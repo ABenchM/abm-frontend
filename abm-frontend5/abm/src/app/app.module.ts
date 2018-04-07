@@ -14,15 +14,19 @@ import { HermesNamePipe } from './shared/hermes-name.pipe';
 import { PrivateStatusPipe } from './shared/private-status.pipe';
 import { SiteNamePipe } from './shared/site-name.pipe';
 import { TabTitlePipe } from './shared/tab-title.pipe';
+import { AboutComponent } from './about/about.component';
+import { CollectionComponent } from './collection/collection.component';
+import { LoginComponent } from './login/login.component';
 
 
 
-const routes : Routes = [
-  {
-    path: '',
-    children: []
-  }
-]
+const routes: Routes = [
+  {path: '',pathMatch: 'full',redirectTo: 'collection'},
+  { path: 'collection', component: CollectionComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'about', component: AboutComponent },
+
+];
 
 @NgModule({
   declarations: [
@@ -33,7 +37,10 @@ const routes : Routes = [
     HermesNamePipe,
     PrivateStatusPipe,
     SiteNamePipe,
-    TabTitlePipe
+    TabTitlePipe,
+    AboutComponent,
+    CollectionComponent,
+    LoginComponent
 
   ],
   imports: [

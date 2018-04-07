@@ -1,26 +1,25 @@
-<div class="max-extend" style="max-width: 1400px; margin:auto;overflow: auto;">
-	<div class="container-fluid">
-		<div class="header" style=" width: calc(100% - 30px); max-width: 1400px;">
-			<!--<img class="logo pull-right" src="logo.png" alt="Placeholder for logo">-->
-			<ul class="nav nav-pills pull-left">
-			
-			</ul>
-		<div class="pull-right"><h3 class="text-muted">Automated Benchmark Management</h3></div>
-		</div>
-  
- <!-- <nav class="navbar navbar-default">
-  <div class="container-fluid">
+
+<header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
       <div class="navbar-header">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">
-            Link <span class="sr-only">(current)</span>
-          </a></li>
-        </ul> 
-        <span class="pull right" class="navbar-brand">{{pageTitle}}</span>
+        <a routingLink="/" class="navbar-brand">{{pageTitle}} </a>
       </div>
-     
-  </div>
-</nav> -->
+      <ul class="nav navbar-nav">
+          <li><a href="" [routerLink]="['/collection']" routerLinkActive="active">Collections</a></li>
+          <li><a href="" [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+          <li><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
+        </ul>
+    </div>
+  </nav>
+</header>
+
+ 
+
+<router-outlet></router-outlet> 
+
+
 
   
  
