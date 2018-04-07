@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Credentials} from '../models/credentials.model';
 
 @Component({
   selector: 'abm-login',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   constructor() { }
+
+  model = new Credentials('','');
 
   ngOnInit() {
   }
