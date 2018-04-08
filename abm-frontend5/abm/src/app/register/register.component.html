@@ -2,7 +2,7 @@
   <h2>Register</h2>
   
   
-  <form #form="ngForm">
+  <form #form="ngForm" (submit)="registerForm(form)">
 
      
 
@@ -11,8 +11,6 @@
         <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username">
         <div *ngIf="username.invalid && username.dirty" class="alert alert-danger">Username is required</div>
     </div>
-
-
 
     <div class="form-group" [class.has-error] = "password.invalid && password.dirty">
         <label for ="password"> Password</label>
@@ -38,16 +36,22 @@
         <input type="text" class="form-control" name="affiliation" required [(ngModel)]="model.affiliation">
     </div>
 
-    <div class="form-group">
+    <div class="form-group" [class.has-error]= "email.dirty && (email.invalid || invalidEmail)">
         <label for ="email">Email Address</label>
-        <input #email="ngModel" type="text" pattern = "/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"  class="form-control" name="email" required [(ngModel)]="model.email">
-        <!-- <div *ngIf="email.invalid && email.touched " class="alert alert-danger">Please enter valid email address</div> -->
+        <input #email="ngModel" type="text"  class="form-control" name="email" (blur)="checkEmail(model.email)" required [(ngModel)]="model.email">
+        <div *ngIf="email.invalid && email.touched" class="alert alert-danger">Your email address is required</div>  
+        <div *ngIf="email.invalid && email.touched && invalidEmail" class="alert alert-danger">This is not a valid email address</div> 
     </div>
+
+  
+    
 
     <div class="text-right" style="margin-top: 10px">
-        <button class="btn btn-primary">Submit</button>
+        <button [disabled]= "form.invalid || (model.password != model.confirmpassword)" class="btn btn-primary">Submit</button>
     </div>
-
+    <div class="wrapper" *ngIf="loading">
+        <span class="cssload-loader"></span>
+    </div>
   </form>
 
 </div>    

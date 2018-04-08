@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   constructor() { }
 
-  model = new Credentials('','');
+  model = new Credentials('', '');
 
   ngOnInit() {
   }
