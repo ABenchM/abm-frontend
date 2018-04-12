@@ -27,7 +27,7 @@ export class Register {
          const body = JSON.stringify(user);
          const headers = new Headers({'Content-type': 'application/json'});
          const options = new RequestOptions({headers: headers});
-         return this.http.post('http://localhost:3100/postuser', body, options)
+         return this.http.post('/rest/username', body, options)
          .map(this.extractData)
          .catch(this.handleError);
       
