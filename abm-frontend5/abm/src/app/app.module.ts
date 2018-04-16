@@ -38,7 +38,7 @@ import { ViewComponent } from './view/view.component';
 import {Register} from './services/register.service';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'collection'},
+ {path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'collection', component: CollectionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'about', component: AboutComponent },
