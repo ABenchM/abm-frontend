@@ -30,7 +30,4 @@ ng build --watch
 ```
 ng test
 ```
-9) Make sure both [3](#in1) and [7](#in2) are running the navigate to
-```
-http://localhost:3000
-```
+9) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
