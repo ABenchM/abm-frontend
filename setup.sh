@@ -4,3 +4,4 @@ cd abm-frontend
 npm install
 cd abm-frontend5/abm
 npm install
+npm install  @angular/cli
