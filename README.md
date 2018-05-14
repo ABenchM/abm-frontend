@@ -5,7 +5,7 @@
 ```
 npm install
 ```
-<a name="in1">3)</a> Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
+3) <a name="in1"></a>Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
 
 ```
 node index.js
@@ -22,7 +22,7 @@ npm install
 ```
 sudo npm install -g @angular/cli
 ```
-<a name="in2">7)</a> During the development to continually build, run with watch flag
+7) <a name="in2"></a> During the development to continually build, run with watch flag
 ```
 ng build --watch
 ```
@@ -30,7 +30,4 @@ ng build --watch
 ```
 ng test
 ```
-9) Make sure both [3](#in1) and [7](#in2) are running the navigate to
-```
-http://localhost:3000
-```
+9) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
