@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { Register } from '../services/register.service';
 import { NgForm } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'abm-register',
@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
   public invalidEmail: boolean;
-  constructor(private register: Register) {
+  constructor(private register: Register , private router: Router) {
     this.invalidEmail = false;
   }
 
@@ -20,7 +20,10 @@ export class RegisterComponent implements OnInit {
 
     this.register.postRegisterForm(this.model)
       .subscribe(
-        data => console.log('success', data),
+        data => {
+          console.log('success', data);
+          this.router.navigateByUrl('/register-success');
+      },
         err => console.log('error: ', err)
       );
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import {Global} from './services/global.service';
 @Component({
   selector: 'abm-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   pageTitle = 'Automated Benchmark Management';
+
+  constructor(private global: Global ) {
+
+  }
+  // Use local storage
+
+  loggedInStatus() {
+    return this.global.loggedIn;
+  }
+
 }

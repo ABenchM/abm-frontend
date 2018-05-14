@@ -7,7 +7,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {Routes, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Global} from './services/global.service';
 // Components
 
 import { AppComponent } from './app.component';
@@ -39,13 +40,18 @@ import { getAuthServiceConfigs } from './SocialLoginConfig';
 import {Register} from './services/register.service';
 import { Login } from './services/login.service';
 import { GoogleLoginComponent } from './google-login/google-login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { Logout } from './services/logout.service';
+import { RegisterSuccessComponent } from './register-success/register-success.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'collection', component: CollectionComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
+  {path: 'register-success', component: RegisterSuccessComponent},
   {path: 'google-login', component: GoogleLoginComponent}
 ];
 
@@ -74,7 +80,9 @@ const routes: Routes = [
     SearchComponent,
     VersionDropDownComponent,
     ViewComponent,
-    GoogleLoginComponent
+    GoogleLoginComponent,
+    LogoutComponent,
+    RegisterSuccessComponent
 
   ],
   imports: [
@@ -85,7 +93,8 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    SocialLoginModule
+    SocialLoginModule,
+    NgbModule.forRoot()
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -95,7 +104,9 @@ const routes: Routes = [
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
-    }
+    },
+    Global,
+    Logout
   ],
   bootstrap: [AppComponent]
 })

@@ -7,7 +7,9 @@ import { AuthService, GoogleLoginProvider } from 'angular5-social-login';
 })
 export class GoogleLoginComponent implements OnInit {
 
-  constructor(private socialAuthService: AuthService) { }
+  constructor(private socialAuthService: AuthService) {
+    this.signinWithGoogle();
+  }
 
   ngOnInit() {
   }

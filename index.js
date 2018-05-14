@@ -7,15 +7,18 @@ var config_file = require('./abm-config.json');
 var jsonParser = bodyParser.json()
 const app = express()
 app.use(express.static('abm-frontend5/abm/dist'))
-app.use('/rest', proxy({target: 'https://abm.cs.upb.de/', changeOrigin: true}));
-//app.use('/rest', proxy({
-  //  target: 'http://localhost:8080/',
-    //changeOrigin: true
-//}));
+var options={
+    target: config_file.url,
+    changeOrigin: true,
+    onProxyReq: function (proxyReq, req, res) {
+      console.log("Proxy");
+    }
+}
+app.use('/rest', proxy(options));
 
 app.post('/auth/login', jsonParser, function (req, res) {
     request.post({
-            url: 'https://abm.cs.upb.de/rest/login',
+            url: config_file.url+'rest/login',
             header: {
                 'Content-type': 'application/json'
             },
@@ -27,7 +30,9 @@ app.post('/auth/login', jsonParser, function (req, res) {
                 'username': req.body['username'],
                 'cookie':response.headers['set-cookie']
             }
+
            var token = jwt.sign(payload,config_file.secret_key)
+           res.status(response.statusCode); 
            res.append('Set-Cookie','Bearer='+token); 
            res.send(payload);
         }
