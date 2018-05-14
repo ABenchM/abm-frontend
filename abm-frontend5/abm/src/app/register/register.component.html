@@ -57,7 +57,7 @@
     
 
     <div class="text-right" style="margin-top: 10px">
-        <button [disabled]= "form.invalid || (model.password != model.confirmpassword)" class="btn btn-primary">Submit</button>
+        <button type="submit" [disabled]= "form.invalid || (model.password != model.confirmpassword)" class="btn btn-primary">Submit</button>
     </div>
     <div class="wrapper" *ngIf="loading">
         <span class="cssload-loader"></span>
