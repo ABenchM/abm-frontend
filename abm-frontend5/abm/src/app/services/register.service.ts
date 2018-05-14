@@ -31,5 +31,8 @@ export class Register {
          .map(this.extractData)
          .catch(this.handleError);
 
+
+
+
      }
 }

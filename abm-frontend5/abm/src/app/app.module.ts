@@ -41,7 +41,7 @@ import {Register} from './services/register.service';
 // import { ToastComponent } from './toast/toast.component';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'collection'},
+ {path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'collection', component: CollectionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'about', component: AboutComponent },
