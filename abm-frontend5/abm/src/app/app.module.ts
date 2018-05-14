@@ -34,8 +34,11 @@ import { SearchComponent } from './search/search.component';
 import { VersionDropDownComponent } from './version-drop-down/version-drop-down.component';
 import { ViewComponent } from './view/view.component';
 
+import {ToastyModule} from 'ng2-toasty';
+
 // Services
 import {Register} from './services/register.service';
+// import { ToastComponent } from './toast/toast.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'collection'},
@@ -71,6 +74,7 @@ const routes: Routes = [
     SearchComponent,
     VersionDropDownComponent,
     ViewComponent
+    // ToastComponent
 
   ],
   imports: [

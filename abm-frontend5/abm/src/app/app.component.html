@@ -9,6 +9,7 @@
         <div class="navbar-brand">{{pageTitle}}</div>
       </div>
       <ul class="nav navbar-nav">
+          {{ "org.opal.hermes.queries." | hermesName}}
           <li><a href="" [routerLink]="['/collection']" routerLinkActive="active">Collections</a></li>
           <li><a href="" [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
           <li><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
