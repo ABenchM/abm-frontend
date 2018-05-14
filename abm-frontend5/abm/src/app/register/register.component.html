@@ -36,11 +36,21 @@
         <input type="text" class="form-control" name="affiliation" required [(ngModel)]="model.affiliation">
     </div>
 
-    <div class="form-group" [class.has-error]= "email.dirty && (email.invalid || invalidEmail)">
+    <!-- <div class="form-group" [class.has-error]= "email.dirty && (email.invalid || invalidEmail)">
         <label for ="email">Email Address</label>
         <input #email="ngModel" type="text"  class="form-control" name="email" (blur)="checkEmail(model.email)" required [(ngModel)]="model.email">
         <div *ngIf="email.invalid && email.touched" class="alert alert-danger">Your email address is required</div>  
         <div *ngIf="email.invalid && email.touched && invalidEmail" class="alert alert-danger">This is not a valid email address</div> 
+    </div> -->
+
+    <div class="form-group">
+        <label for ="email">Email</label>
+          <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" ngModel #emailref="ngModel">
+          <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="aler alert-danger">
+           <div [hidden]="emailref.errors?.pattren">
+           <span class="help-block"> This is not a valid email address </span>  
+           </div> 
+          </div> 
     </div>
 
   
