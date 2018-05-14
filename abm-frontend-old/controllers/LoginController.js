@@ -15,7 +15,7 @@ function($rootScope, $scope, $http, $location, $cookies, ngCart, GoogleSignin, N
 					if(d.status == 401) {
 						Notification.error('Wrong username or password');
 						$location.path('/login');
-					} else {
+						login	} else {
 						Notification.error('Failed with ['+ d.status + '] '+ d.statusText);
 					}
 				})['finally'](function() {

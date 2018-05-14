@@ -1,18 +1,13 @@
 
 <header>
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar bg-light">
     <div class="container-fluid">
-
-      <div class="navbar-header">
-        <img src = "assets/abm_logo.jpg" width="40px" height="40px" alt="ABM">
-
-        <div class="navbar-brand">{{pageTitle}}</div>
-      </div>
-      <ul class="nav navbar-nav">
+      <ul class="nav nav-pills pull-left">
           <li><a href="" [routerLink]="['/collection']" routerLinkActive="active">Collections</a></li>
-          <li><a href="" [routerLink]="['/login']" routerLinkActive="active">Login</a></li>
+          <li><a href="" [routerLink]="['/login']" routerLinkActive="active" class="nav-link active">Login</a></li>
           <li><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
-        </ul>
+      </ul>
+      <img src = "assets/abm_logo.jpg" width="40px" height="40px" alt="ABM">
     </div>
   </nav>
 </header>

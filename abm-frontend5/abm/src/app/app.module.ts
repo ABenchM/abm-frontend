@@ -33,9 +33,12 @@ import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { SearchComponent } from './search/search.component';
 import { VersionDropDownComponent } from './version-drop-down/version-drop-down.component';
 import { ViewComponent } from './view/view.component';
-
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular5-social-login';
+import { getAuthServiceConfigs } from './SocialLoginConfig';
 // Services
 import {Register} from './services/register.service';
+import { Login } from './services/login.service';
+import { GoogleLoginComponent } from './google-login/google-login.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -43,7 +46,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
-
+  {path: 'google-login', component: GoogleLoginComponent}
 ];
 
 @NgModule({
@@ -70,7 +73,8 @@ const routes: Routes = [
     ModalLoginComponent,
     SearchComponent,
     VersionDropDownComponent,
-    ViewComponent
+    ViewComponent,
+    GoogleLoginComponent
 
   ],
   imports: [
@@ -80,12 +84,19 @@ const routes: Routes = [
     ModalModule.forRoot(),
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
-
+    RouterModule.forRoot(routes),
+    SocialLoginModule
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [Register],
+  providers: [
+    Register,
+    Login,
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
