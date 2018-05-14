@@ -2,23 +2,28 @@ var jwt = require('jsonwebtoken');
 const express = require('express');
 const bodyParser = require('body-parser');
 var request = require('request');
+const args = process.argv;
+if (args[2] == undefined) {
+    args[2] = 'env=dev';
+}
+const env_type = args[2].split("=")[1];
 const proxy = require('http-proxy-middleware');
-var config_file = require('./abm-config.json');
+var config_file = require('./abm-config.'+env_type+'.json');
 var jsonParser = bodyParser.json()
 const app = express()
 app.use(express.static('abm-frontend5/abm/dist'))
-var options={
+var options = {
     target: config_file.url,
     changeOrigin: true,
     onProxyReq: function (proxyReq, req, res) {
-      console.log("Proxy");
+        console.log("Proxy");
     }
 }
 app.use('/rest', proxy(options));
 
 app.post('/auth/login', jsonParser, function (req, res) {
     request.post({
-            url: config_file.url+'rest/login',
+            url: config_file.url + 'rest/login',
             header: {
                 'Content-type': 'application/json'
             },
@@ -28,13 +33,13 @@ app.post('/auth/login', jsonParser, function (req, res) {
         function (error, response, body) {
             var payload = {
                 'username': req.body['username'],
-                'cookie':response.headers['set-cookie']
+                'cookie': response.headers['set-cookie']
             }
 
-           var token = jwt.sign(payload,config_file.secret_key)
-           res.status(response.statusCode); 
-           res.append('Set-Cookie','Bearer='+token); 
-           res.send(payload);
+            var token = jwt.sign(payload, config_file.secret_key)
+            res.status(response.statusCode);
+            res.append('Set-Cookie', 'Bearer=' + token);
+            res.send(payload);
         }
 
     );

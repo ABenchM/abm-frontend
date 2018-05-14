@@ -24,4 +24,3 @@ hs_err_pid*
 node_modules/
 abm-frontend5/abm/node_modules
 abm-frontend5/abm/dist
-abm-config.json
