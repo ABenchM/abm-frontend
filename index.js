@@ -7,15 +7,15 @@ var config_file = require('./abm-config.json');
 var jsonParser = bodyParser.json()
 const app = express()
 app.use(express.static('abm-frontend5/abm/dist'))
-//app.use('/rest', proxy({target: 'https://abm.cs.upb.de/', changeOrigin: true}));
-app.use('/rest', proxy({
-    target: 'http://localhost:8080/',
-    changeOrigin: true
-}));
+app.use('/rest', proxy({target: 'https://abm.cs.upb.de/', changeOrigin: true}));
+//app.use('/rest', proxy({
+  //  target: 'http://localhost:8080/',
+    //changeOrigin: true
+//}));
 
 app.post('/auth/login', jsonParser, function (req, res) {
     request.post({
-            url: 'http://localhost:8080/rest/login',
+            url: 'https://abm.cs.upb.de/rest/login',
             header: {
                 'Content-type': 'application/json'
             },
