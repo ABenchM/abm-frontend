@@ -1,10 +1,10 @@
 <div class="col-md-6 col-md-offset-3" class="container">
   <h2>Login</h2>
 
-  <form #form="ngForm" (submit)="loginForm(form)">
+  <form #form="ngForm" (submit)="loginForm()">
     <div class="form-group" [class.has-error]=" username.invalid && username.dirty">
       <label for="username"> Username</label>
-      <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username">
+      <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username" id="username">
       <span *ngIf="username.invalid && username.dirty" class="help-block"> Username is required</span>
     </div>
     <div class="form-group">
@@ -12,17 +12,19 @@
       <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
       <span *ngIf="password.invalid && password.dirty" class="help-block"> password is required</span>
     </div>
-    <div *ngIf="loginFailed" class="alert alert-warning">
+    <div *ngIf="loginFailed" class="alert alert-warning" id="error-id">
       <strong>Error:</strong> Wrong username or password.
     </div>
     <div class="text-right">
-      <a class="btn btn-primary" href="" [routerLink]="['/register']"> Register</a>
       <button type="submit" [disabled]="form.invalid" class="btn btn-primary"> Login</button>
-
+      <a class="btn btn-primary" href="" [routerLink]="['/register']"> Register</a>
     </div>
-    <div class="text-right" style="margin-top: 10px">
-      <button class="btn btn-primary" href="" [routerLink]="['/google-login']">Login with Google account</button>
-    </div>
-
+   
   </form>
+    <div class="text-right">
+      
+      <button class="btn btn-primary"(click)="loginGoogle()">Login with Google account</button>
+    </div>
+
+  
 </div>

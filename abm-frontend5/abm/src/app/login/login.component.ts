@@ -2,18 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Credentials } from '../models/credentials.model';
 import { Login } from '../services/login.service';
 import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {Global} from '../services/global.service';
+import { Global } from '../services/global.service';
+import { GoogleLoginService } from '../services/google-login.service';
 @Component({
   selector: 'abm-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public ngForm: NgForm;
   public loginFailed = false;
-  constructor(private login: Login, private router: Router, private global: Global) { }
+  google_username = 'google-oauth';
+  constructor(private login: Login, private router: Router, private global: Global, private googleLoginService: GoogleLoginService) { }
   model = new Credentials('', '');
-
   loginOnsuccess(code: Number) {
     if (code === 200) {
       this.global.loggedIn = true;
@@ -22,16 +25,25 @@ export class LoginComponent implements OnInit {
       this.loginFailed = true;
     }
   }
-
-
-  loginForm(form: NgForm) {
-    this.login.postLoginForm(this.model)
+  private loginReq(cred: Credentials) {
+    this.login.postLoginForm(cred)
       .subscribe(
         data => this.loginOnsuccess(data),
         err => {
           console.log('error: ', err);
           this.loginFailed = true;
         });
+  }
+
+  loginForm() {
+    this.loginReq(this.model);
+    return this.loginFailed;
+  }
+
+  loginGoogle() {
+    this.googleLoginService.signinWithGoogle().then(data => {
+      this.loginReq(new Credentials(this.google_username, data.idToken));
+    });
   }
   ngOnInit() {
   }
