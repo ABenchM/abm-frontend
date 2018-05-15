@@ -24,12 +24,12 @@ npm install
 ```
 sudo npm install -g @angular/cli
 ```
-9) <a name="in2"></a> During the development to continually build, run with watch flag
+9) <a name="in2"></a> During the development, to continually build, run with watch flag
 ```
 ng build --watch
 ```
-10) To test front end code, run (Make sure Google Chrome is installed) 
+10) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
+11) To test the code, run (Make sure Google Chrome is installed) 
 ```
 ng test
 ```
-11) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
