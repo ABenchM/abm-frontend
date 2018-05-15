@@ -42,7 +42,6 @@ import { LogoutComponent } from './logout/logout.component';
 import {Register} from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
-import {Global} from './services/global.service';
 import {GoogleLoginService} from './services/google-login.service';
 
 const routes: Routes = [
@@ -104,7 +103,6 @@ const routes: Routes = [
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    Global,
     Logout,
     GoogleLoginService
   ],

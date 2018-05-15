@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private logout: Logout, private global: Global, private router: Router) {
+  constructor(private logout: Logout, private router: Router) {
     this.onLogout();
     this.router.navigateByUrl('/login');
   }
@@ -17,7 +17,7 @@ export class LogoutComponent implements OnInit {
   ngOnInit() {
   }
   onLogout() {
-    this.global.loggedIn = false;
+    localStorage.removeItem('loggedIn');
     this.logout.logout();
   }
 

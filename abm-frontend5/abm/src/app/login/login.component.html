@@ -16,15 +16,16 @@
       <strong>Error:</strong> Wrong username or password.
     </div>
     <div class="text-right">
-      <button type="submit" [disabled]="form.invalid" class="btn btn-primary"> Login</button>
       <a class="btn btn-primary" href="" [routerLink]="['/register']"> Register</a>
+      <button type="submit" [disabled]="form.invalid" class="btn btn-primary"> Login</button>
     </div>
-   
-  </form>
-    <div class="text-right">
-      
+    <div class="text-right" style="margin-top: 10px">
+    
       <button class="btn btn-primary"(click)="loginGoogle()">Login with Google account</button>
     </div>
 
+  </form>
+  
+   
   
 </div>

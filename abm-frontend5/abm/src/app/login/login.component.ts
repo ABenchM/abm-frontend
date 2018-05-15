@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
   public ngForm: NgForm;
   public loginFailed = false;
   google_username = 'google-oauth';
-  constructor(private login: Login, private router: Router, private global: Global, private googleLoginService: GoogleLoginService) { }
+  constructor(private login: Login, private router: Router, private googleLoginService: GoogleLoginService) { }
   model = new Credentials('', '');
   loginOnsuccess(code: Number) {
     if (code === 200) {
-      this.global.loggedIn = true;
+      localStorage.setItem('loggedIn', 'true');
       this.router.navigateByUrl('/about');
     } else {
       this.loginFailed = true;
