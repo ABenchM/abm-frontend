@@ -4,6 +4,7 @@
     <div class="container-fluid">
       <ul class="nav nav-pills pull-left">
           <li><a href="" [routerLink]="['/collection']" routerLinkActive="active">Collections</a></li>
+           <li><a href="" [routerLink]="['/search']" routerLinkActive="active">Create Collection</a></li>
           <li *ngIf="!loggedInStatus()"><a href="" [routerLink]="['/login']" routerLinkActive="active" class="nav-link active">Login</a></li>
           <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/logout']" routerLinkActive="active" class="nav-link active">Logout</a></li>
           <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
