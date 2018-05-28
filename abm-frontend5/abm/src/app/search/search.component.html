@@ -1,18 +1,15 @@
-<h2>Create Collections</h2>
-<hr>
+<h2 class="heading_align">Create Collections</h2>
 <section>
-    <div style="max-height:1000px;overflow:auto">
-        <ngcart-cart></ngcart-cart>
-    	<hr>
-        <div class="alert alert-warning" id="error-id">
-      		<strong>Error:</strong> Your collection is empty
-    	</div>
-    	<form>
-            <input #query="ngModel" type="text" name="query" [(ngModel)]="model.query" id="query" placeholder="use user:ownername for search by Repository Owner" size="48" class="search_bar">
+  <div>
+    <hr>
+    <form>
+        <div class="search_bar" >
+            <input #query="ngModel" type="text" name="query" [(ngModel)]="model.query" id="query" placeholder="use user:ownername for search by Repository Owner" class="search_align">
             <button type="button" class="btn btn-success" ng-model="Search" disabled>Search</button>
-           	<div>
-				<a class="btn btn-success">Show Filtering Options</a>
-          	</div>
+            <span>
+              <a class="btn btn-success" ng-hide="showOptions" ng-click="showOptions=true;">Show Filtering Options</a>
+            </span>
+        </div>
 		</form>
 	</div>
 </section>
