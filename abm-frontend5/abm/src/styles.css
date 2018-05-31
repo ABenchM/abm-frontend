@@ -348,3 +348,8 @@
       50%	{ -moz-transform: translateX(0%)		scale(1); }
       100% { -moz-transform: translateX(100%)	scale(0); }
   }
+  .nav>li>a:focus {
+      color:white;
+      background-color: #337ab7;
+
+  }

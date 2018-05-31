@@ -47,6 +47,7 @@ import {GoogleLoginService} from './services/google-login.service';
 const routes: Routes = [
  {path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'collection', component: CollectionComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },

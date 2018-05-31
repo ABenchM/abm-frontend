@@ -1,3 +1,16 @@
-<p>
-  search works!
-</p>
+<h2 class="heading_align">Create Collections</h2>
+<section>
+  <div>
+    <hr>
+    <form #form="ngForm">
+        <div class="search_bar" >
+            <input #query="ngModel" type="text" name="query" [(ngModel)]="model.query" id="query" placeholder="use user:ownername for search by Repository Owner" class="search_align">
+            <button type="button" class="btn btn-success" ng-model="Search" [disabled]="model.query === '' || model.query === undefined">Search</button>
+            <span>
+              <a class="btn btn-success" ng-hide="showOptions" ng-click="showOptions=true;">Show Filtering Options</a>
+            </span>
+        </div>
+		</form>
+	</div>
+</section>
+
