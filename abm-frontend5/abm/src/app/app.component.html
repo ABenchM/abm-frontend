@@ -4,11 +4,14 @@
     <div class="container-fluid">
       <ul class="nav nav-pills pull-left">
           <li><a href="" [routerLink]="['/collection']" routerLinkActive="active">Collections</a></li>
+          <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/search']" routerLinkActive="active">Create Collections</a></li>
+          <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/filters']" routerLinkActive="active">Filters</a></li>
+          <li><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
           <li *ngIf="!loggedInStatus()"><a href="" [routerLink]="['/login']" routerLinkActive="active" class="nav-link active">Login</a></li>
           <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/logout']" routerLinkActive="active" class="nav-link active">Logout</a></li>
-          <li *ngIf="loggedInStatus()"><a href="" [routerLink]="['/about']" routerLinkActive="active">About</a></li>
+          
       </ul>
-       <img src = "assets/abm_logo.jpg" width="60px" height="60px" alt="ABM" align="right">
+       <img src = "assets/abm_logo.jpg" (click)= "sendMeHome()" width="60px" height="60px" alt="ABM" align="right">
     </div>
   </nav>
 </header>

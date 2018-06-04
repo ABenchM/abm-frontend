@@ -1,0 +1,11 @@
+.search_bar{
+	position: absolute;
+	left:15%;
+	width: 70% !important;
+}
+.search_align{
+	width:80%;
+}
+.heading_align{
+	padding-left:20px;
+}

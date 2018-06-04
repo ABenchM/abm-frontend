@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'abm-root',
   templateUrl: './app.component.html',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   pageTitle = 'Automated Benchmark Management';
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
   // Use local storage
@@ -15,5 +17,9 @@ export class AppComponent {
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
   }
+
+  sendMeHome(){
+    this.router.navigate(['']);
+  }   
 
 }

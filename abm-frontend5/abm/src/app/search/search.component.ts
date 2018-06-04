@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'abm-search',
   templateUrl: './search.component.html',
@@ -7,8 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
 
+  constructor() {
+    localStorage.setItem('loading', 'false');
+   
+   }
+
+   loadingStatus() {
+    return localStorage.getItem('loading') === 'true';
+  }
+  
   ngOnInit() {
   }
 

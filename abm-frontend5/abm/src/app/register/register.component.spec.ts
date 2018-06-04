@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './register.component';
 // import { Register } from '../services/register.service';
 import { User } from '../models/user.model';
-import {Component, DebugElement} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import {Component, DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 fdescribe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -18,8 +18,8 @@ fdescribe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
       imports: [ FormsModule  ],
-      // providers : [Register] 
-    })
+      // providers : [Register]
+    });
     // .compileComponents();
   }));
 
@@ -29,13 +29,13 @@ fdescribe('RegisterComponent', () => {
     // registerService = TestBed.get(Register);
     affiliationel = fixture.debugElement.query(By.css('input[type=text]'));
     submitEl = fixture.debugElement.query(By.css('button'));
-   
+
   });
 
   fit('submit button disabled when any of the field is empty', () => {
-   affiliationel.nativeElement.value = "";
+   affiliationel.nativeElement.value = '';
     fixture.detectChanges();
    expect(submitEl.nativeElement.disabled).toBeTruthy();
-   expect()
+   expect();
   });
 });

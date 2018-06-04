@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -43,10 +44,13 @@ import {Register} from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
 import {GoogleLoginService} from './services/google-login.service';
+import {UtilityService} from './services/utility.service';
 
 const routes: Routes = [
- {path: '', pathMatch: 'full', redirectTo: 'login'},
+ {path: '', pathMatch: 'full', redirectTo: 'collection'},
   { path: 'collection', component: CollectionComponent },
+  { path: 'search', component: SearchComponent },
+  {path: 'filters', component: FilterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
@@ -85,6 +89,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
@@ -104,7 +109,8 @@ const routes: Routes = [
       useFactory: getAuthServiceConfigs
     },
     Logout,
-    GoogleLoginService
+    GoogleLoginService,
+    UtilityService
   ],
   bootstrap: [AppComponent]
 })

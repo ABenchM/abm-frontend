@@ -1,3 +1,21 @@
-<p>
-  search works!
-</p>
+
+<section>
+  <div>
+    <hr>
+    <form #form="ngForm" (submit)="search(form)">
+        <div class="search_bar" >
+                <input type="text" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner" required [(ngModel)]="query" class="search_align">
+            <button type="submit" [disabled]= "query=== '' || query===undefined"  class="btn btn-success">Search</button>
+            <span>
+              <a class="btn btn-success" > Show Filtering Options</a> 
+              <a class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</a> 
+            </span>
+        </div>
+		</form>
+	</div>
+</section>
+<div class="wrapper" *ngIf="loadingStatus()">
+  <h2>Searching</h2>
+  <span class="cssload-loader"></span>
+</div>
+<hr>
