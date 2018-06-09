@@ -12,9 +12,13 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public invalidEmail: boolean;
-  constructor(private register: Register , private router: Router) {
+  public invalidUsername: boolean;
+
+constructor(private register: Register , private router: Router) {
     this.invalidEmail = false;
   }
+
+  model = new User('', '', '', '', '', '');
 
   registerForm(form: NgForm) {
 
@@ -22,7 +26,10 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           console.log('success', data);
-          this.router.navigateByUrl('/register-success');
+          this.invalidUsername = this.register.checkUsername;
+          if (this.invalidUsername === false) {
+            this.router.navigateByUrl('/register-success');
+          }
       },
         err => console.log('error: ', err)
       );
@@ -45,8 +52,12 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  model = new User('', '', '', '', '', '');
+
   ngOnInit() {
+  }
+
+  resetUsername() {
+    this.invalidUsername = false;
   }
 
 }

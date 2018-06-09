@@ -6,16 +6,26 @@ import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class Register {
+    static invalidUsername: boolean;
      constructor(private http: Http) {
-
+        Register.invalidUsername = false;
      }
 
     private extractData(res: Response) {
         const body = res.json();
-        return body.fields || { };
+        if (body === false) {
+            Register.invalidUsername = true;
+            return body;
+          } else {
+            Register.invalidUsername = false;
+            return body.fields || { };
+        }
+
 
     }
-
+    get checkUsername() {
+        return Register.invalidUsername;
+    }
     private handleError(error: any) {
 
         console.error('post error : ', error );
