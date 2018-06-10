@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   selector: 'abm-collection',
@@ -7,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollectionComponent implements OnInit {
 
-  constructor() { }
+  //logInStatus: boolean;
+  constructor() {
+     //this.logInStatus =  util.loggedInStatus();
+   }
 
+  loggedInStatus() {
+    return localStorage.getItem('loggedIn') === 'true';
+  }
   ngOnInit() {
   }
 

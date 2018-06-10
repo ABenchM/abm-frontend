@@ -13,25 +13,28 @@ export class RegisterComponent implements OnInit {
 
   public invalidEmail: boolean;
   public invalidUsername: boolean;
-  constructor(private register: Register , private router: Router) {
+
+constructor(private register: Register , private router: Router) {
     this.invalidEmail = false;
   }
 
+  model = new User('', '', '', '', '', '');
+
   registerForm(form: NgForm) {
-    
+
     this.register.postRegisterForm(this.model)
       .subscribe(
-        data => {         
+        data => {
           console.log('success', data);
           this.invalidUsername = this.register.checkUsername;
-          if(this.invalidUsername === false)
-          this.router.navigateByUrl('/register-success');
-      }, 
+          if (this.invalidUsername === false) {
+            this.router.navigateByUrl('/register-success');
+          }
+      },
         err => console.log('error: ', err)
       );
 
   }
-
 
   checkEmail(email: string) {
     if (email === undefined) { return; }
@@ -49,7 +52,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  model = new User('', '', '', '', '', '');
+
   ngOnInit() {
   }
 

@@ -4,16 +4,23 @@
   "description": "Front End for ABM",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "npm test",
+    "prepush": "npm test"
+
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@angular/animations": "^6.0.3",
     "express": "^4.16.3",
     "expressjs": "^1.0.1",
     "hoek": "^5.0.3",
     "http-proxy-middleware": "^0.18.0",
     "jsonwebtoken": "^8.2.1",
     "request": "^2.85.0"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
   }
 }

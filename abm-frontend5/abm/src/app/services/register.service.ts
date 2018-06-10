@@ -7,24 +7,23 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class Register {
     static invalidUsername: boolean;
-     constructor(private http: Http) {        
+     constructor(private http: Http) {
         Register.invalidUsername = false;
      }
 
     private extractData(res: Response) {
         const body = res.json();
-        if(body === false){
+        if (body === false) {
             Register.invalidUsername = true;
             return body;
-          }
-        else
-        {
+          } else {
             Register.invalidUsername = false;
             return body.fields || { };
         }
-    }
 
-    get checkUsername(){
+
+    }
+    get checkUsername() {
         return Register.invalidUsername;
     }
     private handleError(error: any) {
@@ -42,6 +41,4 @@ export class Register {
          .map(this.extractData)
          .catch(this.handleError);
      }
-
-
 }
