@@ -40,5 +40,9 @@ export class Register {
          return this.http.post('/rest/username', body, options)
          .map(this.extractData)
          .catch(this.handleError);
+
+
+
+
      }
 }
