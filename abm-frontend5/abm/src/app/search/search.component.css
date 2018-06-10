@@ -1,7 +1,7 @@
-.search_bar{
-	position: absolute;
+.search_bar{	
 	left:15%;
-	width: 70% !important;
+	position: absolute;
+	width: 70% ;
 }
 .search_align{
 	width:80%;
