@@ -7,19 +7,28 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  viewMode;
+
   pageTitle = 'Automated Benchmark Management';
 
   constructor(private router: Router) {
-
+    localStorage.setItem('viewMode', 'collection');
+    this.viewMode = localStorage.getItem('viewMode');
   }
   // Use local storage
 
   loggedInStatus() {
+    this.viewMode = localStorage.getItem('viewMode');
     return localStorage.getItem('loggedIn') === 'true';
+
   }
 
-  sendMeHome(){
-    this.router.navigate(['']);
-  }   
+  onCLickViewMode(mode) {
+    localStorage.setItem('viewMode', mode);
+    this.viewMode  =  localStorage.getItem('viewMode');
+  }
 
+  sendMeHome() {
+    this.router.navigate(['']);
+  }
 }

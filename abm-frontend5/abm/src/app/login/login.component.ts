@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input } from '@angular/core';
 import { Credentials } from '../models/credentials.model';
 import { Login } from '../services/login.service';
 import { NgForm } from '@angular/forms';
@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
   loginOnsuccess(code: Number) {
     if (code === 200) {
       localStorage.setItem('loggedIn', 'true');
-      this.router.navigateByUrl('/about');
+     localStorage.setItem('viewMode', 'collection');
+      this.router.navigateByUrl('/collection');
+
     } else {
       this.loginFailed = true;
     }
