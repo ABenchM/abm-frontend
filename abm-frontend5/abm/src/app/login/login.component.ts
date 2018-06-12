@@ -14,9 +14,9 @@ import { GoogleLoginService } from '../services/google-login.service';
 export class LoginComponent implements OnInit {
   public ngForm: NgForm;
   public loginFailed = false;
+  model = new Credentials('', '');
   google_username = 'google-oauth';
   constructor(private login: Login, private router: Router, private googleLoginService: GoogleLoginService) { }
-  model = new Credentials('', '');
   loginOnsuccess(code: Number) {
     if (code === 200) {
       localStorage.setItem('loggedIn', 'true');
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     }
   }
   private loginReq(cred: Credentials) {
-    this.login.postLoginForm(cred)
+       this.login.postLoginForm(cred)
       .subscribe(
         data => this.loginOnsuccess(data),
         err => {
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
   loginGoogle() {
     this.googleLoginService.signinWithGoogle().then(data => {
-      this.loginReq(new Credentials(this.google_username, data.idToken));
+        this.loginReq(new Credentials(this.google_username, data.idToken));
     });
   }
   ngOnInit() {

@@ -25,6 +25,7 @@ export class Login {
     postLoginForm(credentials: Credentials): Observable<any> {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
+        console.log(body);
         const options = new RequestOptions({ headers: headers });
         return this.http.post('/auth/login', body, options)
             .map(this.onSuccess)

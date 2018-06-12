@@ -30,5 +30,7 @@ export class AppComponent {
 
   sendMeHome() {
     this.router.navigate(['']);
+    localStorage.setItem('viewMode', 'collection');
+    this.viewMode = localStorage.getItem('viewMode');
   }
 }
