@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilityService } from '../services/utility.service';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'abm-collection',
@@ -8,15 +9,17 @@ import { UtilityService } from '../services/utility.service';
 })
 export class CollectionComponent implements OnInit {
 
-  //logInStatus: boolean;
-  constructor() {
-     //this.logInStatus =  util.loggedInStatus();
-   }
+
+  constructor(private http: Http) {
+         }
 
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
   }
   ngOnInit() {
+    this.http.get('/rest/collection' + '?user=' + 'demo').subscribe(response => {
+      console.log(response.json());
+   });
   }
 
 }

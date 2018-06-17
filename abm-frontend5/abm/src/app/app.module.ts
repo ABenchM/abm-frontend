@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -45,11 +45,13 @@ import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
 import {GoogleLoginService} from './services/google-login.service';
 import {UtilityService} from './services/utility.service';
+import { AppErrorHandler } from './app-error-handler';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', redirectTo: 'collection'},
   { path: 'collection', component: CollectionComponent },
-  { path: 'search', component: SearchComponent },
+  { path: 'search', component: SearchComponent , canActivate: [AuthGuardService]},
   {path: 'filters', component: FilterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -110,7 +112,9 @@ const routes: Routes = [
     },
     Logout,
     GoogleLoginService,
-    UtilityService
+    AuthGuardService,
+    UtilityService,
+    {provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]
 })

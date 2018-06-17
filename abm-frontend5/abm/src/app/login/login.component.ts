@@ -3,7 +3,7 @@ import { Credentials } from '../models/credentials.model';
 import { Login } from '../services/login.service';
 import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Global } from '../services/global.service';
 import { GoogleLoginService } from '../services/google-login.service';
 @Component({
@@ -16,12 +16,15 @@ export class LoginComponent implements OnInit {
   public loginFailed = false;
   model = new Credentials('', '');
   google_username = 'google-oauth';
-  constructor(private login: Login, private router: Router, private googleLoginService: GoogleLoginService) { }
+  constructor(private login: Login, private router: Router,
+        private googleLoginService: GoogleLoginService , private route: ActivatedRoute) { }
   loginOnsuccess(code: Number) {
     if (code === 200) {
       localStorage.setItem('loggedIn', 'true');
      localStorage.setItem('viewMode', 'collection');
-      this.router.navigateByUrl('/collection');
+
+     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      this.router.navigate([ returnUrl || '/collection']);
 
     } else {
       this.loginFailed = true;

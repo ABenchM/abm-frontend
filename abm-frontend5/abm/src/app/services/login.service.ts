@@ -31,4 +31,10 @@ export class Login {
             .map(this.onSuccess)
             .catch(this.handleError);
     }
+
+    isLoggedin() {
+         return localStorage.getItem('loggedIn');
+
+    }
+
 }
