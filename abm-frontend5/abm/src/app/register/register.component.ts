@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     const splitEmail = email.split('@');
     if (splitEmail.length !== 2) {
       this.invalidEmail = true;
-    } else if (splitEmail[0].length < 1 || splitEmail[1].length < 1) {
+      } else if (splitEmail[0].length < 1 || splitEmail[1].length < 1) {
       this.invalidEmail = true;
     } else if (splitEmail[1].indexOf('.') < 1 || splitEmail[1].lastIndexOf('.') === (splitEmail[1].length - 1)) {
       this.invalidEmail = true;

@@ -29,7 +29,7 @@ fdescribe('RegisterComponent', () => {
     // registerService = TestBed.get(Register);
     affiliationel = fixture.debugElement.query(By.css('input[type=text]'));
     submitEl = fixture.debugElement.query(By.css('button'));
-  });
+    });
 
   fit('submit button disabled when any of the field is empty', () => {
    affiliationel.nativeElement.value = '';
