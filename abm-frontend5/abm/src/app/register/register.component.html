@@ -16,25 +16,28 @@
       <div class="form-group" [class.has-error] = "password.invalid && password.dirty">
           <label for ="password"> Password</label>
           <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
-          <div *ngIf="password.invalid && password.dirty" class="alert alert-danger">Password is required</div>
+          <div *ngIf="password.touched && password.invalid" class="alert alert-danger">Password is required</div>
       </div>
   
       <div class="form-group" [class.has-error] = "confirmpassword.dirty && (model.password != model.confirmpassword)">
           <label for ="confirmpassword">Confirm Password</label>
           <input #confirmpassword="ngModel" type="password" class="form-control" name="confirmpassword" required [(ngModel)]="model.confirmpassword">
-          <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">password do not match</div>
+          <div *ngIf="confirmpassword.touched && confirmpassword.invalid" class="alert alert-danger">Confirm Password field is required</div>
+          <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">Passwords do not match</div>
       </div>
   
       <hr>
   
-      <div class="form-group">
+      <div class="form-group" [class.has-error] = "name.invalid && name.dirty">
           <label for ="name"> Name</label>
-          <input type="text" class="form-control" name="name" required [(ngModel)]="model.name">
+          <input #name="ngModel" type="text" class="form-control" name="name" required [(ngModel)]="model.name">
+          <div *ngIf="name.touched && name.invalid" class="alert alert-danger">Name is required</div>
       </div>
   
-      <div class="form-group">
+      <div class="form-group" [class.has-error] = "affiliation.invalid && affiliation.dirty">
           <label for ="affiliation"> Affiliation</label>
-          <input type="text" class="form-control" name="affiliation" required [(ngModel)]="model.affiliation">
+          <input #affiliation="ngModel" type="text" class="form-control" name="affiliation" required [(ngModel)]="model.affiliation">
+          <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger">Affiliation is required</div>
       </div>
   
       <!-- <div class="form-group" [class.has-error]= "email.dirty && (email.invalid || invalidEmail)">
@@ -44,12 +47,12 @@
           <div *ngIf="email.invalid && email.touched && invalidEmail" class="alert alert-danger">This is not a valid email address</div> 
       </div> -->
   
-      <div class="form-group">
+      <div class="form-group" >
           <label for ="email">Email</label>
-            <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" ngModel #emailref="ngModel">
+            <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" required [(ngModel)]="model.emailref">
             <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class ="aler alert-danger">
              <div [hidden]="emailref.errors?.pattren">
-             <span class="help-block"> This is not a valid email address </span>  
+             <span class="help-block"> Enter a valid email address </span>  
              </div> 
             </div> 
       </div>
