@@ -16,7 +16,7 @@
       <div class="form-group" [class.has-error] = "password.invalid && password.dirty">
           <label for ="password"> Password</label>
           <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
-          <div *ngIf="password.invalid && password.dirty" class="alert alert-danger">Password is required</div>
+          <div *ngIf="password.touched && password.invalid" class="alert alert-danger">Password is required</div>
       </div>
   
       <div class="form-group" [class.has-error] = "confirmpassword.dirty && (model.password != model.confirmpassword)">
