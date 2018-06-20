@@ -18,11 +18,11 @@ export class LoginComponent implements OnInit {
   google_username = 'google-oauth';
   constructor(private login: Login, private router: Router,
         private googleLoginService: GoogleLoginService , private route: ActivatedRoute) { }
-  loginOnsuccess(code: Number) {
-    if (code === 200) {
+  loginOnsuccess(response) {
+    if (response.status === 200) {
       localStorage.setItem('loggedIn', 'true');
-
-     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      localStorage.setItem('currentUser', response.json().username);
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       this.router.navigate([ returnUrl || '/']);
 
     } else {

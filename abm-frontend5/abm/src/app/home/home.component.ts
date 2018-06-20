@@ -13,8 +13,6 @@ export class HomeComponent implements OnInit {
   public publicCollections: any[];
   cancelSearch: boolean;
   loading: boolean;
-  isPinned = false;
-  isPublicData = false;
   constructor(private service: CollectionService) { }
 
   model = new Search('');
@@ -40,15 +38,6 @@ export class HomeComponent implements OnInit {
   loggedInStatus() {
 
     return localStorage.getItem('loggedIn') === 'true';
-  }
-
-  loadUser() {
-    const user: string = sessionStorage.getItem('currentUser');
-    if (user === '') {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   search(searchQuery) {
@@ -77,7 +66,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadPublicCollections();
-    if (this.loadUser() && this.loggedInStatus) {
+    if (this.loggedInStatus()) {
        this.loadPinned();
     }
       }

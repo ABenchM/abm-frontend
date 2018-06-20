@@ -18,7 +18,7 @@ export class LogoutComponent implements OnInit {
   }
   onLogout() {
     localStorage.removeItem('loggedIn');
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
     this.logout.logout();
   }
 

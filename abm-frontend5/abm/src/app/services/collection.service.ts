@@ -15,8 +15,7 @@ export class CollectionService {
   }
 
   getCollections(username) {
-    console.log('username is ' + username);
-    return this.http.get('/rest/collection' + '?user=' + username);
+     return this.http.get('/rest/collection' + '?user=' + username);
     // .map(this.onSuccess);
 
 

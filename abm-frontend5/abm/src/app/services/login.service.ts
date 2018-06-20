@@ -14,10 +14,8 @@ export class Login {
 
      private onSuccess(res: Response) {
         const statusCode = res.status;
-        console.log(res.json());
-        console.log(res.json().username);
-       sessionStorage.setItem('currentUser', res.json().username);
-        return statusCode;
+        this.username = res.json().username;
+        return res;
     }
 
     private handleError(error: any) {
@@ -30,7 +28,6 @@ export class Login {
     postLoginForm(credentials: Credentials): Observable<any> {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
-        console.log(body);
         const options = new RequestOptions({ headers: headers });
         return this.http.post('/auth/login', body, options)
             .map(this.onSuccess)
