@@ -21,7 +21,6 @@ export class CollectionComponent implements OnInit {
   }
 
   open(row) {
-    console.log(row.privateStatus);
     if (row.privateStatus) {
       this.router.navigateByUrl('/editCollection/' + row.id);
     } else {

@@ -14,6 +14,10 @@ export class CollectionService {
 
   }
 
+  getViewCollection(id) {
+  const data = {'privateStatus': false, 'id': id};
+  return this.http.get('/rest/collection', {params: data});
+  }
   getCollectionById(id) {
     const data =  {'id': id};
     return this.http.get('/rest/collection', {params : data});

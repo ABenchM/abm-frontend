@@ -1,3 +1,22 @@
-<p>
-  view works!
-</p>
+<div class="wrapper" *ngIf="loading">
+    <span class="cssload-loader"></span>
+</div>
+
+<div *ngIf="!loading">
+  <form >
+    <div class="form-group">
+        <label for="id">Collection Id</label>
+        <input id="id" name="id" [(ngModel)]="viewCollection[0].id" type="text" [disabled]=true class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" name="name" [(ngModel)]="viewCollection[0].name" type="text" [disabled]=true class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea rows='3' id="description" [(ngModel)]="viewCollection[0].description" name="description" [disabled]=true  type="description" class="form-control">
+        </textarea>
+      </div>
+  </form>   
+   <button class="btn btn-primary" (click)="back()">Return to Collection Search</button>
+</div>
