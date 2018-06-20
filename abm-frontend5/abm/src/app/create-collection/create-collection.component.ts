@@ -12,7 +12,7 @@ export class CreateCollectionComponent implements OnInit {
   constructor() { }
 
 
-  );
+
 
   ngOnInit() {
   }
