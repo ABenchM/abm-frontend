@@ -14,6 +14,11 @@ export class CollectionService {
 
   }
 
+  getCollectionById(id) {
+    const data =  {'id': id};
+    return this.http.get('/rest/collection', {params : data});
+  }
+
   getCollections(username) {
      return this.http.get('/rest/collection' + '?user=' + username);
     // .map(this.onSuccess);

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilityService } from '../services/utility.service';
 import { Http } from '@angular/http';
-import {CollectionService} from '../services/collection.service';
-import {Cap}
+import { CollectionService } from '../services/collection.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'abm-collection',
@@ -13,21 +13,30 @@ export class CollectionComponent implements OnInit {
 
   hasCollections = false;
   userCollections: any[];
-  constructor(private service: CollectionService) {
-         }
+  constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute) {
+  }
 
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
+  open(row) {
+    console.log(row.privateStatus);
+    if (row.privateStatus) {
+      this.router.navigateByUrl('/editCollection/' + row.id);
+    } else {
+      this.router.navigateByUrl('/view/' + row.id);
+    }
+
+  }
   ngOnInit() {
-    console.log('Inside ngOnint' + localStorage.getItem('currentUser'));
+
     if (localStorage.getItem('currentUser') != null) {
-      console.log('Inside ngOnint' + localStorage.getItem('currentUser'));
+
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
-         this.userCollections = response.json();
-         console.log('Collection size ' + this.userCollections.length);
-         this.hasCollections =  true;
+        this.userCollections = response.json();
+
+        this.hasCollections = true;
       });
     }
 
