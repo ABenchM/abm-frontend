@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   public invalidEmail: boolean;
   public invalidUsername: boolean;
+  public cannotContainSpace: boolean;
 
 constructor(private register: Register , private router: Router) {
     this.invalidEmail = false;
@@ -51,6 +52,12 @@ constructor(private register: Register , private router: Router) {
 
   }
 
+  checkSpace(username) {
+    console.log('inside checkspace');
+   if ((username.value as string).indexOf(' ') > 0) {
+     this.cannotContainSpace = true;
+   }
+  }
 
 
   ngOnInit() {
@@ -58,6 +65,7 @@ constructor(private register: Register , private router: Router) {
 
   resetUsername() {
     this.invalidUsername = false;
+    this.cannotContainSpace = false;
   }
 
 }

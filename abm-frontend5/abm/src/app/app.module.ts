@@ -47,11 +47,18 @@ import {GoogleLoginService} from './services/google-login.service';
 import {UtilityService} from './services/utility.service';
 import { AppErrorHandler } from './app-error-handler';
 import { AuthGuardService } from './services/auth-guard.service';
+import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
+import { HomeComponent } from './home/home.component';
+import { EditCollectionComponent } from './edit-collection/edit-collection.component';
+import { CreateCollectionComponent } from './create-collection/create-collection.component';
+import { CollectionService } from './services/collection.service';
 
 const routes: Routes = [
- {path: '', pathMatch: 'full', redirectTo: 'collection'},
+ {path: '', pathMatch: 'full', component: HomeComponent},
   { path: 'collection', component: CollectionComponent },
   { path: 'search', component: SearchComponent , canActivate: [AuthGuardService]},
+  {path: 'editCollection/:id' , component: EditCollectionComponent },
+  {path: 'createCollection', component: CreateCollectionComponent },
   {path: 'filters', component: FilterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -86,7 +93,11 @@ const routes: Routes = [
     VersionDropDownComponent,
     ViewComponent,
     LogoutComponent,
-    RegisterSuccessComponent
+    RegisterSuccessComponent,
+    BsNavbarComponent,
+    HomeComponent,
+    EditCollectionComponent,
+    CreateCollectionComponent
 
   ],
   imports: [
@@ -114,6 +125,7 @@ const routes: Routes = [
     GoogleLoginService,
     AuthGuardService,
     UtilityService,
+    CollectionService,
     {provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]

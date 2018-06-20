@@ -1,0 +1,33 @@
+<section>
+  <div *ngIf="loggedInStatus()">
+    <h2>My Collections</h2>
+    <hr>
+    <p class="alert alert-warning" *ngIf="!hasCollections">You have no collections. To create a new collection, collect projects using the search feature and create a collection
+      from them in the Projects tab or clone an existing collection.</p> 
+  </div>
+  <br>
+  <table class="table table-bordered table-striped table-hover table-responsive" style="max-height:400px;table-layout:fixed;">
+    
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Creation Date</th>
+        <!-- <th>Size</th> -->
+        <th>ID</th>
+      </tr>
+      <tr style="cursor:pointer;" *ngFor="let row of collections">
+        <td>{{row.name}}</td>
+        <td>{{row.description}}</td>
+        <td>{{row.creation_date | date:'short'}}</td>
+        <td>{{row.id}}</td>
+      </tr>
+    </table>
+  <div>
+    <h2>Public Collections</h2>
+    <hr>
+  </div>
+  <div>
+
+  </div>
+
+</section>

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class UtilityService {
 
   constructor() { }
-  
+
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
   }

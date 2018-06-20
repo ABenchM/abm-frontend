@@ -17,9 +17,9 @@ export class CollectionComponent implements OnInit {
     return localStorage.getItem('loggedIn') === 'true';
   }
   ngOnInit() {
-    this.http.get('/rest/collection' + '?user=' + 'demo').subscribe(response => {
-      console.log(response.json());
-   });
+   // this.http.get('/rest/collection' + '?user=' + 'demo').subscribe(response => {
+     // console.log(response.json());
+   //});
   }
 
 }

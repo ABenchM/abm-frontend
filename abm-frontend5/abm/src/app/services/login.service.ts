@@ -4,15 +4,20 @@ import { Credentials } from '../models/credentials.model';
 import { IfObservable } from 'rxjs/observable/IfObservable';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+
 @Injectable()
 export class Login {
-    constructor(private http: Http ) {
+    constructor(private http: Http  ) {
 
     }
+    username: string;
 
-    private onSuccess(res: Response) {
+     private onSuccess(res: Response) {
         const statusCode = res.status;
-       return statusCode;
+        console.log(res.json());
+        console.log(res.json().username);
+       sessionStorage.setItem('currentUser', res.json().username);
+        return statusCode;
     }
 
     private handleError(error: any) {
@@ -36,5 +41,10 @@ export class Login {
          return localStorage.getItem('loggedIn');
 
     }
+
+    get currentUser() {
+        return this.username;
+    }
+
 
 }
