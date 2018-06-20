@@ -8,18 +8,36 @@ export class CollectionService {
 
   private onSuccess(res: Response) {
 
-  } 
+  }
 
   private handleError() {
 
   }
 
   getCollections(username) {
-     console.log('username is ' + username);
-     return this.http.get('/rest/collection' + '?user=' + username);
-     //.map(this.onSuccess);
+    console.log('username is ' + username);
+    return this.http.get('/rest/collection' + '?user=' + username);
+    // .map(this.onSuccess);
 
 
   }
 
+  getPublicCollections() {
+    const data = { 'privateStatus': false };
+    return this.http.get('/rest/collection', { params: data });
+  }
+
+  getSearchCollections(query) {
+    const data = { 'privateStatus': false, 'keywords': query };
+    return this.http.get('rest/collection', { params: data });
+  }
+
+  getPinnedCollections() {
+    console.log('calling pin service');
+    const data = {'type': 'collection', 'user': 'demo'};
+   return this.http.get('/rest/pin', {params: data});
+  }
+
 }
+
+

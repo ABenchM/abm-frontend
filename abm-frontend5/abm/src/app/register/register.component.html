@@ -54,7 +54,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">@</span>
         </div>
-        <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" required [(ngModel)]="model.emailref">
+        <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" required [(ngModel)]="model.email">
       </div>
       <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
         <div [hidden]="emailref.errors?.pattren">

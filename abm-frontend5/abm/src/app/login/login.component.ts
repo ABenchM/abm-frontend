@@ -21,10 +21,9 @@ export class LoginComponent implements OnInit {
   loginOnsuccess(code: Number) {
     if (code === 200) {
       localStorage.setItem('loggedIn', 'true');
-     localStorage.setItem('viewMode', 'collection');
 
      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-      this.router.navigate([ returnUrl || '/collection']);
+      this.router.navigate([ returnUrl || '/']);
 
     } else {
       this.loginFailed = true;

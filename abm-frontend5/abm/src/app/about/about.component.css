@@ -1,8 +1,8 @@
-.aboutText p{
-	
-	text-align: justify;
-} 
-
-.aboutText li{
+.aboutText p, .aboutText li{
 	text-align: justify;
 }
+.highlight {
+    padding:10px;
+    background-color:#FFFF66;
+    border-radius:15px;
+  }
