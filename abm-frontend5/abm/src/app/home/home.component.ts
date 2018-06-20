@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     this.service.getPublicCollections().subscribe(response => {
       this.publicCollections = response.json();
     });
+    console.log(this.publicCollections);
     this.loading = false;
   }
 
@@ -29,8 +30,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.service.getPinnedCollections().subscribe(response => {
      this.pinned = response.json();
-     console.log(this.pinned);
-    });
+        });
 
     this.loading = false;
   }

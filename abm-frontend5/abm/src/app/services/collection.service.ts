@@ -23,6 +23,7 @@ export class CollectionService {
 
   getPublicCollections() {
     const data = { 'privateStatus': false };
+    console.log('Inside Public collection service');
     return this.http.get('/rest/collection', { params: data });
   }
 
@@ -32,8 +33,7 @@ export class CollectionService {
   }
 
   getPinnedCollections() {
-    console.log('calling pin service');
-    const data = {'type': 'collection', 'user': 'demo'};
+   const data = {'type': 'collection', 'user': 'demo'};
    return this.http.get('/rest/pin', {params: data});
   }
 

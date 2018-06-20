@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilityService } from '../services/utility.service';
 import { Http } from '@angular/http';
 import {CollectionService} from '../services/collection.service';
+import {Cap}
 
 @Component({
   selector: 'abm-collection',
@@ -10,8 +11,8 @@ import {CollectionService} from '../services/collection.service';
 })
 export class CollectionComponent implements OnInit {
 
-  public hasCollections: boolean;
-  collections: any[];
+  hasCollections = false;
+  userCollections: any[];
   constructor(private service: CollectionService) {
          }
 
@@ -20,11 +21,12 @@ export class CollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Inside ngOnint' + sessionStorage.getItem('currentUser'));
-    if (sessionStorage.getItem('currentUser') != null) {
-      console.log('Inside ngOnint' + sessionStorage.getItem('currentUser'));
-      this.service.getCollections(sessionStorage.getItem('currentUser')).subscribe(response => {
-         this.collections = response.json();
+    console.log('Inside ngOnint' + localStorage.getItem('currentUser'));
+    if (localStorage.getItem('currentUser') != null) {
+      console.log('Inside ngOnint' + localStorage.getItem('currentUser'));
+      this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+         this.userCollections = response.json();
+         console.log('Collection size ' + this.userCollections.length);
          this.hasCollections =  true;
       });
     }

@@ -7,7 +7,7 @@
     </div>
     <br>
   
-     <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;">
+     <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;" *ngIf="hasCollections">
        <thead class="thead-dark">
          <tr>
            <th>Name</th>
@@ -18,11 +18,12 @@
          </tr>
        </thead>
        <tbody>
-         <tr *ngFor="let row of collections">
-           <th>{{row.name}}</th>
-           <th>{{row.description}}</th>
-           <th>{{row.creation_date | date:'short'}}</th>
-           <th>{{row.id}}</th>
+         <tr style="cursor:pointer;"  *ngFor="let row of userCollections">
+           <td>{{row.name}}</td>
+           <td>{{row.description}}</td>
+           <td>{{row.creation_date | date:'short'}}</td>
+           <td>{{row.id}}</td>
+           <td></td>
          </tr>
        </tbody>
      </table> 

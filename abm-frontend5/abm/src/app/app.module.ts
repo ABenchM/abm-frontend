@@ -52,6 +52,7 @@ import { HomeComponent } from './home/home.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CollectionService } from './services/collection.service';
+import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -97,7 +98,8 @@ const routes: Routes = [
     BsNavbarComponent,
     HomeComponent,
     EditCollectionComponent,
-    CreateCollectionComponent
+    CreateCollectionComponent,
+    CapitalizeFirstPipe
 
   ],
   imports: [

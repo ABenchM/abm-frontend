@@ -16,7 +16,7 @@ export class BsNavbarComponent implements OnInit {
     return localStorage.getItem('loggedIn') === 'true';
   }
     ngOnInit() {
-      this.username = sessionStorage.getItem('currentUser');
+      this.username = localStorage.getItem('currentUser');
   }
 
 
