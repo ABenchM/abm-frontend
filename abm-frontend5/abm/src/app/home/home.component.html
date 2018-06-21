@@ -62,9 +62,9 @@
         </thead>
         <tbody>
           <tr style="cursor:pointer;" *ngFor="let row of publicCollections">
-            <td>{{row.name}}</td>
-            <td>{{row.description}}</td>
-            <td>{{row.creation_date | date:'short'}}</td>
+            <td (click)="open(row)">{{row.name}}</td>
+            <td (click)="open(row)">{{row.description}}</td>
+            <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
             <td>{{row.id}}</td>
             <td *ngIf="loggedInStatus()"></td>
           </tr>

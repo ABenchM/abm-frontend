@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../services/collection.service';
 import {Search} from '../models/search.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'abm-home',
@@ -10,20 +11,21 @@ import {Search} from '../models/search.model';
 export class HomeComponent implements OnInit {
 
   public pinned: any[];
-  public publicCollections: any[];
+  publicCollections = [];
   cancelSearch: boolean;
   loading: boolean;
-  constructor(private service: CollectionService) { }
+  constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute) { }
 
   model = new Search('');
 
   loadPublicCollections() {
     this.loading = true;
-    this.service.getPublicCollections().subscribe(response => {
-      this.publicCollections = response.json();
-    });
-    console.log(this.publicCollections);
-    this.loading = false;
+    // this.service.getPublicCollections();
+     this.service.getPublicCollections().subscribe(response => {
+       console.log('Response from public collections service  ' + response.json());
+       this.publicCollections = response.json();
+     });
+     this.loading = false;
   }
 
   loadPinned() {
@@ -35,6 +37,9 @@ export class HomeComponent implements OnInit {
     this.loading = false;
   }
 
+  open(collection) {
+    this.router.navigateByUrl('/view/' + collection.id);
+  }
   loggedInStatus() {
 
     return localStorage.getItem('loggedIn') === 'true';

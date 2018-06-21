@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   public invalidUsername: boolean;
   public cannotContainSpace: boolean;
 
-constructor(private register: Register , private router: Router) {
+  constructor(private register: Register, private router: Router) {
     this.invalidEmail = false;
   }
 
@@ -26,12 +26,11 @@ constructor(private register: Register , private router: Router) {
     this.register.postRegisterForm(this.model)
       .subscribe(
         data => {
-          console.log('success', data);
           this.invalidUsername = this.register.checkUsername;
           if (this.invalidUsername === false) {
             this.router.navigateByUrl('/register-success');
           }
-      },
+        },
         err => console.log('error: ', err)
       );
 
@@ -53,10 +52,9 @@ constructor(private register: Register , private router: Router) {
   }
 
   checkSpace(username) {
-    console.log('inside checkspace');
-   if ((username.value as string).indexOf(' ') > 0) {
-     this.cannotContainSpace = true;
-   }
+    if ((username.value as string).indexOf(' ') > 0) {
+      this.cannotContainSpace = true;
+    }
   }
 
 

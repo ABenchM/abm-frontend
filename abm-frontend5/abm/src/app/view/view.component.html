@@ -1,22 +1,67 @@
 <div class="wrapper" *ngIf="loading">
-    <span class="cssload-loader"></span>
+  <span class="cssload-loader"></span>
 </div>
 
-<div *ngIf="!loading">
-  <form >
+<div class="col-md-12 col-md-offset-0" *ngIf="!loading">
+  <form>
     <div class="form-group">
-        <label for="id">Collection Id</label>
-        <input id="id" name="id" [(ngModel)]="viewCollection[0].id" type="text" [disabled]=true class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" name="name" [(ngModel)]="viewCollection[0].name" type="text" [disabled]=true class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea rows='3' id="description" [(ngModel)]="viewCollection[0].description" name="description" [disabled]=true  type="description" class="form-control">
-        </textarea>
-      </div>
-  </form>   
-   <button class="btn btn-primary" (click)="back()">Return to Collection Search</button>
+      <label for="id">Collection Id</label>
+      <input id="id" name="id" [(ngModel)]="viewCollection[0].id" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="viewCollection[0].name" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea rows='3' id="description" [(ngModel)]="viewCollection[0].description" name="description" [disabled]=true type="description"
+        class="form-control">
+      </textarea>
+    </div>
+  </form>
+  <hr>
+  <div class="row">
+    <span ngbDropdown>
+      <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success">
+        Version
+        <span class="caret"></span>
+      </button>
+    </span>
+    <span class="float-right">
+      <input type="button" (click)="selectall()" value="Select All" class="btn btn-success">
+      <input type="button" (click)="deselectall()" value="Deselect All" class="btn btn-danger">
+    </span>
+  </div>
+  <br>
+  <br>
+  <table class="table table-bordered table-striped" style="max-height:400px">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Commit</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button class="btn btn-primary btn-sm align-bottom" (click)="back()">Return to Collection Search</button>
+    <span>
+
+    </span>
+    <button class="btn btn-primary btn-sm align-bottom" (click)="copy()" *ngIf="loggedInStatus()">Copy this Collection</button>
+    <span class="align-middle">
+      <button class="btn btn-success btn-sm">Download Hermes Result</button>
+    </span>
+    <span class="float-right">
+      <button class="btn btn-success btn-sm align-bottom">Download this version</button>
+    </span>
+  </div>
+
 </div>

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Search } from '../models/search.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SearchService } from '../services/search.service';
 
 
 
@@ -14,14 +15,21 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
 
+  model = new Search('');
+  loading: boolean;
+  results = [];
+  language = {};
+  constructor(private service: SearchService) {
 
-  constructor() {
-    localStorage.setItem('loading', 'false');
-     }
-
-   loadingStatus() {
-    return localStorage.getItem('loading') === 'true';
   }
+
+  search(searchQuery, language) {
+    this.loading = true;
+    this.service.getSearchResults(searchQuery, language);
+    this.loading = false;
+  }
+
+
   ngOnInit() {
   }
 

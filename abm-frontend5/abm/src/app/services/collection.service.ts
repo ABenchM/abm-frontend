@@ -32,8 +32,11 @@ export class CollectionService {
 
   getPublicCollections() {
     const data = { 'privateStatus': false };
-    console.log('Inside Public collection service');
     return this.http.get('/rest/collection', { params: data });
+    // .subscribe(
+    // response => { console.log(response.json());
+
+    // });
   }
 
   getSearchCollections(query) {

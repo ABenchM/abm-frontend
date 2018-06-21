@@ -12,5 +12,10 @@ export class SearchService {
 
   constructor(private http: Http) { }
 
+  getSearchResults(query, language) {
+      this.http.get('/rest/search/' + query + '?language=' + language ).subscribe(response => {
+      console.log(response.json());
+    });
+  }
 
 }

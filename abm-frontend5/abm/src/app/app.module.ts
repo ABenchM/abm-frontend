@@ -46,6 +46,7 @@ import { Logout } from './services/logout.service';
 import {GoogleLoginService} from './services/google-login.service';
 import {UtilityService} from './services/utility.service';
 import { AppErrorHandler } from './app-error-handler';
+import {SearchService } from './services/search.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -129,6 +130,7 @@ const routes: Routes = [
     AuthGuardService,
     UtilityService,
     CollectionService,
+    SearchService,
     {provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]

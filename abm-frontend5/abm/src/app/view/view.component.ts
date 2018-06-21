@@ -12,12 +12,13 @@ import { CollectionService } from '../services/collection.service';
 export class ViewComponent implements OnInit {
 
   viewCollection = [{}];
+  toCreate = [];
   id;
   loading: boolean;
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('id'  + this.id);
+    console.log('id' + this.id);
   }
 
   loggedInStatus() {
@@ -25,13 +26,24 @@ export class ViewComponent implements OnInit {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
+  selectall() {
+
+  }
+  deselectall() {
+
+  }
+
+  copy() {
+    this.router.navigateByUrl('/createCollection');
+  }
+
   loadViewCollection(viewCollectionId) {
     this.loading = true;
     if (viewCollectionId) {
       this.service.getViewCollection(viewCollectionId).take(1).subscribe(
         response => {
-        console.log('REsponse ' + response.json());
-        this.viewCollection = response.json();
+          console.log('REsponse ' + response.json());
+          this.viewCollection = response.json();
         }
       );
     }
@@ -41,15 +53,15 @@ export class ViewComponent implements OnInit {
 
 
   back() {
-if (this.loggedInStatus) {
-   this.router.navigateByUrl('/collection');
-} else {
-   this.router.navigateByUrl('/');
-}
+    if (this.loggedInStatus()) {
+      this.router.navigateByUrl('/collection');
+    } else {
+      this.router.navigateByUrl('/');
+    }
   }
 
   ngOnInit() {
-     this.loadViewCollection(this.id);
+    this.loadViewCollection(this.id);
   }
 
 }
