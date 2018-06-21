@@ -1,26 +1,57 @@
-
 <section>
   <div>
     <br>
     <form #form="ngForm">
-        <div class="search_bar" >
-            <input type="text" #query="ngModel" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner" required [(ngModel)]="model.query" class="search_align">
-            <button type="submit" [disabled]= "query.value === '' || query === undefined" (click)="search(model.query)" class="btn btn-success">Search</button>
-            <span>
-              <a class="btn btn-success" > Show Filtering Options</a> 
-              <a class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</a> 
-            </span>
-        </div>
-		</form>
+      <div class="search_bar">
+        <input type="text" #query="ngModel" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner"
+          required [(ngModel)]="model.query" class="search_align">
+        <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)" class="btn btn-success btn-sm align-middle">Search</button>
+        <span>
+          <a class="btn btn-success btn-sm align-middle"> Show Filtering Options</a>
+          <a class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</a>
+        </span>
+      </div>
+    </form>
   </div>
   <br>
   <br>
   <br>
-  <div class="wrapper" *ngIf="loading">
-      <h2>Searching</h2>
-      <span class="cssload-loader"></span>
+  <!-- <div class="wrapper">
+		<h2>Searching</h2>
+		<span class="cssload-loader"></span>
+	</div>
+  <div class="load-wrapp" *ngIf="true">
+    <div class="load-3">
+        <p>Searching</p>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
     </div>
+</div> -->
+
+  <div class="row" *ngIf="results.length>0">
+    <div class="col-lg-12 text-right">
+      <table class="table table-bordered table-striped table-hover" style="table-layout:fixed;">
+        <thead class="thead-dark">
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Creation Date</th>
+            <th>Size</th>
+            <th>Origin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="cursor:pointer;" *ngFor="let row of results">
+            <td>{{row.name}}</td>
+            <td>{{row.description}}</td>
+            <td>{{row.creationDate | date:'short'}}</td>
+            <td>{{row.size | fileSize}}</td>
+            <td>{{row.htmlUrl | siteName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </section>
-
-
-
