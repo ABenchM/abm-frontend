@@ -1,4 +1,4 @@
-<div *ngIf="!loading">
+<div  class="container-fluid" *ngIf="!loading">
 
   <form>
     <div class="form-group">
@@ -15,21 +15,77 @@
       </textarea>
     </div>
     <div class="form-actions float-right">
-      <button class="btn btn-primary btn-sm">
+      <button class="btn btn-primary btn-sm" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
         Save Changes
       </button>
-      <button class="btn btn-primary btn-sm" (click)="showConfirm(collection[0])"> Make collection public</button>
+      <button class="btn btn-primary btn-sm" (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus"> Make collection public</button>
     </div>
 
   </form>
   <span ngbDropdown>
-    <button ngbDropdownToggle class="btn btn-success btn-sm"> Version
+    <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving" >
+      Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
       <span class="caret"></span>
     </button>
-    <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-
-    </div>
+    <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+      <li *ngFor="let row of versions">
+        <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
+      </li>
+      <li class="dropdown-divider"></li>
+      <li class="dropdown-item">
+        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version {{version.number}}</button>
+      </li>
+    </ul>
   </span>
 
+  <div class="card-body">
+    {{version.comment}}
+    
+    <br>
+    <br>
+    <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
+      <button class="btn btn-primary btn-sm">Build this version</button>
+
+      <button class="btn btn-sm btn-danger">
+        <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
+      <button class="btn btn-sm btn-danger">
+        <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
+    </div>
+    <div id="frozen" *ngIf="version.frozen">
+        This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
+        <strong>Be aware, that the previous build result will be deleted!</strong>
+        <br/><br/>
+        <button class="btn btn-primary btn-sm">Show Build</button>
+        <button class="btn btn-primary btn-sm">Unfreeze</button>
+    </div>
+     <div id="not_filter" *ngIf="version.frozen">
+        <span style="float:right;">
+          <button *ngIf="!version.filtered" class="btn btn-primary btn-sm">Run Hermes Filter</button>
+         </span>   
+     </div>
+     <div id="filter" *ngIf="version.filtered">
+        <span style="float:right;">
+          <button class="btn btn-success btn-sm">Show Hermes Results</button>
+          <button class="btn btn-danger btn-sm">Unfilter</button>
+        </span>
+     </div>
+  </div>
+  <br>
+  <table class="table table-bordered table-striped table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Commit</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commit of version.commits">
+        <td>{{commit.repository.name}}</td>
+        <td>{{commit.commitId}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm">Back to Collections</button>
 </div>

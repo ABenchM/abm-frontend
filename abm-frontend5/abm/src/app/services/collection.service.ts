@@ -30,6 +30,12 @@ export class CollectionService {
 
   }
 
+  postDeriveVersion(version) {
+
+   return this.http.post('rest/version/derive', version);
+
+  }
+
   getPublicCollections() {
     const data = { 'privateStatus': false };
     return this.http.get('/rest/collection', { params: data });

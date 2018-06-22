@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
 // Components
 
 import { AppComponent } from './app.component';
@@ -119,6 +121,7 @@ const routes: Routes = [
     BootstrapModalModule.forRoot({container: document.body}),
     SocialLoginModule,
     NgbModule.forRoot()
+
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
