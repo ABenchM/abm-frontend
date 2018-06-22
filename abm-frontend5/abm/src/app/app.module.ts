@@ -8,6 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {Routes, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // Components
 
@@ -54,6 +55,7 @@ import { EditCollectionComponent } from './edit-collection/edit-collection.compo
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
+import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -101,7 +103,8 @@ const routes: Routes = [
     HomeComponent,
     EditCollectionComponent,
     CreateCollectionComponent,
-    CapitalizeFirstPipe
+    CapitalizeFirstPipe,
+    DialogComponentComponent
 
   ],
   imports: [
@@ -113,6 +116,7 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
+    BootstrapModalModule.forRoot({container: document.body}),
     SocialLoginModule,
     NgbModule.forRoot()
 
@@ -132,6 +136,9 @@ const routes: Routes = [
     CollectionService,
     SearchService,
     {provide: ErrorHandler , useClass: AppErrorHandler}
+  ],
+  entryComponents: [
+    DialogComponentComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -29,7 +29,7 @@ export class Login {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
-        return this.http.post('/auth/login', body, options)
+        return this.http.post('/rest/auth/login', body, options)
             .map(this.onSuccess)
             .catch(this.handleError);
     }

@@ -49,6 +49,11 @@ export class CollectionService {
    return this.http.get('/rest/pin', {params: data});
   }
 
+  updateCollection(fargCollection) {
+
+    return this.http.put('/rest/collection', fargCollection, null);
+  }
+
 }
 
 

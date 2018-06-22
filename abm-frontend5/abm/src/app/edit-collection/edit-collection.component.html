@@ -1,33 +1,35 @@
 <div *ngIf="!loading">
 
   <form>
-  <div class="form-group">
-    <label for="id">Collection Id</label>
-    <input id="id" name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">
-  </div>
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input id="name" name="name" [(ngModel)] = "collection[0].name" type="text" class="form-control">
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea rows='3' id="description" [(ngModel)] = "collection[0].description" name="description" type="description" class="form-control">
-    </textarea>
-  </div>
-  <div class="form-actions float-right">
-    <button class="btn btn-primary btn-sm">
-      Save Changes
-    </button>
-    <button class="btn btn-primary btn-sm"> Make collection public</button>
-  </div>
+    <div class="form-group">
+      <label for="id">Collection Id</label>
+      <input id="id" name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="collection[0].name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description" class="form-control">
+      </textarea>
+    </div>
+    <div class="form-actions float-right">
+      <button class="btn btn-primary btn-sm">
+        Save Changes
+      </button>
+      <button class="btn btn-primary btn-sm" (click)="showConfirm(collection[0])"> Make collection public</button>
+    </div>
 
-</form>
-<span ngbDropdown>
-    <button ngbDropdownToggle class="btn btn-success btn-sm"> Version <span class="caret"></span> </button>
+  </form>
+  <span ngbDropdown>
+    <button ngbDropdownToggle class="btn btn-success btn-sm"> Version
+      <span class="caret"></span>
+    </button>
     <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
 
     </div>
-</span>
+  </span>
 
-<button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm">Back to Collections</button>    
+  <button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm">Back to Collections</button>
 </div>
