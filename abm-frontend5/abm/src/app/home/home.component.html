@@ -67,8 +67,8 @@
             <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
             <td>{{row.id}}</td>
             <td *ngIf="loggedInStatus()">
-              <button class="btn btn-primary btn-sm" style="width:100%;" *ngIf="!row.pinned">Pin</button>
-              <button class="btn btn-primary btn-sm" style="width:100%;" *ngIf="row.pinned">Unpin</button>
+              <button class="btn btn-primary btn-sm" style="width:100%;" (click)="pin(row)" *ngIf="!row.pinned">Pin</button>
+              <button class="btn btn-primary btn-sm" style="width:100%;" (click)="unpin(row)" *ngIf="row.pinned">Unpin</button>
             </td>
           </tr>
         </tbody>

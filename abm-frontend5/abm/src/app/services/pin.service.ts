@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {Http, RequestOptions, RequestMethod} from '@angular/http';
 
 
 @Injectable()
@@ -17,6 +17,23 @@ export class PinService {
     return this.http.delete('/rest/pin/', options);
   }
 
+  postPin(target) {
+
+   const currentUser = localStorage.getItem('currentUser');
+   const body = JSON.stringify(
+    {'type': 'collection',
+    'user': currentUser,
+    'id': target.id}
+   );
+
+   const options = new RequestOptions({
+    method: RequestMethod.Post,
+    url: '/rest/pin/',
+    body: body
+    }
+    );
+   return this.http.post('/rest/pin/', body);
+  }
   checkPinned(item) {
     const currentUser = localStorage.getItem('currentUser');
    return this.http.get('/rest/pin/' + currentUser + '/' + item.id);
