@@ -1,79 +1,81 @@
 <section>
-    <h2>Public Collections</h2>
-    <hr>
-    <div *ngIf="loggedInStatus()">
-      <div *ngIf="!this.loading">
-        <h3>Pinned Collections</h3>
-        <p *ngIf="(pinned === null)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
-  
-        <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf= "!(pinned === null)">
-          <thead class="thead-dark">
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Creation Date</th>
-              <th>Id</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr  style="cursor:pointer;" *ngFor="let row of pinned">
-              <td>{{row.name}}</td>
-              <td>{{row.description}} </td>
-              <td>{{row.creation_date | date:'short'}}</td>
-              <td > {{row.id}}</td>
-              <td><button class="btn btn-sm btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <div class="wrapper" *ngIf="this.loading">
-          <h2>Loading...</h2>
-          <span class="cssload-loader"></span>
-      </div>
-     <hr>  
-    </div>
-  
-    <form #f="ngForm">
-      <input  #searchQuery="ngModel" type="text" name="query" id="query" size="36" [(ngModel)]="model.query" style="width:80%" placeholder="Search for collections...">
-      <button type="submit" class="btn btn-success" (click)="search(model.query)" *ngIf="!cancelSearch" [disabled]="searchQuery.value==='' || searchQuery===undefined" >Search</button>
-      <button type="submit" class="btn btn-success"  (click)="cancel()" *ngIf="cancelSearch" >Cancel Search</button>
-    </form>
-  
-     <br>
-  
-     <div class="wrapper" *ngIf="this.loading">
-        <h2>Loading...</h2>
-        <span class="cssload-loader"></span>
-    </div>
-  
-    <div>
-      <p *ngIf="(publicCollections === null)" class="alert alert-warning">No results found.</p>
-      <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm"  style="table-layout:fixed;" *ngIf="!(publicCollections === null)"> 
+  <h2>Public Collections</h2>
+  <hr>
+  <div *ngIf="loggedInStatus()">
+    <div *ngIf="!this.loading">
+      <h3>Pinned Collections</h3>
+      <p *ngIf="(pinned === null)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
+
+      <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf="!(pinned === null)">
         <thead class="thead-dark">
           <tr>
             <th>Name</th>
             <th>Description</th>
             <th>Creation Date</th>
             <th>Id</th>
-            <th *ngIf="loggedInStatus()"></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr style="cursor:pointer;" *ngFor="let row of publicCollections">
-            <td (click)="open(row)">{{row.name}}</td>
-            <td (click)="open(row)">{{row.description}}</td>
-            <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-            <td>{{row.id}}</td>
-            <td *ngIf="loggedInStatus()">
-              <button class="btn btn-primary btn-sm" style="width:100%;" (click)="pin(row)" *ngIf="!row.pinned">Pin</button>
-              <button class="btn btn-primary btn-sm" style="width:100%;" (click)="unpin(row)" *ngIf="row.pinned">Unpin</button>
+          <tr style="cursor:pointer;" *ngFor="let row of pinned">
+            <td (click)="view(row.id)">{{row.name}}</td>
+            <td (click)="view(row.id)">{{row.description}} </td>
+            <td>{{row.creation_date | date:'short'}}</td>
+            <td> {{row.id}}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  
-  </section>
-  
+
+    <div class="wrapper" *ngIf="this.loading">
+      <h2>Loading...</h2>
+      <span class="cssload-loader"></span>
+    </div>
+    <hr>
+  </div>
+
+  <form #f="ngForm">
+    <input #searchQuery="ngModel" type="text" name="query" id="query" size="36" [(ngModel)]="model.query" style="width:80%" placeholder="Search for collections...">
+    <button type="submit" class="btn btn-success" (click)="search(model.query)" *ngIf="!cancelSearch" [disabled]="searchQuery.value==='' || searchQuery===undefined">Search</button>
+    <button type="submit" class="btn btn-success" (click)="cancel()" *ngIf="cancelSearch">Cancel Search</button>
+  </form>
+
+  <br>
+
+  <div class="wrapper" *ngIf="this.loading">
+    <h2>Loading...</h2>
+    <span class="cssload-loader"></span>
+  </div>
+
+  <div>
+    <p *ngIf="(publicCollections === null)" class="alert alert-warning">No results found.</p>
+    <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm" style="table-layout:fixed;"
+      *ngIf="!(publicCollections === null)">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Creation Date</th>
+          <th>Id</th>
+          <th *ngIf="loggedInStatus()"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="cursor:pointer;" *ngFor="let row of publicCollections">
+          <td (click)="open(row)">{{row.name}}</td>
+          <td (click)="open(row)">{{row.description}}</td>
+          <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
+          <td>{{row.id}}</td>
+          <td *ngIf="loggedInStatus()">
+            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="pin(row)" *ngIf="!row.pinned">Pin</button>
+            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="unpin(row)" *ngIf="row.pinned">Unpin</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>

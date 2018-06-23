@@ -59,6 +59,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  view(collectionId) {
+
+    this.router.navigateByUrl('/view/' + collectionId);
+
+  }
   open(collection) {
     this.router.navigateByUrl('/view/' + collection.id);
   }
@@ -77,7 +82,7 @@ export class HomeComponent implements OnInit {
         this.publicCollections = response.json();
         if (this.loggedInStatus()) {
           for (let i = 0; i < this.publicCollections.length; i++) {
-          this.checkPinned(this.publicCollections[i]);
+            this.checkPinned(this.publicCollections[i]);
           }
         }
       });
@@ -112,7 +117,7 @@ export class HomeComponent implements OnInit {
       response => {
         this.pinned.push(row);
         const targetIndex = this.publicCollections.findIndex(this.checkId, row.id);
-        this.publicCollections.splice(targetIndex, 1) ;
+        this.publicCollections.splice(targetIndex, 1);
 
       }
     );
