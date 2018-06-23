@@ -60,6 +60,7 @@ import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { PinService } from './services/pin.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -143,6 +144,7 @@ const routes: Routes = [
     UtilityService,
     CollectionService,
     SearchService,
+    PinService,
     {provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   entryComponents: [
