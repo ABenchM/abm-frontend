@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class DataServiceService {
 
   public repositoryList: any[] = [];
+  public pinned: any[] = [];
   constructor() { }
 
 }

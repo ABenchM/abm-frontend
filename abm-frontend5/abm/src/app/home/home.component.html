@@ -7,7 +7,7 @@
         <p *ngIf="(pinned === null)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
   
         <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf= "!(pinned === null)">
-          <thead>
+          <thead class="thead-dark">
             <tr>
               <th>Name</th>
               <th>Description</th>
@@ -17,12 +17,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="cursor:pointer;" *ngFor="let row of pinned">
+            <tr  style="cursor:pointer;" *ngFor="let row of pinned">
               <td>{{row.name}}</td>
               <td>{{row.description}} </td>
               <td>{{row.creation_date | date:'short'}}</td>
-              <td>{{row.id}}</td>
-              <td><button class="btn btn-xs btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button></td>
+              <td > {{row.id}}</td>
+              <td><button class="btn btn-sm btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button></td>
             </tr>
           </tbody>
         </table>
@@ -51,7 +51,7 @@
     <div>
       <p *ngIf="(publicCollections === null)" class="alert alert-warning">No results found.</p>
       <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm"  style="table-layout:fixed;" *ngIf="!(publicCollections === null)"> 
-        <thead>
+        <thead class="thead-dark">
           <tr>
             <th>Name</th>
             <th>Description</th>
@@ -66,7 +66,10 @@
             <td (click)="open(row)">{{row.description}}</td>
             <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
             <td>{{row.id}}</td>
-            <td *ngIf="loggedInStatus()"></td>
+            <td *ngIf="loggedInStatus()">
+              <button class="btn btn-primary btn-sm" style="width:100%;" *ngIf="!row.pinned">Pin</button>
+              <button class="btn btn-primary btn-sm" style="width:100%;" *ngIf="row.pinned">Unpin</button>
+            </td>
           </tr>
         </tbody>
       </table>
