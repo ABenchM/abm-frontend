@@ -75,9 +75,10 @@ export class HomeComponent implements OnInit {
       response => {
         console.log('Service results ' + response.json());
         this.publicCollections = response.json();
-        for (let i = 0; i < this.publicCollections.length; i++) {
+        if (this.loggedInStatus()) {
+          for (let i = 0; i < this.publicCollections.length; i++) {
           this.checkPinned(this.publicCollections[i]);
-
+          }
         }
       });
     searching = false;

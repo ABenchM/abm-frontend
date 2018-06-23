@@ -38,7 +38,7 @@
     <form #f="ngForm">
       <input  #searchQuery="ngModel" type="text" name="query" id="query" size="36" [(ngModel)]="model.query" style="width:80%" placeholder="Search for collections...">
       <button type="submit" class="btn btn-success" (click)="search(model.query)" *ngIf="!cancelSearch" [disabled]="searchQuery.value==='' || searchQuery===undefined" >Search</button>
-      <button type="button" class="btn btn-success"  (click)="cancel()" *ngIf="cancelSearch" >Cancel Search</button>
+      <button type="submit" class="btn btn-success"  (click)="cancel()" *ngIf="cancelSearch" >Cancel Search</button>
     </form>
   
      <br>
