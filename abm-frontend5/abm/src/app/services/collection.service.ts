@@ -30,6 +30,14 @@ export class CollectionService {
 
   }
 
+  deleteVersion(versionId) {
+    return this.http.delete('/rest/version/' + versionId);
+  }
+
+  deleteCollection(collectionId) {
+  return this.http.delete('rest/collection/' + collectionId);
+  }
+
   postDeriveVersion(version) {
 
    return this.http.post('rest/version/derive', version);

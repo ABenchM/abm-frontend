@@ -58,6 +58,8 @@ import { CreateCollectionComponent } from './create-collection/create-collection
 import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
+import { DataServiceService } from './services/data-service.service';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -71,7 +73,8 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
-  {path: 'register-success', component: RegisterSuccessComponent}
+  {path: 'register-success', component: RegisterSuccessComponent},
+  {path: 'profile', component: MyProfileComponent}
 ];
 
 @NgModule({
@@ -106,7 +109,8 @@ const routes: Routes = [
     EditCollectionComponent,
     CreateCollectionComponent,
     CapitalizeFirstPipe,
-    DialogComponentComponent
+    DialogComponentComponent,
+    MyProfileComponent
 
   ],
   imports: [
@@ -126,6 +130,7 @@ const routes: Routes = [
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    DataServiceService,
     Register,
     Login,
     {

@@ -21,13 +21,18 @@
   </form>
   <hr>
   <div class="row">
-    <span ngbDropdown>
-      <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success">
-        Version
-        <span class="caret"></span>
-      </button>
+    <span class="col-9" ngbDropdown>
+        <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving" >
+            Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+            <span class="caret"></span>
+        </button>
+        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+            <li *ngFor="let row of versions">
+              <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
+            </li>
+        </ul>
     </span>
-    <span class="float-right">
+    <span class="float-right col">
       <input type="button" (click)="selectall()" value="Select All" class="btn btn-success">
       <input type="button" (click)="deselectall()" value="Deselect All" class="btn btn-danger">
     </span>
@@ -43,17 +48,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let row of version.commits">
+        <td >{{row.repository.name}}</td>
+        <td>{{row.commitId}}</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <div>
     <button class="btn btn-primary btn-sm align-bottom" (click)="back()">Return to Collection Search</button>
-    <span>
-
+    <span *ngIf="loggedInStatus()">
+        <button class="btn btn-primary btn-sm align-bottom">Pin</button>
+        <button class="btn btn-primary btn-sm align-bottom">Unpin</button>
     </span>
     <button class="btn btn-primary btn-sm align-bottom" (click)="copy()" *ngIf="loggedInStatus()">Copy this Collection</button>
     <span class="align-middle">

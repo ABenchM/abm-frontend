@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsernameValidators } from '../register/username.validators';
+import { DataServiceService } from '../services/data-service.service';
 
 @Component({
   selector: 'abm-create-collection',
@@ -9,15 +10,23 @@ import { UsernameValidators } from '../register/username.validators';
 })
 export class CreateCollectionComponent implements OnInit {
 
-  constructor() { }
+
+  loading: boolean;
+  collection: any = {};
+  constructor(private dataService: DataServiceService) { }
 
 
 
 
   ngOnInit() {
+
   }
-  save(collection) {
-  console.log(collection);
+  save() {
+    this.loading = true;
+    this.collection.creation_date = new Date();
+    this.collection.privateStatus = true;
+
+  console.log(this.dataService.repositoryList);
   }
 
 }

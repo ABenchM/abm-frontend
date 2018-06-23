@@ -12,11 +12,11 @@ import 'rxjs/add/operator/take';
 })
 export class EditCollectionComponent implements OnInit {
 
-  collection = [{}];
-  versions = [{}];
-  version = {};
+  collection: any = [{}];
+  versions: any = [{}];
+  version: any = {};
   commits = [{}];
-  derivedVersion = {};
+  derivedVersion: any = {};
   id;
   loading: boolean;
   saving: boolean;
@@ -42,6 +42,7 @@ export class EditCollectionComponent implements OnInit {
     }
     this.loading = false;
   }
+
 
   deriveVersion(ver) {
     this.disabled = true;
@@ -82,6 +83,60 @@ export class EditCollectionComponent implements OnInit {
       disposable.unsubscribe();
     }, 10000);
 
+  }
+
+  removeCollection(collectionId) {
+    const disposable = this.dialogService.addDialog(DialogComponentComponent, {
+      title: 'Confirm',
+      message: 'Removal is irreversible! Continue?'
+    })
+      .subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.service.deleteCollection(collectionId).subscribe(
+            response => {
+              const d: any = this.collection;
+              for (let i = 0; i < d.length; i++) {
+                if (d[i].id === collectionId) {
+                  d.splice(i, 1);
+                  this.router.navigateByUrl('/collection');
+                  break;
+                }
+              }
+            }
+          );
+        }
+      });
+    setTimeout(() => {
+      disposable.unsubscribe();
+    }, 10000);
+  }
+  removeVersion(versionId) {
+    this.saving = true;
+    const disposable = this.dialogService.addDialog(DialogComponentComponent, {
+      title: 'Confirm',
+      message: 'Removal is irreversible! Continue?'
+    })
+      .subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.service.deleteVersion(versionId).subscribe(
+            response => {
+              const d: any = this.versions;
+              for (let i = 0; i < d.length; i++) {
+                if (d[i].id === versionId) {
+                  d.splice(i, 1);
+                  this.version = this.versions[0];
+                  this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
+                  break;
+                }
+              }
+            }
+          );
+        }
+      });
+    setTimeout(() => {
+      disposable.unsubscribe();
+    }, 10000);
+    this.saving = false;
   }
 
   update(fargCollection) {
