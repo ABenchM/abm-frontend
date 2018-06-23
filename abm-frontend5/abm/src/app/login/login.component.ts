@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   loginOnsuccess(response) {
     if (response.status === 200) {
       localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('currentUser', response.json().username);
+      localStorage.setItem('currentUser', this.model.username);
       const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       this.router.navigate([ returnUrl || '/']);
 

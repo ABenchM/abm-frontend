@@ -7,14 +7,14 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class Login {
-    constructor(private http: Http  ) {
+    constructor(private http: Http) {
 
     }
     username: string;
 
-     private onSuccess(res: Response) {
+    private onSuccess(res: Response, uname: string) {
         const statusCode = res.status;
-        this.username = res.json().username;
+        this.username = uname;
         return res;
     }
 
@@ -29,13 +29,13 @@ export class Login {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
-        return this.http.post('/rest/auth/login', body, options)
-            .map(this.onSuccess)
+        return this.http.post('/rest/login', body, options)
+            .map(f => this.onSuccess(f, credentials.username))
             .catch(this.handleError);
     }
 
     isLoggedin() {
-         return localStorage.getItem('loggedIn');
+        return localStorage.getItem('loggedIn');
 
     }
 
