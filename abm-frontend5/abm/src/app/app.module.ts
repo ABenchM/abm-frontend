@@ -61,6 +61,7 @@ import { DialogComponentComponent } from './dialog-component/dialog-component.co
 import { DataServiceService } from './services/data-service.service';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
+import { CurrentUserService } from './services/current-user.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -145,6 +146,7 @@ const routes: Routes = [
     CollectionService,
     SearchService,
     PinService,
+    CurrentUserService,
     {provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   entryComponents: [

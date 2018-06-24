@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'abm-root',
@@ -25,7 +27,7 @@ export class AppComponent {
 
   onCLickViewMode(mode) {
     localStorage.setItem('viewMode', mode);
-    this.viewMode  =  localStorage.getItem('viewMode');
+    this.viewMode = localStorage.getItem('viewMode');
   }
 
   sendMeHome() {
