@@ -10,7 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 // Components
 
@@ -62,6 +62,8 @@ import { DataServiceService } from './services/data-service.service';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
+import { ViewService } from './services/view.service';
+import {ToastService} from './services/toast.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -113,6 +115,7 @@ const routes: Routes = [
     CapitalizeFirstPipe,
     DialogComponentComponent,
     MyProfileComponent
+    
 
   ],
   imports: [
@@ -126,7 +129,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BootstrapModalModule.forRoot({container: document.body}),
     SocialLoginModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ToastModule.forRoot()
 
 
   ],
@@ -147,7 +151,9 @@ const routes: Routes = [
     SearchService,
     PinService,
     CurrentUserService,
-    {provide: ErrorHandler , useClass: AppErrorHandler}
+    ViewService,
+    {provide: ErrorHandler , useClass: AppErrorHandler},
+    ToastService
   ],
   entryComponents: [
     DialogComponentComponent

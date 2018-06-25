@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'abm-root',
@@ -13,26 +14,21 @@ export class AppComponent {
 
   pageTitle = 'Automated Benchmark Management';
 
-  constructor(private router: Router) {
-    localStorage.setItem('viewMode', 'collection');
-    this.viewMode = localStorage.getItem('viewMode');
+  constructor(private router: Router, viewContainerRef: ViewContainerRef, service: ToastService) {
+
+    service.vcRef = viewContainerRef;
+
+
   }
   // Use local storage
 
   loggedInStatus() {
-    this.viewMode = localStorage.getItem('viewMode');
     return localStorage.getItem('loggedIn') === 'true';
 
   }
 
-  onCLickViewMode(mode) {
-    localStorage.setItem('viewMode', mode);
-    this.viewMode = localStorage.getItem('viewMode');
-  }
 
   sendMeHome() {
     this.router.navigate(['']);
-    localStorage.setItem('viewMode', 'collection');
-    this.viewMode = localStorage.getItem('viewMode');
   }
 }

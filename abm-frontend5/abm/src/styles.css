@@ -1,5 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "bootstrap4-glyphicons/css/bootstrap-glyphicons.min.css";
+@import "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css";
 
 body {
   padding-top: 5rem;

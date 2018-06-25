@@ -34,7 +34,9 @@ export class PinService {
     );
    return this.http.post('/rest/pin/', body);
   }
+
   checkPinned(item) {
+    console.log('item ' + item.id);
     const currentUser = localStorage.getItem('currentUser');
    return this.http.get('/rest/pin/' + currentUser + '/' + item.id);
   }

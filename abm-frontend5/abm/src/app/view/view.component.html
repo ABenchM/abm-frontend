@@ -22,15 +22,15 @@
   <hr>
   <div class="row">
     <span class="col-9" ngbDropdown>
-        <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving" >
-            Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
-            <span class="caret"></span>
-        </button>
-        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
-            <li *ngFor="let row of versions">
-              <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
-            </li>
-        </ul>
+      <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving">
+        Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+        <span class="caret"></span>
+      </button>
+      <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+        <li *ngFor="let row of versions">
+          <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
+        </li>
+      </ul>
     </span>
     <span class="float-right col">
       <input type="button" (click)="selectall()" value="Select All" class="btn btn-success">
@@ -49,7 +49,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of version.commits">
-        <td >{{row.repository.name}}</td>
+        <td>{{row.repository.name}}</td>
         <td>{{row.commitId}}</td>
         <td></td>
       </tr>
@@ -58,16 +58,19 @@
   <div>
     <button class="btn btn-primary btn-sm align-bottom" (click)="back()">Return to Collection Search</button>
     <span *ngIf="loggedInStatus()">
-        <button class="btn btn-primary btn-sm align-bottom">Pin</button>
-        <button class="btn btn-primary btn-sm align-bottom">Unpin</button>
+      <button class="btn btn-primary btn-sm align-bottom" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin</button>
+      <button class="btn btn-primary btn-sm align-bottom" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin</button>
     </span>
     <button class="btn btn-primary btn-sm align-bottom" (click)="copy()" *ngIf="loggedInStatus()">Copy this Collection</button>
     <span class="align-middle">
-      <button class="btn btn-success btn-sm">Download Hermes Result</button>
+      <button title="{{(!hermesResultsExists?' Hermes Result does not exist' : '')}}" class="btn btn-success btn-sm" [disabled]= "downloading || !hermesResultsExists" *ngIf="version.filtered">Download Hermes Result</button>
     </span>
     <span class="float-right">
-      <button class="btn btn-success btn-sm align-bottom">Download this version</button>
+      <p *ngIf="!version.frozen">This version is not currently built.</p>
+      <div title="{{(!buildResultsExists?' collection does not exist' : '')}}"> 
+      <button class="btn btn-success btn-sm align-bottom" (click)= "downloadBuild(version.id)" [disabled]= "downloading || !buildResultsExists" *ngIf="version.frozen">Download this version</button>
+    </div>
     </span>
-  </div>
+  </div> 
 
 </div>

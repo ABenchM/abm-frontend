@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit {
   open(collection) {
     this.router.navigateByUrl('/view/' + collection.id);
   }
+
   loggedInStatus() {
 
     return localStorage.getItem('loggedIn') === 'true';
