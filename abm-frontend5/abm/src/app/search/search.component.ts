@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
 
   model = new Search('');
   public loading = false;
-  results = [];
+  results: any = [];
   language = {};
   constructor(private service: SearchService) {
 
@@ -25,13 +25,19 @@ export class SearchComponent implements OnInit {
 
   search(searchQuery, language) {
     this.loading = true;
-    console.log(this.loading);
+
     this.service.getSearchResults(searchQuery, language).subscribe(response => { console.log(response.json());
       this.results = response.json();
-    });
+          });
     this.loading = false;
   }
 
+  openSource(item) {
+
+    // window.location.href = item.repositoryUrl;
+    window.open(item.repositoryUrl, '_blank');
+
+  }
 
   ngOnInit() {
   }

@@ -43,8 +43,8 @@
         </thead>
         <tbody>
           <tr style="cursor:pointer;" *ngFor="let row of results">
-            <td>{{row.name}}</td>
-            <td>{{row.description}}</td>
+            <td (click)="openSource(row)">{{row.name}}</td>
+            <td (click)="openSource(row)">{{row.description}}</td>
             <td>{{row.creationDate | date:'short'}}</td>
             <td>{{row.size | fileSize}}</td>
             <td>{{row.htmlUrl | siteName}}</td>
