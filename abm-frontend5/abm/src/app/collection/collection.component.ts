@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CollectionComponent implements OnInit {
 
   hasCollections = false;
-  userCollections: any[];
+  userCollections: any[] = [];
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute) {
   }
 
@@ -34,7 +34,17 @@ export class CollectionComponent implements OnInit {
 
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
         this.userCollections = response.json();
-
+          for (let i = 0; i < this.userCollections.length; i++) {
+          for (let j = 0; j < this.userCollections[i].versions.length; j++) {
+            if (this.userCollections[i].versions[j].frozen === true) {
+              this.userCollections[i].builtStatus = true;
+              break;
+            }
+          }
+          if (this.userCollections[i].builtStatus === undefined) {
+            this.userCollections[i].builtStatus = false;
+          }
+        }
         this.hasCollections = true;
       });
     }
