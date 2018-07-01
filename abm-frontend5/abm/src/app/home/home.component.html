@@ -51,9 +51,9 @@
   </div>
 
   <div>
-    <p *ngIf="(publicCollections === null)" class="alert alert-warning">No results found.</p>
+    <p *ngIf="(publicCollections[0] === undefined)" class="alert alert-warning">No results found.</p>
     <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm" style="table-layout:fixed;"
-      *ngIf="!(publicCollections === null)">
+      *ngIf="!(publicCollections[0] === undefined)">
       <thead class="thead-dark">
         <tr>
           <th>Name</th>
