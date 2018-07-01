@@ -12,7 +12,7 @@ import { DataServiceService } from '../services/data-service.service';
 })
 export class HomeComponent implements OnInit {
 
-  pinned: any[];
+  pinned: any[] = [];
   public publicCollections: any[] = [];
   cancelSearch: boolean;
   loading: boolean;

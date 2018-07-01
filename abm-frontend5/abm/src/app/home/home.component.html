@@ -4,9 +4,9 @@
   <div *ngIf="loggedInStatus()">
     <div *ngIf="!this.loading">
       <h3>Pinned Collections</h3>
-      <p *ngIf="(pinned === null)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
+      <p *ngIf="(pinned[0] === undefined)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
 
-      <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf="!(pinned === null)">
+      <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf="!(pinned[0] === undefined)">
         <thead class="thead-dark">
           <tr>
             <th>Name</th>
