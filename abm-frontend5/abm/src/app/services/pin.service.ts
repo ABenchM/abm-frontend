@@ -36,8 +36,7 @@ export class PinService {
   }
 
   checkPinned(item) {
-    console.log('item ' + item.id);
-    const currentUser = localStorage.getItem('currentUser');
+       const currentUser = localStorage.getItem('currentUser');
    return this.http.get('/rest/pin/' + currentUser + '/' + item.id);
   }
 

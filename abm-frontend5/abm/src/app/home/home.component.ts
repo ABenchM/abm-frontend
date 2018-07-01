@@ -74,12 +74,10 @@ export class HomeComponent implements OnInit {
   }
 
   search(searchQuery) {
-    console.log('searching .....' + searchQuery);
     let searching = true;
     this.cancelSearch = true;
     this.service.getSearchCollections(searchQuery).subscribe(
       response => {
-        console.log('Service results ' + response.json());
         this.publicCollections = response.json();
         if (this.loggedInStatus()) {
           for (let i = 0; i < this.publicCollections.length; i++) {

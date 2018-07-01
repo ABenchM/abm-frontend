@@ -57,17 +57,17 @@
       <br/>
       <br/>
       <button class="btn btn-primary btn-sm">Show Build</button>
-      <button class="btn btn-primary btn-sm">Unfreeze</button>
+      <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button>
     </div>
     <div id="not_filter" *ngIf="version.frozen">
       <span style="float:right;">
-        <button *ngIf="!version.filtered" class="btn btn-primary btn-sm">Run Hermes Filter</button>
+        <button *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving" (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
       </span>
     </div>
     <div id="filter" *ngIf="version.filtered">
       <span style="float:right;">
-        <button class="btn btn-success btn-sm">Show Hermes Results</button>
-        <button class="btn btn-danger btn-sm">Unfilter</button>
+        <button [disabled] = "running" class="btn btn-success btn-sm">Show Hermes Results</button>
+        <button [disabled]= "running" class="btn btn-danger btn-sm">Unfilter</button> 
       </span>
     </div>
   </div>

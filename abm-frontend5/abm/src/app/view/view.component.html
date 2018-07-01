@@ -30,7 +30,7 @@
         <li *ngFor="let row of versions">
           <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
         </li>
-      </ul>
+       </ul>
     </span>
     <span class="float-right col">
       <input type="button" (click)="selectall()" value="Select All" class="btn btn-success">

@@ -4,6 +4,8 @@ import { Http } from '@angular/http';
 @Injectable()
 export class CollectionService {
 
+
+  toCreate: any[];
   constructor(private http: Http) { }
 
   private onSuccess(res: Response) {
@@ -12,6 +14,11 @@ export class CollectionService {
 
   private handleError() {
 
+  }
+
+
+  createCollection(collection) {
+ return this.http.post('/rest/collection', collection, null);
   }
 
   getViewCollection(id) {
@@ -66,6 +73,14 @@ export class CollectionService {
   updateCollection(fargCollection) {
 
     return this.http.put('/rest/collection', fargCollection, null);
+  }
+
+  getBuild(version) {
+   return this.http.get('/rest/build/' + version.id);
+  }
+
+  deleteBuild(version) {
+    return this.http.post('/rest/version/unfreeze' , version);
   }
 
 }

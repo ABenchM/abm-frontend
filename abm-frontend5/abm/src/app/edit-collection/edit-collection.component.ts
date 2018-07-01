@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 import { DialogService } from 'ng2-bootstrap-modal';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { MessageService} from '../services/message.service';
+import {WebsocketService} from '../services/websocket.service';
+import {ModalHermesComponent} from '../modal-hermes/modal-hermes.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import 'rxjs/add/operator/take';
+import { buildDriverProvider } from 'protractor/built/driverProviders';
 @Component({
   selector: 'abm-edit-collection',
   templateUrl: './edit-collection.component.html',
@@ -21,10 +27,18 @@ export class EditCollectionComponent implements OnInit {
   loading: boolean;
   saving: boolean;
   disabled: boolean;
+  disableBuild: boolean;
+  message = {};
+  running: boolean;
   constructor(private route: ActivatedRoute, private router: Router,
-    private service: CollectionService, private dialogService: DialogService) {
+    private service: CollectionService, private dialogService: DialogService,
+    private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
+    private messageService: MessageService, private modalService: NgbModal ) {
     this.id = this.route.snapshot.paramMap.get('id');
-
+    this.toastr.setRootViewContainerRef(viewf);
+    this.messageService.messages.subscribe(msg => {
+      console.log('Response from server: ' + msg);
+    });
   }
 
   loadCollection(collectionId) {
@@ -60,6 +74,66 @@ export class EditCollectionComponent implements OnInit {
     this.disabled = false;
   }
 
+
+  unfreeze(fargversion) {
+    this.disableBuild = true;
+    this.service.getBuild(fargversion).subscribe(
+     response => {
+       const buildResult = response.json();
+       if (buildResult.status === 'RUNNING' || buildResult.status === 'WAITING' ) {
+              const repoId =  undefined;
+              this.sendMsg({msg: 'listen', id: buildResult.id});
+              console.log('sending command');
+              this.sendMsg({msg: 'cancel', id: buildResult.id});
+       } else {
+           this.deleteBuild(fargversion);
+       }
+     }
+     );
+    this.disableBuild = false;
+  }
+
+  deleteBuild(fargversion) {
+    this.service.deleteBuild(fargversion).subscribe(response => {
+
+      if (response.status === 200) {
+           this.version = fargversion;
+           this.version.frozen = false;
+    }
+
+    });
+  }
+
+  runFilter(fargversion) {
+
+    this.service.getBuild(fargversion).subscribe(
+      response => {
+         if (response.status === 200) {
+           const buildResult = response.json();
+           if (buildResult.status === 'RUNNING') {
+              this.toastr.error('Build is in progress, try again later');
+           } else {
+               this.version.filtered = true;
+               this.running = true;
+               this.openHermesModal();
+           }
+         }
+      }
+    );
+
+  }
+
+  openHermesModal() {
+   const modalRef = this.modalService.open(ModalHermesComponent , {size: 'lg'});
+   modalRef.componentInstance.version = this.version;
+   modalRef.componentInstance.collection = this.collection;
+
+  }
+  sendMsg(message) {
+    console.log('Message from client: ', message);
+    this.messageService.messages.next(message);
+  }
+
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
@@ -92,16 +166,20 @@ export class EditCollectionComponent implements OnInit {
     })
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-          this.service.deleteCollection(collectionId).subscribe(
+            this.service.deleteCollection(collectionId).subscribe(
             response => {
-              const d: any = this.collection;
-              for (let i = 0; i < d.length; i++) {
-                if (d[i].id === collectionId) {
-                  d.splice(i, 1);
-                  this.router.navigateByUrl('/collection');
-                  break;
+              if (response.status === 200) {
+                const d: any = this.collection;
+                for (let i = 0; i < d.length; i++) {
+                  if (d[i].id === collectionId) {
+                    this.toastr.success('Your collection is successfully deleted!!!');
+                    d.splice(i, 1);
+                    this.router.navigateByUrl('/collection');
+                    break;
+                  }
                 }
               }
+
             }
           );
         }

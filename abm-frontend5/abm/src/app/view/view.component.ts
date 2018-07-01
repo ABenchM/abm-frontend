@@ -55,9 +55,9 @@ export class ViewComponent implements OnInit {
 
 
   copy() {
-    this.toCreate = [];
+    this.service.toCreate = [];
     for (let i = 0; i < this.version.commits.length; i++) {
-      this.toCreate.push(this.version.commits[i].repository);
+      this.service.toCreate.push(this.version.commits[i].repository);
     }
     this.dataService.repositoryList = this.toCreate;
     this.router.navigateByUrl('/createCollection');
@@ -101,14 +101,15 @@ export class ViewComponent implements OnInit {
           this.toastr.error('Build is in process, try again later', 'Oops!');
         } else {
 
-
-          this.viewService.downloadBuild(buildResult.id).subscribe(
-            data => {
-              if (data.status === 200) {
-                this.toastr.success('File download successfully');
-              }
-            }
-          );
+               location.href = '/download/' + buildResult.id;
+                      // this.viewService.downloadBuild(buildResult.id);
+          // .subscribe(
+          //   data => {
+          //     if (data.status === 200) {
+          //       this.toastr.success('File download successfully');
+          //     }
+          //   }
+          // );
         }
       }
     );

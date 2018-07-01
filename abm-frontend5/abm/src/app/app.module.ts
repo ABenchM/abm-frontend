@@ -64,6 +64,10 @@ import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
 import {ToastService} from './services/toast.service';
+import { BuiltStatusPipe } from './shared/built-status.pipe';
+import {WebsocketService} from './services/websocket.service';
+import {MessageService} from './services/message.service';
+import { HermesService } from './services/hermes.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -114,9 +118,8 @@ const routes: Routes = [
     CreateCollectionComponent,
     CapitalizeFirstPipe,
     DialogComponentComponent,
-    MyProfileComponent
-    
-
+    MyProfileComponent,
+    BuiltStatusPipe
   ],
   imports: [
     BrowserModule,
@@ -153,10 +156,14 @@ const routes: Routes = [
     CurrentUserService,
     ViewService,
     {provide: ErrorHandler , useClass: AppErrorHandler},
-    ToastService
+    ToastService,
+    WebsocketService,
+    MessageService,
+    HermesService
   ],
   entryComponents: [
-    DialogComponentComponent
+    DialogComponentComponent,
+    ModalHermesComponent
   ],
   bootstrap: [AppComponent]
 })

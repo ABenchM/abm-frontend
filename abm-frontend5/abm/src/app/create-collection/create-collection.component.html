@@ -5,7 +5,7 @@
       <label for="name">Name
         <span class="astrik_style">*</span>
       </label>
-      <input #name="ngModel" type="text" ngModel name="name" id="name" required class="form-control">
+      <input #name="ngModel" type="text" [(ngModel)]="collection.name" name="name" id="name" required class="form-control">
       <div class="alert alert-danger" *ngIf="name.touched && name.invalid">Name is required</div>
     </div>
     
@@ -13,7 +13,7 @@
       <label for="description">Description
         <span class="astrik_style">*</span>
       </label>
-      <input type="text" ngModel #description="ngModel" name="description" id="description" required class="form-control">
+      <input type="text" [(ngModel)]="collection.description" #description="ngModel" name="description" id="description" required class="form-control">
       <div class="alert alert-danger" *ngIf="description.touched && description.invalid">Description is required</div>
     </div>
    

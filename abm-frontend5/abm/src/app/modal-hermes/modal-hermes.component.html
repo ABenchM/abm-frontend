@@ -1,3 +1,22 @@
-<p>
-  modal-hermes works!
-</p>
+<div>
+  <div class="modal-header">
+     <h4 class="modal-title" id="modal-title">Select Filters to run</h4>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <div *ngFor="let filter of filterList">
+      <input type="checkbox" id={{filter.filtername}} [(ngModel)]="filter.activate"/>
+      <label for={{filter.filtername}}> {{filter.filtername | hermesName}}</label> 
+      <input type="text"  [(ngModel)]="filter.threshold" style="width:50px;"/>
+      <br/>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-info" type="button">Run Selected Filters</button>
+    <button class="btn btn-warning float-left" type="button" (click)="activeModal.close('Close click')">Cancel</button>
+  </div>
+  <div class="wrapper" *ngIf="loading">
+      <span class="cssload-loader"></span>
+    </div>
+  <br/>
+</div>
