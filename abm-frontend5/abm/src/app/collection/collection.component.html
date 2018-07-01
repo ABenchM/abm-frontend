@@ -16,6 +16,7 @@
         <th>Creation Date</th>
         <th>Id</th>
         <th>Built Status</th>
+        <th>Private Status</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
         <td>{{row.id}}</td>
         <td> {{row.builtStatus | builtStatus}}
         </td>
+        <td>{{row.privateStatus | privateStatus}}</td>
       </tr>
     </tbody>
   </table>
