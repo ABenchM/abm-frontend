@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
 import {OrderPipe} from 'ngx-order-pipe';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'abm-home',
@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit , OnDestroy {
       this.reverse = !this.reverse;
     }
     this.sortType = value;
+
   }
 
   loadPinned() {

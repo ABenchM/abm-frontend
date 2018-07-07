@@ -7,8 +7,8 @@
           required [(ngModel)]="model.query" class="search_align">
         <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)" class="btn btn-success btn-sm align-middle">Search</button>
         <span>
-          <a class="btn btn-success btn-sm align-middle"> Show Filtering Options</a>
-          <a class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</a>
+          <button class="btn btn-success btn-sm align-middle"> Show Filtering Options</button>
+          <button class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</button>
         </span>
       </div>
     </form>
