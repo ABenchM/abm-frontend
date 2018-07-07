@@ -102,18 +102,23 @@ export class ViewComponent implements OnInit {
         } else {
 
                location.href = '/download/' + buildResult.id;
-                      // this.viewService.downloadBuild(buildResult.id);
-          // .subscribe(
-          //   data => {
-          //     if (data.status === 200) {
-          //       this.toastr.success('File download successfully');
-          //     }
-          //   }
-          // );
-        }
+               }
       }
     );
     this.downloading = false;
+  }
+
+  downloadHermes(id) {
+   this.downloading = true;
+   this.viewService.getHermesResult(id).subscribe(
+     response => {
+       if (response.status === 200) {
+            const hermesResult = response.json();
+            location.href = '/downloadHermes/' + hermesResult.id;
+       }
+     }
+   );
+   this.downloading = false;
   }
 
   pin() {

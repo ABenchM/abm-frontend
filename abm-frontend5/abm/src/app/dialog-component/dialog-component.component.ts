@@ -6,7 +6,20 @@ export interface ConfirmModel {
 }
 @Component({
     selector: 'abm-dialog-component',
-    template: './dialog-component.component.html',
+    template: `<div class="modal-dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+         <h4 class="modal-title">{{title}}</h4>
+       </div>
+       <div class="modal-body">
+         <p>{{message}}</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-primary" (click)="confirm()">OK</button>
+         <button type="button" class="btn btn-default" (click)="close()" >Cancel</button>
+       </div>
+     </div>
+  </div>`,
     styleUrls: ['./dialog-component.component.css']
 })
 export class DialogComponentComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {

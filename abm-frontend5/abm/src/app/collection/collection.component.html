@@ -7,20 +7,55 @@
   </div>
   <br>
 
+  <div class="input-group mb-3 ">
+      <div class="input-group-prepend" ngbDropdown>
+        <button class="btn btn-outline-secondary" ngbDropdownToggle type="button">Filter By: {{filterType}}</button>
+        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+          <li>
+            <button class="dropdown-item" (click)="setFilterType('name')">Name</button>
+            <button class="dropdown-item" (click)="setFilterType('description')">Description</button>
+            <button class="dropdown-item" (click)="setFilterType('builtStatus')">BuiltStatus</button>
+            <button class="dropdown-item" (click)="setFilterType('privateStatus')">PrivateStatus</button>
+          </li>
+        </ul>
+      </div>
+      <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+    </div>
+
+  <br><br>
+
   <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;"
     *ngIf="hasCollections">
     <thead class="thead-dark">
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Creation Date</th>
-        <th>Id</th>
-        <th>Built Status</th>
-        <th>Private Status</th>
+      <tr style="cursor:pointer;">
+        <th (click)="setSortType('name')">Name
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th (click)="setSortType('description')">Description
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th (click)="setSortType('creation_date')">Creation Date
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th (click)="setSortType('id')">Id
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th (click)="setSortType('builtStatus')">Built Status
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th (click)="setSortType('privateStatus')">Private Status
+          <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr style="cursor:pointer;" *ngFor="let row of userCollections">
+      <tr style="cursor:pointer;" *ngFor="let row of filteredCollections | orderBy: SortType:reverse:'case-insensitive'">
         <td (click)="open(row)">{{row.name}}</td>
         <td (click)="open(row)">{{row.description}}</td>
         <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>

@@ -23,39 +23,14 @@ export class ViewService {
     return this.http.get('/rest/build', {params: data});
   }
 
-  downloadBuild(buildResultId) {
-    const headers = new Headers();
-   //  headers.append('Accept', 'text/html');
-    this.http.get('/download/' + buildResultId, {
-     // headers: headers,
-     // responseType: ResponseContentType.Blob
-   }).subscribe(response =>  {
+ getHermesResult(id) {
 
-      console.log(response.headers);
-      const blob = new Blob([response.json()], { type: 'text/plain' });
-     // saveAs(blob, 'archive.zip;');
+  const data = {'id': id, 'privateStatus': false};
+  return this.http.get('/rest/instance/', {params: data});
 
-    }
-   );
-   // .then(response => this.saveFile(response));
-
-  }
-
-  saveFile(response) {
-    console.log(response.json());
-    const contentDispositionHeader: string = response.headers.get('Content-Disposition');
-
-    console.log(contentDispositionHeader);
-
-    // if (contentDispositionHeader !== null) {
-    //   const parts: string[] = contentDispositionHeader.split(';');
-    //   const filename = parts[1].split('=')[1];
-    // }
+ }
 
 
-    // const blob = new Blob([response._body], { type: 'text/plain' });
-    // saveAs(blob, filename);
-  }
 
  }
 

@@ -11,6 +11,7 @@ import {HttpModule} from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {OrderModule} from 'ngx-order-pipe';
 
 // Components
 
@@ -133,7 +134,8 @@ const routes: Routes = [
     BootstrapModalModule.forRoot({container: document.body}),
     SocialLoginModule,
     NgbModule.forRoot(),
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
+    OrderModule
 
 
   ],
