@@ -8,16 +8,20 @@
 
       <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf="!(pinned[0] === undefined)">
         <thead class="thead-dark">
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Creation Date</th>
-            <th>Id</th>
+          <tr style="cursor:pointer;">
+            <th (click)="setSortType('name')">Name <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span> </th>
+            <th (click)="setSortType('description')">Description <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span> </th>
+            <th (click)="setSortType('creation_date')">Creation Date <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span> </th>
+            <th (click)="setSortType('id')">Id <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr style="cursor:pointer;" *ngFor="let row of pinned">
+          <tr style="cursor:pointer;" *ngFor="let row of pinned | orderBy: sortType:reverse:'case-insensitive'">
             <td (click)="view(row.id)">{{row.name}}</td>
             <td (click)="view(row.id)">{{row.description}} </td>
             <td>{{row.creation_date | date:'short'}}</td>
@@ -55,16 +59,28 @@
     <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm" style="table-layout:fixed;"
       *ngIf="!(publicCollections[0] === undefined)">
       <thead class="thead-dark">
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Creation Date</th>
-          <th>Id</th>
+        <tr style="cursor:pointer;">
+          <th (click)="setSortType('name')">Name
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+          </th>
+          <th (click)="setSortType('description')">Description
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+          </th>
+          <th (click)="setSortType('creation_date')">Creation Date
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+          </th>
+          <th (click)="setSortType('id')">Id
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+          </th>
           <th *ngIf="loggedInStatus()"></th>
         </tr>
       </thead>
       <tbody>
-        <tr style="cursor:pointer;" *ngFor="let row of publicCollections">
+        <tr style="cursor:pointer;" *ngFor="let row of publicCollections | orderBy: sortType:reverse:'case-insensitive'">
           <td (click)="open(row)">{{row.name}}</td>
           <td (click)="open(row)">{{row.description}}</td>
           <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>

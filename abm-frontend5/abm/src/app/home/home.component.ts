@@ -1,31 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
+import {OrderPipe} from 'ngx-order-pipe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'abm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit , OnDestroy {
 
   pinned: any[] = [];
   public publicCollections: any[] = [];
   cancelSearch: boolean;
   loading: boolean;
+  reverse =  false;
+  sortType: any = 'name';
   disabled: boolean;
+  subscription: Subscription;
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
-    private pinService: PinService, private dataService: DataServiceService) { }
+    private pinService: PinService, private dataService: DataServiceService,
+    private orderPipe: OrderPipe) { }
 
   model = new Search('');
 
   loadPublicCollections() {
     this.loading = true;
-    this.service.getPublicCollections().subscribe(response => {
-      this.publicCollections = response.json();
+   this.subscription =  this.service.getPublicCollections().subscribe(response => {
+      this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
       if (this.loggedInStatus()) {
         this.loadPinned();
       }
@@ -33,6 +39,12 @@ export class HomeComponent implements OnInit {
     this.loading = false;
   }
 
+  setSortType(value) {
+    if (this.sortType === value) {
+      this.reverse = !this.reverse;
+    }
+    this.sortType = value;
+  }
 
   loadPinned() {
     this.loading = true;
@@ -41,7 +53,7 @@ export class HomeComponent implements OnInit {
 
     }
     this.service.getPinnedCollections().subscribe(response => {
-      this.pinned = response.json();
+      this.pinned = this.orderPipe.transform(response.json() , this.sortType) ;
     });
 
     this.loading = false;
@@ -128,5 +140,8 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
     this.loadPublicCollections();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
