@@ -23,6 +23,7 @@ export class ViewComponent implements OnInit {
   derivedVersion: any = {};
   id;
   loading: boolean;
+  selectProject: boolean;
   disabled: boolean;
   saving: boolean;
   downloading: boolean;
@@ -48,8 +49,17 @@ export class ViewComponent implements OnInit {
 
   selectall() {
 
+    for ( let i = 0; i < this.version.commits.length ; i++) {
+         this.version.commits[i].selectProject = true;
+
+    }
+
   }
   deselectall() {
+
+     for ( let i = 0; i < this.version.commits.length ; i++) {
+           this.version.commits[i].selectProject = false;
+    }
 
   }
 
@@ -72,7 +82,10 @@ export class ViewComponent implements OnInit {
   copy() {
     this.service.toCreate = [];
     for (let i = 0; i < this.version.commits.length; i++) {
-      this.service.toCreate.push(this.version.commits[i].repository);
+      if (this.version.commits[i].selectProject === true) {
+        this.service.toCreate.push(this.version.commits[i].repository);
+      }
+
     }
     this.dataService.repositoryList = this.toCreate;
     this.router.navigateByUrl('/createCollection');

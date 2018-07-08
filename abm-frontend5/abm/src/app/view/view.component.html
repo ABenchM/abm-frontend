@@ -55,7 +55,7 @@
       <tr *ngFor="let row of version.commits">
         <td>{{row.repository.name}}</td>
         <td>{{row.commitId}}</td>
-        <td [hidden]= "!loggedInStatus()">&nbsp;&nbsp;<input type="checkbox" name="row.repository.name"/></td>
+        <td [hidden]= "!loggedInStatus()">&nbsp;&nbsp;<input [(ngModel)] = "row.selectProject" type="checkbox" name="row.repository.name"/></td>
       </tr>
     </tbody>
   </table>
