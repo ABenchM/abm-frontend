@@ -20,6 +20,7 @@ export class ViewComponent implements OnInit {
   version: any = {};
   toCreate = [];
   commits = [{}];
+  derivedVersion: any = {};
   id;
   loading: boolean;
   disabled: boolean;
@@ -52,7 +53,21 @@ export class ViewComponent implements OnInit {
 
   }
 
+  deriveVersion (fargVersion) {
+    this.disabled = true;
+    this.service.postDeriveVersion(fargVersion).subscribe(
+      response => {
+        if (response.status === 200) {
 
+          this.derivedVersion = response.json();
+          this.versions.push(this.derivedVersion);
+          this.version = this.derivedVersion;
+
+        }
+      }
+    );
+    this.disabled = false;
+  }
 
   copy() {
     this.service.toCreate = [];
