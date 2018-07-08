@@ -75,23 +75,23 @@ export class EditCollectionComponent implements OnInit {
   }
 
 
-  unfreeze(fargversion) {
-    this.disableBuild = true;
-    this.service.getBuild(fargversion).subscribe(
-     response => {
-       const buildResult = response.json();
-       if (buildResult.status === 'RUNNING' || buildResult.status === 'WAITING' ) {
-              const repoId =  undefined;
-              this.sendMsg({msg: 'listen', id: buildResult.id});
-              console.log('sending command');
-              this.sendMsg({msg: 'cancel', id: buildResult.id});
-       } else {
-           this.deleteBuild(fargversion);
-       }
-     }
-     );
-    this.disableBuild = false;
-  }
+  // unfreeze(fargversion) {
+  //   this.disableBuild = true;
+  //   this.service.getBuild(fargversion).subscribe(
+  //    response => {
+  //      const buildResult = response.json();
+  //      if (buildResult.status === 'RUNNING' || buildResult.status === 'WAITING' ) {
+  //             const repoId =  undefined;
+  //             this.sendMsg({msg: 'listen', id: buildResult.id});
+  //             console.log('sending command');
+  //             this.sendMsg({msg: 'cancel', id: buildResult.id});
+  //      } else {
+  //          this.deleteBuild(fargversion);
+  //      }
+  //    }
+  //    );
+  //   this.disableBuild = false;
+  // }
 
   deleteBuild(fargversion) {
     this.service.deleteBuild(fargversion).subscribe(response => {
