@@ -69,10 +69,11 @@
   </div>
   <br>
   <table class="table table-bordered table-striped table-sm">
-    <thead class="thead-dark">
+    <thead class="thead-light">
       <tr>
         <th>Name</th>
         <th>Commit</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -81,7 +82,7 @@
         <td>{{commit.repository.name}}</td>
         <td>
           <div class="dropdown" *ngIf="!version.frozen">
-            <button class="btn btn-default btn-sm dropdown-toggle" (click)="selectCommit(commit)" type="button" data-toggle="dropdown"
+            <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="true" id="commitSelect">
               <span style="font-family:monospace">{{commit.commitId}}</span>
               <span class="caret" *ngIf="!loading"></span>
@@ -91,8 +92,9 @@
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
         </td>
         <td>&nbsp;&nbsp;
-          <input type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}" />
+          <input [disabled]="version.frozen" type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}" />
         </td>
+        <td> <button [disabled]="version.frozen" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button></td>
       </tr>
     </tbody>
   </table>

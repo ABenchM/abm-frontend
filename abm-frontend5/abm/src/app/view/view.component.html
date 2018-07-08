@@ -38,7 +38,7 @@
     </span>
     <span class="float-right col">
       <input type="button" [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All" class="btn btn-success">
-      <input type="button" [hidden] = "!loggedInStatus()" (click)="deselectall()" value="Deselect All" class="btn btn-danger">
+      <input type="button" [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()" value="Deselect All" class="btn btn-danger">
     </span>
   </div>
   <br>
@@ -55,7 +55,7 @@
       <tr *ngFor="let row of version.commits">
         <td>{{row.repository.name}}</td>
         <td>{{row.commitId}}</td>
-        <td [hidden]= "!loggedInStatus()">&nbsp;&nbsp;<input [(ngModel)] = "row.selectProject" type="checkbox" name="row.repository.name"/></td>
+        <td [hidden]= "!loggedInStatus()">&nbsp;&nbsp;<input [(ngModel)] = "row.selectProject" (change)="select(row)" type="checkbox" name="row.repository.name"/></td>
       </tr>
     </tbody>
   </table>

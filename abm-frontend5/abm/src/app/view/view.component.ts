@@ -49,21 +49,33 @@ export class ViewComponent implements OnInit {
 
   selectall() {
 
-    for ( let i = 0; i < this.version.commits.length ; i++) {
-         this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.commits.length; i++) {
+      this.version.commits[i].selectProject = true;
 
     }
 
   }
   deselectall() {
 
-     for ( let i = 0; i < this.version.commits.length ; i++) {
-           this.version.commits[i].selectProject = false;
+    for (let i = 0; i < this.version.commits.length; i++) {
+      this.version.commits[i].selectProject = false;
     }
 
   }
 
-  deriveVersion (fargVersion) {
+  select(fargCommit) {
+
+    for (let i = 0; i < this.version.commits.length; i++) {
+      if (this.version.commits[i].id === fargCommit.id) {
+        this.version.commits[i].selectProject = true;
+        break;
+      }
+
+    }
+
+  }
+
+  deriveVersion(fargVersion) {
     this.disabled = true;
     this.service.postDeriveVersion(fargVersion).subscribe(
       response => {
@@ -89,6 +101,22 @@ export class ViewComponent implements OnInit {
     }
     this.dataService.repositoryList = this.toCreate;
     this.router.navigateByUrl('/createCollection');
+  }
+
+
+  // This function is to check if any project is selected on the page.if no, then deselect all button will be disabled.
+  isRepoSelected() {
+    if (!this.version.commits) {
+      return false;
+    }
+
+    for (let i = 0; i < this.version.commits.length; i++) {
+      if (this.version.commits[i].selectProject === true) {
+        return true;
+
+      }
+    }
+    return false;
   }
 
   loadViewCollection(viewCollectionId) {
@@ -129,24 +157,24 @@ export class ViewComponent implements OnInit {
           this.toastr.error('Build is in process, try again later', 'Oops!');
         } else {
 
-               location.href = '/download/' + buildResult.id;
-               }
+          location.href = '/download/' + buildResult.id;
+        }
       }
     );
     this.downloading = false;
   }
 
   downloadHermes(id) {
-   this.downloading = true;
-   this.viewService.getHermesResult(id).subscribe(
-     response => {
-       if (response.status === 200) {
-            const hermesResult = response.json();
-            location.href = '/downloadHermes/' + hermesResult.id;
-       }
-     }
-   );
-   this.downloading = false;
+    this.downloading = true;
+    this.viewService.getHermesResult(id).subscribe(
+      response => {
+        if (response.status === 200) {
+          const hermesResult = response.json();
+          location.href = '/downloadHermes/' + hermesResult.id;
+        }
+      }
+    );
+    this.downloading = false;
   }
 
   pin() {

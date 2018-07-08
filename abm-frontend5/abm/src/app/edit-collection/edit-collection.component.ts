@@ -1,24 +1,25 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { MessageService} from '../services/message.service';
-import {WebsocketService} from '../services/websocket.service';
-import {ModalHermesComponent} from '../modal-hermes/modal-hermes.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {CommitSelectorComponent} from '../commit-selector/commit-selector.component';
+import { MessageService } from '../services/message.service';
+import { WebsocketService } from '../services/websocket.service';
+import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
 
 import 'rxjs/add/operator/take';
 import { buildDriverProvider } from 'protractor/built/driverProviders';
+import { CommitService } from '../services/commit.service';
 
 @Component({
   selector: 'abm-edit-collection',
   templateUrl: './edit-collection.component.html',
   styleUrls: ['./edit-collection.component.css']
 })
-export class EditCollectionComponent implements OnInit {
+export class EditCollectionComponent implements OnInit, OnDestroy {
 
   collection: any = [{}];
   versions: any = [{}];
@@ -35,9 +36,11 @@ export class EditCollectionComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
-    private messageService: MessageService, private modalService: NgbModal ) {
+    private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService) {
     this.id = this.route.snapshot.paramMap.get('id');
+    localStorage.setItem('id', this.id);
     this.toastr.setRootViewContainerRef(viewf);
+
     this.messageService.messages.subscribe(msg => {
       console.log('Response from server: ' + msg);
     });
@@ -59,10 +62,10 @@ export class EditCollectionComponent implements OnInit {
     this.loading = false;
   }
 
-selectCommit(fargCommit) {
+  selectCommit(fargCommit) {
 
-  this.openCommitModal(fargCommit);
-}
+    this.openCommitModal(fargCommit);
+  }
 
   deriveVersion(ver) {
     this.disabled = true;
@@ -103,9 +106,9 @@ selectCommit(fargCommit) {
     this.service.deleteBuild(fargversion).subscribe(response => {
 
       if (response.status === 200) {
-           this.version = fargversion;
-           this.version.frozen = false;
-    }
+        this.version = fargversion;
+        this.version.frozen = false;
+      }
 
     });
   }
@@ -114,31 +117,32 @@ selectCommit(fargCommit) {
 
     this.service.getBuild(fargversion).subscribe(
       response => {
-         if (response.status === 200) {
-           const buildResult = response.json();
-           if (buildResult.status === 'RUNNING') {
-              this.toastr.error('Build is in progress, try again later');
-           } else {
-               this.version.filtered = true;
-               this.running = true;
-               this.openHermesModal();
-           }
-         }
+        if (response.status === 200) {
+          const buildResult = response.json();
+          if (buildResult.status === 'RUNNING') {
+            this.toastr.error('Build is in progress, try again later');
+          } else {
+            this.version.filtered = true;
+            this.running = true;
+            this.openHermesModal();
+          }
+        }
       }
     );
 
   }
 
+
   openHermesModal() {
-   const modalRef = this.modalService.open(ModalHermesComponent , {size: 'lg'});
-   modalRef.componentInstance.version = this.version;
-   modalRef.componentInstance.collection = this.collection;
+    const modalRef = this.modalService.open(ModalHermesComponent, { size: 'lg' });
+    modalRef.componentInstance.version = this.version;
+    modalRef.componentInstance.collection = this.collection;
 
   }
 
   openCommitModal(commit) {
-    const modalRef = this.modalService.open(CommitSelectorComponent, {size: 'lg'});
-    modalRef.componentInstance.commit =  commit;
+    const modalRef = this.modalService.open(CommitSelectorComponent, { size: 'lg' });
+    modalRef.componentInstance.commit = commit;
 
   }
 
@@ -180,7 +184,7 @@ selectCommit(fargCommit) {
     })
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-            this.service.deleteCollection(collectionId).subscribe(
+          this.service.deleteCollection(collectionId).subscribe(
             response => {
               if (response.status === 200) {
                 const d: any = this.collection;
@@ -231,6 +235,37 @@ selectCommit(fargCommit) {
     this.saving = false;
   }
 
+
+  deleteProject(fargCommit) {
+    const disposable = this.dialogService.addDialog(DialogComponentComponent, {
+      title: 'Confirm',
+      message: 'Removal is irreversible! Continue?'
+    })
+      .subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.commitService.deleteRepos(fargCommit.id).subscribe(
+            response => {
+              if (response.status === 200) {
+                const d: any = this.version.commits;
+                for (let i = 0; i < d.length; i++) {
+                  if (d[i].id === fargCommit.id) {
+                    d.splice(i, 1);
+                   // this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
+                    break;
+                  }
+                }
+              }
+            }
+          );
+        }
+      }
+
+      );
+    setTimeout(() => {
+      disposable.unsubscribe();
+    }, 10000);
+  }
+
   update(fargCollection) {
     this.saving = true;
     console.log(fargCollection);
@@ -250,7 +285,15 @@ selectCommit(fargCommit) {
   }
 
   ngOnInit() {
+    if (!this.id) {
+       this.id = localStorage.getItem('id');
+    }
     this.loadCollection(this.id);
   }
 
+  ngOnDestroy() {
+      localStorage.removeItem('id');
+  }
+
 }
+

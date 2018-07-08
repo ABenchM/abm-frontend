@@ -12,7 +12,8 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {OrderModule} from 'ngx-order-pipe';
-
+import {ContextMenuModule} from 'ngx-contextmenu';
+import {ShContextMenuModule} from 'ng2-right-click-menu';
 // Components
 
 import { AppComponent } from './app.component';
@@ -69,6 +70,8 @@ import { BuiltStatusPipe } from './shared/built-status.pipe';
 import {WebsocketService} from './services/websocket.service';
 import {MessageService} from './services/message.service';
 import { HermesService } from './services/hermes.service';
+import { CommitSelectorComponent } from './commit-selector/commit-selector.component';
+import { CommitService } from './services/commit.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -120,7 +123,8 @@ const routes: Routes = [
     CapitalizeFirstPipe,
     DialogComponentComponent,
     MyProfileComponent,
-    BuiltStatusPipe
+    BuiltStatusPipe,
+    CommitSelectorComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +139,9 @@ const routes: Routes = [
     SocialLoginModule,
     NgbModule.forRoot(),
     ToastModule.forRoot(),
-    OrderModule
+    OrderModule,
+    ContextMenuModule.forRoot(),
+    ShContextMenuModule
 
 
   ],
@@ -161,11 +167,13 @@ const routes: Routes = [
     ToastService,
     WebsocketService,
     MessageService,
-    HermesService
+    HermesService,
+    CommitService
   ],
   entryComponents: [
     DialogComponentComponent,
-    ModalHermesComponent
+    ModalHermesComponent,
+    CommitSelectorComponent
   ],
   bootstrap: [AppComponent]
 })
