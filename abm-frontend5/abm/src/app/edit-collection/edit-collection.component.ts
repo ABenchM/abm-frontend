@@ -8,9 +8,11 @@ import { MessageService} from '../services/message.service';
 import {WebsocketService} from '../services/websocket.service';
 import {ModalHermesComponent} from '../modal-hermes/modal-hermes.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CommitSelectorComponent} from '../commit-selector/commit-selector.component';
 
 import 'rxjs/add/operator/take';
 import { buildDriverProvider } from 'protractor/built/driverProviders';
+
 @Component({
   selector: 'abm-edit-collection',
   templateUrl: './edit-collection.component.html',
@@ -57,6 +59,10 @@ export class EditCollectionComponent implements OnInit {
     this.loading = false;
   }
 
+selectCommit(fargCommit) {
+
+  this.openCommitModal(fargCommit);
+}
 
   deriveVersion(ver) {
     this.disabled = true;
@@ -129,6 +135,14 @@ export class EditCollectionComponent implements OnInit {
    modalRef.componentInstance.collection = this.collection;
 
   }
+
+  openCommitModal(commit) {
+    const modalRef = this.modalService.open(CommitSelectorComponent, {size: 'lg'});
+    modalRef.componentInstance.commit =  commit;
+
+  }
+
+
   sendMsg(message) {
     console.log('Message from client: ', message);
     this.messageService.messages.next(message);

@@ -52,24 +52,20 @@
         <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
     </div>
     <div id="frozen" *ngIf="version.frozen">
-      This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
+      <!-- This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
       <strong>Be aware, that the previous build result will be deleted!</strong>
       <br/>
-      <br/>
+      <br/> -->
       <button class="btn btn-primary btn-sm">Show Build</button>
-      <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
-    </div>
-    <div id="not_filter" *ngIf="version.frozen">
       <span style="float:right;">
         <button *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving" (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
+        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm">Show Hermes Results</button>
+        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-danger btn-sm">Unfilter</button>
       </span>
+
+      <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
     </div>
-    <div id="filter" *ngIf="version.filtered">
-      <span style="float:right;">
-        <button [disabled] = "running" class="btn btn-success btn-sm">Show Hermes Results</button>
-        <button [disabled]= "running" class="btn btn-danger btn-sm">Unfilter</button> 
-      </span>
-    </div>
+
   </div>
   <br>
   <table class="table table-bordered table-striped table-sm">
@@ -85,14 +81,18 @@
         <td>{{commit.repository.name}}</td>
         <td>
           <div class="dropdown" *ngIf="!version.frozen">
-            <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
-              id="commitSelect">
+            <button class="btn btn-default btn-sm dropdown-toggle" (click)="selectCommit(commit)" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="true" id="commitSelect">
+              <span style="font-family:monospace">{{commit.commitId}}</span>
+              <span class="caret" *ngIf="!loading"></span>
             </button>
 
           </div>
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
         </td>
-        <td>&nbsp;&nbsp;<input type="checkbox" name="commit.repository.name"/></td>
+        <td>&nbsp;&nbsp;
+          <input type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}" />
+        </td>
       </tr>
     </tbody>
   </table>

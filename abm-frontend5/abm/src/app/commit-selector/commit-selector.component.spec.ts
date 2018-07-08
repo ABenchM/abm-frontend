@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommitSelectionComponent } from './commit-selection.component';
+import { CommitSelectorComponent } from './commit-selector.component';
 
-describe('CommitSelectionComponent', () => {
-  let component: CommitSelectionComponent;
-  let fixture: ComponentFixture<CommitSelectionComponent>;
+describe('CommitSelectorComponent', () => {
+  let component: CommitSelectorComponent;
+  let fixture: ComponentFixture<CommitSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommitSelectionComponent ]
+      declarations: [ CommitSelectorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommitSelectionComponent);
+    fixture = TestBed.createComponent(CommitSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
