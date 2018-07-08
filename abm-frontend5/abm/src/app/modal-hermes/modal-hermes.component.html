@@ -1,15 +1,19 @@
-<div>
+<div class="modal-lg ">
   <div class="modal-header">
      <h4 class="modal-title" id="modal-title">Select Filters to run</h4>
   </div>
   <div class="modal-body" id="modal-body">
-    <div *ngFor="let filter of filterList">
-      <input type="checkbox" id={{filter.filtername}} [(ngModel)]="filter.activate"/>
-      <label for={{filter.filtername}}> {{filter.filtername | hermesName}}</label> 
-      <input type="text"  [(ngModel)]="filter.threshold" style="width:50px;"/>
-      <br/>
+    <div class="row">
+      <ng-container *ngFor="let filter of filterList ; let i = index">
+          <div class="col">
+              <input type="checkbox" id={{filter.filtername}} [(ngModel)]="filter.activate"/>
+              <label for={{filter.filtername}}> {{filter.filtername | hermesName}}</label> 
+              <input type="text"  [(ngModel)]="filter.threshold" style="width:50px;"/>
+              
+          </div>
+          <div *ngIf= "(i+2) % 2 === 0" class="w-100"></div>
+      </ng-container>
     </div>
-
   </div>
   <div class="modal-footer">
     <button class="btn btn-info" type="button">Run Selected Filters</button>
