@@ -29,7 +29,6 @@ import { CollectionComponent } from './collection/collection.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
-import { CommitSelectionComponent } from './commit-selection/commit-selection.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { FilterComponent } from './filter/filter.component';
 import { HermesViewerComponent } from './hermes-viewer/hermes-viewer.component';
@@ -104,7 +103,6 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     CartComponent,
-    CommitSelectionComponent,
     CriteriaComponent,
     FilterComponent,
     HermesViewerComponent,
