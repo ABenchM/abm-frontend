@@ -14,6 +14,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {OrderModule} from 'ngx-order-pipe';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
+import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 // Components
 
 import { AppComponent } from './app.component';

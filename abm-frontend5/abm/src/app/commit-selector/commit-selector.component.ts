@@ -1,5 +1,6 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommitService } from '../services/commit.service';
 
 @Component({
   selector: 'abm-commit-selector',
@@ -9,11 +10,81 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class CommitSelectorComponent implements OnInit {
 
 
-  @Input() commit: any ;
+  @Input() commit: any;
   loading: boolean;
-  constructor(public activeModal: NgbActiveModal) { }
+  branches = [];
+  tags = [];
+  commits = [];
+  page = 1;
+  constructor(public activeModal: NgbActiveModal, private commitService: CommitService) { }
+
+
+  loadBranches() {
+    this.loading = true;
+
+    this.commitService.getBranches(this.commit.repository).subscribe(
+      response => {
+        if (response.status === 200) {
+
+          this.branches = response.json();
+        }
+      }
+    );
+    this.loading = false;
+  }
+
+  switchCommit(id) {
+    this.commit.commitId = id;
+    this.commitService.changeCommit(this.commit).subscribe(
+      response => {
+        if (response.status === 200) {
+          this.activeModal.close();
+        }
+      }
+    );
+
+
+  }
+
+  loadPrevCommitPage() {
+    this.page--;
+    this.loadCommits();
+  }
+
+  loadNextCommitPage() {
+    this.page++;
+    this.loadCommits();
+  }
+
+  loadCommits() {
+    this.loading = true;
+    this.commitService.getCommits(this.commit.repository, this.page).subscribe(
+      response => {
+        if (response.status === 200) {
+          this.commits = response.json();
+
+        }
+      }
+    );
+    this.loading = false;
+  }
+  loadTags() {
+    this.loading = true;
+    this.commitService.getTags(this.commit.repository).subscribe(
+      response => {
+        if (response.status === 200) {
+
+          this.tags = response.json();
+        }
+      }
+    );
+    this.loading = false;
+  }
 
   ngOnInit() {
+    this.loadBranches();
+    this.loadTags();
+    this.loadCommits();
   }
 
 }
