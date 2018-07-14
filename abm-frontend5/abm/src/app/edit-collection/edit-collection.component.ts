@@ -13,6 +13,8 @@ import { CommitSelectorComponent } from '../commit-selector/commit-selector.comp
 import 'rxjs/add/operator/take';
 import { buildDriverProvider } from 'protractor/built/driverProviders';
 import { CommitService } from '../services/commit.service';
+import { DataServiceService } from '../services/data-service.service';
+import { HermesService } from '../services/hermes.service';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -32,11 +34,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   disabled: boolean;
   disableBuild: boolean;
   message = {};
+  filtered: boolean;
   running: boolean;
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
-    private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService) {
+    private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
+  private dataService: DataServiceService, private hermesService: HermesService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);
     this.toastr.setRootViewContainerRef(viewf);
@@ -123,7 +127,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
             this.toastr.error('Build is in progress, try again later');
           } else {
             this.version.filtered = true;
-            this.running = true;
+            this.dataService.setRunning(true);
             this.openHermesModal();
           }
         }
@@ -137,6 +141,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     const modalRef = this.modalService.open(ModalHermesComponent, { size: 'lg' });
     modalRef.componentInstance.version = this.version;
     modalRef.componentInstance.collection = this.collection;
+
 
   }
 
@@ -297,7 +302,35 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/collection');
   }
 
+  removeFilter(fargversion) {
+
+    this.loading = true;
+    this.version.filtered = false;
+    this.hermesService.getHermesStatus(fargversion.id).subscribe(
+      response => {
+         if ( response.json().status === 'RUNNING') {
+           this.toastr.error('Hermes is in progress, Please try again later');
+         } else {
+           this.hermesService.deleteHermes(response.json().id).subscribe(
+             data => {
+               if ( data.status === 200) {
+                   this.toastr.success('Hermes Results succesfully unfiltered');
+               } else {
+                 this.toastr.error('Failed with [' + data.status + '] ' + data.statusText );
+               }
+             }
+           );
+         }
+      }
+    );
+
+this.loading = false;
+
+  }
+
   ngOnInit() {
+
+    this.dataService.cast.subscribe(response => this.running = response);
     if (!this.id) {
       this.id = localStorage.getItem('id');
     }
