@@ -187,21 +187,34 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.service.deleteCollection(collectionId).subscribe(
             response => {
               if (response.status === 200) {
+
                 const d: any = this.collection;
                 for (let i = 0; i < d.length; i++) {
                   if (d[i].id === collectionId) {
-                    this.toastr.success('Your collection is successfully deleted!!!');
                     d.splice(i, 1);
-                    this.router.navigateByUrl('/collection');
+
                     break;
                   }
                 }
+
               }
 
             }
           );
+
+          this.router.navigate(['/collection']).then(
+            () => {
+              this.toastr.success('Your collection has been successfully deleted!!!');
+            }
+          );
         }
+
+
+
+
+
       });
+
     setTimeout(() => {
       disposable.unsubscribe();
     }, 10000);
@@ -250,7 +263,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < d.length; i++) {
                   if (d[i].id === fargCommit.id) {
                     d.splice(i, 1);
-                   // this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
+                    // this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
                     break;
                   }
                 }
@@ -286,13 +299,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (!this.id) {
-       this.id = localStorage.getItem('id');
+      this.id = localStorage.getItem('id');
     }
     this.loadCollection(this.id);
   }
 
   ngOnDestroy() {
-      localStorage.removeItem('id');
+    localStorage.removeItem('id');
   }
 
 }
