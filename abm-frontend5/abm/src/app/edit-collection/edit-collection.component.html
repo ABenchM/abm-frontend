@@ -59,7 +59,7 @@
       <button class="btn btn-primary btn-sm">Show Build</button>
       <span style="float:right;">
         <button *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving" (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
-        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm">Show Hermes Results</button>
+        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show Hermes Results</button>
         <button *ngIf="version.filtered" [disabled]="running" class="btn btn-danger btn-sm" (click)="removeFilter(version)">Unfilter</button>
       </span>
 

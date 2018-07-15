@@ -172,7 +172,8 @@ const routes: Routes = [
   entryComponents: [
     DialogComponentComponent,
     ModalHermesComponent,
-    CommitSelectorComponent
+    CommitSelectorComponent,
+    HermesViewerComponent
   ],
   bootstrap: [AppComponent]
 })

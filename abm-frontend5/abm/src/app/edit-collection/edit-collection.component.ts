@@ -15,6 +15,7 @@ import { buildDriverProvider } from 'protractor/built/driverProviders';
 import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
+import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -301,6 +302,15 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   back() {
     this.router.navigateByUrl('/collection');
   }
+
+ showHermesResults(fargversion) {
+   this.openHermesViewerModal();
+ }
+
+ openHermesViewerModal() {
+  const modalRef = this.modalService.open(HermesViewerComponent, { size: 'lg' });
+  modalRef.componentInstance.version = this.version;
+ }
 
   removeFilter(fargversion) {
 

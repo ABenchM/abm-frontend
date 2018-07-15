@@ -22,5 +22,10 @@ export class HermesService {
   deleteHermes(id) {
     return this.http.delete('/rest/instance/' + id);
   }
+
+  getHermesResults(versionId) {
+    return this.http.get('/rest/hermesResults/' + versionId );
+
+  }
 }
 
