@@ -10,6 +10,7 @@ import { AppErrorHandler } from '../app-error-handler';
 @Injectable()
 export class SearchService {
 
+  project: any[];
   constructor(private http: Http) { }
 
   getSearchResults(query, language) {

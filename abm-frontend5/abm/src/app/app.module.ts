@@ -15,6 +15,7 @@ import {OrderModule} from 'ngx-order-pipe';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
+import {DataTableModule} from 'angular5-data-table';
 // Components
 
 import { AppComponent } from './app.component';
@@ -72,6 +73,7 @@ import {MessageService} from './services/message.service';
 import { HermesService } from './services/hermes.service';
 import { CommitSelectorComponent } from './commit-selector/commit-selector.component';
 import { CommitService } from './services/commit.service';
+import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-viewer.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -123,7 +125,8 @@ const routes: Routes = [
     DialogComponentComponent,
     MyProfileComponent,
     BuiltStatusPipe,
-    CommitSelectorComponent
+    CommitSelectorComponent,
+    ModalBuildViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -140,7 +143,8 @@ const routes: Routes = [
     ToastModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
-    ShContextMenuModule
+    ShContextMenuModule,
+    DataTableModule.forRoot()
 
 
   ],
@@ -173,7 +177,8 @@ const routes: Routes = [
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
-    HermesViewerComponent
+    HermesViewerComponent,
+    ModalBuildViewerComponent
   ],
   bootstrap: [AppComponent]
 })

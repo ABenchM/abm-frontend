@@ -9,7 +9,7 @@
         <span>
           <button class="btn btn-success btn-sm align-middle"> Show Filtering Options</button>
           <button class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</button>
-        </span> 
+        </span>
       </div>
     </form>
   </div>
@@ -17,34 +17,83 @@
   <br>
   <br>
   <div class="wrapper" *ngIf="loadStatus()">
-		<h2>Searching</h2>
-		<span class="cssload-loader"></span>
-	</div>
-
-
-  <div class="row" *ngIf="results.length>0">
-    <div class="col-lg-12 text-right">
-      <table class="table table-bordered table-striped table-hover" style="table-layout:fixed;">
-        <thead class="thead-dark">
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Creation Date</th>
-            <th>Size</th>
-            <th>Origin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="cursor:pointer;" *ngFor="let row of results">
-            <td (click)="openSource(row)">{{row.name}}</td>
-            <td (click)="openSource(row)">{{row.description}}</td>
-            <td>{{row.creationDate | date:'short'}}</td>
-            <td>{{row.size | fileSize}}</td>
-            <td>{{row.htmlUrl | siteName}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <h2>Searching</h2>
+    <span class="cssload-loader"></span>
   </div>
 
+  <p class="alert alert-warning" *ngIf="results.length === 0 && searched && !loadStatus()">No results found</p>
+
+  <div id="results" *ngIf="results.length>0">
+
+    <div class="row">
+      <div class="col-lg-12 text-right">
+        <button class="btn btn-success" (click)="addSingle(singleSelection)">Add this project to a collection</button>
+        <button class="btn btn-success">Select all</button>
+        <button class="btn btn-danger">Deselect all</button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-12">
+
+
+        <!-- <data-table [items]="results" [itemCount]="itemsCount" (reload)="reloadTable($event)">
+          <data-table-column  (click)="openSource(item)" [property]="'name'" [header]="'Name'" [sortable]="true" [resizable]="true">
+           <ng-template #dataTableCell let-item="item"> 
+             {{item.name}}
+           </ng-template>
+          </data-table-column>
+          <data-table-column [property]="'description'" [header]="'Description'" [sortable]="true" [resizable]="true">
+
+          </data-table-column>
+          <data-table-column [property]="'creationDate'" [header]="'Creation Date'" [sortable]="true" [resizable]="true">
+            <ng-template #dataTableCell let-item="item">
+              {{ item.creationDate | date:'short'}}
+            </ng-template>
+          </data-table-column>
+          <data-table-column [property]="'size'" [header]="'Size'" [sortable]="true">
+            <ng-template #dataTableCell let-item="item">
+              {{item.size | fileSize }}
+            </ng-template>
+          </data-table-column>
+          <data-table-column [property]="'htmlUrl'" [header]="'Origin'" [sortable]="true">
+            <ng-template #dataTableCell let-item="item">
+              {{ item.htmlUrl | siteName}}
+            </ng-template>
+          </data-table-column>
+
+
+
+
+
+        </data-table> -->
+
+
+        <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
+          <thead class="thead-dark">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Creation Date</th>
+              <th>Size</th>
+              <th>Origin</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="cursor:pointer;" *ngFor="let row of results">
+              <td style="width: 40%;" (click)="openSource(row)">{{row.name}}</td>
+              <td (click)="openSource(row)">{{row.description }}</td>
+              <td>{{row.creationDate | date:'short'}}</td>
+              <td>{{row.size | fileSize}}</td>
+              <td>{{row.htmlUrl | siteName}}</td>
+              <td>
+                <input type="checkbox" [(ngModel)] = "row.singleSelection" (change)="select(row)" name="row.name" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>
