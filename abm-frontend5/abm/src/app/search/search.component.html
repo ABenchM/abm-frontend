@@ -9,25 +9,18 @@
         <span>
           <button class="btn btn-success btn-sm align-middle"> Show Filtering Options</button>
           <button class="btn btn-success" *ngIf="showOptions"> Hide Filtering Options</button>
-        </span>
+        </span> 
       </div>
     </form>
   </div>
   <br>
   <br>
   <br>
-  <!-- <div class="wrapper">
+  <div class="wrapper" *ngIf="loadStatus()">
 		<h2>Searching</h2>
 		<span class="cssload-loader"></span>
 	</div>
-  <div class="load-wrapp" *ngIf="true">
-    <div class="load-3">
-        <p>Searching</p>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-</div> -->
+
 
   <div class="row" *ngIf="results.length>0">
     <div class="col-lg-12 text-right">

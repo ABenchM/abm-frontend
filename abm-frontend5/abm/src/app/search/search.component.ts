@@ -16,20 +16,26 @@ import { SearchService } from '../services/search.service';
 export class SearchComponent implements OnInit {
 
   model = new Search('');
-  public loading = false;
-  results: any = [];
+  loading: boolean;
+  results = [];
   language = {};
   constructor(private service: SearchService) {
 
   }
 
+  loadStatus() {
+    return this.loading;
+  }
+
   search(searchQuery, language) {
     this.loading = true;
-
-    this.service.getSearchResults(searchQuery, language).subscribe(response => { console.log(response.json());
+    this.results = [];
+    console.log(this.loading);
+    this.service.getSearchResults(searchQuery, language).subscribe(response => {
       this.results = response.json();
-          });
-    this.loading = false;
+      this.loading = false;
+    });
+
   }
 
   openSource(item) {
