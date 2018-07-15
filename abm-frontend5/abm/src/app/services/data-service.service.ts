@@ -6,12 +6,20 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class DataServiceService {
 
   buildResultExists: BehaviorSubject<boolean>;
+  private running  =  new BehaviorSubject<boolean>(false);
   public repositoryList: any[] = [];
   public pinned: any[] = [];
   public buildStatus: boolean;
+
+  cast = this.running.asObservable();
   constructor() {
     this.buildResultExists = new BehaviorSubject(false);
+
   }
+
+   setRunning(newValue) {
+     this.running.next(newValue);
+   }
 
   setBuildResultStatus(value: boolean) {
     this.buildStatus = value;

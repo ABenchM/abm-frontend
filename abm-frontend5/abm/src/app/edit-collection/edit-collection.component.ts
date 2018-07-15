@@ -41,7 +41,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
     private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
-  private dataService: DataServiceService, private hermesService: HermesService) {
+    private dataService: DataServiceService, private hermesService: HermesService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);
     this.toastr.setRootViewContainerRef(viewf);
@@ -303,14 +303,23 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/collection');
   }
 
- showHermesResults(fargversion) {
-   this.openHermesViewerModal();
- }
+  showHermesResults(fargversion) {
+    this.hermesService.getHermesStatus(fargversion.id).subscribe(
+      response => {
+        if (response.json().status === 'RUNNING') {
+          this.toastr.error('Hermes process is still running');
+        } else if (response.json().status === 'FINISHED') {
+              this.openHermesViewerModal();
+        }
+      }
+    );
 
- openHermesViewerModal() {
-  const modalRef = this.modalService.open(HermesViewerComponent, { size: 'lg' });
-  modalRef.componentInstance.version = this.version;
- }
+  }
+
+  openHermesViewerModal() {
+    const modalRef = this.modalService.open(HermesViewerComponent, { size: 'lg' });
+    modalRef.componentInstance.version = this.version;
+  }
 
   removeFilter(fargversion) {
 
@@ -318,23 +327,23 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.version.filtered = false;
     this.hermesService.getHermesStatus(fargversion.id).subscribe(
       response => {
-         if ( response.json().status === 'RUNNING') {
-           this.toastr.error('Hermes is in progress, Please try again later');
-         } else {
-           this.hermesService.deleteHermes(response.json().id).subscribe(
-             data => {
-               if ( data.status === 200) {
-                   this.toastr.success('Hermes Results succesfully unfiltered');
-               } else {
-                 this.toastr.error('Failed with [' + data.status + '] ' + data.statusText );
-               }
-             }
-           );
-         }
+        if (response.json().status === 'RUNNING') {
+          this.toastr.error('Hermes is in progress, Please try again later');
+        } else {
+          this.hermesService.deleteHermes(response.json().id).subscribe(
+            data => {
+              if (data.status === 200) {
+                this.toastr.success('Hermes Results succesfully unfiltered');
+              } else {
+                this.toastr.error('Failed with [' + data.status + '] ' + data.statusText);
+              }
+            }
+          );
+        }
       }
     );
 
-this.loading = false;
+    this.loading = false;
 
   }
 

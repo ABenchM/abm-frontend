@@ -32,10 +32,13 @@ export class HermesViewerComponent implements OnInit {
   }
 
   loadResults() {
+    this.results = [];
     this.loading = true;
+    console.log(this.version.id);
     this.service.getHermesResults(this.version.id).subscribe(
       response => {
         if (response.status === 200) {
+          console.log(response.json());
           this.results = response.json();
         } else {
           this.toastr.error('Failed with [' + response.status + '] ' + response.statusText);
@@ -44,6 +47,7 @@ export class HermesViewerComponent implements OnInit {
     );
     this.loading = false;
   }
+
   ngOnInit() {
     this.loadResults();
   }

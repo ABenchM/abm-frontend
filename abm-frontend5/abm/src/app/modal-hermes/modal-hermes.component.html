@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-info" type="button">Run Selected Filters</button>
+    <button class="btn btn-info" type="button" (click)="run()">Run Selected Filters</button>
     <button class="btn btn-warning float-left" type="button" (click)="activeModal.close('Close click')">Cancel</button>
   </div>
   <div class="wrapper" *ngIf="loading">
