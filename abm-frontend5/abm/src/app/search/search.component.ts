@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Search } from '../models/search.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { DataTableResource } from 'angular5-data-table';
+import { CollectionService } from '../services/collection.service';
 
 
 
@@ -24,9 +25,23 @@ export class SearchComponent implements OnInit {
   searched = false;
 
 
-  constructor(private service: SearchService) {
+  constructor(private service: SearchService , private collectionService: CollectionService, private router: Router,
+  private route: ActivatedRoute) {
 
   }
+
+addAll() {
+
+}
+
+
+createCollection() {
+this.collectionService.toCreate = [];
+this.collectionService.toCreate = this.toAdd;
+this.router.navigateByUrl('/createCollection');
+}
+
+
 
   loadStatus() {
     return this.loading;

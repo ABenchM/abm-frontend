@@ -58,6 +58,7 @@ export class CreateCollectionComponent implements OnInit {
 
     this.version.commits = [];
     for (let i = 0; i < this.repositoryList.length; i++) {
+
       this.commit = {
         commitId: 'HEAD'
       };
