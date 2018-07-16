@@ -117,12 +117,15 @@ this.router.navigateByUrl('/createCollection');
       if (this.results[i].id === item.id) {
 
         if (this.results[i].singleSelection === true) {
-          console.log('Value of item ' + item);
+
           this.service.project.push(item);
           this.toAdd.push(item);
         } else {
+          console.log('Value of item ' + item);
           this.service.project.splice(i, 1);
+          console.log(this.toAdd.length);
           this.toAdd.splice(i, 1);
+          console.log(this.toAdd.length);
         }
 
         break;
@@ -131,7 +134,7 @@ this.router.navigateByUrl('/createCollection');
   }
 
   getTotalItems() {
-
+  
     return this.toAdd.length;
   }
 
