@@ -74,6 +74,7 @@ import { HermesService } from './services/hermes.service';
 import { CommitSelectorComponent } from './commit-selector/commit-selector.component';
 import { CommitService } from './services/commit.service';
 import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-viewer.component';
+import { ProjectCountPipe } from './project-count.pipe';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -126,7 +127,8 @@ const routes: Routes = [
     MyProfileComponent,
     BuiltStatusPipe,
     CommitSelectorComponent,
-    ModalBuildViewerComponent
+    ModalBuildViewerComponent,
+    ProjectCountPipe
   ],
   imports: [
     BrowserModule,

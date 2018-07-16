@@ -22,9 +22,8 @@ export class SearchComponent implements OnInit {
   toAdd = [];
   language = {};
   searched = false;
-  searchResults: DataTableResource<any>;
-  itemsCount: number;
-  singleSelection = undefined;
+
+
   constructor(private service: SearchService) {
 
   }
@@ -36,33 +35,89 @@ export class SearchComponent implements OnInit {
   search(searchQuery, language) {
     this.loading = true;
     this.results = [];
-    console.log(this.loading);
+
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
-      // this.results = response.json();
-      this.searchResults = new DataTableResource(response.json());
-      this.searchResults.query({ offset: 0 }).then(items => this.results = items);
-      this.searchResults.count().then(count => this.itemsCount = count);
+      this.results = response.json();
+      for (let i = 0; i < this.results.length; i++) {
+        this.results[i].singleSelection = false;
+      }
+      // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
+      // this.searchResults.count().then(count => this.itemsCount = count);
       this.loading = false;
       this.searched = true;
     });
 
   }
 
-  reloadTable(params) {
-    if (!this.searchResults) {
+
+
+  isProjectSelected() {
+    if (!this.results) {
       return false;
     }
-    this.searchResults.query(params).then(items => this.results = items);
+
+    for (let i = 0; i < this.results.length; i++) {
+      if (this.results[i].singleSelection === true) {
+        return true;
+
+      }
+    }
+    return false;
   }
 
- select(item) {
-    this.singleSelection = item;
- }
+  deselectAll() {
+    for (let i = 0; i < this.results.length; i++) {
+      this.results[i].singleSelection = false;
+      this.service.project = [];
+      this.toAdd = [];
+    }
+  }
 
- addSingle(item) {
-   this.service.project = [];
-   this.service.project.push(item);
- }
+  removeCart() {
+    this.toAdd = [];
+  }
+
+  removeItem(itemId) {
+    for (let i = 0; i < this.toAdd.length; i++) {
+      if (this.toAdd[i].id === itemId) {
+        this.toAdd.splice(i, 1);
+      }
+    }
+  }
+
+  selectAll() {
+    for (let i = 0; i < this.results.length; i++) {
+      this.results[i].singleSelection = true;
+      this.service.project.push(this.results[i]);
+
+    }
+    this.toAdd = this.service.project;
+  }
+
+  select(item) {
+
+    for (let i = 0; i < this.results.length; i++) {
+      if (this.results[i].id === item.id) {
+
+        if (this.results[i].singleSelection === true) {
+          console.log('Value of item ' + item);
+          this.service.project.push(item);
+          this.toAdd.push(item);
+        } else {
+          this.service.project.splice(i, 1);
+          this.toAdd.splice(i, 1);
+        }
+
+        break;
+      }
+    }
+  }
+
+  getTotalItems() {
+
+    return this.toAdd.length;
+  }
+
   openSource(item) {
 
     // window.location.href = item.repositoryUrl;
@@ -71,6 +126,8 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.toAdd = [];
+    this.results = [];
   }
 
 }

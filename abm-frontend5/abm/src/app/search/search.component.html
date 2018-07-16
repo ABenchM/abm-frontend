@@ -1,4 +1,47 @@
 <section>
+
+  <div style="max-height:1000px;overflow:auto">
+    <h2 class="float-left" style="margin-top:0px" *ngIf="getTotalItems() > 0"> {{getTotalItems() | projectCount }} selected</h2>
+    <div class="alert alert-warning" role="alert" *ngIf="getTotalItems() === 0">
+      Your collection is empty
+    </div>
+
+    <div class="table-responsive col-lg-12" *ngIf="getTotalItems()>0" style="max-height:600px">
+      <table class="table table-condensed table-bordered table-hover ngCart cart">
+        <thead>
+          <tr>
+            <th style="width: 7%;">Name</th>
+            <th style="width: 64%;">Description</th>
+            <th style="width: 15%;">Creation Date</th>
+            <th style="width: 5%;">Size</th>
+            <th style="width: 7%;">Origin</th>
+            <th style="width: 5%;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of toAdd">
+            <td style="white-space: pre-wrap;" style="width: 7%;" >{{project.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 64%;">{{project.description}}</td>
+            <td style="width: 15%;" >{{project.creationDate | date:'short'}}</td>
+            <td  style="width: 5%;" >{{project.size |  fileSize}}</td>
+            <td style="width: 7%;" >{{project.htmlUrl | siteName }}</td>
+            <td style="width: 5%;" >
+              <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-12 text-right" *ngIf="getTotalItems()>0">
+      <button class="btn btn-success" (click)="addSingle()">Add this Project to a Collection</button>
+      <button class="btn btn-success" (click)="addAll()">Add all Selected Projects to a Collection</button>
+      <button class="btn btn-success" (click)="createCollection()">Create Collection</button>
+      <button class="btn btn-danger" (click)="removeCart()">Remove all</button>
+    </div>
+
+  </div>
+
   <div>
     <br>
     <form #form="ngForm">
@@ -27,9 +70,8 @@
 
     <div class="row">
       <div class="col-lg-12 text-right">
-        <button class="btn btn-success" (click)="addSingle(singleSelection)">Add this project to a collection</button>
-        <button class="btn btn-success">Select all</button>
-        <button class="btn btn-danger">Deselect all</button>
+        <button class="btn btn-success" (click)="selectAll()">Select all</button>
+        <button class="btn btn-danger" [disabled]="!isProjectSelected()" (click)="deselectAll()">Deselect all</button>
       </div>
     </div>
     <br>
@@ -37,36 +79,6 @@
       <div class="col-lg-12">
 
 
-        <!-- <data-table [items]="results" [itemCount]="itemsCount" (reload)="reloadTable($event)">
-          <data-table-column  (click)="openSource(item)" [property]="'name'" [header]="'Name'" [sortable]="true" [resizable]="true">
-           <ng-template #dataTableCell let-item="item"> 
-             {{item.name}}
-           </ng-template>
-          </data-table-column>
-          <data-table-column [property]="'description'" [header]="'Description'" [sortable]="true" [resizable]="true">
-
-          </data-table-column>
-          <data-table-column [property]="'creationDate'" [header]="'Creation Date'" [sortable]="true" [resizable]="true">
-            <ng-template #dataTableCell let-item="item">
-              {{ item.creationDate | date:'short'}}
-            </ng-template>
-          </data-table-column>
-          <data-table-column [property]="'size'" [header]="'Size'" [sortable]="true">
-            <ng-template #dataTableCell let-item="item">
-              {{item.size | fileSize }}
-            </ng-template>
-          </data-table-column>
-          <data-table-column [property]="'htmlUrl'" [header]="'Origin'" [sortable]="true">
-            <ng-template #dataTableCell let-item="item">
-              {{ item.htmlUrl | siteName}}
-            </ng-template>
-          </data-table-column>
-
-
-
-
-
-        </data-table> -->
 
 
         <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
@@ -88,7 +100,7 @@
               <td>{{row.size | fileSize}}</td>
               <td>{{row.htmlUrl | siteName}}</td>
               <td>
-                <input type="checkbox" [(ngModel)] = "row.singleSelection" (change)="select(row)" name="row.name" />
+                <input type="checkbox" [(ngModel)]="row.singleSelection" (change)="select(row)" name="row.name" />
               </td>
             </tr>
           </tbody>

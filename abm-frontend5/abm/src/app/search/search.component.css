@@ -13,12 +13,20 @@
 	padding-left:20px;
 }
 
+.ngCart.cart span[ng-click] {
+	cursor: pointer;
+}
+.ngCart.cart .glyphicon.disabled {
+	color:#aaa;
+}
+
 .table-style{
   
   table-layout: fixed;
   width: 100%;
   white-space: nowrap;
 }
+
 
 .table-style td {
     white-space: nowrap;
