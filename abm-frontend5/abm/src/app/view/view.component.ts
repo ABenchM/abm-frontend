@@ -67,7 +67,7 @@ export class ViewComponent implements OnInit {
 
     for (let i = 0; i < this.version.commits.length; i++) {
       if (this.version.commits[i].id === fargCommit.id) {
-        this.version.commits[i].selectProject = true;
+        // this.version.commits[i].selectProject = !this.version.commits[i].selectProject;
         break;
       }
 
@@ -100,6 +100,7 @@ export class ViewComponent implements OnInit {
 
     }
     this.dataService.repositoryList = this.toCreate;
+
     this.router.navigateByUrl('/createCollection');
   }
 
@@ -129,6 +130,7 @@ export class ViewComponent implements OnInit {
             this.versions = response.json()[0].versions;
             this.version = response.json()[0].versions[0];
             this.commits = response.json()[0].versions[0].commits;
+
             this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => this.buildResultsExists = s.json());
             this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => this.hermesResultsExists = s.json());
             if (this.loggedInStatus()) {

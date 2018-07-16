@@ -75,6 +75,7 @@ import { CommitSelectorComponent } from './commit-selector/commit-selector.compo
 import { CommitService } from './services/commit.service';
 import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-viewer.component';
 import { ProjectCountPipe } from './project-count.pipe';
+import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -83,6 +84,7 @@ const routes: Routes = [
   {path: 'editCollection/:id' , component: EditCollectionComponent, canActivate: [AuthGuardService] },
   {path: 'view/:id' , component: ViewComponent },
   {path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
+  {path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
   {path: 'filters', component: FilterComponent ,  canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -128,7 +130,8 @@ const routes: Routes = [
     BuiltStatusPipe,
     CommitSelectorComponent,
     ModalBuildViewerComponent,
-    ProjectCountPipe
+    ProjectCountPipe,
+    AddToCollectionComponent
   ],
   imports: [
     BrowserModule,

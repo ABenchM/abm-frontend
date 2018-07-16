@@ -31,7 +31,9 @@ export class SearchComponent implements OnInit {
   }
 
 addAll() {
-
+this.collectionService.toAdd = [];
+this.collectionService.toAdd = this.toAdd;
+this.router.navigateByUrl('/addToCollection');
 }
 
 
