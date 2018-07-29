@@ -210,20 +210,19 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
           this.router.navigate(['/collection']).then(
             () => {
-              this.toastr.success('Your collection has been successfully deleted!!!');
-            }
-          );
+
+              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', { toastLife: 10 });
+            });
+
+          setTimeout(() => {
+            this.toastr.clearAllToasts();
+          }, 1000);
+          setTimeout(() => {
+            disposable.unsubscribe();
+            this.toastr.clearAllToasts();
+          }, 10000);
         }
-
-
-
-
-
       });
-
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 10000);
   }
   removeVersion(versionId) {
     this.saving = true;
@@ -309,7 +308,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         if (response.json().status === 'RUNNING') {
           this.toastr.error('Hermes process is still running');
         } else if (response.json().status === 'FINISHED') {
-              this.openHermesViewerModal();
+          this.openHermesViewerModal();
         }
       }
     );
