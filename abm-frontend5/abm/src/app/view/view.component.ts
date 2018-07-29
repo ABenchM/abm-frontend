@@ -99,7 +99,7 @@ export class ViewComponent implements OnInit {
       }
 
     }
-    this.dataService.repositoryList = this.toCreate;
+    // this.dataService.repositoryList = this.toCreate;
 
     this.router.navigateByUrl('/createCollection');
   }

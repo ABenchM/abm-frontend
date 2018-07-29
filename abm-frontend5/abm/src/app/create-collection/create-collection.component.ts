@@ -5,6 +5,7 @@ import { UsernameValidators } from '../register/username.validators';
 import { DataServiceService } from '../services/data-service.service';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute, Route } from '@angular/router';
+import { CommitService } from '../services/commit.service';
 
 @Component({
   selector: 'abm-create-collection',
@@ -19,8 +20,9 @@ export class CreateCollectionComponent implements OnInit {
   repositoryList: any[];
   version: any = {};
   commit: any = {};
+  commits: any = [{}];
   constructor(private toastr: ToastsManager, private viewC: ViewContainerRef,
-    private collectService: CollectionService, private router: Router) {
+    private collectService: CollectionService, private router: Router, private commitService: CommitService) {
     this.toastr.setRootViewContainerRef(viewC);
     this.repositoryList = this.collectService.toCreate;
   }
@@ -32,6 +34,17 @@ export class CreateCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    for (let i = 0; i < this.repositoryList.length; i++) {
+
+      this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
+        res => {
+          if (res.status === 200) {
+            this.commits[i].commitId = res.json()[0].commitId;
+            this.commits[i].id = this.repositoryList[i].id;
+          }
+        }
+      );
+    }
 
   }
 
@@ -59,9 +72,12 @@ export class CreateCollectionComponent implements OnInit {
     this.version.commits = [];
     for (let i = 0; i < this.repositoryList.length; i++) {
 
-      this.commit = {
-        commitId: 'HEAD'
-      };
+      if (this.repositoryList[i].id === this.commits[i].id) {
+        this.commit = {
+          commitId: this.commits[i].commitId
+        };
+      }
+
       this.commit.repository = this.repositoryList[i];
       this.commit.branchId = this.commit.repository.defaultBranch;
       this.version.commits.push(this.commit);
@@ -74,7 +90,7 @@ export class CreateCollectionComponent implements OnInit {
         this.router.navigateByUrl('/login');
       } else {
         this.toastr.error('Internal error: the collections cannot be saved. Please try again later.' +
-        'If the error persists, please report it here: https://github.com/ABenchM/abm/issues');
+          'If the error persists, please report it here: https://github.com/ABenchM/abm/issues');
       }
     });
     this.loading = false;
