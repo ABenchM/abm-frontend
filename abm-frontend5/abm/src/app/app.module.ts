@@ -76,6 +76,7 @@ import { CommitService } from './services/commit.service';
 import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-viewer.component';
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
+import { BuildService } from './services/build.service';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -176,7 +177,8 @@ const routes: Routes = [
     WebsocketService,
     MessageService,
     HermesService,
-    CommitService
+    CommitService,
+    BuildService
   ],
   entryComponents: [
     DialogComponentComponent,

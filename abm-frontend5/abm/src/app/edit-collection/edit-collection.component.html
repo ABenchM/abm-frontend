@@ -44,7 +44,7 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
-      <button class="btn btn-primary btn-sm">Build this version</button>
+      <button class="btn btn-primary btn-sm" (click)="build()">Build this version</button>
 
       <button [disabled]="loading || saving || versions.length <= 1" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
@@ -56,7 +56,7 @@
       <strong>Be aware, that the previous build result will be deleted!</strong>
       <br/>
       <br/> -->
-      <button class="btn btn-primary btn-sm">Show Build</button>
+      <button class="btn btn-primary btn-sm" (click)="addBuild()">Show Build</button>
       <span style="float:right;">
         <button *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving" (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
         <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show Hermes Results</button>
@@ -92,9 +92,12 @@
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
         </td>
         <td>&nbsp;&nbsp;
-          <input [disabled]="version.frozen" type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}" />
+          <input [disabled]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}"
+          />
         </td>
-        <td> <button [disabled]="version.frozen" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button></td>
+        <td>
+          <button [disabled]="version.frozen" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

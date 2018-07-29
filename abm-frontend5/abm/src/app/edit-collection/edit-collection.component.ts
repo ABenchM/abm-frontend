@@ -16,6 +16,7 @@ import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
 import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
+import { BuildService } from '../services/build.service';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -27,6 +28,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   collection: any = [{}];
   versions: any = [{}];
   version: any = {};
+  buildprojects: any = {};
   commits = [{}];
   derivedVersion: any = {};
   id;
@@ -41,7 +43,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
     private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
-    private dataService: DataServiceService, private hermesService: HermesService) {
+    private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);
     this.toastr.setRootViewContainerRef(viewf);
@@ -252,7 +254,38 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     }, 10000);
     this.saving = false;
   }
+  addBuild() {
 
+  }
+
+  build() {
+    this.buildprojects.id = this.version.id;
+    this.buildprojects.collectionId = this.version.collectionId;
+    this.buildprojects.commits = [];
+    for (let i = 0; i < this.version.commits.length; i++) {
+      if (this.version.commits[i].selectProject === true) {
+
+        this.buildprojects.commits.push(this.version.commits[i]);
+      }
+    }
+
+    if (!this.buildprojects.commits || this.buildprojects.commits.length === 0) {
+      this.toastr.error('No Project has been selected. Please select atleast one project to build the collection');
+    }
+
+    this.buildService.postBuild(this.buildprojects).subscribe(
+      response => {
+        if (response.status === 200) {
+          const buildId = response.json();
+          this.buildprojects.frozen = true;
+        } else if (response.status === 403) {
+          this.router.navigateByUrl('/login');
+        }
+      }
+
+    );
+
+  }
 
   deleteProject(fargCommit) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {

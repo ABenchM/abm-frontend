@@ -35,7 +35,7 @@ export class CreateCollectionComponent implements OnInit {
 
   ngOnInit() {
     for (let i = 0; i < this.repositoryList.length; i++) {
-
+   this.commits[i] = {};
       this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
         res => {
           if (res.status === 200) {
