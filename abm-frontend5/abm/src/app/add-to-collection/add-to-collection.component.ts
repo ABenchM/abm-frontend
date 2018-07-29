@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { CollectionComponent } from '../collection/collection.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CommitService } from '../services/commit.service';
 
 @Component({
   selector: 'abm-add-to-collection',
@@ -19,8 +20,11 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   collection: any = {};
   version: any = {};
   updatedVersion: any = {};
+  commits: any = [{}];
+
   constructor(private collectionService: CollectionService, private toastr: ToastsManager,
-    private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute) {
+    private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
+    private commitService: CommitService) {
     this.toastr.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -39,8 +43,8 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   }
 
   editCollection(item) {
-   this.collection = item;
-   this.version = this.collection.versions[0];
+    this.collection = item;
+    this.version = this.collection.versions[0];
   }
   addProjects(fargVersion) {
     this.loading = true;
@@ -49,7 +53,10 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.collectionService.toAdd.length; i++) {
       console.log(this.collectionService.toAdd[i]);
       const commit: any = {};
-      commit.commitId = 'HEAD';
+      if (this.collectionService.toAdd[i].id === this.commits[i].id) {
+        commit.commitId = this.commits[i].commitId;
+      }
+
 
       commit.repository = this.collectionService.toAdd[i];
       commit.branchId = commit.repository.defaultBranch;
@@ -76,8 +83,24 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     );
 
   }
+
+  loadCommits() {
+    for (let i = 0; i < this.collectionService.toAdd.length; i++) {
+
+      this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
+        res => {
+          if (res.status === 200) {
+            this.commits[i].commitId = res.json()[0].commitId;
+            this.commits[i].id = this.collectionService.toAdd[i].id;
+          }
+        }
+      );
+    }
+  }
+
   ngOnInit() {
     this.loadUserCollections();
+    this.loadCommits();
   }
 
 
