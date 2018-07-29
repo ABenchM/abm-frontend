@@ -6,6 +6,7 @@ export class CollectionService {
 
 
   toCreate: any[];
+  toAdd: any[];
   constructor(private http: Http) { }
 
   private onSuccess(res: Response) {
@@ -18,23 +19,27 @@ export class CollectionService {
 
 
   createCollection(collection) {
- return this.http.post('/rest/collection', collection, null);
+    return this.http.post('/rest/collection', collection, null);
   }
 
   getViewCollection(id) {
-  const data = {'privateStatus': false, 'id': id};
-  return this.http.get('/rest/collection', {params: data});
+    const data = { 'privateStatus': false, 'id': id };
+    return this.http.get('/rest/collection', { params: data });
   }
   getCollectionById(id) {
-    const data =  {'id': id};
-    return this.http.get('/rest/collection', {params : data});
+    const data = { 'id': id };
+    return this.http.get('/rest/collection', { params: data });
   }
 
   getCollections(username) {
-     return this.http.get('/rest/collection' + '?user=' + username);
+    return this.http.get('/rest/collection' + '?user=' + username);
     // .map(this.onSuccess);
 
 
+  }
+
+  updateVersion(version) {
+    return this.http.put('/rest/version/', version);
   }
 
   deleteVersion(versionId) {
@@ -42,12 +47,12 @@ export class CollectionService {
   }
 
   deleteCollection(collectionId) {
-  return this.http.delete('rest/collection/' + collectionId);
+    return this.http.delete('rest/collection/' + collectionId);
   }
 
   postDeriveVersion(version) {
 
-   return this.http.post('rest/version/derive', version);
+    return this.http.post('rest/version/derive', version);
 
   }
 
@@ -66,8 +71,8 @@ export class CollectionService {
   }
 
   getPinnedCollections() {
-   const data = {'type': 'collection', 'user': 'demo'};
-   return this.http.get('/rest/pin', {params: data});
+    const data = { 'type': 'collection', 'user': 'demo' };
+    return this.http.get('/rest/pin', { params: data });
   }
 
   updateCollection(fargCollection) {
@@ -76,11 +81,11 @@ export class CollectionService {
   }
 
   getBuild(version) {
-   return this.http.get('/rest/build/' + version.id);
+    return this.http.get('/rest/build/' + version.id);
   }
 
   deleteBuild(version) {
-    return this.http.post('/rest/version/unfreeze' , version);
+    return this.http.post('/rest/version/unfreeze', version);
   }
 
 }
