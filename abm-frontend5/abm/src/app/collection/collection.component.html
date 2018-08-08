@@ -8,25 +8,26 @@
   <br>
 
   <div class="input-group mb-3 ">
-      <div class="input-group-prepend" ngbDropdown>
-        <button class="btn btn-outline-secondary" ngbDropdownToggle type="button">Filter By: {{filterType}}</button>
-        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
-          <li>
-            <button class="dropdown-item" (click)="setFilterType('name')">Name</button>
-            <button class="dropdown-item" (click)="setFilterType('description')">Description</button>
-            <button class="dropdown-item" (click)="setFilterType('builtStatus')">BuiltStatus</button>
-            <button class="dropdown-item" (click)="setFilterType('privateStatus')">PrivateStatus</button>
-          </li>
-        </ul>
-      </div>
-      <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+    <div class="input-group-prepend" ngbDropdown>
+      <button class="btn btn-outline-secondary" ngbDropdownToggle type="button">Filter By: {{filterType}}</button>
+      <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+        <li>
+          <button class="dropdown-item" (click)="setFilterType('name')">Name</button>
+          <button class="dropdown-item" (click)="setFilterType('description')">Description</button>
+          <button class="dropdown-item" (click)="setFilterType('builtStatus')">BuiltStatus</button>
+          <button class="dropdown-item" (click)="setFilterType('privateStatus')">PrivateStatus</button>
+        </li>
+      </ul>
     </div>
+    <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+  </div>
 
-  <br><br>
+  <br>
+  <br>
 
   <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;"
     *ngIf="hasCollections">
-    <thead class="thead-dark">
+    <thead class="thead-light">
       <tr style="cursor:pointer;">
         <th (click)="setSortType('name')">Name
           <span [hidden]="reverse">▼</span>
@@ -55,7 +56,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr style="cursor:pointer;" *ngFor="let row of filteredCollections | orderBy: SortType:reverse:'case-insensitive'">
+      <tr style="cursor:pointer;" *ngFor="let row of filteredCollections | orderBy: SortType:reverse:'case-insensitive'" [contextMenu]="basicMenu"
+        [contextMenuSubject]="row">
         <td (click)="open(row)">{{row.name}}</td>
         <td (click)="open(row)">{{row.description}}</td>
         <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
@@ -63,6 +65,13 @@
         <td> {{row.builtStatus | builtStatus}}
         </td>
         <td>{{row.privateStatus | privateStatus}}</td>
+        
       </tr>
     </tbody>
   </table>
+  
+  <context-menu>
+      <ng-template contextMenuItem let-item (execute)="onContextMenu($event,item)" >
+        Make Public
+      </ng-template>
+    </context-menu>
