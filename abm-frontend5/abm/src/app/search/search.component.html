@@ -43,6 +43,9 @@
 
   <div>
     <br>
+    <br>
+    <br>
+    <br>
     <form #form="ngForm">
       <div class="search_bar">
         <input type="text" #query="ngModel" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner"
@@ -58,6 +61,10 @@
   <br>
   <br>
   <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <div class="wrapper" *ngIf="loadStatus()">
     <h2>Searching</h2>
     <span class="cssload-loader"></span>
@@ -67,19 +74,15 @@
 
   <div id="results" *ngIf="results.length>0">
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-12 text-right">
         <button class="btn btn-success" (click)="selectAll()">Select all</button>
         <button class="btn btn-danger" [disabled]="!isProjectSelected()" (click)="deselectAll()">Deselect all</button>
       </div>
-    </div>
+    </div> -->
     <br>
     <div class="row">
       <div class="col-lg-12">
-
-
-
-
         <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
           <thead class="thead-light">
             <tr>
@@ -88,7 +91,9 @@
               <th>Creation Date</th>
               <th>Size</th>
               <th>Origin</th>
-
+              <th>
+                <input type="checkbox" [(ngModel)]="isSelect" (click)="selectDeselectAll()" name="row.name" />
+              </th>
             </tr>
           </thead>
           <tbody>

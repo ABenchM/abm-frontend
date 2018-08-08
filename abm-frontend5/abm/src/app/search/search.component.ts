@@ -23,25 +23,26 @@ export class SearchComponent implements OnInit {
   toAdd = [];
   language = {};
   searched = false;
+  isSelect ;
 
 
-  constructor(private service: SearchService , private collectionService: CollectionService, private router: Router,
-  private route: ActivatedRoute) {
+  constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
+    private route: ActivatedRoute) {
 
   }
 
-addAll() {
-this.collectionService.toAdd = [];
-this.collectionService.toAdd = this.toAdd;
-this.router.navigateByUrl('/addToCollection');
-}
+  addAll() {
+    this.collectionService.toAdd = [];
+    this.collectionService.toAdd = this.toAdd;
+    this.router.navigateByUrl('/addToCollection');
+  }
 
 
-createCollection() {
-this.collectionService.toCreate = [];
-this.collectionService.toCreate = this.toAdd;
-this.router.navigateByUrl('/createCollection');
-}
+  createCollection() {
+    this.collectionService.toCreate = [];
+    this.collectionService.toCreate = this.toAdd;
+    this.router.navigateByUrl('/createCollection');
+  }
 
 
 
@@ -82,13 +83,13 @@ this.router.navigateByUrl('/createCollection');
     return false;
   }
 
-  deselectAll() {
-    for (let i = 0; i < this.results.length; i++) {
-      this.results[i].singleSelection = false;
-      this.service.project = [];
-      this.toAdd = [];
-    }
-  }
+  // deselectAll() {
+  //   for (let i = 0; i < this.results.length; i++) {
+  //     this.results[i].singleSelection = false;
+  //     this.service.project = [];
+  //     this.toAdd = [];
+  //   }
+  // }
 
   removeCart() {
     this.toAdd = [];
@@ -102,13 +103,35 @@ this.router.navigateByUrl('/createCollection');
     }
   }
 
-  selectAll() {
-    for (let i = 0; i < this.results.length; i++) {
-      this.results[i].singleSelection = true;
-      this.service.project.push(this.results[i]);
+  // selectAll() {
+  //   for (let i = 0; i < this.results.length; i++) {
+  //     this.results[i].singleSelection = true;
+  //     this.service.project.push(this.results[i]);
 
+  //   }
+  //   this.toAdd = this.service.project;
+  // }
+
+  selectDeselectAll() {
+
+    this.isSelect = !this.isSelect;
+    console.log('isSelect ' + this.isSelect);
+    if (this.isSelect === true) {
+      for (let i = 0; i < this.results.length; i++) {
+        this.results[i].singleSelection = true;
+        this.service.project.push(this.results[i]);
+
+      }
+      this.toAdd = this.service.project;
+    } else {
+      for (let i = 0; i < this.results.length; i++) {
+        this.results[i].singleSelection = false;
+        this.service.project = [];
+        this.toAdd = [];
+      }
     }
-    this.toAdd = this.service.project;
+
+
   }
 
   select(item) {
@@ -134,7 +157,7 @@ this.router.navigateByUrl('/createCollection');
   }
 
   getTotalItems() {
-  
+
     return this.toAdd.length;
   }
 
