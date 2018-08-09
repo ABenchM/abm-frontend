@@ -9,7 +9,7 @@ import { WebsocketService } from '../services/websocket.service';
 import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
-
+import { ModalBuildViewerComponent } from '../modal-build-viewer/modal-build-viewer.component';
 import 'rxjs/add/operator/take';
 import { buildDriverProvider } from 'protractor/built/driverProviders';
 import { CommitService } from '../services/commit.service';
@@ -48,9 +48,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     localStorage.setItem('id', this.id);
     this.toastr.setRootViewContainerRef(viewf);
 
-    this.messageService.messages.subscribe(msg => {
-      console.log('Response from server: ' + msg);
-    });
+    // this.messageService.messages.subscribe(msg => {
+    //   console.log('Response from server: ' + msg);
+    // });
   }
 
   loadCollection(collectionId) {
@@ -61,6 +61,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
         this.commits = response.json()[0].versions[0].commits;
+        for (let i = 0; i < this.version.commits.length; i++) {
+          this.version.commits[i].selectProject = true;
+        }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
       }
@@ -73,7 +76,12 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
     this.openCommitModal(fargCommit);
   }
-
+  selectVersion(fargVersion) {
+    this.version = fargVersion;
+    for (let i = 0; i < this.version.commits.length; i++) {
+      this.version.commits[i].selectProject = true;
+    }
+  }
   deriveVersion(ver) {
     this.disabled = true;
     this.service.postDeriveVersion(ver).subscribe(
@@ -155,10 +163,10 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
 
 
-  sendMsg(message) {
-    console.log('Message from client: ', message);
-    this.messageService.messages.next(message);
-  }
+  // sendMsg(message) {
+  //   console.log('Message from client: ', message);
+  //   this.messageService.messages.next(message);
+  // }
 
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
@@ -256,34 +264,88 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
   addBuild() {
 
+    let targetTab = this.buildService.builds.findIndex(this.findTab, this.version);
+    if (targetTab < 0) {
+      this.buildService.builds.push({
+        'id': this.version.id, 'name': this.collection[0].name,
+        'versionNum': this.version.number, 'progress': 0, 'buildStatus': '', 'hidden': false
+      });
+      targetTab = this.buildService.builds.length - 1;
+      this.getBuildProcess(this.version.id, targetTab);
+    } else {
+      this.buildService.builds[targetTab].hidden = false;
+
+    }
+    this.buildService.initialSelection = this.buildService.builds[targetTab];
+    console.log(this.collection[0].name);
+    const modalRef = this.modalService.open(ModalBuildViewerComponent, { size: 'lg' });
+    modalRef.componentInstance.showing = this.buildService.initialSelection;
+    modalRef.componentInstance.tabs = this.buildService.builds;
+
+  }
+
+  getBuildProcess(id, targetTab) {
+    this.buildService.getBuild(id).subscribe(
+      res => {
+        if (res.status === 200) {
+          const build = res.json();
+          let progress = 0;
+          if (build.status === 'RUNNING') {
+            for (let i = 0; i < build.projectBuilds.length; i++) {
+              const buildProject = build.projectBuilds[i];
+              for (let j = 0; j < buildProject.buildSteps.length; j++) {
+                if (buildProject.buildSteps[j].status === 'IN_PROGRESS') {
+                  progress = i / build.projectBuilds.length;
+                }
+              }
+            }
+          } else if (build.status === 'FINISHED') {
+            progress = 1;
+          }
+        }
+      }
+    );
+  }
+
+  findTab(item) {
+    return (item.id === this.id);
   }
 
   build() {
-    this.buildprojects.id = this.version.id;
-    this.buildprojects.collectionId = this.version.collectionId;
-    this.buildprojects.commits = [];
+    // this.buildprojects.id = this.version.id;
+    // this.buildprojects.collectionId = this.version.collectionId;
+    // this.buildprojects.commits = [];
+    let count = 0;
     for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].selectProject === true) {
 
-        this.buildprojects.commits.push(this.version.commits[i]);
+      if (this.version.commits[i].selectProject === false) {
+        count = count + 1;
+
       }
-    }
 
-    if (!this.buildprojects.commits || this.buildprojects.commits.length === 0) {
+    }
+    if (count === this.version.commits.length) {
       this.toastr.error('No Project has been selected. Please select atleast one project to build the collection');
-    }
-
-    this.buildService.postBuild(this.buildprojects).subscribe(
-      response => {
-        if (response.status === 200) {
-          const buildId = response.json();
-          this.buildprojects.frozen = true;
-        } else if (response.status === 403) {
-          this.router.navigateByUrl('/login');
+    } else {
+      this.buildService.postBuild(this.version).subscribe(
+        response => {
+          if (response.status === 200) {
+            const buildId = response.json();
+            this.buildprojects.frozen = true;
+            this.version.frozen = true;
+            this.buildService.builds.push({
+              'id': this.version.id, 'name': this.collection[0].name, 'versionNum': this.version.number,
+              'progress': 0, 'buildStatus': 'RUNNING', 'hidden': false
+            });
+            const targetTab = this.buildService.builds.length - 1;
+            this.getBuildProcess(this.version.id, targetTab);
+          } else if (response.status === 403) {
+            this.router.navigateByUrl('/login');
+          }
         }
-      }
 
-    );
+      );
+    }
 
   }
 

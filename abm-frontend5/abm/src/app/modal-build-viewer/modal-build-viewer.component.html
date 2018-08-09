@@ -1,0 +1,21 @@
+<div style="min-height: {{150 + (tabs.length * 30)}}px">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Build Progress for {{showing.name}}</h3>
+    <p>Version {{showing.versionNum}}</p>
+  </div>
+  <div class="modal-sidebar sidebar" *ngFor="let tab of tabs">
+    <div class="sidebarTab" title="{{tab.name}}" [ngClass]="{'selected': (tab === showing)}" *ngIf="!tab.hidden"></div>
+    <span class="glyphicon glyphicon-chevron-right" (click)="dismiss(tab.id)"></span>
+    <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)" (click)="select(tab)">
+      {{tab | tabTitle}}
+    </a>
+  </div>
+  <div class="modal-footer">
+    <span class="float-left" *ngIf="!loading">
+      <button class="btn btn-danger btn-sm" (click)="cancelBuild(build.id)" *ngIf="build.status === 'RUNNING'">Cancel build</button>
+      <button class="btn btn-info btn-sm" (click)="downloadArchive(build.id)" *ngIf="build.status === 'FINISHED'">Download</button>
+      <button class="btn btn-danger btn-sm" (click)="deleteBuild(build.id)" *ngIf="build.status === 'FINISHED' || build.status === 'CANCELLED' || build.status === 'FAILED'">Delete</button>
+    </span>
+    <button class="btn btn-warning btn-sm" type="button" (click)="activeModal.close('Close click')">Close Panel</button>
+  </div>
+</div>

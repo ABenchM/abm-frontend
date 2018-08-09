@@ -29,7 +29,7 @@
     </button>
     <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
       <li *ngFor="let row of versions">
-        <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
+        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
       <li class="dropdown-item">
@@ -73,8 +73,8 @@
       <tr>
         <th>Name</th>
         <th>Commit</th>
-        <th></th>
-        <th></th>
+        <th [hidden]="version.frozen"></th>
+        <th [hidden]="version.frozen"></th>
       </tr>
     </thead>
     <tbody>
@@ -91,12 +91,12 @@
           </div>
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
         </td>
-        <td>&nbsp;&nbsp;
-          <input [disabled]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}"
+        <td [hidden]="version.frozen">&nbsp;&nbsp;
+          <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}" id="{{commit.repository.id}}"
           />
         </td>
-        <td>
-          <button [disabled]="version.frozen" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
+        <td [hidden]="version.frozen">
+          <button [hidden]="version.frozen" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
         </td>
       </tr>
     </tbody>
