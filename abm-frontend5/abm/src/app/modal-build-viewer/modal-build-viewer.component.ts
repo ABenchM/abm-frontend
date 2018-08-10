@@ -5,6 +5,10 @@ import { Router, ActivatedRoute, Route } from '@angular/router';
 import { BuildService } from '../services/build.service';
 import { WebsocketService } from '../services/websocket.service';
 import { DialogService } from 'ng2-bootstrap-modal';
+// import {accordion} from 'angular-ui-bootstrap/src/accordion';
+// import {tabs} from 'angular-ui-bootstrap/src/tabs';
+
+
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 
 @Component({
@@ -22,7 +26,7 @@ export class ModalBuildViewerComponent implements OnInit {
   socket: any;
   messageFromServer = '';
   isOpen = false;
-  ws: WebSocket;
+  ws: any;
   targetTab: any;
   constructor(private route: ActivatedRoute, private router: Router, private toastr: ToastsManager, public activeModal: NgbActiveModal,
     private viewf: ViewContainerRef, private buildService: BuildService, private dialogservice: DialogService,
@@ -43,21 +47,21 @@ export class ModalBuildViewerComponent implements OnInit {
           }
           for (let i = 0; i < this.build.projectBuilds.length; i++) {
             const currentBuild = this.build.projectBuilds[i];
-            currentBuild.cssClass = 'panel-info';
+            currentBuild.cssClass = 'info';
             for (let j = 0; j < currentBuild.buildSteps.length; j++) {
               const currentStep = currentBuild.buildSteps[j];
               if (currentStep.status === 'IN_PROGRESS') {
-                currentStep.cssClass = 'panel-warning';
-                currentBuild.cssClass = 'panel-warning';
+                currentStep.cssClass = 'warning';
+                currentBuild.cssClass = 'warning';
               } else if (currentStep.status === 'SUCCESS') {
-                currentStep.cssClass = 'panel-success';
+                currentStep.cssClass = 'success';
               } else if (currentStep.status === 'WAITING') {
-                currentStep.cssClass = 'panel-info';
+                currentStep.cssClass = 'info';
               } else if (currentStep.status === 'FAILED') {
-                currentStep.cssClass = 'panel-danger';
-                currentBuild.cssClass = 'panel-danger';
+                currentStep.cssClass = 'danger';
+                currentBuild.cssClass = 'danger';
               } else if (currentStep.status === 'FAILED') {
-                currentStep.cssClass = 'panel-warning';
+                currentStep.cssClass = 'warning';
               }
             }
 
@@ -69,7 +73,7 @@ export class ModalBuildViewerComponent implements OnInit {
               }
             }
             if (allGood) {
-              currentBuild.cssClass = 'panel-success';
+              currentBuild.cssClass = 'success';
             }
 
           }
@@ -81,7 +85,7 @@ export class ModalBuildViewerComponent implements OnInit {
   openSocket(buildId) {
     this.ws = new WebSocket('ws://localhost:8080/ws/build');
     this.ws.binaryType = 'arraybuffer';
-    this.ws.onopen = function (event) {
+    this.ws.onopen = function () {
       this.onOpen(buildId);
 
 
@@ -122,7 +126,7 @@ export class ModalBuildViewerComponent implements OnInit {
               currentBuild.buildSteps.clear();
               for (let j = 0; j < steps.length; j++) {
                 const step = steps[j];
-                step.cssClass = 'panel-info';
+                step.cssClass = 'info';
                 currentBuild.buildSteps.push(step);
               }
               break;
@@ -134,14 +138,14 @@ export class ModalBuildViewerComponent implements OnInit {
           for (let i = 0; i < this.build.projectBuilds.length; i++) {
             const currentBuild = this.build.projectBuilds[i];
             if (currentBuild.repositoryId === repoId) {
-              currentBuild.cssClass = 'panel-success';
+              currentBuild.cssClass = 'success';
               for (let j = 0; j < currentBuild.buildSteps.length; j++) {
                 const currentStep = currentBuild.buildSteps[j];
                 if (currentStep.status === 'FAILED') {
-                  currentBuild.cssClass = 'panel-danger';
+                  currentBuild.cssClass = 'danger';
                   break;
                 } else if (currentStep.status === 'CANCELLED') {
-                  currentBuild.cssClass = 'panel-info';
+                  currentBuild.cssClass = 'info';
                   this.build.status = 'CANCELLED';
                   break;
                 }
@@ -160,13 +164,13 @@ export class ModalBuildViewerComponent implements OnInit {
                 currentStep.stderr = step.stderr;
                 currentStep.stdout = step.stdout;
                 if (step.status === 'IN_PROGRESS') {
-                  currentStep.cssClass = 'panel-warning';
-                  currentProjectBuild.cssClass = 'panel-warning';
+                  currentStep.cssClass = 'warning';
+                  currentProjectBuild.cssClass = 'warning';
                 } else if (step.status === 'SUCCESS') {
-                  currentStep.cssClass = 'panel-success';
+                  currentStep.cssClass = 'success';
                 } else if (step.status === 'FAILED') {
-                  currentStep.cssClass = 'panel-danger';
-                  currentProjectBuild.cssClass = 'panel-danger';
+                  currentStep.cssClass = 'danger';
+                  currentProjectBuild.cssClass = 'danger';
                 }
                 break;
               }
@@ -258,8 +262,8 @@ export class ModalBuildViewerComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.tabs[0]);
     this.loadBuild(this.showing.id);
+    console.log(this.tabs);
 
   }
 

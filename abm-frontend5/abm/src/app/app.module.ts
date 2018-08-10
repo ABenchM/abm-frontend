@@ -15,7 +15,8 @@ import {OrderModule} from 'ngx-order-pipe';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
-import {DataTableModule} from 'angular5-data-table';
+import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
+
 // Components
 
 import { AppComponent } from './app.component';
@@ -149,8 +150,7 @@ const routes: Routes = [
     ToastModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
-    ShContextMenuModule,
-    DataTableModule.forRoot()
+    ShContextMenuModule
 
 
   ],

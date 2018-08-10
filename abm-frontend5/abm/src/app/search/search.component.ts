@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { DataTableResource } from 'angular5-data-table';
 import { CollectionService } from '../services/collection.service';
+import { OrderPipe } from 'ngx-order-pipe';
 
 
 
@@ -24,11 +25,22 @@ export class SearchComponent implements OnInit {
   language = {};
   searched = false;
   isSelect ;
+  SortType: any = 'name';
+  reverse = false;
 
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private orderPipe: OrderPipe) {
 
+  }
+
+
+
+  setSortType(value) {
+    if (this.SortType === value) {
+      this.reverse = !this.reverse;
+    }
+    this.SortType = value;
   }
 
   addAll() {

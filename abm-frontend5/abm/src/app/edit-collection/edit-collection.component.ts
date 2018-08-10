@@ -39,6 +39,14 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   message = {};
   filtered: boolean;
   running: boolean;
+
+
+  isOpen = false;
+  buildstoRegister = [];
+  findingStep = false;
+  openingSocket = false;
+  socket: any;
+
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
@@ -277,7 +285,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
     }
     this.buildService.initialSelection = this.buildService.builds[targetTab];
-    console.log(this.collection[0].name);
+
     const modalRef = this.modalService.open(ModalBuildViewerComponent, { size: 'lg' });
     modalRef.componentInstance.showing = this.buildService.initialSelection;
     modalRef.componentInstance.tabs = this.buildService.builds;
@@ -302,6 +310,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           } else if (build.status === 'FINISHED') {
             progress = 1;
           }
+          this.buildService.builds[targetTab].progress = progress;
+          this.buildService.builds[targetTab].buildStatus = build.status;
+          this.buildService.addListener(build.id);
         }
       }
     );

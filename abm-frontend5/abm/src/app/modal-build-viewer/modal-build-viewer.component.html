@@ -6,9 +6,93 @@
   <div class="modal-sidebar sidebar" *ngFor="let tab of tabs">
     <div class="sidebarTab" title="{{tab.name}}" [ngClass]="{'selected': (tab === showing)}" *ngIf="!tab.hidden"></div>
     <span class="glyphicon glyphicon-chevron-right" (click)="dismiss(tab.id)"></span>
-    <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)" (click)="select(tab)">
-      {{tab | tabTitle}}
+    <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)"
+      (click)="select(tab)">
+      {{tab | tabTitle}} {{tab.buildStatus}}
     </a>
+  </div>
+  <div class="modal-body" *ngIf="!loading">
+    <p class="highlight" *ngIf="build.status === 'WAITING'">This build is currently pending, and will start when other builds are finished.</p>
+
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let projectBuild of build.projectBuilds">
+      <div>
+        <ngb-panel type="{{projectBuild.cssClass}}">
+          <ng-template ngbPanelTitle>
+            <span class="titleColor"> {{projectBuild.repository.name}} </span>
+            <span class="cssload-loader" *ngIf="projectBuild.cssClass === 'warning'"
+              style="width: 16px; height: 16px"></span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <ngb-accordion *ngFor="let step of projectBuild.buildSteps">
+              <div>
+                <ngb-panel type="{{step.cssClass}}">
+                  <ng-template ngbPanelTitle>
+                    <span class="titleColor"> {{step.name}} - {{step.status}} </span>
+                    <span class="cssload-loader" *ngIf="step.status === 'IN_PROGRESS'"
+                      style="width: 16px; height: 16px"></span>
+                  </ng-template>
+
+                  <ng-template ngbPanelContent>
+                    <ngb-tabset>
+                      <ngb-tab title="STDOUT">
+                        <ng-template ngbTabContent>
+                          {{step.stdout}}
+                        </ng-template>
+                      </ngb-tab>
+                      <ngb-tab title="STDERR">
+                        <ng-template ngbTabContent>
+                          {{step.stderr}}
+                        </ng-template>
+                      </ngb-tab>
+                    </ngb-tabset>
+                  </ng-template>
+                </ngb-panel>
+
+              </div>
+              <br>
+              <br>
+              <br>
+            </ngb-accordion>
+          </ng-template>
+        </ngb-panel>
+      </div>
+
+    </ngb-accordion>
+
+
+    <!-- <uib-accordion *ngFor="let projectBuild of build.projectBuilds">
+      <div uib-accordion-group [ngClass]="projectBuild.cssClass" >
+        <uib-accordion-heading>
+          {{projectBuild.repository.name}}
+          <span class="cssload-loader" *ngIf="projectBuild.cssClass == 'panel-warning'"
+            style="width: 16px; height: 16px"></span>
+          <i class="float-right glyphicon" [ngClass]="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </uib-accordion-heading>
+        <uib-accordion *ngFor="let step of projectBuild.buildSteps">
+          <div uib-accordion-group [ngClass]="step.cssClass" >
+            <uib-accordion-heading>
+              {{step.name}} - {{step.status}}
+              <span class="cssload-loader" *ngIf="step.status == 'IN_PROGRESS'" style="width: 16px; height: 16px"></span>
+              <i class="float-right glyphicon" [ngClass]="{'glyphicon-chevron-down': inner_status.open, 'glyphicon-chevron-right': !inner_status.open}"></i>
+            </uib-accordion-heading>
+            <uib-tabset active="active">
+              <uib-tab index="0" heading="STDOUT">
+                <pre>{{step.stdout}}</pre>
+              </uib-tab>
+              <uib-tab index="1" heading="STDERR">
+                <pre>{{step.stderr}}</pre>
+              </uib-tab>
+            </uib-tabset>
+          </div>
+        </uib-accordion>
+        <ul *ngFor="let artifact of projectBuild.buildArtifacts">
+          <li>{{artifact}}</li>
+        </ul>
+      </div>
+    </uib-accordion> -->
+    <div class="wrapper" *ngIf="loading">
+      <span class="cssload-loader"></span>
+    </div>
   </div>
   <div class="modal-footer">
     <span class="float-left" *ngIf="!loading">

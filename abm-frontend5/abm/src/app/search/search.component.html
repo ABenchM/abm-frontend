@@ -86,7 +86,9 @@
         <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
           <thead class="thead-light">
             <tr>
-              <th>Name</th>
+              <th>Name  
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span></th>
               <th>Description</th>
               <th>Creation Date</th>
               <th>Size</th>

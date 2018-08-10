@@ -1,4 +1,7 @@
 
+.titleColor {
+    color: white;
+}
 /* Sidebar to display builds */
 .sidebar {
     position: fixed;
