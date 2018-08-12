@@ -1,3 +1,31 @@
-<p>
-  hermes-viewer works!
-</p>
+<div style="min-height:{{150 + (22 * 30)}}px">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title"> Hermes Results</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-bordered table-striped table-hover" style="table-layout:flexible;">
+          <thead>
+            <tr>
+              <th>Project Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of results">
+              <td>{{row.projectName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-sm" type="button" (click)="download()">Download Hermes Results</button>
+    <button class="btn btn-warning float-left" type="button" (click)="activeModal.close('Close click')">Close</button>
+  </div>
+  <div class="wrapper" *ngIf="loading">
+    <span class="cssload-loader"></span>
+  </div>
+  <br/>
+</div>

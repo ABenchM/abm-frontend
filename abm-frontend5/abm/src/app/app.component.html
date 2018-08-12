@@ -1,27 +1,9 @@
 
-<header>
-  <nav class="navbar bg-light">
-    <div class="container-fluid">
-      <ul class="nav nav-pills pull-left">
-          <li  [class.active] = "viewMode == 'collection'"><a (click)="onCLickViewMode('collection')" routerLink="/collection" routerLinkActive="active">Collections</a></li>
-          <li  [class.active] = "viewMode == 'createCollection'" *ngIf="loggedInStatus()"><a (click)= "onCLickViewMode('createCollection')"   [routerLink]="['/search']" routerLinkActive="active">Create Collections</a></li>
-          <li [class.active] = "viewMode == 'filter'" *ngIf="loggedInStatus()"><a (click)= "onCLickViewMode('filter')"   [routerLink]="['/filters']" routerLinkActive="active">Filters</a></li>
-          <li [class.active] = "viewMode == 'about'"><a (click)= "onCLickViewMode('about')"   [routerLink]="['/about']" routerLinkActive="active">About</a></li>
-          <li [class.active] = "viewMode == 'login'"  *ngIf="!loggedInStatus()"><a (click)= "onCLickViewMode('login')"  [routerLink]="['/login']" routerLinkActive="active" class="nav-link active">Login</a></li>
-          <li [class.active] = "viewMode == 'logout'" *ngIf="loggedInStatus()"><a (click)= "onCLickViewMode('login')"   [routerLink]="['/logout']" routerLinkActive="active" class="nav-link active">Logout</a></li>
-          
-      </ul>
-       <img src = "assets/abm_logo.jpg" (click)= "sendMeHome()" width="60px" height="60px" alt="ABM" align="right">
-    </div>
-  </nav>
-</header>
+ <abm-bs-navbar></abm-bs-navbar>
 
- 
+ <div class="container">
 
-<router-outlet></router-outlet> 
-
-
-
-  
- 
+   <abm-build-tab></abm-build-tab> 
+ <router-outlet></router-outlet> 
+  </div>
 

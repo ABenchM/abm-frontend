@@ -6,7 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TabTitlePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return "Building " + value.name;
+    return value.name;
+
   }
 
 }
