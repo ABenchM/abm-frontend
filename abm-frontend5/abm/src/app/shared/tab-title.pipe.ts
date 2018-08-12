@@ -7,6 +7,7 @@ export class TabTitlePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
     return value.name;
+
   }
 
 }

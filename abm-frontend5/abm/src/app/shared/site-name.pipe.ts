@@ -16,6 +16,7 @@ export class SiteNamePipe implements PipeTransform {
     } else {
       return 'Unknown';
     }
+
   }
 
 }
