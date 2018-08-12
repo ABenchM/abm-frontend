@@ -4,12 +4,13 @@
     <p>Version {{showing.versionNum}}</p>
   </div>
   <div class="modal-sidebar sidebar" *ngFor="let tab of tabs">
-    <div class="sidebarTab" title="{{tab.name}}" [ngClass]="{'selected': (tab === showing)}" *ngIf="!tab.hidden"></div>
+    <div class="sidebarTab" title="{{tab.name}}" [ngClass]="{'selected': (tab === showing)}" *ngIf="!tab.hidden">
     <span class="glyphicon glyphicon-chevron-right" (click)="dismiss(tab.id)"></span>
-    <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)"
-      (click)="select(tab)">
-      {{tab | tabTitle}} {{tab.buildStatus}}
+    <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)" 
+      (click)="select(tab)" >
+      {{tab | tabTitle}}
     </a>
+</div>
   </div>
   <div class="modal-body" *ngIf="!loading">
     <p class="highlight" *ngIf="build.status === 'WAITING'">This build is currently pending, and will start when other builds are finished.</p>

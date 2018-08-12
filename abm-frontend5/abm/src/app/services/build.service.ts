@@ -1,12 +1,13 @@
-import { Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 
 @Injectable()
 export class BuildService {
 
-  constructor(private http: Http, private toastr: ToastsManager, private viewf: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(viewf);
+  constructor(private http: Http, private toastr: ToastsManager) {
+
   }
   builds = [];
   initialSelection;
@@ -25,9 +26,12 @@ export class BuildService {
   }
 
   getBuild(versionId) {
-    return this.http.get('/rest/build/' + versionId);
+      return this.http.get('/rest/build/' + versionId);
   }
 
+  getUserBuild(user) {
+    return this.http.get('/rest/builds/' + user);
+  }
 
   addListener(buildId) {
     if (!this.isOpen) {
@@ -126,5 +130,4 @@ export class BuildService {
     }
     return true;
   }
-
 }

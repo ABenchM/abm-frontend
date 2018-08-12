@@ -318,14 +318,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
   findTab(item) {
     return (item.id === this.id);
   }
 
   build() {
-    // this.buildprojects.id = this.version.id;
-    // this.buildprojects.collectionId = this.version.collectionId;
-    // this.buildprojects.commits = [];
     let count = 0;
     for (let i = 0; i < this.version.commits.length; i++) {
 
