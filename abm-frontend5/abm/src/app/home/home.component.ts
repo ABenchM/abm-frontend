@@ -4,24 +4,24 @@ import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
-import {OrderPipe} from 'ngx-order-pipe';
-import { Subscription } from 'rxjs/Subscription';
+import { OrderPipe } from 'ngx-order-pipe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'abm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit , OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   pinned: any[] = [];
   public publicCollections: any[] = [];
   cancelSearch: boolean;
   loading: boolean;
-  reverse =  false;
+  reverse = false;
   sortType: any = 'name';
   disabled: boolean;
-  subscription: Subscription;
+  // subscription: Subscription;
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
     private orderPipe: OrderPipe) { }
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit , OnDestroy {
 
   loadPublicCollections() {
     this.loading = true;
-   this.subscription =  this.service.getPublicCollections().subscribe(response => {
+    this.service.getPublicCollections().subscribe(response => {
       this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
       if (this.loggedInStatus()) {
         this.loadPinned();
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit , OnDestroy {
 
     }
     this.service.getPinnedCollections().subscribe(response => {
-      this.pinned = this.orderPipe.transform(response.json() , this.sortType) ;
+      this.pinned = this.orderPipe.transform(response.json(), this.sortType);
     });
 
     this.loading = false;
@@ -143,6 +143,6 @@ export class HomeComponent implements OnInit , OnDestroy {
     this.loadPublicCollections();
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }

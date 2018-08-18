@@ -1,3 +1,7 @@
+
+import {throwError as observableThrowError} from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {Http , Response, Headers, RequestOptions} from '@angular/http';
 import {User} from '../models/user.model';
@@ -29,7 +33,7 @@ export class Register {
     private handleError(error: any) {
 
         console.error('post error : ', error );
-        return Observable.throw(error.statusText);
+        return observableThrowError(error.statusText);
 
 
     }
@@ -37,9 +41,9 @@ export class Register {
          const body = JSON.stringify(user);
          const headers = new Headers({'Content-type': 'application/json'});
          const options = new RequestOptions({headers: headers});
-         return this.http.post('/rest/username', body, options)
-         .map(this.extractData)
-         .catch(this.handleError);
+         return this.http.post('/rest/username', body, options).pipe(
+         map(this.extractData),
+         catchError(this.handleError));
 
 
 

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HermesService } from '../services/hermes.service';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { DataServiceService } from '../services/data-service.service';
 
 
@@ -20,9 +21,9 @@ export class ModalHermesComponent implements OnInit {
   filterList: any[] = [];
   loading: boolean;
   constructor(public activeModal: NgbActiveModal, private service: HermesService, private dataService: DataServiceService,
-    private toastr: ToastsManager,
+    private toastr: ToastrService,
     private viewf: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(viewf);
+    // this.toastr.setRootViewContainerRef(viewf);
 
   }
 

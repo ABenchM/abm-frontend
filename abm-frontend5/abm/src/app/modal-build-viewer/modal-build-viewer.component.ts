@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { BuildService } from '../services/build.service';
 import { WebsocketService } from '../services/websocket.service';
@@ -28,10 +29,10 @@ export class ModalBuildViewerComponent implements OnInit {
   isOpen = false;
   ws: any;
   targetTab: any;
-  constructor(private route: ActivatedRoute, private router: Router, private toastr: ToastsManager, public activeModal: NgbActiveModal,
+  constructor(private route: ActivatedRoute, private router: Router, private toastr: ToastrService, public activeModal: NgbActiveModal,
     private viewf: ViewContainerRef, private buildService: BuildService, private dialogservice: DialogService,
     private wsService: WebsocketService) {
-    this.toastr.setRootViewContainerRef(viewf);
+    // this.toastr.setRootViewContainerRef(viewf);
 
   }
 
@@ -263,7 +264,7 @@ export class ModalBuildViewerComponent implements OnInit {
 
   ngOnInit() {
     this.loadBuild(this.showing.id);
-    console.log(this.tabs);
+    // console.log(this.tabs);
 
   }
 

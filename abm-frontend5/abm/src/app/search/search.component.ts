@@ -105,6 +105,7 @@ export class SearchComponent implements OnInit {
 
   removeCart() {
     this.toAdd = [];
+    this.isSelect = !this.isSelect;
   }
 
   removeItem(itemId) {

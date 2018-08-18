@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { UsernameValidators } from '../register/username.validators';
 import { DataServiceService } from '../services/data-service.service';
 import { CollectionService } from '../services/collection.service';
@@ -21,9 +22,9 @@ export class CreateCollectionComponent implements OnInit {
   version: any = {};
   commit: any = {};
   commits: any = [{}];
-  constructor(private toastr: ToastsManager, private viewC: ViewContainerRef,
+  constructor(private toastr: ToastrService, private viewC: ViewContainerRef,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
-    this.toastr.setRootViewContainerRef(viewC);
+    // this.toastr.setRootViewContainerRef(viewC);
     this.repositoryList = this.collectService.toCreate;
   }
 

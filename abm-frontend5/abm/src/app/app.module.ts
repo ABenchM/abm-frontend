@@ -10,7 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastrModule} from 'ngx-toastr';
 import {OrderModule} from 'ngx-order-pipe';
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
@@ -41,7 +41,7 @@ import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { SearchComponent } from './search/search.component';
 import { VersionDropDownComponent } from './version-drop-down/version-drop-down.component';
 import { ViewComponent } from './view/view.component';
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular5-social-login';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular-6-social-login';
 import { getAuthServiceConfigs } from './SocialLoginConfig';
 import { RegisterSuccessComponent } from './register-success/register-success.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -147,7 +147,7 @@ const routes: Routes = [
     BootstrapModalModule.forRoot({container: document.body}),
     SocialLoginModule,
     NgbModule.forRoot(),
-    ToastModule.forRoot(),
+    ToastrModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
     ShContextMenuModule

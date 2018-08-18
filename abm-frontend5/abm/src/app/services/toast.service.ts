@@ -1,5 +1,6 @@
 import { Injectable , ViewContainerRef } from '@angular/core';
-import {ToastsManager} from 'ng2-toastr/ng2-toastr';
+// import {ToastsManager} from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable()
@@ -7,8 +8,8 @@ export class ToastService {
 
   vcRef: ViewContainerRef;
 
-  constructor(private toastr: ToastsManager) {
-    this.toastr.setRootViewContainerRef(this.vcRef);
+  constructor(private toastr: ToastrService) {
+    // this.toastr.setRootViewContainerRef(this.vcRef);
    }
 
    showSuccess(message) {
@@ -24,8 +25,8 @@ export class ToastService {
     this.toastr.info(message);
   }
 
-  showCustom(message) {
-    this.toastr.custom('<span style="color: red">' + message + '</span>', null, {enableHTML: true});
-  }
+  // showCustom(message) {
+  //   this.toastr.custom('<span style="color: red">' + message + '</span>', null, {enableHTML: true});
+  // }
 
 }

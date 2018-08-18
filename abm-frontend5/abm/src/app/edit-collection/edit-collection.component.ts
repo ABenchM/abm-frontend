@@ -1,16 +1,19 @@
+
+import {take} from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
 import { DialogService } from 'ng2-bootstrap-modal';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../services/message.service';
 import { WebsocketService } from '../services/websocket.service';
 import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
 import { ModalBuildViewerComponent } from '../modal-build-viewer/modal-build-viewer.component';
-import 'rxjs/add/operator/take';
+
 import { buildDriverProvider } from 'protractor/built/driverProviders';
 import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
@@ -49,12 +52,12 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
-    private toastr: ToastsManager, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
+    private toastr: ToastrService, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
     private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
     private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);
-    this.toastr.setRootViewContainerRef(viewf);
+    // this.toastr.setRootViewContainerRef(viewf);
 
     // this.messageService.messages.subscribe(msg => {
     //   console.log('Response from server: ' + msg);
@@ -64,7 +67,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   loadCollection(collectionId) {
     this.loading = true;
     if (collectionId) {
-      this.service.getCollectionById(collectionId).take(1).subscribe(response => {
+      this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
@@ -229,15 +232,15 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.router.navigate(['/collection']).then(
             () => {
 
-              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', { toastLife: 10 });
+              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', {timeOut: 1000});
             });
 
           setTimeout(() => {
-            this.toastr.clearAllToasts();
+            this.toastr.clear();
           }, 1000);
           setTimeout(() => {
             disposable.unsubscribe();
-            this.toastr.clearAllToasts();
+            this.toastr.clear();
           }, 10000);
         }
       });

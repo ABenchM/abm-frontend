@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
@@ -17,15 +19,15 @@ export class MessageService {
   buildSocketUrl = 'ws://localhost:8080/ws/build';
   constructor(wsService: WebsocketService) {
     this.messages = <Subject<Message>>wsService
-      .connect(this.buildSocketUrl)
-      .map((response: MessageEvent): Message => {
+      .connect(this.buildSocketUrl).pipe(
+      map((response: MessageEvent): Message => {
         const data = JSON.parse(response.data);
         return data;
         // return {
         //   status: data.status,
         //   id: data.id
         // };
-      });
+      }));
   }
 
 }

@@ -3,7 +3,7 @@ import { UtilityService } from '../services/utility.service';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import {OrderPipe} from 'ngx-order-pipe';
 
 @Component({
@@ -19,7 +19,7 @@ export class CollectionComponent implements OnInit, OnDestroy  {
   reverse = false;
   userCollections: any[] = [];
   filteredCollections: any[];
-  subscription: Subscription;
+  // subscription: Subscription;
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute , private orderPipe: OrderPipe) {
 
@@ -80,7 +80,7 @@ export class CollectionComponent implements OnInit, OnDestroy  {
 
     if (localStorage.getItem('currentUser') != null) {
 
-    this.subscription =   this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+      this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
         this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
           for (let i = 0; i < this.userCollections.length; i++) {
           for (let j = 0; j < this.userCollections[i].versions.length; j++) {
@@ -100,7 +100,7 @@ export class CollectionComponent implements OnInit, OnDestroy  {
   }
 
   ngOnDestroy() {
-     this.subscription.unsubscribe();
+    //  this.subscription.unsubscribe();
   }
 
 }

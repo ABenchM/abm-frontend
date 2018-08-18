@@ -1,7 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { Observable ,  BehaviorSubject } from 'rxjs';
 import { ToastService } from './services/toast.service';
 
 @Component({

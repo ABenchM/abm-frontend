@@ -1,8 +1,11 @@
+
+import {take} from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
-import 'rxjs/add/operator/take';
+
 import { CollectionService } from '../services/collection.service';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {ToastrService} from 'ngx-toastr';
 import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ViewService } from '../services/view.service';
@@ -33,11 +36,11 @@ export class ViewComponent implements OnInit {
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private viewService: ViewService,
     private dataService: DataServiceService,
-    private pinService: PinService, private toastr: ToastsManager,
+    private pinService: PinService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private location: Location) {
 
     this.id = this.route.snapshot.paramMap.get('id');
-    this.toastr.setRootViewContainerRef(viewContainerRef);
+    // this.toastr.setRootViewContainerRef(viewContainerRef);
     this.loadViewCollection(this.id);
 
   }
@@ -123,7 +126,7 @@ export class ViewComponent implements OnInit {
   loadViewCollection(viewCollectionId) {
     this.loading = true;
     if (viewCollectionId) {
-      this.service.getViewCollection(viewCollectionId).take(1).subscribe(
+      this.service.getViewCollection(viewCollectionId).pipe(take(1)).subscribe(
         response => {
           if (response.json() !== undefined) {
             this.viewCollection = response.json();

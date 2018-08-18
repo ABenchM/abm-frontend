@@ -1,4 +1,4 @@
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular5-social-login';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular-6-social-login';
 
 export function getAuthServiceConfigs() {
     const config = new AuthServiceConfig([{

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HermesService } from '../services/hermes.service';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'abm-hermes-viewer',
   templateUrl: './hermes-viewer.component.html',
@@ -13,22 +13,22 @@ export class HermesViewerComponent implements OnInit {
   loading: boolean;
   results = [];
   @Input() version: any;
-  constructor(public activeModal: NgbActiveModal, private service: HermesService, private toastr: ToastsManager,
+  constructor(public activeModal: NgbActiveModal, private service: HermesService, private toastr: ToastrService,
     private viewf: ViewContainerRef) {
-      this.toastr.setRootViewContainerRef(viewf);
-    }
+    // this.toastr.setRootViewContainerRef(viewf);
+  }
 
 
   download() {
-      this.service.getHermesStatus(this.version.id).subscribe(
-        response => {
-          if (response.json().status  === 'RUNNING') {
-             this.toastr.error('Hermes is in progress, try again later');
-          } else {
-            location.href = '/downloadHermes/' + response.json().id;
-          }
+    this.service.getHermesStatus(this.version.id).subscribe(
+      response => {
+        if (response.json().status === 'RUNNING') {
+          this.toastr.error('Hermes is in progress, try again later');
+        } else {
+          location.href = '/downloadHermes/' + response.json().id;
         }
-      );
+      }
+    );
   }
 
   loadResults() {

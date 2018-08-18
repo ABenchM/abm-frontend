@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable()
 export class BuildService {
 
-  constructor(private http: Http, private toastr: ToastsManager) {
+  constructor(private http: Http, private toastr: ToastrService) {
 
   }
   builds = [];

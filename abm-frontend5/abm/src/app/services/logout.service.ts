@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Credentials } from '../models/credentials.model';
 import { IfObservable } from 'rxjs/observable/IfObservable';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -19,7 +22,7 @@ export class Logout {
     private handleError(error: any) {
 
         console.error('post error : ', error);
-        return Observable.throw(error.statusText);
+        return observableThrowError(error.statusText);
 
     }
     private getBearerToken() {
@@ -29,8 +32,8 @@ console.log(document.cookie);
       //  this.getBearerToken();
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
-        return this.http.get('/rest/logout', options)
-            .map(this.onSuccess)
-            .catch(this.handleError);
+        return this.http.get('/rest/logout', options).pipe(
+            map(this.onSuccess),
+            catchError(this.handleError),);
     }
 }

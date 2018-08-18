@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { CollectionService } from '../services/collection.service';
-import { Subscription } from 'rxjs/Subscription';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
+// import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService, Toast } from 'ngx-toastr';
 import { CollectionComponent } from '../collection/collection.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommitService } from '../services/commit.service';
@@ -15,22 +16,22 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
 
   userCollections: any[] = [];
-  subscription: Subscription;
+  // subscription: Subscription;
   loading: boolean;
   collection: any = {};
   version: any = {};
   updatedVersion: any = {};
   commits: any = [{}];
 
-  constructor(private collectionService: CollectionService, private toastr: ToastsManager,
+  constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
     private commitService: CommitService) {
-    this.toastr.setRootViewContainerRef(viewContainerRef);
+    // this.toastr.setRootViewContainerRef(viewContainerRef);
   }
 
   loadUserCollections() {
     this.loading = true;
-    this.subscription = this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+     this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       if (response.status === 200) {
         this.userCollections = response.json();
         this.collection = this.userCollections[0];
@@ -77,7 +78,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/editCollection/' + this.collection.id);
         } else {
           this.toastr.error('Internal error: the projects cannot be added. Please try again later.' +
-            'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { toastLife: 100 });
+            'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { timeOut: 100 });
         }
       }
     );
@@ -106,6 +107,6 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }

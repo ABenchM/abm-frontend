@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService, GoogleLoginProvider } from 'angular5-social-login';
+import { AuthService, GoogleLoginProvider } from 'angular-6-social-login';
 
 @Injectable()
 export class GoogleLoginService {

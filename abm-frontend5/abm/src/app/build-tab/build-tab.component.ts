@@ -32,7 +32,8 @@ export class BuildTabComponent implements OnInit {
 
   initilize() {
     this.buildService.builds.splice(0, this.buildService.builds.length);
-    if (localStorage.getItem('currentUser') !== undefined) {
+    console.log('currentUser ' + localStorage.getItem('currentUser'));
+    if (localStorage.getItem('currentUser') !== null) {
       this.buildService.getUserBuild(localStorage.getItem('currentUser')).subscribe(
         response => {
           if (response.status === 200) {

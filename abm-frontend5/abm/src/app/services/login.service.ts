@@ -1,8 +1,10 @@
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Credentials } from '../models/credentials.model';
 import { IfObservable } from 'rxjs/observable/IfObservable';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -29,9 +31,9 @@ export class Login {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
-        return this.http.post('/rest/login', body, options)
-            .map(f => this.onSuccess(f, credentials.username))
-            .catch(this.handleError);
+        return this.http.post('/rest/login', body, options).pipe(
+            map(f => this.onSuccess(f, credentials.username)),
+            catchError(this.handleError),);
     }
 
     isLoggedin() {
