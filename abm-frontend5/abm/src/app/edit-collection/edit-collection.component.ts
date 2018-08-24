@@ -7,8 +7,7 @@ import { DialogComponentComponent } from '../dialog-component/dialog-component.c
 import { DialogService } from 'ng2-bootstrap-modal';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
-import { MessageService } from '../services/message.service';
-import { WebsocketService } from '../services/websocket.service';
+
 import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
@@ -52,8 +51,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
-    private toastr: ToastrService, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
-    private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
+    private toastr: ToastrService, private viewf: ViewContainerRef,
+    private modalService: NgbModal, private commitService: CommitService,
     private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);

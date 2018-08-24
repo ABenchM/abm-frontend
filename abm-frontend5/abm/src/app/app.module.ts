@@ -1,21 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule , CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {Routes, RouterModule} from '@angular/router';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ToastrModule} from 'ngx-toastr';
-import {OrderModule} from 'ngx-order-pipe';
-import {ContextMenuModule} from 'ngx-contextmenu';
-import {ShContextMenuModule} from 'ng2-right-click-menu';
-import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
-import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { OrderModule } from 'ngx-order-pipe';
+import { ContextMenuModule } from 'ngx-contextmenu';
+import { ShContextMenuModule } from 'ng2-right-click-menu';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
 
@@ -31,7 +31,6 @@ import { AboutComponent } from './about/about.component';
 import { CollectionComponent } from './collection/collection.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { CartComponent } from './cart/cart.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { FilterComponent } from './filter/filter.component';
 import { HermesViewerComponent } from './hermes-viewer/hermes-viewer.component';
@@ -39,7 +38,6 @@ import { ModalBuildComponent } from './modal-build/modal-build.component';
 import { ModalHermesComponent } from './modal-hermes/modal-hermes.component';
 import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { SearchComponent } from './search/search.component';
-import { VersionDropDownComponent } from './version-drop-down/version-drop-down.component';
 import { ViewComponent } from './view/view.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular-6-social-login';
 import { getAuthServiceConfigs } from './SocialLoginConfig';
@@ -47,13 +45,13 @@ import { RegisterSuccessComponent } from './register-success/register-success.co
 import { LogoutComponent } from './logout/logout.component';
 
 // Services
-import {Register} from './services/register.service';
+import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
-import {GoogleLoginService} from './services/google-login.service';
-import {UtilityService} from './services/utility.service';
+import { GoogleLoginService } from './services/google-login.service';
+import { UtilityService } from './services/utility.service';
 import { AppErrorHandler } from './app-error-handler';
-import {SearchService } from './services/search.service';
+import { SearchService } from './services/search.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -67,10 +65,10 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
-import {ToastService} from './services/toast.service';
+import { ToastService } from './services/toast.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
-import {WebsocketService} from './services/websocket.service';
-import {MessageService} from './services/message.service';
+
+
 import { HermesService } from './services/hermes.service';
 import { CommitSelectorComponent } from './commit-selector/commit-selector.component';
 import { CommitService } from './services/commit.service';
@@ -80,20 +78,20 @@ import { AddToCollectionComponent } from './add-to-collection/add-to-collection.
 import { BuildService } from './services/build.service';
 
 const routes: Routes = [
- {path: '', pathMatch: 'full', component: HomeComponent},
+  { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'collection', component: CollectionComponent },
-  { path: 'search', component: SearchComponent , canActivate: [AuthGuardService]},
-  {path: 'editCollection/:id' , component: EditCollectionComponent, canActivate: [AuthGuardService] },
-  {path: 'view/:id' , component: ViewComponent },
-  {path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
-  {path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
-  {path: 'filters', component: FilterComponent ,  canActivate: [AuthGuardService] },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
+  { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'view/:id', component: ViewComponent },
+  { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
-  {path: 'register', component: RegisterComponent},
-  {path: 'register-success', component: RegisterSuccessComponent},
-  {path: 'profile', component: MyProfileComponent}
+  { path: 'register', component: RegisterComponent },
+  { path: 'register-success', component: RegisterSuccessComponent },
+  { path: 'profile', component: MyProfileComponent }
 ];
 
 @NgModule({
@@ -110,7 +108,6 @@ const routes: Routes = [
     CollectionComponent,
     LoginComponent,
     RegisterComponent,
-    CartComponent,
     CriteriaComponent,
     FilterComponent,
     HermesViewerComponent,
@@ -118,7 +115,6 @@ const routes: Routes = [
     ModalHermesComponent,
     ModalLoginComponent,
     SearchComponent,
-    VersionDropDownComponent,
     ViewComponent,
     LogoutComponent,
     RegisterSuccessComponent,
@@ -144,7 +140,7 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    BootstrapModalModule.forRoot({container: document.body}),
+    BootstrapModalModule.forRoot({ container: document.body }),
     SocialLoginModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
@@ -172,10 +168,8 @@ const routes: Routes = [
     PinService,
     CurrentUserService,
     ViewService,
-    {provide: ErrorHandler , useClass: AppErrorHandler},
+    { provide: ErrorHandler, useClass: AppErrorHandler },
     ToastService,
-    WebsocketService,
-    MessageService,
     HermesService,
     CommitService,
     BuildService
