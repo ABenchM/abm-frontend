@@ -4,7 +4,6 @@ import { Search } from '../models/search.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SearchService } from '../services/search.service';
-import { DataTableResource } from 'angular5-data-table';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 
