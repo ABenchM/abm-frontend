@@ -78,6 +78,7 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
+import {TableModule} from 'primeng/table';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -150,7 +151,9 @@ const routes: Routes = [
     ToastModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
-    ShContextMenuModule
+    ShContextMenuModule,
+    TableModule
+    
 
 
   ],

@@ -1,12 +1,12 @@
-import { Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 
 @Injectable()
 export class BuildService {
 
-  constructor(private http: Http, private toastr: ToastsManager, private viewf: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(viewf);
+  constructor(private http: Http) {
+   
   }
   builds = [];
   initialSelection;
@@ -90,12 +90,14 @@ export class BuildService {
                 this.builds[i].progress = (j + 1) / buildResult.projectBuilds.length;
                 if (buildResult.status === 'RUNNING' && this.builds[i].progress === 1) {
                   const failed = this.checkFailure(buildResult);
+               
+               
                   if (failed) {
                     this.builds[i].buildStatus = 'FAILED';
-                    this.toastr.error(this.builds[i].name + ' failed to build');
+                 //   this.toastr.error(this.builds[i].name + ' failed to build');
                   } else {
                     this.builds[i].buildStatus = 'FINISHED';
-                    this.toastr.success(this.builds[i].name + ' has been built');
+                   // this.toastr.success(this.builds[i].name + ' has been built');
                   }
                 } else {
                   this.builds[i].buildStatus = buildResult.status;
