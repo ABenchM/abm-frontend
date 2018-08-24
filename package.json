@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "precommit": "npm test",
-    "prepush": "npm test"
+    "prepush": "npm run lint && npm test"
   },
   "author": "",
   "license": "ISC",
