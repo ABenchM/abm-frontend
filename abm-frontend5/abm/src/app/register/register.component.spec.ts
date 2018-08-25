@@ -7,7 +7,7 @@ import { User } from '../models/user.model';
 import {Component, DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   // let registerService : Register;
@@ -32,7 +32,7 @@ fdescribe('RegisterComponent', () => {
 
   });
 
-  fit('submit button disabled when any of the field is empty', () => {
+ it('submit button disabled when any of the field is empty', () => {
    affiliationel.nativeElement.value = '';
     fixture.detectChanges();
    expect(submitEl.nativeElement.disabled).toBeTruthy();

@@ -1,8 +1,13 @@
 import { PrivateStatusPipe } from './private-status.pipe';
 
-describe('PrivateStatusPipe', () => {
-  it('create an instance', () => {
+fdescribe('PrivateStatusPipe', () => {
+let input = true;
+  fit('should return "Private" if true', () => {
     const pipe = new PrivateStatusPipe();
-    expect(pipe).toBeTruthy();
+    expect(pipe.transform(input)).toBe('Private');
+  });
+  fit('should return "Public" if false', () => {
+    const pipe = new PrivateStatusPipe();
+    expect(pipe.transform(!input)).toBe('Public');
   });
 });

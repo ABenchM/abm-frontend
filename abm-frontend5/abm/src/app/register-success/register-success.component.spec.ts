@@ -1,16 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 import { RegisterSuccessComponent } from './register-success.component';
 
 describe('RegisterSuccessComponent', () => {
   let component: RegisterSuccessComponent;
   let fixture: ComponentFixture<RegisterSuccessComponent>;
+  const de = fixture.debugElement.query(By.css('h2')).nativeElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterSuccessComponent ]
+      declarations: [RegisterSuccessComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,4 +25,9 @@ describe('RegisterSuccessComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a h2 tag of `Thank you for registering!`', () => {
+    expect(de.query(By.css('h2')).nativeElement.innerText).toBe('Thank you for registering!');
+  });
+
 });
