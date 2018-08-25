@@ -29,12 +29,10 @@ import { AboutComponent } from './about/about.component';
 import { CollectionComponent } from './collection/collection.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { CriteriaComponent } from './criteria/criteria.component';
 import { FilterComponent } from './filter/filter.component';
 import { HermesViewerComponent } from './hermes-viewer/hermes-viewer.component';
 import { ModalBuildComponent } from './modal-build/modal-build.component';
 import { ModalHermesComponent } from './modal-hermes/modal-hermes.component';
-import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { SearchComponent } from './search/search.component';
 import { ViewComponent } from './view/view.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular-6-social-login';
@@ -47,7 +45,6 @@ import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
 import { GoogleLoginService } from './services/google-login.service';
-import { UtilityService } from './services/utility.service';
 import { AppErrorHandler } from './app-error-handler';
 import { SearchService } from './services/search.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -63,7 +60,6 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
-import { ToastService } from './services/toast.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
 
 
@@ -106,12 +102,10 @@ const routes: Routes = [
     CollectionComponent,
     LoginComponent,
     RegisterComponent,
-    CriteriaComponent,
     FilterComponent,
     HermesViewerComponent,
     ModalBuildComponent,
     ModalHermesComponent,
-    ModalLoginComponent,
     SearchComponent,
     ViewComponent,
     LogoutComponent,
@@ -158,14 +152,12 @@ const routes: Routes = [
     Logout,
     GoogleLoginService,
     AuthGuardService,
-    UtilityService,
     CollectionService,
     SearchService,
     PinService,
     CurrentUserService,
     ViewService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    ToastService,
     HermesService,
     CommitService,
     BuildService

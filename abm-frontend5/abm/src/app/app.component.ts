@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable ,  BehaviorSubject } from 'rxjs';
-import { ToastService } from './services/toast.service';
+import { Observable, BehaviorSubject } from 'rxjs';
+
 
 @Component({
   selector: 'abm-root',
@@ -13,9 +13,8 @@ export class AppComponent {
 
   pageTitle = 'Automated Benchmark Management';
 
-  constructor(private router: Router, viewContainerRef: ViewContainerRef, service: ToastService) {
+  constructor(private router: Router) {
 
-    service.vcRef = viewContainerRef;
 
 
   }
