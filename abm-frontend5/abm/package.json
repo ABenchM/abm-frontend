@@ -6,11 +6,11 @@
     "ng": "ng",
     "start": "ng build --watch",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test": "ng test --single-run --browsers ChromeHeadless --reporters mocha --sourcemaps=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "npm run lint",
-    "prepush": "npm run lint"
+    "precommit": "npm run lint && ng test",
+    "prepush": "npm run lint && ng test"
   },
   "private": true,
   "dependencies": {
