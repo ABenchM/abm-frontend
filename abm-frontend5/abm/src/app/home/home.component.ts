@@ -118,6 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (publicIndex >= 0) {
           this.publicCollections[publicIndex].pinned = false;
         }
+        this.loadPublicCollections();
       }
     );
     this.disabled = false;

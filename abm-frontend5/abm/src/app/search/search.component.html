@@ -7,7 +7,30 @@
     </div>
 
     <div class="table-responsive col-lg-12" *ngIf="getTotalItems()>0" style="max-height:600px">
-      <table class="table table-condensed table-bordered table-hover ngCart cart">
+      <p-table  #searchDt [value]="toAdd"  [columns]="searchColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th *ngFor="let col of searchColumns">
+                  {{col.header}}
+              </th>
+          </tr>
+      </ng-template>
+      
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td style="white-space: pre-wrap;" style="width: 7%;">{{project.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 64%;">{{project.description}}</td>
+            <td style="width: 15%;">{{project.creationDate | date:'short'}}</td>
+            <td style="width: 5%;">{{project.size | fileSize}}</td>
+            <td style="width: 7%;">{{project.htmlUrl | siteName }}</td>
+            <td style="width: 5%;">
+              <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
+            </td>
+      </tr>
+    </ng-template>
+    
+    </p-table>
+     <!--  <table class="table table-condensed table-bordered table-hover ngCart cart">
         <thead>
           <tr>
             <th style="width: 7%;">Name</th>
@@ -30,7 +53,7 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
 
     <div class="col-lg-12 text-right" *ngIf="getTotalItems()>0">
@@ -83,7 +106,37 @@
     <br>
     <div class="row">
       <div class="col-lg-12">
-        <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
+          <p-table  #searchDt1 [value]="results"  [columns]="searchColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th style="width: 35%;" >Name  
+                        <span [hidden]="reverse">▼</span>
+                        <span [hidden]="!reverse">▲</span></th>
+                      <th style="width: 20%;" >Description</th>
+                      <th>Creation Date</th>
+                      <th>Size</th>
+                      <th>Origin</th>
+                      <th>
+                        <input type="checkbox" [(ngModel)]="isSelect" (click)="selectDeselectAll()" name="row.name" />
+                      </th>
+                </tr>
+            </ng-template>
+            
+          <ng-template pTemplate="body" let-row>
+            <tr style="cursor:pointer;">
+                <td style="width: 35%;" (click)="openSource(row)">{{row.name}}</td>
+                <td style="width: 20%;"  (click)="openSource(row)">{{row.description }}</td>
+                <td>{{row.creationDate | date:'short'}}</td>
+                <td>{{row.size | fileSize}}</td>
+                <td>{{row.htmlUrl | siteName}}</td>
+                <td>
+                  <input type="checkbox" [(ngModel)]="row.singleSelection" (change)="select(row)" name="row.name" />
+                </td>
+            </tr>
+          </ng-template>
+          
+          </p-table>
+        <!-- <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
           <thead class="thead-light">
             <tr>
               <th>Name  
@@ -110,7 +163,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
     </div>
   </div>
