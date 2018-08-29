@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { UtilityService } from '../services/utility.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';

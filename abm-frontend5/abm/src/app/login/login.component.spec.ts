@@ -11,7 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AboutComponent } from '../about/about.component';
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   beforeEach(async(() => {

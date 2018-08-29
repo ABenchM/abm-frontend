@@ -4,7 +4,7 @@ import { } from 'jasmine';
 import { Login } from './login.service';
 import { Credentials } from '../models/credentials.model';
 
-fdescribe('Login', () => {
+describe('Login', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

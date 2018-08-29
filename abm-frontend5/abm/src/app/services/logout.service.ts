@@ -34,6 +34,6 @@ console.log(document.cookie);
         const options = new RequestOptions({ headers: headers });
         return this.http.get('/rest/logout', options).pipe(
             map(this.onSuccess),
-            catchError(this.handleError),);
+            catchError(this.handleError), );
     }
 }

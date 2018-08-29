@@ -4,7 +4,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { BuildService } from '../services/build.service';
-import { WebsocketService } from '../services/websocket.service';
 import { DialogService } from 'ng2-bootstrap-modal';
 // import {accordion} from 'angular-ui-bootstrap/src/accordion';
 // import {tabs} from 'angular-ui-bootstrap/src/tabs';
@@ -30,8 +29,8 @@ export class ModalBuildViewerComponent implements OnInit {
   ws: any;
   targetTab: any;
   constructor(private route: ActivatedRoute, private router: Router, private toastr: ToastrService, public activeModal: NgbActiveModal,
-    private viewf: ViewContainerRef, private buildService: BuildService, private dialogservice: DialogService,
-    private wsService: WebsocketService) {
+    private viewf: ViewContainerRef, private buildService: BuildService, private dialogservice: DialogService
+    ) {
     // this.toastr.setRootViewContainerRef(viewf);
 
   }
