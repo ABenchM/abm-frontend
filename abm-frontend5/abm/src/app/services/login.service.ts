@@ -33,7 +33,7 @@ export class Login {
         const options = new RequestOptions({ headers: headers });
         return this.http.post('/rest/login', body, options).pipe(
             map(f => this.onSuccess(f, credentials.username)),
-            catchError(this.handleError),);
+            catchError(this.handleError), );
     }
 
     isLoggedin() {

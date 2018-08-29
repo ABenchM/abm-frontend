@@ -206,9 +206,9 @@ export class ViewComponent implements OnInit {
     this.disabled = false;
   }
 
-  //  checkFile(id, type) {
-  //  this.viewService.checkFileStatus(id, type).subscribe( response => {
-  //    if (response.status === 200 ) {
+  // checkFile(id, type) {
+  // this.viewService.checkFileStatus(id, type).subscribe( response => {
+  // if (response.status === 200 ) {
   //        if (type === 'hermes') {
   //             this.hermesResultsExists =  response.json();
   //        } else {
