@@ -80,6 +80,7 @@ import { AddToCollectionComponent } from './add-to-collection/add-to-collection.
 import { BuildService } from './services/build.service';
 import {TableModule} from 'primeng/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {CheckboxModule} from 'primeng/checkbox';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},

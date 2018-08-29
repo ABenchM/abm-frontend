@@ -18,11 +18,11 @@
       
     <ng-template pTemplate="body" let-row>
       <tr>
-        <td style="white-space: pre-wrap;" style="width: 7%;">{{project.name}}</td>
-            <td style="white-space: pre-wrap;" style="width: 64%;">{{project.description}}</td>
-            <td style="width: 15%;">{{project.creationDate | date:'short'}}</td>
-            <td style="width: 5%;">{{project.size | fileSize}}</td>
-            <td style="width: 7%;">{{project.htmlUrl | siteName }}</td>
+        <td style="white-space: pre-wrap;" style="width: 7%;">{{row.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 64%;">{{row.description}}</td>
+            <td style="width: 15%;">{{row.creationDate | date:'short'}}</td>
+            <td style="width: 5%;">{{row.size | fileSize}}</td>
+            <td style="width: 7%;">{{row.htmlUrl | siteName }}</td>
             <td style="width: 5%;">
               <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
             </td>
