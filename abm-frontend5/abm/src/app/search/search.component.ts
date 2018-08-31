@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
   isSelect ;
   SortType: any = 'name';
   reverse = false;
-
+  searchColumns: any[];
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe) {
@@ -181,6 +181,13 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchColumns =  [
+      { field: 'name', header: 'Name' },
+  { field: 'description', header: 'Description' },
+  { field: 'creationdate', header: 'Creation Date' },
+  { field: 'size', header: 'Size' },
+  { field: 'htmlUrl', header: 'Origin' }
+];
     this.toAdd = [];
     this.results = [];
   }
