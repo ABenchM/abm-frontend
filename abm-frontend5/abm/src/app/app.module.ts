@@ -16,6 +16,7 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
+import {MatButtonModule, MatCheckboxModule, MatIconModule, MatPaginatorModule, MatInputModule,MatFormFieldModule, MatTableModule } from '@angular/material';
 
 // Components
 
@@ -78,6 +79,7 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
+import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -93,7 +95,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
-  {path: 'profile', component: MyProfileComponent}
+  {path: 'profile', component: MyProfileComponent},
+  {path: 'pendingRequest', component: AdminPendingReqComponent}
 ];
 
 @NgModule({
@@ -133,7 +136,8 @@ const routes: Routes = [
     CommitSelectorComponent,
     ModalBuildViewerComponent,
     ProjectCountPipe,
-    AddToCollectionComponent
+    AddToCollectionComponent,
+    AdminPendingReqComponent
   ],
   imports: [
     BrowserModule,
@@ -150,7 +154,14 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
-    ShContextMenuModule
+    ShContextMenuModule,
+    MatButtonModule, 
+    MatCheckboxModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule
 
 
   ],
