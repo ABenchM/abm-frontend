@@ -10,20 +10,23 @@
       <p-table  #searchDt [value]="toAdd"  [columns]="searchColumns" [scrollable]="true" [paginator]="true" [rows]="10">
         <ng-template pTemplate="header" let-columns>
           <tr>
-              <th *ngFor="let col of searchColumns">
-                  {{col.header}}
-              </th>
+            <th style="width: 10%;">Name</th>
+            <th style="width: 50%;">Description</th>
+            <th style="width: 10%;">Creation Date</th>
+            <th style="width: 10%;">Size</th>
+            <th style="width: 10%;">Origin</th>
+            <th style="width: 10%;"></th>
           </tr>
       </ng-template>
       
     <ng-template pTemplate="body" let-row>
       <tr>
-        <td style="white-space: pre-wrap;" style="width: 7%;">{{row.name}}</td>
-            <td style="white-space: pre-wrap;" style="width: 64%;">{{row.description}}</td>
-            <td style="width: 15%;">{{row.creationDate | date:'short'}}</td>
-            <td style="width: 5%;">{{row.size | fileSize}}</td>
-            <td style="width: 7%;">{{row.htmlUrl | siteName }}</td>
-            <td style="width: 5%;">
+        <td style="white-space: pre-wrap;" style="width: 10%;">{{row.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 50%;">{{row.description}}</td>
+            <td style="width: 10%;">{{row.creationDate | date:'short'}}</td>
+            <td style="width: 10%;">{{row.size | fileSize}}</td>
+            <td style="width: 10%;">{{row.htmlUrl | siteName }}</td>
+            <td style="width: 10%;">
               <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
             </td>
       </tr>
@@ -73,9 +76,9 @@
       <div class="search_bar">
         <input type="text" #query="ngModel" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner"
           required [(ngModel)]="model.query" class="search_align">
-        <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)" class="btn btn-success btn-sm align-middle">Search</button>
-        <span>
-          <button class="btn btn-success btn-sm align-middle"> Show Filtering Options</button>
+        <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)" class="btn-left-mrgn btn btn-success btn-sm align-middle">Search</button>
+        <span class="btn-left-mrgn">
+          <button class="btn btn-success btn-sm align-middle "> Show Filtering Options</button>
           <button class="btn btn-success" *ngIf="false"> Hide Filtering Options</button>
         </span>
       </div>
