@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AboutComponent } from '../about/about.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { LogoutComponent } from './logout.component';
+import { Logout } from '../services/logout.service';
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
@@ -8,7 +11,19 @@ describe('LogoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogoutComponent ]
+      declarations: [ LogoutComponent , AboutComponent ],
+      imports: [
+        FormsModule,
+        RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
+      ],
+      providers: [ Logout
+        // {
+        //   provide: Logout,
+        //   useClass: class {
+        //     logout = jasmine.createSpy('logout');
+        //   }
+        // }
+      ]
     })
     .compileComponents();
   }));
@@ -22,4 +37,6 @@ describe('LogoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
 });

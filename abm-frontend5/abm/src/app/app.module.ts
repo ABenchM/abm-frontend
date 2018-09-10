@@ -16,7 +16,6 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
-
 import { AppComponent } from './app.component';
 import { BuildTabComponent } from './build-tab/build-tab.component';
 import { BuildColourPipe } from './shared/build-colour.pipe';
@@ -70,6 +69,9 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
+import {TableModule} from 'primeng/table';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {CheckboxModule} from 'primeng/checkbox';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },

@@ -1,16 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {OrderPipe} from 'ngx-order-pipe';
+import { OrderPipe } from 'ngx-order-pipe';
+import { ContextMenuComponent } from 'ngx-contextmenu';
+import * as _ from 'lodash';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
   selector: 'abm-collection',
   templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.css']
+  styleUrls: ['./collection.component.css'],
+  providers: [ConfirmationService]
 })
-export class CollectionComponent implements OnInit, OnDestroy  {
+export class CollectionComponent implements OnInit, OnDestroy {
 
   hasCollections = false;
   SortType: any = 'name';
@@ -18,9 +22,11 @@ export class CollectionComponent implements OnInit, OnDestroy  {
   reverse = false;
   userCollections: any[] = [];
   filteredCollections: any[];
+  collectionColumns: any[];
+  @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
   // subscription: Subscription;
   constructor(private service: CollectionService, private router: Router,
-    private route: ActivatedRoute , private orderPipe: OrderPipe) {
+    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) {
 
   }
 
@@ -48,40 +54,48 @@ export class CollectionComponent implements OnInit, OnDestroy  {
     this.filterType = item;
   }
 
- filter(query) {
-   if (this.filterType === 'name') {
-    this.filteredCollections = (query) ?
-    this.userCollections.filter(p => p.name.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
-   } else if (this.filterType === 'description') {
-    this.filteredCollections = (query) ?
-    this.userCollections.filter(p => p.description.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
-   } else if (this.filterType === 'builtStatus') {
+  filter(query) {
+    if (this.filterType === 'name') {
+      this.filteredCollections = (query) ?
+        this.userCollections.filter(p => p.name.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
+    } else if (this.filterType === 'description') {
+      this.filteredCollections = (query) ?
+        this.userCollections.filter(p => p.description.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
+    } else if (this.filterType === 'builtStatus') {
 
-    if (query.toLowerCase().includes('n') ) {
-        this.filteredCollections =  this.userCollections.filter(p => p.builtStatus === false);
-    } else {
-       this.filteredCollections = this.userCollections.filter(p => p.builtStatus === true);
+      if (query.toLowerCase().includes('n')) {
+        this.filteredCollections = this.userCollections.filter(p => p.builtStatus === false);
+      } else {
+        this.filteredCollections = this.userCollections.filter(p => p.builtStatus === true);
+      }
+
+    } else if (this.filterType === 'privateStatus') {
+
+      if (query.toLowerCase().includes('pr')) {
+        this.filteredCollections = this.userCollections.filter(p => p.privateStatus === true);
+      } else {
+        this.filteredCollections = this.userCollections.filter(p => p.privateStatus === false);
+      }
+
     }
 
-   } else if ( this.filterType === 'privateStatus') {
 
-    if (query.toLowerCase().includes('pr') ) {
-      this.filteredCollections =  this.userCollections.filter(p => p.privateStatus === true);
-  } else {
-     this.filteredCollections = this.userCollections.filter(p => p.privateStatus === false);
   }
-
-   }
-
-
- }
   ngOnInit() {
+    this.collectionColumns =  [
+          { field: 'name', header: 'Name' },
+      { field: 'description', header: 'Description' },
+      { field: 'creationdate', header: 'Creation Date' },
+      { field: 'id', header: 'Id' },
+      { field: 'builtsstatus', header: 'Built Status' },
+      { field: 'privatestatus', header: 'Private Status' }
+    ];
 
     if (localStorage.getItem('currentUser') != null) {
 
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
         this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
-          for (let i = 0; i < this.userCollections.length; i++) {
+        for (let i = 0; i < this.userCollections.length; i++) {
           for (let j = 0; j < this.userCollections[i].versions.length; j++) {
             if (this.userCollections[i].versions[j].frozen === true) {
               this.userCollections[i].builtStatus = true;
@@ -100,6 +114,26 @@ export class CollectionComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy() {
     //  this.subscription.unsubscribe();
+  }
+
+  onContextMenu(event, item) {
+    console.log('isnide method');
+    this.confirmationService.confirm({
+      message: 'Make Collection Public!',
+      accept: () => {
+        console.log('isnide accet method');
+        let selectedRowIndex = _.findIndex(this.filteredCollections, function(o) {return (o.id === item.id); });
+        this.filteredCollections[selectedRowIndex].privateStatus = false;
+        console.log(this.filteredCollections[selectedRowIndex]);
+        this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
+          response => {
+            if (response.status === 200) {
+              this.router.navigateByUrl('/collection');
+            }
+          });
+      }
+  });
+
   }
 
 }
