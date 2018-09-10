@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -117,23 +117,61 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   onContextMenu(event, item) {
-    console.log("isnide method");
-    this.confirmationService.confirm({
-      message: 'Make Collection Public!',
-      accept: () => {
-        console.log("isnide accet method");
-        let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
-        this.filteredCollections[selectedRowIndex].privateStatus =false;
-        console.log(this.filteredCollections[selectedRowIndex]);
-        this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
-          response => {
-            if (response.status === 200) {
-              this.router.navigateByUrl('/collection');
-            }
-          });
-      }
-  });
+    console.log("isnide method",item, event);
+    let msg="";
+    if(item.privateStatus == true){
+      msg = 'Make Collection Public!';
+      this.confirmationService.confirm({
+        message: msg,
+        accept: () => {
+          console.log("isnide accet method");
+          let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
+  
+          this.filteredCollections[selectedRowIndex].privateStatus = false;
+          console.log(this.filteredCollections[selectedRowIndex]);
+          this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
+            response => {
+              if (response.status === 200) {
+                this.router.navigateByUrl('/collection');
+              }
+            });
+        }
+    });
+    } 
+    
     
   }
 
 }
+
+ /* Collection status can change both ways
+ 
+ onContextMenu(event, item) {
+  console.log("isnide method",item, event);
+  let msg="";
+  if(item.privateStatus == true){
+    msg= 'Make Collection Public!';
+  } else{
+    msg = 'Make Collection Private!'
+    
+  }
+  this.confirmationService.confirm({
+    message: msg,
+    accept: () => {
+      console.log("isnide accet method");
+      let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
+
+      this.filteredCollections[selectedRowIndex].privateStatus = (item.privateStatus == true)?false:true;
+      console.log(this.filteredCollections[selectedRowIndex]);
+      this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
+        response => {
+          if (response.status === 200) {
+            this.router.navigateByUrl('/collection');
+          }
+        });
+    }
+});
+  
+}
+
+} */
