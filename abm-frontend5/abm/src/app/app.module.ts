@@ -16,7 +16,6 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
-
 import { AppComponent } from './app.component';
 import { BuildTabComponent } from './build-tab/build-tab.component';
 import { BuildColourPipe } from './shared/build-colour.pipe';
@@ -145,9 +144,6 @@ const routes: Routes = [
     TableModule,
     ConfirmDialogModule,
     CheckboxModule
-
-    
-
 
 
   ],
