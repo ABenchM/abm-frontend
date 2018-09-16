@@ -32,7 +32,7 @@
           </tr>
         </tbody>
       </table> -->
-      <p-table  [value]="pinned"   [scrollable]="true" [paginator]="true" [rows]="10">
+      <p-table  *ngIf="pinned.length>0" [value]="pinned"   [scrollable]="true" [paginator]="true" [rows]="10">
           <ng-template pTemplate="header" let-columns>
               <tr style="cursor:pointer;">
                   <th (click)="setSortType('name')">Name <span [hidden]="reverse">▼</span>

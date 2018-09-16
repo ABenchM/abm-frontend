@@ -72,6 +72,7 @@ import { BuildService } from './services/build.service';
 import {TableModule} from 'primeng/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CheckboxModule} from 'primeng/checkbox';
+import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -138,7 +139,11 @@ const routes: Routes = [
     SocialLoginModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
-    OrderModule
+    OrderModule,
+    ContextMenuModule,
+    TableModule,
+    ConfirmDialogModule,
+    CheckboxModule
 
 
   ],
@@ -162,7 +167,8 @@ const routes: Routes = [
     { provide: ErrorHandler, useClass: AppErrorHandler },
     HermesService,
     CommitService,
-    BuildService
+    BuildService,
+    ContextMenuService
   ],
   entryComponents: [
     DialogComponentComponent,
