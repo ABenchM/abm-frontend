@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderPipe } from 'ngx-order-pipe';
 import { ContextMenuComponent } from 'ngx-contextmenu';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
@@ -26,7 +26,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
   // subscription: Subscription;
   constructor(private service: CollectionService, private router: Router,
-    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService:ConfirmationService) {
+    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) {
 
   }
 
@@ -117,16 +117,16 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   onContextMenu(event, item) {
-    console.log("isnide method",item, event);
-    let msg="";
-    if(item.privateStatus == true){
+    console.log('isnide method', item, event);
+    let msg = '';
+    if (item.privateStatus === true) {
       msg = 'Make Collection Public!';
       this.confirmationService.confirm({
         message: msg,
         accept: () => {
-          console.log("isnide accet method");
-          let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
-  
+          console.log('isnide accet method');
+          let selectedRowIndex = _.findIndex(this.filteredCollections, function(o) {return (o.id === item.id); });
+
           this.filteredCollections[selectedRowIndex].privateStatus = false;
           console.log(this.filteredCollections[selectedRowIndex]);
           this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
@@ -137,15 +137,15 @@ export class CollectionComponent implements OnInit, OnDestroy {
             });
         }
     });
-    
-    } 
-    
+
+    }
+
   }
 
 }
 
  /* Collection status can change both ways
- 
+
  onContextMenu(event, item) {
   console.log("isnide method",item, event);
   let msg="";
@@ -153,7 +153,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
     msg= 'Make Collection Public!';
   } else{
     msg = 'Make Collection Private!'
-    
+
   }
   this.confirmationService.confirm({
     message: msg,
@@ -171,7 +171,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
         });
     }
 });
-  
+
 }
 
 } */
