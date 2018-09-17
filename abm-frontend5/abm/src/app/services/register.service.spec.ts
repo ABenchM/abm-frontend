@@ -11,7 +11,7 @@ describe('Register', () => {
     });
   });
 
-it('should be created', inject([Register], (service: Register) => {
+fit('should be created', inject([Register], (service: Register) => {
     expect(service).toBeTruthy();
   }));
 });
