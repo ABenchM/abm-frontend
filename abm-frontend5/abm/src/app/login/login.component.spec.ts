@@ -11,6 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AboutComponent } from '../about/about.component';
+import { CurrentUserService } from '../services/current-user.service';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -25,6 +26,7 @@ describe('LoginComponent', () => {
         RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
       ],
       providers: [
+        CurrentUserService,
         {
           provide: Login,
           useClass: class {
@@ -54,18 +56,18 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Error message on login failed', async(() => {
+  fit('Error message on login failed', async(() => {
     component.loginFailed = true;
     fixture.detectChanges();
     const error_msg = fixture.debugElement.nativeElement;
     expect(error_msg.querySelectorAll('strong').length).toBe(1);
   }));
 
-  it('Successful Login', async(() => {
+  fit('Successful Login', async(() => {
     spyOn(component, 'loginForm').and.returnValue(false);
     expect(component.loginForm()).toBeFalsy();
 }));
