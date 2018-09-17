@@ -7,10 +7,13 @@
 	width: 70% ;
 }
 .search_align{
-	width:80%;
+	width:75%;
 }
 .heading_align{
 	padding-left:20px;
+}
+.btn-left-mrgn{
+	margin-left:0.25rem;
 }
 
 .ngCart.cart span[ng-click] {
