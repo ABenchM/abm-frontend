@@ -73,6 +73,7 @@ import {TableModule} from 'primeng/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+import { DataTableModule, PaginatorModule } from 'primeng/primeng';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -142,6 +143,8 @@ const routes: Routes = [
     OrderModule,
     ContextMenuModule,
     TableModule,
+    DataTableModule,
+    PaginatorModule,
     ConfirmDialogModule,
     CheckboxModule
 
