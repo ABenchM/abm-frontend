@@ -16,6 +16,8 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
+import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
+import { MatDialogModule, MatCheckboxModule} from '@angular/material';
 
 // Components
 
@@ -78,6 +80,8 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -93,7 +97,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
-  {path: 'profile', component: MyProfileComponent}
+  {path: 'profile', component: MyProfileComponent},
+  {path: 'manageusers', component: ManageUsersComponent}
 ];
 
 @NgModule({
@@ -133,7 +138,9 @@ const routes: Routes = [
     CommitSelectorComponent,
     ModalBuildViewerComponent,
     ProjectCountPipe,
-    AddToCollectionComponent
+    AddToCollectionComponent,
+    ManageUsersComponent,
+    DeleteDialogboxComponent
   ],
   imports: [
     BrowserModule,
@@ -150,7 +157,17 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     OrderModule,
     ContextMenuModule.forRoot(),
-    ShContextMenuModule
+    ShContextMenuModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatDialogModule,
+    MatCheckboxModule
 
 
   ],
@@ -181,6 +198,7 @@ const routes: Routes = [
     BuildService
   ],
   entryComponents: [
+    DeleteDialogboxComponent,
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
