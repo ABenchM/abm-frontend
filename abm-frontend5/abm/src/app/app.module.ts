@@ -80,6 +80,7 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
+import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 
@@ -98,6 +99,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
   {path: 'profile', component: MyProfileComponent},
+  {path: 'pendingRequest', component: AdminPendingReqComponent},
   {path: 'manageusers', component: ManageUsersComponent}
 ];
 
@@ -139,6 +141,7 @@ const routes: Routes = [
     ModalBuildViewerComponent,
     ProjectCountPipe,
     AddToCollectionComponent,
+    AdminPendingReqComponent,
     ManageUsersComponent,
     DeleteDialogboxComponent
   ],
@@ -168,8 +171,6 @@ const routes: Routes = [
     MatSortModule,
     MatDialogModule,
     MatCheckboxModule
-
-
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
