@@ -25,6 +25,6 @@ describe('Login', () => {
     service.postLoginForm(new Credentials('demo', '123'))
      .subscribe(
        data => data,
-       err => expect(err).toBe(403));
+       err => expect(err).toBe(404));
  }));
 });
