@@ -1,6 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpModule } from '@angular/http';
+import { DataTableModule , PaginatorModule} from 'primeng/primeng';
+
+import { CollectionService } from '../services/collection.service';
+import { PinService } from '../services/pin.service';
+import { DataServiceService } from '../services/data-service.service';
+import { TableModule } from 'primeng/table';
+import { OrderModule } from 'ngx-order-pipe';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -8,7 +18,10 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ HomeComponent ],
+      imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, DataTableModule, PaginatorModule,
+         TableModule , OrderModule],
+      providers: [CollectionService, PinService, DataServiceService]
     })
     .compileComponents();
   }));
@@ -19,7 +32,7 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });
