@@ -16,7 +16,8 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule, MatCheckboxModule, MatIconModule, MatPaginatorModule, MatInputModule,MatFormFieldModule, MatTableModule } from '@angular/material';
+import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
+import { MatDialogModule, MatCheckboxModule} from '@angular/material';
 
 // Components
 
@@ -80,6 +81,8 @@ import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -96,7 +99,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
   {path: 'profile', component: MyProfileComponent},
-  {path: 'pendingRequest', component: AdminPendingReqComponent}
+  {path: 'pendingRequest', component: AdminPendingReqComponent},
+  {path: 'manageusers', component: ManageUsersComponent}
 ];
 
 @NgModule({
@@ -137,7 +141,9 @@ const routes: Routes = [
     ModalBuildViewerComponent,
     ProjectCountPipe,
     AddToCollectionComponent,
-    AdminPendingReqComponent
+    AdminPendingReqComponent,
+    ManageUsersComponent,
+    DeleteDialogboxComponent
   ],
   imports: [
     BrowserModule,
@@ -155,15 +161,16 @@ const routes: Routes = [
     OrderModule,
     ContextMenuModule.forRoot(),
     ShContextMenuModule,
-    MatButtonModule, 
-    MatCheckboxModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
     MatTableModule,
     MatPaginatorModule,
-    MatIconModule,
+    MatFormFieldModule,
     MatInputModule,
-    MatFormFieldModule
-
-
+    MatSortModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -192,6 +199,7 @@ const routes: Routes = [
     BuildService
   ],
   entryComponents: [
+    DeleteDialogboxComponent,
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
