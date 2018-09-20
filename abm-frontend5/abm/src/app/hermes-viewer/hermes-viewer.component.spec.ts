@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HermesViewerComponent } from './hermes-viewer.component';
+import { HermesService } from '../services/hermes.service';
+import { HermesNamePipe } from '../shared/hermes-name.pipe';
+import { HttpModule } from '@angular/http';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 describe('HermesViewerComponent', () => {
   let component: HermesViewerComponent;
@@ -8,7 +12,9 @@ describe('HermesViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HermesViewerComponent ]
+      declarations: [ HermesViewerComponent , HermesNamePipe],
+      imports: [NgbModule.forRoot(), HttpModule, ToastrModule.forRoot()],
+      providers: [NgbActiveModal, HermesService, ToastrService]
     })
     .compileComponents();
   }));

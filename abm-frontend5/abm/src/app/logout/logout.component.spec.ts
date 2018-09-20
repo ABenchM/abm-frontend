@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LogoutComponent } from './logout.component';
 import { Logout } from '../services/logout.service';
+import { HttpModule } from '@angular/http';
 
 describe('LogoutComponent', () => {
   let component: LogoutComponent;
@@ -14,7 +15,8 @@ describe('LogoutComponent', () => {
       declarations: [ LogoutComponent , AboutComponent ],
       imports: [
         FormsModule,
-        RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
+        HttpModule,
+        RouterTestingModule
       ],
       providers: [ Logout
         // {
