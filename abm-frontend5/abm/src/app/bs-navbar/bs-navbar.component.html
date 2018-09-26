@@ -31,5 +31,28 @@
          </div>
       </li>
     </ul>
+    <ul class="navbar-nav ml-auto">
+      <li *ngIf="loggedInStatus()">
+        <button mat-button [matMenuTriggerFor]="menu">{{username}}</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button *ngIf="!false" mat-menu-item routerLink="/manageusers">
+            <mat-icon>people</mat-icon>
+            <span>Manage Users</span>
+          </button>
+          <button *ngIf="!false" mat-menu-item routerLink="/pendingRequest">
+            <mat-icon>email</mat-icon>
+            <span>Pending requests</span>
+          </button>
+          <button mat-menu-item routerLink="/logout">
+            <mat-icon>keyboard_tab</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </li>
+    </ul>
   </div>
 </nav>
