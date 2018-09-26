@@ -5,9 +5,13 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <img src = "assets/abm_logo.jpg" class="img-click" routerLink="/" width="60px" height="60px" alt="ABM" align="right">
     <ul class="navbar-nav mr-auto nav-pills">
       <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/manageusers">Collections</a>
+        <a class="nav-link" routerLink="/collection">My Collections</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active current">
+        <a class="nav-link" routerLink="/publicCollection" >Public collections</a>
       </li>
       <li  *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active current">
         <a class="nav-link" routerLink="/search" >Create collection</a>
@@ -21,15 +25,37 @@
       <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active current">
         <a class="nav-link" routerLink="/login" >Login</a>
       </li>
-      <li *ngIf="loggedInStatus()" ngbDropdown class="nav-item dropdown float-right">
-        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{username | capitalizeFirst}}</a>
-        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="/pendingRequest  ">Pending Requests</a>
-          <a class="dropdown-item" href="/collection">My Collections</a>
-          <a class="dropdown-item" routerLink="/logout">Logout</a>
-         </div>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li *ngIf="loggedInStatus()">
+        <button mat-button [matMenuTriggerFor]="menu">{{username}}</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button *ngIf="!false" mat-menu-item routerLink="/manageusers">
+            <mat-icon>people</mat-icon>
+            <span>Manage Users</span>
+          </button>
+          <button *ngIf="!false" mat-menu-item routerLink="/publicCollections">
+            <mat-icon>collections</mat-icon>
+            <span>Manage Public Collections</span>
+          </button>
+          <button *ngIf="!false" mat-menu-item routerLink="/pendingRequest">
+            <mat-icon>email</mat-icon>
+            <span>Pending requests</span>
+          </button>
+          <button mat-menu-item routerLink="/logout">
+            <mat-icon>keyboard_tab</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
       </li>
     </ul>
-    <img src = "assets/abm_logo.jpg" class="img-click" routerLink="/" width="60px" height="60px" alt="ABM" align="right">
   </div>
 </nav>

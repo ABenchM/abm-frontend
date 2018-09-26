@@ -84,6 +84,7 @@ import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { DailogBoxComponent } from './dailog-box/dailog-box.component';
+import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -101,7 +102,9 @@ const routes: Routes = [
   {path: 'register-success', component: RegisterSuccessComponent},
   {path: 'profile', component: MyProfileComponent},
   {path: 'pendingRequest', component: AdminPendingReqComponent},
-  {path: 'manageusers', component: ManageUsersComponent}
+  {path: 'manageusers', component: ManageUsersComponent},
+  {path: 'publicCollections', component: ManagePublicCollectionsComponent},
+  {path: 'publicCollection', component: HomeComponent}
 ];
 
 @NgModule({
@@ -145,7 +148,8 @@ const routes: Routes = [
     AdminPendingReqComponent,
     ManageUsersComponent,
     DeleteDialogboxComponent,
-    DailogBoxComponent
+    DailogBoxComponent,
+    ManagePublicCollectionsComponent
   ],
   imports: [
     BrowserModule,
