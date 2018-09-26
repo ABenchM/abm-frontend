@@ -102,7 +102,8 @@ const routes: Routes = [
   {path: 'profile', component: MyProfileComponent},
   {path: 'pendingRequest', component: AdminPendingReqComponent},
   {path: 'manageusers', component: ManageUsersComponent},
-  {path: 'publicCollections', component: ManagePublicCollectionsComponent}
+  {path: 'publicCollections', component: ManagePublicCollectionsComponent},
+  {path: 'publicCollection', component: HomeComponent}
 ];
 
 @NgModule({
