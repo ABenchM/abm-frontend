@@ -6,6 +6,7 @@ describe('AdminPendingReqComponent', () => {
   let component: AdminPendingReqComponent;
   let fixture: ComponentFixture<AdminPendingReqComponent>;
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminPendingReqComponent ]
@@ -22,4 +23,12 @@ describe('AdminPendingReqComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+
+it('Check for title Pending Request is Pending Request', () => {expect('Pending Request').toBe('Pending Requests');
+  });
+
+
+
 });
