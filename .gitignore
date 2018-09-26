@@ -25,5 +25,3 @@ node_modules/
 abm-frontend5/abm/node_modules
 abm-frontend5/abm/dist
 abm-config.prod.json
-
-abm-frontend5/abm/src/app/app\.module\.ts

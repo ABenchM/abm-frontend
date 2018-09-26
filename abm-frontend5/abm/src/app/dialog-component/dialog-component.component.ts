@@ -35,6 +35,3 @@ export class DialogComponentComponent extends DialogComponent<ConfirmModel, bool
     this.close();
   }
 }
-
-
-
