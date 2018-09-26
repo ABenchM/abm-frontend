@@ -16,8 +16,8 @@ import {ContextMenuModule} from 'ngx-contextmenu';
 import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatDialogModule} from '@angular/material';
-
+import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
+import { MatDialogModule, MatCheckboxModule} from '@angular/material';
 
 // Components
 
@@ -83,7 +83,6 @@ import { BuildService } from './services/build.service';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
-import { DailogBoxComponent } from './dailog-box/dailog-box.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 
 const routes: Routes = [
@@ -148,7 +147,6 @@ const routes: Routes = [
     AdminPendingReqComponent,
     ManageUsersComponent,
     DeleteDialogboxComponent,
-    DailogBoxComponent,
     ManagePublicCollectionsComponent
   ],
   imports: [
@@ -210,9 +208,7 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
-    ModalBuildViewerComponent,
-    DailogBoxComponent
-
+    ModalBuildViewerComponent
   ],
   bootstrap: [AppComponent]
 })
