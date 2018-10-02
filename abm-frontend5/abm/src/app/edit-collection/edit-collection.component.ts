@@ -30,6 +30,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   collection: any = [{}];
   versions: any = [{}];
   version: any = {};
+  latestVersion: any = {};
   buildprojects: any = {};
   commits = [{}];
   derivedVersion: any = {};
@@ -70,6 +71,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
+        this.latestVersion = response.json()[0].versions[this.versions.length - 1];
         this.commits = response.json()[0].versions[0].commits;
         for (let i = 0; i < this.version.commits.length; i++) {
           this.version.commits[i].selectProject = true;
@@ -101,6 +103,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.derivedVersion = response.json();
           this.versions.push(this.derivedVersion);
           this.version = this.derivedVersion;
+          this.latestVersion = this.derivedVersion;
 
         }
       }
