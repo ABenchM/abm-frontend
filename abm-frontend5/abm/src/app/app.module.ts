@@ -84,6 +84,7 @@ import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
+import { DailogboxComponent } from './dailogbox/dailogbox.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -147,7 +148,8 @@ const routes: Routes = [
     AdminPendingReqComponent,
     ManageUsersComponent,
     DeleteDialogboxComponent,
-    ManagePublicCollectionsComponent
+    ManagePublicCollectionsComponent,
+    DailogboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -208,7 +210,9 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
-    ModalBuildViewerComponent
+    ModalBuildViewerComponent,
+    DailogboxComponent,
+
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,15 @@
+<div >
+  <h2 mat-dialog-title>Approve Request</h2>
+
+  <button mat-icon-button color="warn" class="icon_align" >
+   <mat-icon aria-label="Clear" (click)="onClose()">clear</mat-icon>
+  </button>
+
+  <mat-dialog-content class= "approvalmessage">A mail has been sent to user confirming the approval request. </mat-dialog-content>
+  <br>
+  <strong>{{data}}</strong>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="onOK()" class="messageconfirm">OK</button>
+</mat-dialog-actions>
+  
+</div>

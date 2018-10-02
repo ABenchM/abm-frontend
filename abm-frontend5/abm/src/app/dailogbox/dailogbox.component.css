@@ -1,0 +1,18 @@
+.icon_align {
+	float: right;
+    position: relative;
+    bottom: 70px;
+    left: 20px;
+}
+
+.messageconfirm
+{
+    margin: auto;
+}
+
+.approvalmessage
+{
+
+    width: 100%;
+
+}

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource } from '@angular/material';
+import {DailogboxComponent} from  '../dailogbox/dailogbox.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSort} from '@angular/material';
 
 @Component({
   selector: 'admin-pending-req-root',
@@ -7,22 +9,35 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
   styleUrls: ['./admin-pending-req.component.css']
 })
 export class AdminPendingReqComponent implements OnInit {
-
+  dialogResult = "";
   displayedColumns  = ['Name', 'Last_name', 'Username', 'Email_id', 'City', 'Affilition', 'Action'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
+
+constructor(public dialog: MatDialog) {
+
+  }
+
+  openDialog(){
+    let dialogRef = this.dialog.open(DailogboxComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.dialogResult = result;
+    });
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-
-  constructor() { }
-
   ngOnInit() {
   this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
   }
 
 }
