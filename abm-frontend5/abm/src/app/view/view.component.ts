@@ -1,11 +1,11 @@
 
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 
 import { CollectionService } from '../services/collection.service';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ViewService } from '../services/view.service';
@@ -131,10 +131,27 @@ export class ViewComponent implements OnInit {
           if (response.json() !== undefined) {
             this.viewCollection = response.json();
             this.versions = response.json()[0].versions;
-            this.version = response.json()[0].versions[0];
-            this.commits = response.json()[0].versions[0].commits;
+            console.log('versions length ' + this.versions.length);
+            let i = 0;
+            while (i < this.versions.length) {
+              console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+              if (this.versions[i].privateStatus === true) {
+                console.log('Deleting version ' + this.versions[i].id);
+                this.versions.splice(i, 1);
 
-            this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => this.buildResultsExists = s.json());
+              } else {
+                i = i + 1;
+              }
+            }
+
+            // this.version = response.json()[0].versions[0];
+            this.version = this.versions[0];
+            console.log('versions' + this.versions.length);
+            console.log('version' + this.version.id);
+            // this.commits = response.json()[0].versions[0].commits;
+            this.commits = this.versions[0].commits;
+
+             this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => this.buildResultsExists = s.json());
             this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => this.hermesResultsExists = s.json());
             if (this.loggedInStatus()) {
               this.pinService.checkPinned(this.viewCollection[0]).subscribe(

@@ -1,5 +1,5 @@
 
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
@@ -184,16 +184,32 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
-      message: 'Are you sure?This cannot be undone.'
+      message: 'Are you sure that you want to make current selected version public? This cannot be undone.'
     })
       .subscribe((isConfirmed) => {
         // We get dialog result
         if (isConfirmed) {
-          fargCollection.privateStatus = false;
+
+          this.version.privateStatus = false;
+          // let countPublicVersions = 0;
+          // for (let i = 0; i < fargCollection.versions.length; i++) {
+          //   if (fargCollection.versions[i].privateStatus === 0) {
+          //     countPublicVersions++;
+          //   }
+          // }
+          // if (countPublicVersions === fargCollection.versions.length) {
+          //   fargCollection.privateStatus = false;
+          // }
+
           this.service.updateCollection(fargCollection).subscribe(
             response => {
               if (response.status === 200) {
-                this.router.navigateByUrl('/collection');
+                this.service.updateVersion(this.version).subscribe(data => {
+                  if (data.status === 200) {
+                    this.router.navigateByUrl('/collection');
+                  }
+                });
+
               }
             });
         } else {
@@ -234,7 +250,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.router.navigate(['/collection']).then(
             () => {
 
-              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', {timeOut: 1000});
+              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', { timeOut: 1000 });
             });
 
           setTimeout(() => {
