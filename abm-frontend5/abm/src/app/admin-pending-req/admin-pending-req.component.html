@@ -11,40 +11,40 @@
 </mat-form-field>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="Name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
     <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
   </ng-container>
 
   <!-- Last_Name Column -->
   <ng-container matColumnDef="Last_name">
-    <th mat-header-cell *matHeaderCellDef> Last_name </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last_name </th>
     <td mat-cell *matCellDef="let element"> {{element.Last_name}} </td>
   </ng-container>
 
   <!-- Username Column -->
   <ng-container matColumnDef="Username">
-    <th mat-header-cell *matHeaderCellDef> Username </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
     <td mat-cell *matCellDef="let element"> {{element.Username}} </td>
   </ng-container>
 
   <!-- Email_id Column -->
-  <ng-container matColumnDef="Email_id">
-    <th mat-header-cell *matHeaderCellDef> Email_id </th>
+  <ng-container matColumnDef="Email_id" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email_id </th>
     <td mat-cell *matCellDef="let element"> {{element.Email_id}} </td>
   </ng-container>
 
     <!-- City Column -->
-  <ng-container matColumnDef="City">
-    <th mat-header-cell *matHeaderCellDef> City </th>
+  <ng-container matColumnDef="City" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
     <td mat-cell *matCellDef="let element"> {{element.City}} </td>
   </ng-container>
 
     <!-- Affilation Column -->
-  <ng-container matColumnDef="Affilition">
-    <th mat-header-cell *matHeaderCellDef> Affilition </th>
+  <ng-container matColumnDef="Affilition" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Affilition </th>
     <td mat-cell *matCellDef="let element"> {{element.Affilition}} </td>
   </ng-container>
 
@@ -53,7 +53,7 @@
     <th mat-header-cell *matHeaderCellDef> Action </th>
     <td mat-cell *matCellDef="let row; let i=index;">
                 <button mat-icon-button color="accent" >
-                  <mat-icon aria-label="Done">done</mat-icon>
+                <mat-icon aria-label="Done" (click)="openDialog()">done</mat-icon>
                 </button>
         
                 <button mat-icon-button color="warn" >
