@@ -61,10 +61,10 @@ export class SearchComponent implements OnInit {
     return this.loading;
   }
 
-  search(searchQuery, language) {
+  search(searchQuery) {
     this.loading = true;
     this.results = [];
-
+    const language = '';
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
       this.results = response.json();
       for (let i = 0; i < this.results.length; i++) {
