@@ -82,8 +82,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
-    this.collectionColumns =  [
-          { field: 'name', header: 'Name' },
+    this.collectionColumns = [
+      { field: 'name', header: 'Name' },
       { field: 'description', header: 'Description' },
       { field: 'creationdate', header: 'Creation Date' },
       { field: 'id', header: 'Id' },
@@ -94,19 +94,22 @@ export class CollectionComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('currentUser') != null) {
 
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
-        this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
-        for (let i = 0; i < this.userCollections.length; i++) {
-          for (let j = 0; j < this.userCollections[i].versions.length; j++) {
-            if (this.userCollections[i].versions[j].frozen === true) {
-              this.userCollections[i].builtStatus = true;
-              break;
+        if (response.status === 200) {
+          this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
+          for (let i = 0; i < this.userCollections.length; i++) {
+            for (let j = 0; j < this.userCollections[i].versions.length; j++) {
+              if (this.userCollections[i].versions[j].frozen === true) {
+                this.userCollections[i].builtStatus = true;
+                break;
+              }
+            }
+            if (this.userCollections[i].builtStatus === undefined) {
+              this.userCollections[i].builtStatus = false;
             }
           }
-          if (this.userCollections[i].builtStatus === undefined) {
-            this.userCollections[i].builtStatus = false;
-          }
+          this.hasCollections = true;
         }
-        this.hasCollections = true;
+
       });
     }
 
@@ -125,7 +128,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
         message: msg,
         accept: () => {
           console.log('isnide accet method');
-          let selectedRowIndex = _.findIndex(this.filteredCollections, function(o) {return (o.id === item.id); });
+          let selectedRowIndex = _.findIndex(this.filteredCollections, function (o) { return (o.id === item.id); });
 
           this.filteredCollections[selectedRowIndex].privateStatus = false;
           console.log(this.filteredCollections[selectedRowIndex]);
@@ -136,7 +139,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
               }
             });
         }
-    });
+      });
 
     }
 

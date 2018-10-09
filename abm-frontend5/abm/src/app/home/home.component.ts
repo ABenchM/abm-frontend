@@ -31,10 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadPublicCollections() {
     this.loading = true;
     this.service.getPublicCollections().subscribe(response => {
-      this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
-      if (this.loggedInStatus()) {
-        this.loadPinned();
+      if (response.status === 200) {
+        this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
+        if (this.loggedInStatus()) {
+          this.loadPinned();
+        }
       }
+
     });
     this.loading = false;
   }
@@ -54,7 +57,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     }
     this.service.getPinnedCollections().subscribe(response => {
-      this.pinned = this.orderPipe.transform(response.json(), this.sortType);
+      if (response.status === 200) {
+        this.pinned = this.orderPipe.transform(response.json(), this.sortType);
+      }
+
     });
 
     this.loading = false;
