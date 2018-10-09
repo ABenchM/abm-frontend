@@ -12,7 +12,7 @@
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
+  <!-- <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_new mat_cell'">
         <mat-checkbox (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
@@ -25,7 +25,7 @@
                       [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
-    </ng-container>
+    </ng-container> -->
 
       <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -33,31 +33,31 @@
       <!-- id Column -->
       <ng-container matColumnDef="UserName">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Username</h5></mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.UserName}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="Name">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Name</h5> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
       </ng-container>
 
       <!-- Description Column -->
       <ng-container matColumnDef="Emailid">
         <mat-header-cell *matHeaderCellDef mat-sort-header> <h5>Email-id </h5></mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Emailid}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
       </ng-container>
 
       <!-- Owner Column -->
       <ng-container matColumnDef="Affiliation">
         <mat-header-cell *matHeaderCellDef mat-sort-header> <h5>Affiliation</h5> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Affiliation}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.affiliation}} </mat-cell>
       </ng-container>
 
       <!-- CreationDate Column -->
       <ng-container matColumnDef="Account_status">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Account status</h5>  </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Account_status}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstname}} </mat-cell>
       </ng-container>
 
       <!-- Status Column -->
@@ -84,7 +84,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
     </mat-table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
