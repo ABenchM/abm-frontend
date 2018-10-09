@@ -25,7 +25,7 @@
   <br>
   <br>
 
-  <p-table  #collectionDt [value]="filteredCollections"  [columns]="collectionColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+  <p-table *ngIf="hasCollections" #collectionDt [value]="filteredCollections"  [columns]="collectionColumns" [scrollable]="true" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header" let-columns>
       <tr>
           <th *ngFor="let col of collectionColumns">
