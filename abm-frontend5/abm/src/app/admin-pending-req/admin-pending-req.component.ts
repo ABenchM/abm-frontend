@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource } from '@angular/material';
 import {DailogboxComponent} from  '../dailogbox/dailogbox.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSort} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+
 
 @Component({
   selector: 'admin-pending-req-root',
@@ -10,8 +12,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSort} from '@angular/mater
 })
 export class AdminPendingReqComponent implements OnInit {
   dialogResult = "";
-  displayedColumns  = ['Name', 'Last_name', 'Username', 'Email_id', 'City', 'Affilition', 'Action'];
+  displayedColumns: string[] = ['select','Name', 'LastName', 'UserName', 'EmailId', 'City', 'Affilition', 'Approve', 'Reject'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  selection = new SelectionModel<PeriodicElement>(true, []);
 
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
@@ -40,29 +43,44 @@ constructor(public dialog: MatDialog) {
   this.dataSource.sort = this.sort;
   }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
 }
+
 export interface PeriodicElement {
   Name: string;
-  Last_name: string;
-  Username: string;
-  Email_id: string;
+  LastName: string;
+  UserName: string;
+  EmailId: string;
   City: string;
   Affilition: string;
-  Action: string
+  Approve: string;
+  Reject: string
 }
 
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {Name: 'Minal', Last_name: 'Lad', Username: 'minal_lad', Email_id: 'minal0110@gmail.com', City: 'Paderborn', Affilition: 'IBM', Action: 'Approve'}, 
-  {Name: 'Namita', Last_name: 'Bhore', Username: 'Nami_08', Email_id: 'Nami0808@gmail.com', City: 'Bonn', Affilition: 'BMW', Action: 'Approve'},
-  {Name: 'Neha', Last_name: 'Kumari', Username: 'Neha@19', Email_id: 'Neha1992@gmail.com', City: 'Munich', Affilition: 'IBM', Action: 'Approve'},
-  {Name: 'Vishal', Last_name: 'Joshep', Username: 'Vishal_VJ', Email_id: 'Visha10@gmail.com', City: 'Hamburg', Affilition: 'TCS', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'},
-  {Name: 'Anu', Last_name: 'Thottam', Username: 'Anu_30', Email_id: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Action: 'Approve'}, 
+  {Name: 'Minal', LastName: 'Lad', UserName: 'minal_lad', EmailId: 'minal0110@gmail.com', City: 'Paderborn', Affilition: 'IBM', Approve: 'Check', Reject: 'Clear'}, 
+  {Name: 'Namita', LastName: 'Bhore', UserName: 'Nami_08', EmailId: 'Nami0808@gmail.com', City: 'Bonn', Affilition: 'BMW', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Neha', LastName: 'Kumari', UserName: 'Neha@19', EmailId: 'Neha1992@gmail.com', City: 'Munich', Affilition: 'IBM', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Vishal', LastName: 'Joshep', UserName: 'Vishal_VJ', EmailId: 'Visha10@gmail.com', City: 'Hamburg', Affilition: 'TCS', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Anu', LastName: 'Thottam', UserName: 'Anu_30', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Adarsh', LastName: 'Manepali', UserName: 'Manu_12', EmailId: 'Adarsh21@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Shubham', LastName: 'singh', UserName: 'Singh_297', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Nitesh', LastName: 'Sahah', UserName: 'Nit_04', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Shashank', LastName: 'Khude', UserName: 'Shasha', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Snehal', LastName: 'Chitnis', UserName: 'Mau_10', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Amu', LastName: 'Lohiya', UserName: 'Amu_20', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
+  {Name: 'Mohit', LastName: 'Lohiya', UserName: 'Mohit_17', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'}, 
 ];
