@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadPublicCollections() {
     this.loading = true;
     this.service.getPublicCollections().subscribe(response => {
-      if (response.status === 200) {
+      if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
         if (this.loggedInStatus()) {
           this.loadPinned();
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     }
     this.service.getPinnedCollections().subscribe(response => {
-      if (response.status === 200) {
+      if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json(), this.sortType);
       }
 
