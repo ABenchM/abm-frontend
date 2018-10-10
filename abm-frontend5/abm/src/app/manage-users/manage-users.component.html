@@ -3,11 +3,14 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field> 
 
+<button (click)="deleteUser()">Click me</button>
+
 <div class="container">
   <div class="example-container mat-elevation-z8">
 
          
 
+    
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -39,7 +42,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="Name">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Name</h5> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
       </ng-container>
 
       <!-- Description Column -->
@@ -57,17 +60,27 @@
       <!-- CreationDate Column -->
       <ng-container matColumnDef="Account_status">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Account status</h5>  </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.firstname}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.locked == 'true' ? 'Locked' : 'Active'}} </mat-cell>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="Lockaction">
         <mat-header-cell *matHeaderCellDef><h5>   Actions</h5>  </mat-header-cell>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="red">
-            <mat-icon aria-label="Lock">lock</mat-icon>
-          </button>
+        <mat-cell *matCellDef="let row;">
+
+          <div *ngIf="row.locked">
+            <button mat-icon-button color="red">
+              <mat-icon (click)="lockUser(row)" aria-label="Lock" >lock</mat-icon>
+            </button>
+          </div>
+
+          <div *ngIf="!row.locked">
+            <button mat-icon-button color="red">
+              <mat-icon (click)="unlockUser(row)" aria-label="unLock" >lock_open</mat-icon>
+            </button>
+          </div>
+
 
           <button mat-button >Role</button>
           <mat-menu #menu="matMenu" yPosition="below">
@@ -78,7 +91,7 @@
           </mat-menu> 
 
           <button mat-icon-button>
-            <mat-icon aria-label="Delete" (click)="openDialog()">delete</mat-icon>
+            <mat-icon  aria-label="Delete" (click)="deleteUser()">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

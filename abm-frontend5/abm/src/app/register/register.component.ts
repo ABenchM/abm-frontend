@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
     this.invalidEmail = false;
   }
 
-  model = new User('', '', '', '', '', '');
+  model = new User('', '', '', '', '', '','','');
 
   registerForm(form: NgForm) {
 

@@ -51,6 +51,10 @@ export class ManageUsersComponent implements OnInit {
     });
   }
 
+  // deleteUser(){
+  //   this.service.deleteUser("vjv");
+  // }
+
   // isAllSelected() {
   //   const numSelected = this.selection.selected.length;
   //   const numRows = this.dataSource.data.length;
@@ -66,13 +70,28 @@ export class ManageUsersComponent implements OnInit {
 
    ngOnInit() {
     this.loadUsers();
-    // this.dataSource = new MatTableDataSource(this.dataSource.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteUser(coll: User ){
+    this.service.deleteUser(coll).subscribe();
+  }
+
+  lockUser(coll: User ){
+    this.service.lockUser(coll).subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  unlockUser(coll: User ){
+    this.service.unlockUser(coll).subscribe(result => {
+      this.loadUsers();
+    });
   }
 
 }
