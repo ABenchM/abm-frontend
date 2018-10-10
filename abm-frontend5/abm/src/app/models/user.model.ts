@@ -3,11 +3,24 @@ export class User {
         public username: string,
         public password: string,
         public confirmpassword: string,
-        public name: string,
         public affiliation: string,
-        public email: string
+        public email: string,
+        public firstname: string,
+        public lastname: string,
+        public locked: Boolean
 
     ) {
 
     }
 }
+
+
+// public username: string,
+// public password: string,
+// public confirmpassword: string,
+// public name: string,
+// public affiliation: string,
+// public email: string,
+// public firstname: string,
+// public lastname: string,
+// public oldpassword: string

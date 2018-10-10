@@ -91,7 +91,6 @@ export class CollectionService {
     return this.http.get('/rest/collection', { params: data });
     // .subscribe(
     // response => { console.log(response.json());
-
     // });
   }
 
@@ -106,7 +105,6 @@ export class CollectionService {
   }
 
   updateCollection(fargCollection) {
-
     return this.http.put('/rest/collection', fargCollection, null);
   }
 

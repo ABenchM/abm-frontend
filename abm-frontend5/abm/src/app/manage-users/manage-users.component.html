@@ -3,16 +3,19 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field> 
 
+<button (click)="deleteUser()">Click me</button>
+
 <div class="container">
   <div class="example-container mat-elevation-z8">
 
          
 
+    
 
     <mat-table #table [dataSource]="dataSource" matSort>
 
       <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
+  <!-- <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_new mat_cell'">
         <mat-checkbox (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
@@ -25,7 +28,7 @@
                       [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
-    </ng-container>
+    </ng-container> -->
 
       <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -33,41 +36,51 @@
       <!-- id Column -->
       <ng-container matColumnDef="UserName">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Username</h5></mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.UserName}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="Name">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Name</h5> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
       </ng-container>
 
       <!-- Description Column -->
       <ng-container matColumnDef="Emailid">
         <mat-header-cell *matHeaderCellDef mat-sort-header> <h5>Email-id </h5></mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Emailid}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
       </ng-container>
 
       <!-- Owner Column -->
       <ng-container matColumnDef="Affiliation">
         <mat-header-cell *matHeaderCellDef mat-sort-header> <h5>Affiliation</h5> </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Affiliation}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.affiliation}} </mat-cell>
       </ng-container>
 
       <!-- CreationDate Column -->
       <ng-container matColumnDef="Account_status">
         <mat-header-cell *matHeaderCellDef mat-sort-header><h5>Account status</h5>  </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.Account_status}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.locked == 'true' ? 'Locked' : 'Active'}} </mat-cell>
       </ng-container>
 
       <!-- Status Column -->
       <ng-container matColumnDef="Lockaction">
         <mat-header-cell *matHeaderCellDef><h5>   Actions</h5>  </mat-header-cell>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="red">
-            <mat-icon aria-label="Lock">lock</mat-icon>
-          </button>
+        <mat-cell *matCellDef="let row;">
+
+          <div *ngIf="row.locked">
+            <button mat-icon-button color="red">
+              <mat-icon (click)="lockUser(row)" aria-label="Lock" >lock</mat-icon>
+            </button>
+          </div>
+
+          <div *ngIf="!row.locked">
+            <button mat-icon-button color="red">
+              <mat-icon (click)="unlockUser(row)" aria-label="unLock" >lock_open</mat-icon>
+            </button>
+          </div>
+
 
           <button mat-button >Role</button>
           <mat-menu #menu="matMenu" yPosition="below">
@@ -78,13 +91,13 @@
           </mat-menu> 
 
           <button mat-icon-button>
-            <mat-icon aria-label="Delete" (click)="openDialog()">delete</mat-icon>
+            <mat-icon  aria-label="Delete" (click)="deleteUser()">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
     </mat-table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
