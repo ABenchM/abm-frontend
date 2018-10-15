@@ -121,7 +121,7 @@
       </tbody>
     </table>
  -->
-    <p-table  [(value)]="publicCollections"   [scrollable]="true" [paginator]="true" [rows]="10">
+    <p-table *ngIf="!(publicCollections[0] === undefined)" [(value)]="publicCollections"   [scrollable]="true" [paginator]="true" [rows]="10">
         <ng-template pTemplate="header" let-columns>
             <tr style="cursor:pointer;">
                 <th (click)="setSortType('name')">Name
