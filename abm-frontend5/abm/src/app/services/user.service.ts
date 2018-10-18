@@ -53,4 +53,13 @@ export class UserService {
     map(this.extractData),
     catchError(this.handleError));
   }
+
+  approveRejectUser(user: User, isApprove: boolean): Observable<any>{
+    const body = { 'isApprove': isApprove, 'username': user.username };
+    const headers = new Headers({'Content-type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+    return this.http.post('/rest/approval', body, options).pipe(
+    map(this.extractData),
+    catchError(this.handleError));
+  }
 }

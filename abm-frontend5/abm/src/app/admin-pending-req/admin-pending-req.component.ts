@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { OrderPipe } from 'ngx-order-pipe';
+
 import {MatPaginator, MatTableDataSource } from '@angular/material';
 import {DailogboxComponent} from  '../dailogbox/dailogbox.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSort} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 
+
+import { UserService } from '../services/user.service';
+import { User} from '../models/user.model'
 
 @Component({
   selector: 'admin-pending-req-root',
@@ -11,15 +16,17 @@ import {SelectionModel} from '@angular/cdk/collections';
   styleUrls: ['./admin-pending-req.component.css']
 })
 export class AdminPendingReqComponent implements OnInit {
+  public usersList: any[] = [];
+  loading: boolean;
   dialogResult = "";
-  displayedColumns: string[] = ['select','Name', 'LastName', 'UserName', 'EmailId', 'City', 'Affilition', 'Approve', 'Reject'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  displayedColumns: string[] = ['select','affiliation', 'lastname', 'username', 'email', 'affiliation', 'Approve', 'Reject'];
+  dataSource = new MatTableDataSource<User>();
+  selection = new SelectionModel<User>(true, []);
 
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
 
-constructor(public dialog: MatDialog) {
+constructor(private service:UserService ,private orderPipe: OrderPipe, public dialog: MatDialog) {
 
   }
 
@@ -34,13 +41,24 @@ constructor(public dialog: MatDialog) {
     });
   }
 
+  loadUsers() {
+    this.loading = true;
+    this.service.getAllUsers(0).subscribe(response => {
+      this.usersList = this.orderPipe.transform(response.json());
+      this.dataSource.data = this.usersList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.selection = new SelectionModel<User>(true, []);
+    });
+    this.loading = false;
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
   ngOnInit() {
-  this.dataSource.paginator = this.paginator;
-  this.dataSource.sort = this.sort;
+    this.loadUsers();
   }
 
   isAllSelected() {
@@ -56,31 +74,16 @@ constructor(public dialog: MatDialog) {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+  approveUser(user: User){
+    this.service.approveRejectUser(user,true).subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  rejectUser(user: User){
+    this.service.approveRejectUser(user,false).subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
 }
-
-export interface PeriodicElement {
-  Name: string;
-  LastName: string;
-  UserName: string;
-  EmailId: string;
-  City: string;
-  Affilition: string;
-  Approve: string;
-  Reject: string
-}
-
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {Name: 'Minal', LastName: 'Lad', UserName: 'minal_lad', EmailId: 'minal0110@gmail.com', City: 'Paderborn', Affilition: 'IBM', Approve: 'Check', Reject: 'Clear'}, 
-  {Name: 'Namita', LastName: 'Bhore', UserName: 'Nami_08', EmailId: 'Nami0808@gmail.com', City: 'Bonn', Affilition: 'BMW', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Neha', LastName: 'Kumari', UserName: 'Neha@19', EmailId: 'Neha1992@gmail.com', City: 'Munich', Affilition: 'IBM', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Vishal', LastName: 'Joshep', UserName: 'Vishal_VJ', EmailId: 'Visha10@gmail.com', City: 'Hamburg', Affilition: 'TCS', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Anu', LastName: 'Thottam', UserName: 'Anu_30', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Adarsh', LastName: 'Manepali', UserName: 'Manu_12', EmailId: 'Adarsh21@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Shubham', LastName: 'singh', UserName: 'Singh_297', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Nitesh', LastName: 'Sahah', UserName: 'Nit_04', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Shashank', LastName: 'Khude', UserName: 'Shasha', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Snehal', LastName: 'Chitnis', UserName: 'Mau_10', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Amu', LastName: 'Lohiya', UserName: 'Amu_20', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'},
-  {Name: 'Mohit', LastName: 'Lohiya', UserName: 'Mohit_17', EmailId: 'Anu7698@gmail.com', City: 'Lipzig', Affilition: 'TeamB', Approve: 'Check', Reject: 'Clear'}, 
-];
