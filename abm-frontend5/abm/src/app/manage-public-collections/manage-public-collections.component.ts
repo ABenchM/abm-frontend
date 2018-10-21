@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 import { OrderPipe } from 'ngx-order-pipe';
 
 import { CollectionService } from '../services/collection.service';
@@ -18,7 +19,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
   dataSource = new MatTableDataSource<Collection>();
   selection = new SelectionModel<Collection>(true, []);
 
-  constructor(private service: CollectionService, private orderPipe: OrderPipe) { }
+  constructor(private router: Router, private service: CollectionService, private orderPipe: OrderPipe) { }
 
   loadCols() {
     this.loading = true;
@@ -72,7 +73,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
   }
 
   NavigateToCollection(col:Collection){
-    
+    this.router.navigateByUrl('/view/' + col.id);
   }
 
   changeColStatus(coll:Collection){

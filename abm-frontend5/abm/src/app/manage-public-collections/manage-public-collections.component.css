@@ -11,8 +11,12 @@
     min-width: 300px;
 }
 
-.select{
+.selectColCheckbox{
   border-bottom-style: hidden;
+}
+
+.navigateToCol{
+  cursor: pointer;
 }
   /*
   .mat-column-id {
