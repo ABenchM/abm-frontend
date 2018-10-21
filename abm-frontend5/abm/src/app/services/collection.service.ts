@@ -70,13 +70,22 @@ export class CollectionService {
     return this.http.delete('rest/collection/' + collectionId);
   }
 
-  deletePublicCollection (collection: Collection | string): Observable<Collection> {
+  deleteSingleCol (collection: Collection | string): Observable<Collection> {
     const id = typeof collection === 'string' ? collection : collection.id;
     const body = { 'deleteCollections': id};
 
     return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
-      tap(_ => this.log(`deleted collection id=${id}`)),
+      tap(_ => this.log(`delete single Collection`)),
       catchError(this.handleError<Collection>('deleteCollection'))
+    );
+  }
+
+  deleteSelectedCols (colIDs: String): Observable<Collection> {
+    const body = { 'deleteCollections': colIDs};
+
+    return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
+      tap(_ => this.log(`deleted Selected Collection`)),
+      catchError(this.handleError<Collection>('deleteCollections'))
     );
   }
 
@@ -101,6 +110,10 @@ export class CollectionService {
     // .subscribe(
     // response => { console.log(response.json());
     // });
+  }
+
+  getAllCollections(){
+    return this.http.get('/rest/managecollection');
   }
 
   getSearchCollections(query) {

@@ -4,12 +4,16 @@
     margin-top: 8px;
   }
   
-  .example-container {
+.example-container {
     display: flex;
     flex-direction: column;
     max-height: 500px;
     min-width: 300px;
-  }
+}
+
+.select{
+  border-bottom-style: hidden;
+}
   /*
   .mat-column-id {
     flex: 0 0 250px;
