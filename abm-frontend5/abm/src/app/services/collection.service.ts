@@ -14,7 +14,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class CollectionService {
 
-  private heroesUrl = 'rest/deletepubliccollection';
+  private headers = new Headers({'Content-Type': 'application/json'});
 
   toCreate: any[];
   toAdd: any[];
@@ -70,13 +70,32 @@ export class CollectionService {
     return this.http.delete('rest/collection/' + collectionId);
   }
 
-  deletePublicCollection (collection: Collection | string): Observable<Collection> {
+  deleteSingleCol (collection: Collection | string): Observable<Collection> {
     const id = typeof collection === 'string' ? collection : collection.id;
-    const url = `${this.heroesUrl}/${id}`;
+    const body = { 'deleteCollections': id};
 
-    return this.httpClient.delete<Collection>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
+    return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
+      tap(_ => this.log(`delete single Collection`)),
       catchError(this.handleError<Collection>('deleteCollection'))
+    );
+  }
+
+  deleteSelectedCols (colIDs: String): Observable<Collection> {
+    const body = { 'deleteCollections': colIDs};
+
+    return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
+      tap(_ => this.log(`deleted Selected Collection`)),
+      catchError(this.handleError<Collection>('deleteCollections'))
+    );
+  }
+
+  changeCollectionStatus (collection: Collection | string): Observable<Collection> {
+    const id = typeof collection === 'string' ? collection : collection.id;
+    const body = { 'collectionid': id};
+
+    return this.httpClient.post<Collection>('/rest/collectionstatus',body, httpOptions).pipe(
+      tap(_ => this.log(`Change collection status id=${id}`)),
+      catchError(this.handleError<Collection>('changeCollectionStatus'))
     );
   }
 
@@ -85,13 +104,16 @@ export class CollectionService {
   }
 
   getPublicCollections() {
-    alert("byID");
 
     const data = { 'privateStatus': false };
     return this.http.get('/rest/collection', { params: data });
     // .subscribe(
     // response => { console.log(response.json());
     // });
+  }
+
+  getAllCollections(){
+    return this.http.get('/rest/managecollection');
   }
 
   getSearchCollections(query) {
