@@ -4,7 +4,8 @@ export class Collection {
         public description: string,
         public creation_date: Date,
         public id: string,
-        public pinned: boolean
+        public pinned: boolean,
+        public isActive:boolean
     ) {
 
     }

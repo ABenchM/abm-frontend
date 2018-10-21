@@ -42,7 +42,15 @@ export class ManagePublicCollectionsComponent implements OnInit {
   }
 
   deletePublicCollection(coll: Collection ){
-    this.service.deletePublicCollection(coll).subscribe();
+    this.service.deletePublicCollection(coll).subscribe(result=>{
+      this.loadPublicCollections();
+    });
+  }
+
+  activeCollection(coll:Collection){
+    this.service.changeCollectionStatus(coll).subscribe(result=>{
+      this.loadPublicCollections();
+    });
   }
 
 }

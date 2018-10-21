@@ -2,8 +2,6 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<button  (click)="deletePublicCollection()">delete</button>{{z}}
-
 <div class="example-container mat-elevation-z8">
     <mat-table #table  [dataSource]="dataSource" matSort>
   
@@ -31,9 +29,23 @@
         <mat-header-cell  *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
 
         <mat-cell *matCellDef="let row;">
+
           <button mat-icon-button>
             <mat-icon (click)="deletePublicCollection(row)" aria-label="Delete">delete</mat-icon>
           </button>
+
+          <div *ngIf="row.isActive">
+                <button mat-icon-button color="red">
+                  <mat-icon (click)="activeCollection(row)" aria-label="Lock" >lock</mat-icon>
+                </button>
+              </div>
+    
+              <div *ngIf="!row.isActive">
+                <button mat-icon-button color="red">
+                  <mat-icon (click)="activeCollection(row)" aria-label="unLock" >lock_open</mat-icon>
+                </button>
+            </div>
+
         </mat-cell>
 
     </ng-container>
