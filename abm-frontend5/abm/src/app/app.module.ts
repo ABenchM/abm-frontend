@@ -12,8 +12,6 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrModule} from 'ngx-toastr';
 import {OrderModule} from 'ngx-order-pipe';
-import {ContextMenuModule} from 'ngx-contextmenu';
-import {ShContextMenuModule} from 'ng2-right-click-menu';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
@@ -168,8 +166,6 @@ const routes: Routes = [
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
     OrderModule,
-    ContextMenuModule.forRoot(),
-    ShContextMenuModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,

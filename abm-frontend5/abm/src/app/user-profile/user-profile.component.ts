@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit {
   public newPassword: string;
   public confirmNewPassword: string;
 
-  model = new User('', '', '', '', '', '', '', '', '');
+  model = new User('', '', '', '', '', '', '', true);
 
   saveChanges(form: NgForm) {
     this.register.updateUser(this.model)
