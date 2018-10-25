@@ -108,7 +108,7 @@ const routes: Routes = [
   {path: 'pendingRequest', component: AdminPendingReqComponent},
   {path: 'manageusers', component: ManageUsersComponent},
   {path: 'publicCollections', component: ManagePublicCollectionsComponent},
-  {path: 'publicCollection', component: HomeComponent}
+  {path: 'publicCollection', component: HomeComponent},
   {path: 'save-success', component: SaveSuccessComponent},
   {path: 'profile', component: UserProfileComponent}
 ];
