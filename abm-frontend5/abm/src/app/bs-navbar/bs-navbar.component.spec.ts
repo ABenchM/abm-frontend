@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {Login} from '../services/login.service';
 import { BsNavbarComponent } from './bs-navbar.component';
+import { CapitalizeFirstPipe } from '../shared/capitalize-first.pipe';
+import { HttpModule } from '@angular/http';
+import { CurrentUserService } from '../services/current-user.service';
 
 describe('BsNavbarComponent', () => {
   let component: BsNavbarComponent;
@@ -8,7 +11,9 @@ describe('BsNavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BsNavbarComponent ]
+      declarations: [ BsNavbarComponent, CapitalizeFirstPipe ],
+      imports: [HttpModule],
+      providers: [Login, CurrentUserService]
     })
     .compileComponents();
   }));
@@ -19,7 +24,7 @@ describe('BsNavbarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

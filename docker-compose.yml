@@ -1,0 +1,17 @@
+version: '2.1'
+
+services: 
+ angular: 
+  build: abm-frontend5/abm/
+  ports:
+  - "4200:4200"
+
+ express:
+  build: .
+  ports:
+  - "3000:3000"
+
+ abm:
+  build: abm/
+  ports:
+  - "8080:8080"

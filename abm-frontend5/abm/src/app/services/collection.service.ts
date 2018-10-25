@@ -121,8 +121,8 @@ export class CollectionService {
     return this.http.get('rest/collection', { params: data });
   }
 
-  getPinnedCollections() {
-    const data = { 'type': 'collection', 'user': 'demo' };
+  getPinnedCollections(currentUser) {
+    const data = { 'type': 'collection', 'user': currentUser };
     return this.http.get('/rest/pin', { params: data });
   }
 

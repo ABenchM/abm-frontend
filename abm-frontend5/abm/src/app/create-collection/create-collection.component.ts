@@ -22,9 +22,8 @@ export class CreateCollectionComponent implements OnInit {
   version: any = {};
   commit: any = {};
   commits: any = [{}];
-  constructor(private toastr: ToastrService, private viewC: ViewContainerRef,
+  constructor(private toastr: ToastrService,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
-    // this.toastr.setRootViewContainerRef(viewC);
     this.repositoryList = this.collectService.toCreate;
   }
 

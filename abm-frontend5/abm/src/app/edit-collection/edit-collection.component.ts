@@ -1,5 +1,5 @@
 
-import {take} from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
@@ -7,8 +7,7 @@ import { DialogComponentComponent } from '../dialog-component/dialog-component.c
 import { DialogService } from 'ng2-bootstrap-modal';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
-import { MessageService } from '../services/message.service';
-import { WebsocketService } from '../services/websocket.service';
+
 import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
@@ -31,6 +30,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   collection: any = [{}];
   versions: any = [{}];
   version: any = {};
+  latestVersion: any = {};
   buildprojects: any = {};
   commits = [{}];
   derivedVersion: any = {};
@@ -52,8 +52,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private router: Router,
     private service: CollectionService, private dialogService: DialogService,
-    private toastr: ToastrService, private viewf: ViewContainerRef, private webSocketService: WebsocketService,
-    private messageService: MessageService, private modalService: NgbModal, private commitService: CommitService,
+    private toastr: ToastrService, private viewf: ViewContainerRef,
+    private modalService: NgbModal, private commitService: CommitService,
     private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
     this.id = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('id', this.id);
@@ -71,6 +71,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
+        this.latestVersion = response.json()[0].versions[this.versions.length - 1];
         this.commits = response.json()[0].versions[0].commits;
         for (let i = 0; i < this.version.commits.length; i++) {
           this.version.commits[i].selectProject = true;
@@ -102,6 +103,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.derivedVersion = response.json();
           this.versions.push(this.derivedVersion);
           this.version = this.derivedVersion;
+          this.latestVersion = this.derivedVersion;
 
         }
       }
@@ -182,16 +184,32 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
-      message: 'Are you sure?This cannot be undone.'
+      message: 'Are you sure that you want to make current selected version public? This cannot be undone.'
     })
       .subscribe((isConfirmed) => {
         // We get dialog result
         if (isConfirmed) {
-          fargCollection.privateStatus = false;
+
+          this.version.privateStatus = false;
+          // let countPublicVersions = 0;
+          // for (let i = 0; i < fargCollection.versions.length; i++) {
+          //   if (fargCollection.versions[i].privateStatus === 0) {
+          //     countPublicVersions++;
+          //   }
+          // }
+          // if (countPublicVersions === fargCollection.versions.length) {
+          //   fargCollection.privateStatus = false;
+          // }
+
           this.service.updateCollection(fargCollection).subscribe(
             response => {
               if (response.status === 200) {
-                this.router.navigateByUrl('/collection');
+                this.service.updateVersion(this.version).subscribe(data => {
+                  if (data.status === 200) {
+                    this.router.navigateByUrl('/collection');
+                  }
+                });
+
               }
             });
         } else {
@@ -232,7 +250,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.router.navigate(['/collection']).then(
             () => {
 
-              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', {timeOut: 1000});
+              const toast = this.toastr.success('Your collection has been successfully deleted!!!', 'Sucess', { timeOut: 1000 });
             });
 
           setTimeout(() => {

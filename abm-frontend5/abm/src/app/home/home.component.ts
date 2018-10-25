@@ -31,10 +31,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadPublicCollections() {
     this.loading = true;
     this.service.getPublicCollections().subscribe(response => {
-      this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
-      if (this.loggedInStatus()) {
-        this.loadPinned();
+      if (response.status === 200 && response.json() !== null) {
+        this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
+        if (this.loggedInStatus()) {
+          this.loadPinned();
+        }
       }
+
     });
     this.loading = false;
   }
@@ -53,8 +56,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.checkPinned(this.publicCollections[i]);
 
     }
-    this.service.getPinnedCollections().subscribe(response => {
-      this.pinned = this.orderPipe.transform(response.json(), this.sortType);
+    this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
+      if (response.status === 200 && response.json() !== null) {
+        this.pinned = this.orderPipe.transform(response.json(), this.sortType);
+      }
+
     });
 
     this.loading = false;
@@ -91,12 +97,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.cancelSearch = true;
     this.service.getSearchCollections(searchQuery).subscribe(
       response => {
-        this.publicCollections = response.json();
-        if (this.loggedInStatus()) {
-          for (let i = 0; i < this.publicCollections.length; i++) {
-            this.checkPinned(this.publicCollections[i]);
+        if (response.status === 200 && response.json() !== null) {
+          this.publicCollections = response.json();
+          if (this.loggedInStatus()) {
+            for (let i = 0; i < this.publicCollections.length; i++) {
+              this.checkPinned(this.publicCollections[i]);
+            }
           }
         }
+
       });
     searching = false;
   }
@@ -118,6 +127,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (publicIndex >= 0) {
           this.publicCollections[publicIndex].pinned = false;
         }
+        this.loadPublicCollections();
       }
     );
     this.disabled = false;

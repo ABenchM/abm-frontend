@@ -3,7 +3,7 @@ import { Http, HttpModule} from '@angular/http';
 import {} from 'jasmine';
 import { Register } from './register.service';
 
-fdescribe('Register', () => {
+describe('Register', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
@@ -11,7 +11,7 @@ fdescribe('Register', () => {
     });
   });
 
- fit('should be created', inject([Register], (service: Register) => {
+fit('should be created', inject([Register], (service: Register) => {
     expect(service).toBeTruthy();
   }));
 });

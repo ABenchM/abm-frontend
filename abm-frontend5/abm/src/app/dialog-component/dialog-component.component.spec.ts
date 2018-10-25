@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogComponentComponent } from './dialog-component.component';
+import { FormsModule } from '@angular/forms';
+import { DialogService } from 'ng2-bootstrap-modal';
 
 describe('DialogComponentComponent', () => {
   let component: DialogComponentComponent;
@@ -8,7 +10,9 @@ describe('DialogComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogComponentComponent ]
+      declarations: [ DialogComponentComponent ],
+      imports: [FormsModule],
+      providers: [DialogService]
     })
     .compileComponents();
   }));
@@ -19,7 +23,7 @@ describe('DialogComponentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

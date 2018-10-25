@@ -2,12 +2,14 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms';
 // import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RegisterComponent } from './register.component';
-// import { Register } from '../services/register.service';
+import { Register } from '../services/register.service';
 import { User } from '../models/user.model';
 import {Component, DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   // let registerService : Register;
@@ -17,8 +19,8 @@ fdescribe('RegisterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [ FormsModule  ],
-      // providers : [Register]
+      imports: [ FormsModule , HttpModule , RouterTestingModule ],
+      providers : [Register]
     });
     // .compileComponents();
   }));
@@ -32,10 +34,13 @@ fdescribe('RegisterComponent', () => {
 
   });
 
-  fit('submit button disabled when any of the field is empty', () => {
-   affiliationel.nativeElement.value = '';
-    fixture.detectChanges();
-   expect(submitEl.nativeElement.disabled).toBeTruthy();
-   expect();
+  fit('should create', () => {
+    expect(component).toBeTruthy();
   });
+//  fit('submit button disabled when any of the field is empty', () => {
+//    affiliationel.nativeElement.value = '';
+//     fixture.detectChanges();
+//    expect(submitEl.nativeElement.disabled).toBeTruthy();
+
+//   });
 });

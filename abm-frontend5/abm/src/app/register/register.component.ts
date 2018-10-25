@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   public invalidEmail: boolean;
   public invalidUsername: boolean;
   public cannotContainSpace: boolean;
+  public loading: boolean;
 
   constructor(private register: Register, private router: Router) {
     this.invalidEmail = false;
@@ -61,7 +62,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  resetUsername() {
+  resetUsername(event: any) {
     this.invalidUsername = false;
     this.cannotContainSpace = false;
   }
