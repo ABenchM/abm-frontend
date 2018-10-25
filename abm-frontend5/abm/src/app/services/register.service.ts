@@ -50,3 +50,19 @@ export class Register {
 
      }
 }
+
+ updateUser(user: User) {
+        const body = JSON.stringify(user);
+        const headers = new Headers({'Content-type': 'application/json'});
+        const options = new RequestOptions({headers: headers});
+        return this.http.put('/rest/userdata', body, options);
+    }
+
+    deleteUser(currentUser) {
+        return this.http.delete('/rest/userdata/'+ currentUser);
+    }
+
+     // restAPi method to get the user details 
+     getUserDetails(currentUser) {
+         return this.http.get('/rest/userdata/' + currentUser);
+     }

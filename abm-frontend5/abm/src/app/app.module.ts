@@ -86,6 +86,8 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 import { DailogboxComponent } from './dailogbox/dailogbox.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SaveSuccessComponent } from './save-success/save-success.component';
 
 const routes: Routes = [
  {path: '', pathMatch: 'full', component: HomeComponent},
@@ -101,11 +103,14 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
+  {path: 'save-success', component: SaveSuccessComponent},
   {path: 'profile', component: MyProfileComponent},
   {path: 'pendingRequest', component: AdminPendingReqComponent},
   {path: 'manageusers', component: ManageUsersComponent},
   {path: 'publicCollections', component: ManagePublicCollectionsComponent},
   {path: 'publicCollection', component: HomeComponent}
+  {path: 'save-success', component: SaveSuccessComponent},
+  {path: 'profile', component: UserProfileComponent}
 ];
 
 @NgModule({
@@ -151,6 +156,8 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     ManagePublicCollectionsComponent,
     DailogboxComponent,
+    UserProfileComponent,
+    SaveSuccessComponent,
   ],
   imports: [
     BrowserModule,
