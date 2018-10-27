@@ -23,8 +23,8 @@
       <label for="uname">
         <b>User Name</b>
       </label>
-      <input #username="ngModel" type="text" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
-        required>
+      <input disabled #username="ngModel" type="text" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
+        require d>
       <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
       <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
       <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
@@ -50,12 +50,14 @@
       <label for="affiliation">
         <b>Affiliation</b>
       </label>
-      <input type="text" placeholder="Company / University / Institution belongs to" name="Affiliation" [(ngModel)]="model.affiliation"
+      <input #affiliation="ngModel" type="text" placeholder="Company / University / Institution belongs to" name="Affiliation" [(ngModel)]="model.affiliation"
+      
         required>
+        <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger"> This field can not be empty. </div>
     </div>
 
     <div class="clearfix">
-      <button type="submit" class="signupbtn">Save Changes</button>
+      <button type="submit" [disabled]="form.invalid" class="signupbtn">Save Changes</button>
 
       <div class="form-group">
         <label for="oldpassword">
@@ -63,7 +65,7 @@
         </label>
         <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="model.oldpassword"
           required>
-        <div *ngIf="oldpassword.dirty && model.oldpassword != model.password" class="alert alert-danger"> Old password is incorrect </div>
+        <!-- <div *ngIf="oldpassword.dirty && model.oldpassword != model.password" class="alert alert-danger"> Old password is incorrect </div> -->
       </div>
 
 
