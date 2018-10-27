@@ -2,7 +2,7 @@
   <div *ngIf="loggedInStatus()">
     <h2>My Collections</h2>
     <hr>
-    <p class="alert alert-warning" *ngIf="!hasCollections">You have no collections. To create a new collection, collect projects using the search feature and create a collection
+    <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new collection, collect projects using the search feature and create a collection
       from them in the Projects tab or clone an existing collection.</p>
   </div>
   <br>
@@ -25,7 +25,7 @@
   <br>
   <br>
 
-  <p-table *ngIf="hasCollections" #collectionDt [value]="filteredCollections"  [columns]="collectionColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+  <p-table *ngIf="!(userCollections[0]===undefined)" #collectionDt [value]="filteredCollections"  [columns]="collectionColumns" [scrollable]="true" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header" let-columns>
       <tr>
           <th *ngFor="let col of collectionColumns">

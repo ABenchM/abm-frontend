@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadPublicCollections() {
     this.loading = true;
     this.service.getPublicCollections().subscribe(response => {
-      if (response.status === 200) {
+      if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
         if (this.loggedInStatus()) {
           this.loadPinned();
@@ -56,8 +56,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.checkPinned(this.publicCollections[i]);
 
     }
-    this.service.getPinnedCollections().subscribe(response => {
-      if (response.status === 200) {
+    this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
+      if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json(), this.sortType);
       }
 
@@ -97,12 +97,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.cancelSearch = true;
     this.service.getSearchCollections(searchQuery).subscribe(
       response => {
-        this.publicCollections = response.json();
-        if (this.loggedInStatus()) {
-          for (let i = 0; i < this.publicCollections.length; i++) {
-            this.checkPinned(this.publicCollections[i]);
+        if (response.status === 200 && response.json() !== null) {
+          this.publicCollections = response.json();
+          if (this.loggedInStatus()) {
+            for (let i = 0; i < this.publicCollections.length; i++) {
+              this.checkPinned(this.publicCollections[i]);
+            }
           }
         }
+
       });
     searching = false;
   }
