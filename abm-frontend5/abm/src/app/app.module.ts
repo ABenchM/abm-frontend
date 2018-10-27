@@ -58,7 +58,7 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+// import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
@@ -100,7 +100,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'register-success', component: RegisterSuccessComponent},
   {path: 'save-success', component: SaveSuccessComponent},
-  {path: 'profile', component: MyProfileComponent},
+  // {path: 'profile', component: MyProfileComponent},
   {path: 'pendingRequest', component: AdminPendingReqComponent},
   {path: 'manageusers', component: ManageUsersComponent},
   {path: 'publicCollections', component: ManagePublicCollectionsComponent},
@@ -138,7 +138,6 @@ const routes: Routes = [
     CreateCollectionComponent,
     CapitalizeFirstPipe,
     DialogComponentComponent,
-    MyProfileComponent,
     BuiltStatusPipe,
     CommitSelectorComponent,
     ModalBuildViewerComponent,
