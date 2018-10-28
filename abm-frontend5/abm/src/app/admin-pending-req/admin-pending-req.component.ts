@@ -19,7 +19,7 @@ export class AdminPendingReqComponent implements OnInit {
   public usersList: any[] = [];
   loading: boolean;
   dialogResult = "";
-  displayedColumns: string[] = ['select','affiliation', 'lastname', 'username', 'email', 'affiliation', 'Approve', 'Reject'];
+  displayedColumns: string[] = ['select','firstname', 'lastname', 'username', 'email', 'affiliation', 'Approve', 'Reject'];
   dataSource = new MatTableDataSource<User>();
   selection = new SelectionModel<User>(true, []);
 
