@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaveSuccessComponent } from './save-success.component';
+import { ForgetPasswordComponent } from './forget-password.component';
 
-describe('SaveSuccessComponent', () => {
-  let component: SaveSuccessComponent;
-  let fixture: ComponentFixture<SaveSuccessComponent>;
+describe('ForgetPasswordComponent', () => {
+  let component: ForgetPasswordComponent;
+  let fixture: ComponentFixture<ForgetPasswordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveSuccessComponent ]
+      declarations: [ ForgetPasswordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SaveSuccessComponent);
+    fixture = TestBed.createComponent(ForgetPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

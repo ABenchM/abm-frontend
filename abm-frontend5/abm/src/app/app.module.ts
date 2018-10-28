@@ -43,6 +43,7 @@ import { RegisterSuccessComponent } from './register-success/register-success.co
 import { LogoutComponent } from './logout/logout.component';
 
 // Services
+import {ResetPasswordService} from './services/reset-password.service';
 import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
@@ -84,6 +85,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -106,7 +109,9 @@ const routes: Routes = [
   {path: 'publicCollections', component: ManagePublicCollectionsComponent},
   {path: 'publicCollection', component: HomeComponent},
   {path: 'save-success', component: SaveSuccessComponent},
-  {path: 'profile', component: UserProfileComponent}
+  {path: 'profile', component: UserProfileComponent},
+  {path: 'forget-password', component: ForgetPasswordComponent},
+  {path: 'confirm-password', component: ConfirmPasswordComponent}
 
 ];
 
@@ -150,8 +155,11 @@ const routes: Routes = [
     DailogboxComponent,
     UserProfileComponent,
     SaveSuccessComponent,
+    ForgetPasswordComponent,
+    ConfirmPasswordComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
@@ -206,7 +214,8 @@ const routes: Routes = [
     HermesService,
     CommitService,
     BuildService,
-    ContextMenuService
+    ContextMenuService,
+    ResetPasswordService
   ],
   entryComponents: [
     DeleteDialogboxComponent,

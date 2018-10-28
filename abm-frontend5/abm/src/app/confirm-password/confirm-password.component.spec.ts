@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaveSuccessComponent } from './save-success.component';
+import { ConfirmPasswordComponent } from './confirm-password.component';
 
-describe('SaveSuccessComponent', () => {
-  let component: SaveSuccessComponent;
-  let fixture: ComponentFixture<SaveSuccessComponent>;
+describe('ConfirmPasswordComponent', () => {
+  let component: ConfirmPasswordComponent;
+  let fixture: ComponentFixture<ConfirmPasswordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SaveSuccessComponent ]
+      declarations: [ ConfirmPasswordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SaveSuccessComponent);
+    fixture = TestBed.createComponent(ConfirmPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
