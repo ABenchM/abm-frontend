@@ -31,25 +31,25 @@
             The actual rendered columns are set as a property on the row definition" -->
   
         <!-- id Column -->
-        <ng-container matColumnDef="UserName">
+        <ng-container matColumnDef="username">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
         </ng-container>
   
         <!-- Name Column -->
-        <ng-container matColumnDef="Name">
+        <ng-container matColumnDef="firstname">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
         </ng-container>
   
         <!-- Description Column -->
-        <ng-container matColumnDef="Emailid">
+        <ng-container matColumnDef="email">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Email-id</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
         </ng-container>
   
         <!-- Owner Column -->
-        <ng-container matColumnDef="Affiliation">
+        <ng-container matColumnDef="affiliation">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Affiliation</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.affiliation}} </mat-cell>
         </ng-container>
@@ -59,11 +59,11 @@
         <ng-container matColumnDef="Account_status">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Account status</mat-header-cell>
           <mat-cell *matCellDef="let element"> 
-            <div *ngIf="element.locked" >
+            <div *ngIf="!element.locked" >
               Active
             </div>
-            <div *ngIf="!element.locked" >
-                LOcked
+            <div *ngIf="element.locked" >
+                Locked
               </div>
           </mat-cell>
         </ng-container>
@@ -74,28 +74,28 @@
   
           <mat-cell *matCellDef="let row;">
   
-            <div *ngIf="row.locked">
+            <div *ngIf="!row.locked">
               <button mat-icon-button color="red">
                 <mat-icon (click)="lockUser(row)" aria-label="Lock" >lock</mat-icon>
               </button>
             </div>
   
-            <div *ngIf="!row.locked">
+            <div *ngIf="row.locked">
               <button mat-icon-button color="red">
                 <mat-icon (click)="unlockUser(row)" aria-label="unLock" >lock_open</mat-icon>
               </button>
             </div>
   
-            <div *ngIf="row.locked" >              
+            <div *ngIf="row.role === 'RegisteredUser'" >              
             <button mat-button [matMenuTriggerFor]="menu">User</button>
               </div>
-              <div *ngIf="!row.locked" >              
+              <div *ngIf="row.role === 'UserAdmin'" >              
                   <button mat-button [matMenuTriggerFor]="menu">Admin</button>
                     </div>
             <mat-menu #menu="matMenu" yPosition="below">
                   <ng-template matMenuContent>
-              <button mat-menu-item>User</button>
-              <button mat-menu-item>Admin</button>
+              <button mat-menu-item (click)="updateRoletoUser(row)">User</button>
+              <button mat-menu-item (click)="updateRoletoAdmin(row)">Admin</button>
               </ng-template>
             </mat-menu> 
   

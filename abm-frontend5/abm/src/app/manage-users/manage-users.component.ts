@@ -19,7 +19,7 @@ export class ManageUsersComponent implements OnInit {
   public usersList: any[] = [];
   loading: boolean;
   //dialogResult = "";
-  displayedColumns: string[] = ['select','UserName', 'Name', 'Emailid', 'Affiliation' ,'Account_status','Lockaction'];
+  displayedColumns: string[] = ['select','username', 'firstname', 'email', 'affiliation' ,'Account_status','Lockaction'];
   dataSource = new MatTableDataSource<User>();
   selection = new SelectionModel<User>(true, []);
 
@@ -32,6 +32,9 @@ export class ManageUsersComponent implements OnInit {
     this.service.getAllUsers(1).subscribe(response => {
       this.usersList = this.orderPipe.transform(response.json());
       this.dataSource.data = this.usersList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.selection = new SelectionModel<User>(true, []);
     });
     this.loading = false;
   }
@@ -58,8 +61,6 @@ export class ManageUsersComponent implements OnInit {
 
    ngOnInit() {
     this.loadUsers();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
@@ -94,6 +95,18 @@ export class ManageUsersComponent implements OnInit {
 
   unlockUser(user: User ){
     this.service.lockunlockUser(user,false).subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  updateRoletoAdmin(user: User ){
+    this.service.updateUserRole(user,"UserAdmin").subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  updateRoletoUser(user: User ){
+    this.service.updateUserRole(user,"RegisteredUser").subscribe(result => {
       this.loadUsers();
     });
   }
