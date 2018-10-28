@@ -3,7 +3,6 @@ import { OrderPipe } from 'ngx-order-pipe';
 
 import {MatPaginator, MatTableDataSource, MatSort,MatFormFieldModule, MatCheckboxModule} from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {MatMenuModule} from '@angular/material/menu';
 
 import { SelectionModel} from '@angular/cdk/collections';
 import { DeleteDialogboxComponent } from '../delete-dialogbox/delete-dialogbox.component';
@@ -18,7 +17,7 @@ import { User} from '../models/user.model'
 export class ManageUsersComponent implements OnInit {
   public usersList: any[] = [];
   loading: boolean;
-  //dialogResult = "";
+  confirm:boolean=false;
   displayedColumns: string[] = ['select','username', 'firstname', 'email', 'affiliation' ,'Account_status','Lockaction'];
   dataSource = new MatTableDataSource<User>();
   selection = new SelectionModel<User>(true, []);
@@ -41,8 +40,6 @@ export class ManageUsersComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  confirm:boolean=false;
 
   openDialog(user: string) : void{
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewComponent } from './view.component';
 import { HttpModule } from '@angular/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CollectionService } from '../services/collection.service';
@@ -18,7 +19,7 @@ describe('ViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ViewComponent ],
       imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, ToastrModule.forRoot()],
-      providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService]
+      providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));

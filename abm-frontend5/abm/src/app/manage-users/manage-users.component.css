@@ -15,7 +15,17 @@ table {
   flex: 1 1 auto;
 }
 
-.mat-raised-button{
+.selectCheckbox{
+  border-bottom-style: hidden;
+}
+
+.button_alignR {
+  left: 12px;
+  position: relative;
+  top: 30px;
+}
+
+/* .mat-raised-button{
   border-radius: 15px;
     margin-left: 60px;
     font-size:12px;
@@ -24,6 +34,10 @@ table {
     font-weight:bold;
     height:30px;
     
+  } */
+
+  .navigateToCol{
+    cursor: pointer;
   }
 
 

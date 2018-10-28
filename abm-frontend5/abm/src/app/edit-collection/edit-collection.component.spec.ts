@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CollectionService } from '../services/collection.service';
 import { HttpModule } from '@angular/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,7 +22,7 @@ describe('EditCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ EditCollectionComponent ],
       imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, HttpModule, ToastrModule.forRoot(), NgbModule.forRoot()],
-      providers: [CollectionService, DialogService, ToastrService, CommitService, DataServiceService, HermesService, BuildService]
+      providers: [CollectionService, DialogService, ToastrService, CommitService, DataServiceService, HermesService, BuildService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));
