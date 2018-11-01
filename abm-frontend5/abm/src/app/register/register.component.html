@@ -37,7 +37,7 @@
 
     <div class="form-group">
       <label for="affiliation"> Affiliation</label>
-      <input #affiliation="ngModel" type="text" class="form-control" placeholder="Organization/Institution belongs to..." name="affiliation" required [(ngModel)]="model.affiliation">
+      <input #affiliation="ngModel" type="text" class="form-control" placeholder="Company / University / Institution" name="affiliation" required [(ngModel)]="model.affiliation">
       <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger">Affiliation is required</div>
     </div>
 
