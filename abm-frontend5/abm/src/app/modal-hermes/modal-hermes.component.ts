@@ -35,7 +35,7 @@ export class ModalHermesComponent implements OnInit {
           this.toastr.success('Hermes has been started');
           this.loading = false;
           this.activeModal.close();
-          this.timer = setTimeout(this.poller(), 100);
+          this.timer = setTimeout((): void => this.poller(), 100);
         }
       }
     );
@@ -49,7 +49,7 @@ export class ModalHermesComponent implements OnInit {
           this.dataService.setRunning(false);
           clearTimeout(this.timer);
         } else {
-          this.timer = setTimeout(this.poller(), 8000);
+          this.timer = setTimeout((): void => this.poller(), 8000);
         }
       }
     }
