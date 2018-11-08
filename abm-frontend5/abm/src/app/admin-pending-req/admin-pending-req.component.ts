@@ -74,16 +74,36 @@ constructor(private service:UserService ,private orderPipe: OrderPipe, public di
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  approveUser(user: User){
+  approveUser(user: string){
+    this.openDialog();
     this.service.approveRejectUser(user,true).subscribe(result => {
       this.loadUsers();
     });
+    
   }
 
-  rejectUser(user: User){
+  rejectUser(user: string){
+    this.openDialog();
     this.service.approveRejectUser(user,false).subscribe(result => {
       this.loadUsers();
     });
+    
   }
 
+  approveSelectedUsers() {
+    let userlist: string = "";
+    this.selection.selected.forEach(item => {
+      userlist= userlist.concat(item.username,",");      
+    });
+    this.approveUser(userlist);
+  }
+
+  rejectSelectedUsers() {
+    let userlist: string = "";
+    this.selection.selected.forEach(item => {
+      userlist= userlist.concat(item.username,",");      
+    });
+    this.rejectUser(userlist);
+  }
+  
 }
