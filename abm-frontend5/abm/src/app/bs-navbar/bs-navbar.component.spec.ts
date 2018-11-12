@@ -4,6 +4,7 @@ import { BsNavbarComponent } from './bs-navbar.component';
 import { CapitalizeFirstPipe } from '../shared/capitalize-first.pipe';
 import { HttpModule } from '@angular/http';
 import { CurrentUserService } from '../services/current-user.service';
+import { MatButtonModule, MatMenuModule, MatIconModule, MatTableModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, MatSortModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 
 describe('BsNavbarComponent', () => {
   let component: BsNavbarComponent;
@@ -12,7 +13,13 @@ describe('BsNavbarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BsNavbarComponent, CapitalizeFirstPipe ],
-      imports: [HttpModule],
+      imports: [HttpModule,MatButtonModule, MatMenuModule, MatIconModule, MatTableModule,
+        MatPaginatorModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSortModule,
+        MatDialogModule,
+        MatCheckboxModule],
       providers: [Login, CurrentUserService]
     })
     .compileComponents();

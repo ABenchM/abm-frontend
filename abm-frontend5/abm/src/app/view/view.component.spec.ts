@@ -9,6 +9,7 @@ import { ViewService } from '../services/view.service';
 import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewComponent', () => {
   let component: ViewComponent;
@@ -17,7 +18,7 @@ describe('ViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewComponent ],
-      imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, ToastrModule.forRoot()],
+      imports: [HttpModule, FormsModule, HttpClientModule, ReactiveFormsModule, RouterTestingModule, ToastrModule.forRoot()],
       providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService]
     })
     .compileComponents();

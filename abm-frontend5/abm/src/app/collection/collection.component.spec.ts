@@ -8,6 +8,7 @@ import { BuiltStatusPipe } from '../shared/built-status.pipe';
 import { CollectionService } from '../services/collection.service';
 import { OrderModule } from 'ngx-order-pipe';
 import { PrivateStatusPipe } from '../shared/private-status.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CollectionComponent', () => {
   let component: CollectionComponent;
@@ -16,7 +17,7 @@ describe('CollectionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CollectionComponent, BuiltStatusPipe , PrivateStatusPipe ],
-      imports: [PaginatorModule, DataTableModule, TableModule, ContextMenuModule, ConfirmDialogModule, OrderModule],
+      imports: [PaginatorModule, DataTableModule, TableModule, ContextMenuModule, ConfirmDialogModule, OrderModule, HttpClientModule],
       providers: [ContextMenuService, CollectionService, ConfirmationService]
     })
     .compileComponents();

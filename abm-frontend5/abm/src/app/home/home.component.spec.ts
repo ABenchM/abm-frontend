@@ -11,6 +11,7 @@ import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
 import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -20,7 +21,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
       imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, DataTableModule, PaginatorModule,
-         TableModule , OrderModule],
+         TableModule , OrderModule, HttpClientModule],
       providers: [CollectionService, PinService, DataServiceService]
     })
     .compileComponents();

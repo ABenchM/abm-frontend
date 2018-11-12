@@ -12,6 +12,7 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -21,7 +22,7 @@ describe('SearchComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SearchComponent , ProjectCountPipe, FileSizePipe, SiteNamePipe],
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule, DataTableModule
-        , PaginatorModule, TableModule],
+        , PaginatorModule, TableModule, HttpClientModule],
         providers: [SearchService, CollectionService]
     })
     .compileComponents();
