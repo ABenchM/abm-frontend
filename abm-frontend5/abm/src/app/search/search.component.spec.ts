@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { OrderModule } from 'ngx-order-pipe';
 import { ProjectCountPipe } from '../project-count.pipe';
@@ -22,8 +23,8 @@ describe('SearchComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SearchComponent , ProjectCountPipe, FileSizePipe, SiteNamePipe],
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule, DataTableModule
-        , PaginatorModule, TableModule, HttpClientModule],
-        providers: [SearchService, CollectionService]
+        , PaginatorModule, TableModule],
+        providers: [SearchService, CollectionService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));

@@ -3,7 +3,6 @@ import { OrderPipe } from 'ngx-order-pipe';
 
 import {MatPaginator, MatTableDataSource, MatSort,MatFormFieldModule, MatCheckboxModule} from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {MatMenuModule} from '@angular/material/menu';
 
 import { SelectionModel} from '@angular/cdk/collections';
 import { DeleteDialogboxComponent } from '../delete-dialogbox/delete-dialogbox.component';
@@ -18,8 +17,8 @@ import { User} from '../models/user.model'
 export class ManageUsersComponent implements OnInit {
   public usersList: any[] = [];
   loading: boolean;
-  //dialogResult = "";
-  displayedColumns: string[] = ['select','UserName', 'Name', 'Emailid', 'Affiliation' ,'Account_status','Lockaction'];
+  confirm:boolean=false;
+  displayedColumns: string[] = ['select','username', 'firstname', 'email', 'affiliation' ,'Account_status','Lockaction'];
   dataSource = new MatTableDataSource<User>();
   selection = new SelectionModel<User>(true, []);
 
@@ -32,14 +31,15 @@ export class ManageUsersComponent implements OnInit {
     this.service.getAllUsers(1).subscribe(response => {
       this.usersList = this.orderPipe.transform(response.json());
       this.dataSource.data = this.usersList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.selection = new SelectionModel<User>(true, []);
     });
     this.loading = false;
   }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  confirm:boolean=false;
 
   openDialog(user: string) : void{
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
@@ -58,8 +58,6 @@ export class ManageUsersComponent implements OnInit {
 
    ngOnInit() {
     this.loadUsers();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
@@ -94,6 +92,18 @@ export class ManageUsersComponent implements OnInit {
 
   unlockUser(user: User ){
     this.service.lockunlockUser(user,false).subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  updateRoletoAdmin(user: User ){
+    this.service.updateUserRole(user,"UserAdmin").subscribe(result => {
+      this.loadUsers();
+    });
+  }
+
+  updateRoletoUser(user: User ){
+    this.service.updateUserRole(user,"RegisteredUser").subscribe(result => {
       this.loadUsers();
     });
   }
