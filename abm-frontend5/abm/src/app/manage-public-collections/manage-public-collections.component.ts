@@ -10,7 +10,7 @@ import { Collection } from '../models/collection.model';
 @Component({
   selector: 'abm-manage-public-collections',
   templateUrl: './manage-public-collections.component.html',
-  styleUrls: ['./manage-public-collections.component.css']
+  styleUrls: ['./adminUIS.css']
 })
 export class ManagePublicCollectionsComponent implements OnInit {
   public publicCollections: any[] = [];

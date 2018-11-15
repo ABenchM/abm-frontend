@@ -1,18 +1,14 @@
-.container {
+mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.example-container {
   display: flex;
   flex-direction: column;
   max-height: 500px;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-
-table {
-  width: 100%;
-}
-
-.example-spacer {
-  flex: 1 1 auto;
+  min-width: 300px;
 }
 
 .selectCheckbox{
@@ -20,30 +16,7 @@ table {
 }
 
 .button_alignR {
-  left: 12px;
   position: relative;
+  left: 12px;
   top: 30px;
-}
-
-/* .mat-raised-button{
-  border-radius: 15px;
-    margin-left: 60px;
-    font-size:12px;
-    font-family: Verdana,Sans-Serif;
-    text-align:center; 
-    font-weight:bold;
-    height:30px;
-    
-  } */
-
-  .navigateToCol{
-    cursor: pointer;
-  }
-
-
-
-
-mat-form-field {
-  font-size: 14px;
-  width: 100%;
 }

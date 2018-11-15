@@ -1,12 +1,10 @@
-<div class="container-fluid">
-    <h2> Manage Users</h2>
-  </div>
+<h2> Manage Users</h2>
   
   <mat-form-field>
       <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>  
   
-    <div class="mat-elevation-z8">
+    <div class="example-container mat-elevation-z8">
     
       <mat-table #table [dataSource]="dataSource" matSort>
   
@@ -33,25 +31,25 @@
         <!-- id Column -->
         <ng-container matColumnDef="username">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.username}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
         </ng-container>
   
         <!-- Name Column -->
         <ng-container matColumnDef="firstname">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.firstname}} {{element.lastname}}  </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
         </ng-container>
   
         <!-- Description Column -->
         <ng-container matColumnDef="email">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Email-id</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.email}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
         </ng-container>
   
         <!-- Owner Column -->
         <ng-container matColumnDef="affiliation">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Affiliation</mat-header-cell>
-          <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.affiliation}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.affiliation}} </mat-cell>
         </ng-container>
   
         <!-- CreationDate Column -->
@@ -111,8 +109,7 @@
 
       <mat-toolbar>
         <mat-toolbar-row>
-          <span><button mat-raised-button  (click)="deleteSelectedUsers()" id="button_alignR">Delete Selected Users</button></span>
-          <span class="example-spacer"></span>
+          <button mat-raised-button  (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button>
           <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
         </mat-toolbar-row>
       </mat-toolbar>

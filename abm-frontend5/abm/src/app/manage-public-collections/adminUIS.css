@@ -1,3 +1,5 @@
+h2 {color:green;}
+
 mat-form-field {
   font-size: 14px;
   width: 100%;
@@ -15,6 +17,10 @@ mat-form-field {
   border-bottom-style: hidden;
 }
 
+.navigateToCol{
+  cursor: pointer;
+}
+
 .button_alignR {
   position: relative;
   left: 12px;
@@ -26,8 +32,3 @@ mat-form-field {
   left:20px;
   top: 30px;
 }
-
-
-
-
-
