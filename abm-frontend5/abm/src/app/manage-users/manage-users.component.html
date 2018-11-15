@@ -3,7 +3,7 @@
   </div>
   
   <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>  
   
     <div class="mat-elevation-z8">
@@ -99,7 +99,7 @@
               </ng-template>
             </mat-menu> 
   
-            <button mat-icon-button>
+            <button class="deleteIcon" mat-icon-button >
               <mat-icon  aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
             </button>
           </mat-cell>
@@ -111,7 +111,7 @@
 
       <mat-toolbar>
         <mat-toolbar-row>
-          <span><button mat-raised-button  (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button></span>
+          <span><button mat-raised-button  (click)="deleteSelectedUsers()" id="button_alignR">Delete Selected Users</button></span>
           <span class="example-spacer"></span>
           <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
         </mat-toolbar-row>
