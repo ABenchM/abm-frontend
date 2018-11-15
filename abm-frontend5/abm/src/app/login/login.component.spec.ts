@@ -12,6 +12,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AboutComponent } from '../about/about.component';
 import { CurrentUserService } from '../services/current-user.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -22,11 +23,11 @@ describe('LoginComponent', () => {
         AboutComponent
       ],
       imports: [
-        FormsModule,
+        FormsModule, ToastrModule.forRoot(),
         RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
       ],
       providers: [
-        CurrentUserService,
+        CurrentUserService, ToastrService,
         {
           provide: Login,
           useClass: class {
@@ -70,5 +71,5 @@ describe('LoginComponent', () => {
   fit('Successful Login', async(() => {
     spyOn(component, 'loginForm').and.returnValue(false);
     expect(component.loginForm()).toBeFalsy();
-}));
+  }));
 });
