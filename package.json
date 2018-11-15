@@ -4,9 +4,7 @@
   "description": "Front End for ABM",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "precommit": "npm test",
-    "prepush": "npm run lint && npm test"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
