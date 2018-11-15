@@ -6,6 +6,9 @@ import { Credentials } from '../models/credentials.model';
 import { IfObservable } from 'rxjs/observable/IfObservable';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/catch';
+// import 'rxjs/add/operator/throw';
+
 
 @Injectable()
 export class Login {
@@ -20,10 +23,10 @@ export class Login {
         return res;
     }
 
-    private handleError(error: any) {
+    private handleError(error: Response) {
 
         console.error('post error : ', error);
-        return error.status;
+        return Observable.throw(error);
 
 
     }
@@ -31,9 +34,11 @@ export class Login {
         const body = JSON.stringify(credentials);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
-        return this.http.post('/rest/login', body, options).pipe(
-            map(f => this.onSuccess(f, credentials.username)),
-            catchError(this.handleError), );
+        return this.http.post('/rest/login', body, options)
+           .catch(this.handleError);
+        // .filter(f => f.status === 200).pipe(
+        //     map(f => this.onSuccess(f, credentials.username)),
+        //     catchError(this.handleError), );
     }
 
     isLoggedin() {
