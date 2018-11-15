@@ -48,7 +48,7 @@
             <mat-cell *matCellDef="let row;">
 
                 <button mat-icon-button>
-                    <mat-icon (click)="deleteSingleCol(row)" aria-label="Delete">delete</mat-icon>
+                    <mat-icon class="red" (click)="deleteSingleCol(row)" aria-label="Delete">delete</mat-icon>
                 </button>
 
                 <div *ngIf="row.isActive">
