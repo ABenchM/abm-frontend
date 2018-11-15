@@ -55,7 +55,7 @@
       <ng-container matColumnDef="Approve">
         <mat-header-cell *matHeaderCellDef> Approve </mat-header-cell>
         <mat-cell *matCellDef="let row; let i=index;">
-                    <button mat-icon-button color="accent" >
+                    <button mat-icon-button >
                     <mat-icon class="green" aria-label="Done" (click)="approveUser(row.username)">done</mat-icon>
                     </button>
                   </mat-cell>
@@ -65,7 +65,7 @@
       <ng-container matColumnDef="Reject">
         <mat-header-cell *matHeaderCellDef> Reject </mat-header-cell>
         <mat-cell *matCellDef="let row; let i=index;">
-                    <button mat-icon-button color="warn" >
+                    <button mat-icon-button>
                       <mat-icon class="red" aria-label="Clear" (click)="rejectUser(row.username)">clear</mat-icon>
                     </button>
                   </mat-cell>
