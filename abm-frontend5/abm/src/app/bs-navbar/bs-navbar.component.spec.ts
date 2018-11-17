@@ -4,6 +4,8 @@ import { BsNavbarComponent } from './bs-navbar.component';
 import { CapitalizeFirstPipe } from '../shared/capitalize-first.pipe';
 import { HttpModule } from '@angular/http';
 import { CurrentUserService } from '../services/current-user.service';
+import { RouterLinkActive, RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BsNavbarComponent', () => {
   let component: BsNavbarComponent;
@@ -12,8 +14,8 @@ describe('BsNavbarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BsNavbarComponent, CapitalizeFirstPipe ],
-      imports: [HttpModule],
-      providers: [Login, CurrentUserService]
+      imports: [HttpModule,RouterTestingModule],
+      providers: [Login, CurrentUserService , RouterLinkActive]
     })
     .compileComponents();
   }));

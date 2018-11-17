@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
@@ -135,7 +135,7 @@ const routes: Routes = [
     ModalModule.forRoot(),
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes),RouterLinkActive,
     BootstrapModalModule.forRoot({ container: document.body }),
     SocialLoginModule,
     NgbModule.forRoot(),
@@ -171,7 +171,8 @@ const routes: Routes = [
     HermesService,
     CommitService,
     BuildService,
-    ContextMenuService
+    ContextMenuService,
+    RouterLinkActive
   ],
   entryComponents: [
     DialogComponentComponent,

@@ -6,19 +6,19 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto nav-pills">
-      <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/">Collections</a>
+      <li class="nav-item" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link">
+        <a class="nav-link"   routerLink="/">Collections</a>
       </li>
-      <li  *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active current">
+      <li  *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/search" >Create collection</a>
       </li>
-      <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active current">
+      <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
           <a class="nav-link" routerLink="/filters">Filters</a>
         </li>
-      <li class="nav-item" routerLinkActive="active current">
+      <li class="nav-item" routerLinkActive="active-link">
          <a class="nav-link" routerLink="/about">About</a>
       </li>
-      <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active current">
+      <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/login" >Login</a>
       </li>
       <li *ngIf="loggedInStatus()" ngbDropdown class="nav-item dropdown float-right">
