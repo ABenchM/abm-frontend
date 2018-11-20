@@ -70,9 +70,9 @@
     <label for="oldpassword">
       <b>Old Password</b>
     </label>
-    <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="model.oldpassword"
+    <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="oldPassword"
       required>
-    <div *ngIf="oldpassword.dirty && model.oldpassword != model.password" class="alert alert-danger"> Old password is incorrect </div>
+      <!-- <div *ngIf="oldpassword.dirty && !check" class="alert alert-danger"> Old password is incorrect </div> -->
   </div>
 
 

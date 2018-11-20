@@ -50,9 +50,16 @@ export class Register {
 
     }
 
+    checkPassword(password) {
+        const data = {username: localStorage.getItem('currentUser'),
+                      password: password};
+        return this.http.get('/rest/ispasswordmatched/' , {params: data});
+    }
+
 
     updateUser(user: User) {
         const body = JSON.stringify(user);
+        console.log(user.password);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
         return this.http.post('/rest/username/', body, options);

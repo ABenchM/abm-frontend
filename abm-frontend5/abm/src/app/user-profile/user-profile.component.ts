@@ -3,7 +3,7 @@ import { User } from '../models/user.model';
 import { NgForm } from '@angular/forms';
 import { Register } from '../services/register.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
-
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { DialogService } from 'ng2-bootstrap-modal';
 
@@ -16,9 +16,11 @@ export class UserProfileComponent implements OnInit {
 
 
   public invalidUsername: boolean;
-  constructor(private register: Register, private router: Router, private dialogService: DialogService) { }
+  constructor(private register: Register, private toastr: ToastrService, private router: Router, private dialogService: DialogService) { }
   public newPassword: string;
+  public oldPassword: string;
   public confirmNewPassword: string;
+  public passwordMatched: boolean = false;
 
   model = new User('', '', '', '', '', '', '', true);
 
@@ -44,8 +46,8 @@ export class UserProfileComponent implements OnInit {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
       message: 'Removal is irreversible! Continue?'
-    }).subscribe( (isConfirmed) => {
-       if(isConfirmed) {
+    }).subscribe((isConfirmed) => {
+      if (isConfirmed) {
         this.register.deleteUser(localStorage.getItem('currentUser')).subscribe(
           response => {
             if (response.status === 200) {
@@ -53,27 +55,47 @@ export class UserProfileComponent implements OnInit {
             }
           }
         )
-       }
+      }
     }
-      
+
     );
-   
+
+  }
+
+  checkPassword() {
+
+    this.register.checkPassword('demo').subscribe(
+      response => this.passwordMatched = response.json()
+    );
+    return this.passwordMatched;
   }
 
   savePassword() {
+    console.log('New Password' + this.newPassword);
     this.model.password = this.newPassword;
-    this.register.updateUser(this.model).subscribe(
+    console.log('old password' + this.oldPassword);
+    this.register.checkPassword(this.oldPassword).subscribe(
       response => {
-        if(response.status === 200) {
-          this.router.navigateByUrl('/save-success');
-        }
+          if (response.json() === true) {
+              this.register.updateUser(this.model).subscribe(
+              response => {
+                if (response.status === 200) {
+                  this.router.navigateByUrl('/save-success');
+                }
         
+              }
+            )
+          } else {
+             this.toastr.error('Old Password is incorrect');
+          }
       }
     )
+    
   }
 
   ngOnInit() {
     this.loadUserData();
+    
   }
 
 }
