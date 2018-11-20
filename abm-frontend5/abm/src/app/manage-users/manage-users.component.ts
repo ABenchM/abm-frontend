@@ -116,4 +116,11 @@ export class ManageUsersComponent implements OnInit {
     this.openDialog(userlist);
   }
 
+  isselected(){
+    if(this.selection.selected.length >=1)
+      return false;
+      else
+      return true;
+  }
+
 }
