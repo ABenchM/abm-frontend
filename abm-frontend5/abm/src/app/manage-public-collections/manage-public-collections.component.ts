@@ -10,7 +10,7 @@ import { Collection } from '../models/collection.model';
 @Component({
   selector: 'abm-manage-public-collections',
   templateUrl: './manage-public-collections.component.html',
-  styleUrls: ['./manage-public-collections.component.css']
+  styleUrls: ['./adminUIS.css']
 })
 export class ManagePublicCollectionsComponent implements OnInit {
   public publicCollections: any[] = [];
@@ -21,14 +21,6 @@ export class ManagePublicCollectionsComponent implements OnInit {
 
   constructor(private router: Router, private service: CollectionService, private orderPipe: OrderPipe) { }
 
-  loadCols() {
-    this.loading = true;
-    this.service.getPublicCollections().subscribe(response => {
-      this.publicCollections = this.orderPipe.transform(response.json());
-      this.dataSource.data = this.publicCollections;
-    });
-    this.loading = false;
-  }
   getAllCollections(){
     this.loading = true;
     this.service.getAllCollections().subscribe(response => {
@@ -42,7 +34,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    this.loadCols();
+    this.getAllCollections();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -53,7 +45,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
 
   deleteSingleCol(coll: Collection ){
     this.service.deleteSingleCol(coll).subscribe(result=>{
-      this.loadCols();
+      this.getAllCollections();
     });
   }
 
@@ -67,7 +59,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
       }
 
       this.service.deleteSelectedCols(colIDs).subscribe(result=>{
-        this.loadCols();
+        this.getAllCollections();
       });
     
   }
@@ -78,7 +70,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
 
   changeColStatus(coll:Collection){
     this.service.changeCollectionStatus(coll).subscribe(result=>{
-      this.loadCols();
+      this.getAllCollections();
     });
   }
 
