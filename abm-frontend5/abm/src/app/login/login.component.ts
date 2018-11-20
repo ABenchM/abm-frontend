@@ -13,6 +13,7 @@ import { CurrentUserService } from '../services/current-user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  userrole: string;
   public ngForm: NgForm;
   public loginFailed = false;
   model = new Credentials('', '');
@@ -24,6 +25,10 @@ export class LoginComponent implements OnInit {
 
       localStorage.setItem('loggedIn', 'true');
       this.currentUserService.username(this.model.username);
+      this.currentUserService.getuserrole(this.model.username).subscribe(response => {
+        this.userrole = response.json().role;
+        this.currentUserService.userrole(this.userrole);
+      });      
       const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       this.router.navigate([returnUrl || '/']);
 

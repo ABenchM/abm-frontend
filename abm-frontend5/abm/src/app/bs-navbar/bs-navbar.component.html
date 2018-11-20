@@ -38,15 +38,15 @@
             <mat-icon>person</mat-icon>
             <span>My Profile</span>
           </button>
-          <button *ngIf="!false" mat-menu-item routerLink="/manageusers">
+          <button *ngIf="isAdmin()" mat-menu-item routerLink="/manageusers">
             <mat-icon>people</mat-icon>
             <span>Manage Users</span>
           </button>
-          <button *ngIf="!false" mat-menu-item routerLink="/publicCollections">
+          <button *ngIf="isAdmin()" mat-menu-item routerLink="/publicCollections">
             <mat-icon>collections</mat-icon>
             <span>Manage Public Collections</span>
           </button>
-          <button *ngIf="!false" mat-menu-item routerLink="/pendingRequest">
+          <button *ngIf="isAdmin()" mat-menu-item routerLink="/pendingRequest">
             <mat-icon>email</mat-icon>
             <span>Pending requests</span>
           </button>
