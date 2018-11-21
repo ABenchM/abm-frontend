@@ -12,6 +12,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AboutComponent } from '../about/about.component';
 import { CurrentUserService } from '../services/current-user.service';
+import { HttpModule } from '@angular/http';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -22,7 +23,7 @@ describe('LoginComponent', () => {
         AboutComponent
       ],
       imports: [
-        FormsModule,
+        FormsModule, HttpModule,
         RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
       ],
       providers: [
