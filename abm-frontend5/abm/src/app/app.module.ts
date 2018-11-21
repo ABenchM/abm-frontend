@@ -9,14 +9,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {ToastrModule} from 'ngx-toastr';
-import {OrderModule} from 'ngx-order-pipe';
-import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
-import {NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
-import {MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule} from '@angular/material';
-import { MatDialogModule, MatCheckboxModule} from '@angular/material';
-import { HttpClientModule }    from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { OrderModule } from 'ngx-order-pipe';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from './app.component';
@@ -43,7 +43,7 @@ import { RegisterSuccessComponent } from './register-success/register-success.co
 import { LogoutComponent } from './logout/logout.component';
 
 // Services
-import {ResetPasswordService} from './services/reset-password.service';
+import { ResetPasswordService } from './services/reset-password.service';
 import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
@@ -80,13 +80,15 @@ import { ManagePublicCollectionsComponent } from './manage-public-collections/ma
 import { DailogboxComponent } from './dailogbox/dailogbox.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SaveSuccessComponent } from './save-success/save-success.component';
-import {TableModule} from 'primeng/table';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -100,18 +102,21 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
-  {path: 'register', component: RegisterComponent},
-  {path: 'register-success', component: RegisterSuccessComponent},
-  {path: 'save-success', component: SaveSuccessComponent},
+  { path: 'register', component: RegisterComponent },
+  { path: 'register-success', component: RegisterSuccessComponent },
+  { path: 'save-success', component: SaveSuccessComponent },
   // {path: 'profile', component: MyProfileComponent},
-  {path: 'pendingRequest', component: AdminPendingReqComponent},
-  {path: 'manageusers', component: ManageUsersComponent},
-  {path: 'publicCollections', component: ManagePublicCollectionsComponent},
-  {path: 'publicCollection', component: HomeComponent},
-  {path: 'save-success', component: SaveSuccessComponent},
-  {path: 'profile', component: UserProfileComponent},
-  {path: 'forget-password', component: ForgetPasswordComponent},
-  {path: 'confirm-password', component: ConfirmPasswordComponent}
+  { path: 'pendingRequest', component: AdminPendingReqComponent },
+  { path: 'manageusers', component: ManageUsersComponent },
+  { path: 'publicCollections', component: ManagePublicCollectionsComponent },
+  { path: 'publicCollection', component: HomeComponent },
+  { path: 'save-success', component: SaveSuccessComponent },
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'confirm-password', component: ConfirmPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password-success', component: ResetPasswordSuccessComponent }
+
 
 ];
 
@@ -156,7 +161,9 @@ const routes: Routes = [
     UserProfileComponent,
     SaveSuccessComponent,
     ForgetPasswordComponent,
-    ConfirmPasswordComponent
+    ConfirmPasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordSuccessComponent
   ],
   imports: [
     HttpClientModule,

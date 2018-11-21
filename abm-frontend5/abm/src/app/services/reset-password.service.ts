@@ -24,4 +24,12 @@ export class ResetPasswordService {
     const options = new RequestOptions({ headers: headers });
     return this.http.post('/rest/resetpassword', body)
 }
+
+approvePassword(model): Observable<any> {
+  console.log(model)
+  const body = JSON.stringify(model);
+  const headers = new Headers({ 'Content-type': 'application/json' });
+  const options = new RequestOptions({ headers: headers });
+  return this.http.post('/rest/approvePassword', body)
+}
 }
