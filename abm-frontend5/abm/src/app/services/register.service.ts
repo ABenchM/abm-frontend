@@ -38,8 +38,6 @@ export class Register {
 
     }
     postRegisterForm(user: User): Observable<any> {
-        user.firstname='cvasvsd';
-        user.lastname='viysabfv';
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
