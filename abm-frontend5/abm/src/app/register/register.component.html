@@ -37,7 +37,7 @@
 
     <div class="form-group">
       <label for="lastname">Last Name</label>
-      <input #lastname="ngModel" type="text" class="form-control" lastname="lastname" required [(ngModel)]="model.lastname">
+      <input #lastname="ngModel" type="text" class="form-control" name="lastname" required [(ngModel)]="model.lastname">
       <div *ngIf="lastname.touched && lastname.invalid" class="alert alert-danger">Last Name is required</div>
     </div>
 
