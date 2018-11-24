@@ -135,7 +135,7 @@ const routes: Routes = [
     ModalModule.forRoot(),
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes),RouterLinkActive,
+    RouterModule.forRoot(routes),
     BootstrapModalModule.forRoot({ container: document.body }),
     SocialLoginModule,
     NgbModule.forRoot(),
