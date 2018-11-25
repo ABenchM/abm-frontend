@@ -3,13 +3,9 @@ import { HttpClient, HttpHeaders,} from '@angular/common/http';
 import {Http , Response, Headers, RequestOptions} from '@angular/http';
 import { User} from '../models/user.model'
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import {throwError as observableThrowError} from 'rxjs';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +14,12 @@ export class UserService {
 
   constructor(private http: Http, private httpClient: HttpClient) { }  
 
-  private extractData(res: Response) {
-    
+  private extractData(res: Response) {    
   }
 
-  private handleError(error: any) {
-
+  handleError(error: any) {
     console.error('post error : ', error );
     return observableThrowError(error.statusText);
-
-
 }
 
   getAllUsers(aprv) {
@@ -42,8 +34,7 @@ export class UserService {
    return this.http.post('/rest/adminDeleteUsers', body, options).pipe(
    map(this.extractData),
    catchError(this.handleError));
-
-}
+  }
 
   lockunlockUser(user: User, islock: boolean): Observable<any>{
     const body = { 'isLock': islock, 'username': user.username };

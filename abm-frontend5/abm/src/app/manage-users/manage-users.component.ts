@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderPipe } from 'ngx-order-pipe';
-
-import {MatPaginator, MatTableDataSource, MatSort,MatFormFieldModule, MatCheckboxModule} from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
+import {MatPaginator, MatTableDataSource, MatSort, MatDialog} from '@angular/material';
 import { SelectionModel} from '@angular/cdk/collections';
 import { DeleteDialogboxComponent } from '../delete-dialogbox/delete-dialogbox.component';
 import { UserService } from '../services/user.service';
@@ -23,7 +20,6 @@ export class ManageUsersComponent implements OnInit {
   selection = new SelectionModel<User>(true, []);
 
   constructor(private service:UserService ,private orderPipe: OrderPipe, public dialog: MatDialog) {
-
   }
 
   loadUsers() {
@@ -70,13 +66,11 @@ export class ManageUsersComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
-
 
   deleteUser(user: string ){
     this.service.deleteUsers(user).subscribe(result => {

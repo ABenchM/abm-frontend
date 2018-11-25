@@ -23,50 +23,34 @@
               </td>
             </ng-container>
   
-            
-  
-        <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-  
-        <!-- id Column -->
         <ng-container matColumnDef="username">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
         </ng-container>
   
-        <!-- Name Column -->
         <ng-container matColumnDef="firstname">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
         </ng-container>
-  
-        <!-- Description Column -->
+
         <ng-container matColumnDef="email">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Email-id</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
         </ng-container>
-  
-        <!-- Owner Column -->
+
         <ng-container matColumnDef="affiliation">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Affiliation</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.affiliation}} </mat-cell>
         </ng-container>
-  
-        <!-- CreationDate Column -->
-        
+ 
         <ng-container matColumnDef="Account_status">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Account status</mat-header-cell>
           <mat-cell *matCellDef="let element"> 
-            <div *ngIf="!element.locked" >
-              Active
-            </div>
-            <div *ngIf="element.locked" >
-                Locked
-              </div>
+            <div *ngIf="!element.locked" >Active</div>
+            <div *ngIf="element.locked" >Locked</div>
           </mat-cell>
         </ng-container>
   
-        <!-- Status Column -->
         <ng-container matColumnDef="Lockaction">
           <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
   
@@ -84,20 +68,20 @@
               </button>
             </div>
   
-            <div *ngIf="row.role === 'RegisteredUser'" >              
-            <button mat-button [matMenuTriggerFor]="menu">User</button>
+            <div *ngIf="row.role === 'RegisteredUser'" > 
+            <button mat-button [matMenuTriggerFor]="menu">User<mat-icon>arrow_drop_down</mat-icon></button>
               </div>
               <div *ngIf="row.role === 'UserAdmin'" >              
-                  <button mat-button [matMenuTriggerFor]="menu">Admin</button>
+                  <button mat-button [matMenuTriggerFor]="menu">Admin<mat-icon>arrow_drop_down</mat-icon></button>
                     </div>
             <mat-menu #menu="matMenu" yPosition="below">
                   <ng-template matMenuContent>
               <button mat-menu-item (click)="updateRoletoUser(row)">User</button>
               <button mat-menu-item (click)="updateRoletoAdmin(row)">Admin</button>
               </ng-template>
-            </mat-menu> 
+            </mat-menu>             
   
-            <button class="deleteIcon" mat-icon-button >
+            <button class="deleteIcon" id="deletebutton" mat-icon-button >
               <mat-icon class="red" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
             </button>
           </mat-cell>
@@ -109,7 +93,7 @@
 
       <mat-toolbar>
         <mat-toolbar-row>
-          <button mat-raised-button  [disabled]="isselected()" (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button>
+          <button mat-raised-button  [disabled]="isselected()" id="buttonL" (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button>
           <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
         </mat-toolbar-row>
       </mat-toolbar>
