@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
@@ -14,6 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 // Components
 import { AppComponent } from './app.component';
@@ -40,6 +43,7 @@ import { RegisterSuccessComponent } from './register-success/register-success.co
 import { LogoutComponent } from './logout/logout.component';
 
 // Services
+// import { ResetPasswordService } from './services/reset-password.service';
 import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
@@ -55,10 +59,11 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+// import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
+import { UserService} from './services/user.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
 
 
@@ -69,11 +74,22 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
-import {TableModule} from 'primeng/table';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+// import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
+// import { ManageUsersComponent } from './manage-users/manage-users.component';
+// import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
+// import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
+// import { DailogboxComponent } from './dailogbox/dailogbox.component';
+// import { UserProfileComponent } from './user-profile/user-profile.component';
+// import { SaveSuccessComponent } from './save-success/save-success.component';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
+// import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+// import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
+// import { ResetPasswordComponent } from './reset-password/reset-password.component';
+// import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -88,8 +104,21 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'register-success', component: RegisterSuccessComponent },
-  { path: 'profile', component: MyProfileComponent }
+  { path: 'register-success', component: RegisterSuccessComponent }
+  // { path: 'save-success', component: SaveSuccessComponent },
+  // // {path: 'profile', component: MyProfileComponent},
+  // { path: 'pendingRequest', component: AdminPendingReqComponent },
+  // { path: 'manageusers', component: ManageUsersComponent },
+  // { path: 'publicCollections', component: ManagePublicCollectionsComponent },
+  // { path: 'publicCollection', component: HomeComponent },
+  // { path: 'save-success', component: SaveSuccessComponent },
+  // { path: 'profile', component: UserProfileComponent },
+  // { path: 'forget-password', component: ForgetPasswordComponent },
+  // { path: 'confirm-password', component: ConfirmPasswordComponent },
+  // { path: 'reset-password', component: ResetPasswordComponent },
+  // { path: 'reset-password-success', component: ResetPasswordSuccessComponent }
+
+
 ];
 
 @NgModule({
@@ -120,14 +149,25 @@ const routes: Routes = [
     CreateCollectionComponent,
     CapitalizeFirstPipe,
     DialogComponentComponent,
-    MyProfileComponent,
     BuiltStatusPipe,
     CommitSelectorComponent,
     ModalBuildViewerComponent,
     ProjectCountPipe,
     AddToCollectionComponent
+    // AdminPendingReqComponent,
+    // ManageUsersComponent,
+    // DeleteDialogboxComponent,
+    // ManagePublicCollectionsComponent,
+    // DailogboxComponent,
+    // UserProfileComponent,
+    // SaveSuccessComponent,
+    // ForgetPasswordComponent,
+    // ConfirmPasswordComponent,
+    // ResetPasswordComponent,
+    // ResetPasswordSuccessComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
@@ -141,6 +181,17 @@ const routes: Routes = [
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
     OrderModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    HttpClientModule,
     ContextMenuModule,
     TableModule,
     DataTableModule,
@@ -167,19 +218,23 @@ const routes: Routes = [
     PinService,
     CurrentUserService,
     ViewService,
+    UserService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     HermesService,
     CommitService,
     BuildService,
-    ContextMenuService,
-    RouterLinkActive
+    ContextMenuService
+    // ResetPasswordService
   ],
   entryComponents: [
+    // DeleteDialogboxComponent,
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
-    ModalBuildViewerComponent
+    ModalBuildViewerComponent,
+    // DailogboxComponent,
+
   ],
   bootstrap: [AppComponent]
 })
