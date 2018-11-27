@@ -43,7 +43,6 @@ import { RegisterSuccessComponent } from './register-success/register-success.co
 import { LogoutComponent } from './logout/logout.component';
 
 // Services
-// import { ResetPasswordService } from './services/reset-password.service';
 import { Register } from './services/register.service';
 import { Login } from './services/login.service';
 import { Logout } from './services/logout.service';
@@ -59,7 +58,6 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-// import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
@@ -74,22 +72,13 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
-// import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
-// import { ManageUsersComponent } from './manage-users/manage-users.component';
-// import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
-// import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
-// import { DailogboxComponent } from './dailogbox/dailogbox.component';
-// import { UserProfileComponent } from './user-profile/user-profile.component';
-// import { SaveSuccessComponent } from './save-success/save-success.component';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
-// import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-// import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
-// import { ResetPasswordComponent } from './reset-password/reset-password.component';
-// import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
+import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -104,21 +93,8 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'register-success', component: RegisterSuccessComponent }
-  // { path: 'save-success', component: SaveSuccessComponent },
-  // // {path: 'profile', component: MyProfileComponent},
-  // { path: 'pendingRequest', component: AdminPendingReqComponent },
-  // { path: 'manageusers', component: ManageUsersComponent },
-  // { path: 'publicCollections', component: ManagePublicCollectionsComponent },
-  // { path: 'publicCollection', component: HomeComponent },
-  // { path: 'save-success', component: SaveSuccessComponent },
-  // { path: 'profile', component: UserProfileComponent },
-  // { path: 'forget-password', component: ForgetPasswordComponent },
-  // { path: 'confirm-password', component: ConfirmPasswordComponent },
-  // { path: 'reset-password', component: ResetPasswordComponent },
-  // { path: 'reset-password-success', component: ResetPasswordSuccessComponent }
-
-
+  { path: 'register-success', component: RegisterSuccessComponent },
+  { path: 'manageusers', component: ManageUsersComponent }
 ];
 
 @NgModule({
@@ -153,18 +129,9 @@ const routes: Routes = [
     CommitSelectorComponent,
     ModalBuildViewerComponent,
     ProjectCountPipe,
-    AddToCollectionComponent
-    // AdminPendingReqComponent,
-    // ManageUsersComponent,
-    // DeleteDialogboxComponent,
-    // ManagePublicCollectionsComponent,
-    // DailogboxComponent,
-    // UserProfileComponent,
-    // SaveSuccessComponent,
-    // ForgetPasswordComponent,
-    // ConfirmPasswordComponent,
-    // ResetPasswordComponent,
-    // ResetPasswordSuccessComponent
+    AddToCollectionComponent,
+    DeleteDialogboxComponent,
+    ManageUsersComponent
   ],
   imports: [
     HttpClientModule,
@@ -198,8 +165,6 @@ const routes: Routes = [
     PaginatorModule,
     ConfirmDialogModule,
     CheckboxModule
-
-
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -224,17 +189,14 @@ const routes: Routes = [
     CommitService,
     BuildService,
     ContextMenuService
-    // ResetPasswordService
   ],
   entryComponents: [
-    // DeleteDialogboxComponent,
+    DeleteDialogboxComponent,
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
     ModalBuildViewerComponent,
-    // DailogboxComponent,
-
   ],
   bootstrap: [AppComponent]
 })
