@@ -32,7 +32,13 @@ export class AppComponent {
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
-   // idle.onIdleEnd.subscribe(() => this.idleState = 'No longer idle.');
+    idle.onIdleEnd.subscribe(() => { 
+      this.idleState = 'No longer idle.';
+      if(this.isWarningShown){
+       this.messageService.clear('logout');
+      }
+      this.reset();
+    });
     idle.onTimeout.subscribe(() => {
       this.router.navigateByUrl('/login');
       localStorage.removeItem('loggedIn');
@@ -40,9 +46,15 @@ export class AppComponent {
       this.logoutService.logout().subscribe();
       this.idleState = 'Timed out!';
       this.timedOut = true;
+      this.reset();
       //this.onLogout();
     });
-    idle.onIdleStart.subscribe(() => this.idleState = 'You\'ve gone idle!');
+    idle.onIdleStart.subscribe(() => {
+      this.idleState = 'You\'ve gone idle!';
+      if(!this.loggedInStatus){
+        this.reset();
+      }
+    });
     idle.onTimeoutWarning.subscribe((countdown) => {
        this.idleState = 'You will time out in ' + countdown + ' seconds!'
        this.showLogoutWarning();
@@ -61,6 +73,7 @@ export class AppComponent {
     this.idle.watch();
     this.idleState = 'Started.';
     this.timedOut = false;
+    this.isWarningShown=false;
   }
 
   loggedInStatus() {
