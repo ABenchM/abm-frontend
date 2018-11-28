@@ -3,7 +3,18 @@
 
  <div class="container">
 
+    <p-toast [style]="{marginTop: '80px'}" position="top-center" key="logout">
+
+        <ng-template let-message pTemplate="message">
+            <div style="text-align: center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                <h3>warning</h3>
+                <p>{{idleState}}</p>
+            </div>
+        </ng-template>
+    </p-toast>
    <abm-build-tab></abm-build-tab> 
  <router-outlet></router-outlet> 
+ 
   </div>
 
