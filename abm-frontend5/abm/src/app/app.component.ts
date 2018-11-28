@@ -29,11 +29,16 @@ export class AppComponent {
     idle.setIdle(5);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
     idle.setTimeout(5);
-    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    // sets the default interrupts, in this case, things like clicks, scrolls.
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     idle.onIdleEnd.subscribe(() => { 
       this.idleState = 'No longer idle.';
+      try{
+        this.messageService.clear();
+       } catch(err){
+         console.log("toast error");
+       }
       this.reset();
     });
     idle.onTimeout.subscribe(() => {
@@ -68,13 +73,7 @@ export class AppComponent {
 
   }
 
-  reset() {
-    try{
-     this.messageService.clear();
-    } catch(e){
-      console.log("toast error");
-    }
-       
+  reset() {    
     this.idle.watch();
     this.idleState = 'No Longer Idle.';
     this.timedOut = false;

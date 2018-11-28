@@ -36,6 +36,7 @@ export class BuildTabComponent implements OnInit {
     if (localStorage.getItem('currentUser') !== null) {
       this.buildService.getUserBuild(localStorage.getItem('currentUser')).subscribe(
         response => {
+          console.log('bc stats bata' + response.status);
           if (response.status === 200) {
             const resp = response.json();
             for (let i = 0; i < resp.length; i++) {
@@ -43,8 +44,10 @@ export class BuildTabComponent implements OnInit {
               this.buildService.builds.push(resp[i]);
               this.addBuildListener(resp[i].id);
             }
+          } else if (response.status === 403) {
+             console.log('Login first');
           }
-        }
+        } 
       );
     }
   }
