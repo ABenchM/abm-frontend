@@ -72,7 +72,7 @@ export class AppComponent {
     try{
      this.messageService.clear();
     } catch(e){
-
+      console.log("toast error");
     }
        
     this.idle.watch();
