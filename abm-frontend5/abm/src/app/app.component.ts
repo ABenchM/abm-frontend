@@ -25,7 +25,7 @@ export class AppComponent {
 
   constructor(private router: Router, private idle: Idle, private keepalive: Keepalive, private logoutService : Logout, private messageService: MessageService) {
 
-    // sets an idle timeout of 5 seconds, for testing purposes.
+    // sets an idle timeout of 5 seconds.
     idle.setIdle(5);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
     idle.setTimeout(5);
@@ -34,9 +34,6 @@ export class AppComponent {
 
     idle.onIdleEnd.subscribe(() => { 
       this.idleState = 'No longer idle.';
-      if(this.isWarningShown){
-       this.messageService.clear('logout');
-      }
       this.reset();
     });
     idle.onTimeout.subscribe(() => {
@@ -51,13 +48,15 @@ export class AppComponent {
     });
     idle.onIdleStart.subscribe(() => {
       this.idleState = 'You\'ve gone idle!';
-      if(!this.loggedInStatus){
-        this.reset();
-      }
     });
     idle.onTimeoutWarning.subscribe((countdown) => {
        this.idleState = 'You will time out in ' + countdown + ' seconds!'
-       this.showLogoutWarning();
+      
+       if(!this.loggedInStatus()){
+        this.reset();
+      }else{
+      this.showLogoutWarning();
+      }
     });
 
     // sets the ping interval to 15 seconds
@@ -70,8 +69,14 @@ export class AppComponent {
   }
 
   reset() {
+    try{
+     this.messageService.clear();
+    } catch(e){
+
+    }
+       
     this.idle.watch();
-    this.idleState = 'Started.';
+    this.idleState = 'No Longer Idle.';
     this.timedOut = false;
     this.isWarningShown=false;
   }
