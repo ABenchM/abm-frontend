@@ -40,7 +40,7 @@ export class ManageUsersComponent implements OnInit {
   openDialog(user: string) : void{
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
       width: '300px',
-      data: {name:user}
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
