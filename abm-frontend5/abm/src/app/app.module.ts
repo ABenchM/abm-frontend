@@ -14,8 +14,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 // Components

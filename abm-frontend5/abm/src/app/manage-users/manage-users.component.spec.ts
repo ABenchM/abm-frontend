@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule, By} from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule, MatPaginatorModule, MatDialogModule} from '@angular/material';
-import { MatMenuModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule} from '@angular/material';
+import { MatMenuModule, MatIconModule, MatToolbarModule, MatPaginatorModule, MatDialogModule} from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { OrderModule } from 'ngx-order-pipe';
@@ -18,7 +18,7 @@ describe('ManageUsersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManageUsersComponent ],
-      imports: [BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule, MatIconModule, MatTableModule, 
+      imports: [BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule, MatIconModule, MatTableModule,
         MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSortModule, MatPaginatorModule,
         OrderModule, MatDialogModule],
       providers: [UserService, HttpClient, HttpHandler]
@@ -67,5 +67,5 @@ describe('ManageUsersComponent', () => {
     expect(component.applyFilter).toHaveBeenCalled();
     });
 
-  }
+  });
 

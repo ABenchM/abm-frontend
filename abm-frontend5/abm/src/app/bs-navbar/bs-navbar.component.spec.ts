@@ -15,7 +15,7 @@ describe('BsNavbarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BsNavbarComponent, CapitalizeFirstPipe ],
-      imports: [HttpModule, MatMenuModule, MatIconModule, RouterTestingModule,RouterModule],
+      imports: [HttpModule, MatMenuModule, MatIconModule, RouterTestingModule, RouterModule],
       providers: [Login, CurrentUserService]
     })
     .compileComponents();

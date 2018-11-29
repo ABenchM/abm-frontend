@@ -10,21 +10,21 @@ import { User } from '../models/user.model';
 })
 export class DeleteDialogboxComponent {
 
-  val: boolean = false;
+  val = false;
 
-  constructor(public dialogRef:MatDialogRef<DeleteDialogboxComponent>, 
+  constructor(public dialogRef: MatDialogRef<DeleteDialogboxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User) { }
 
-  onNoClick(){
+  onNoClick() {
     this.dialogRef.close();
   }
 
-  onConfirm(){
-    this.val=true;
+  onConfirm() {
+    this.val = true;
     this.dialogRef.close();
   }
 
-  callback(){
+  callback() {
     return this.val;
   }
 }

@@ -20,7 +20,7 @@ export class CurrentUserService {
     localStorage.setItem('currentUserRole', role);
   }
 
-  getuserrole(username: string){
+  getuserrole(username: string) {
     const data = { 'username': username };
     return this.http.get('/rest/username', { params: data });
   }

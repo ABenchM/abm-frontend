@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By} from '@angular/platform-browser';
-import { MatDialogRef,MAT_DIALOG_DATA, MatIconModule } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatIconModule } from '@angular/material';
 import { DeleteDialogboxComponent } from './delete-dialogbox.component';
 import { MatDialogModule} from '@angular/material/dialog';
 
@@ -15,10 +15,10 @@ describe('DeleteDialogboxComponent', () => {
       providers: [
         {
           provide: MatDialogRef,
-          useValue:{}
+          useValue: {}
         },
         {
-          provide: MAT_DIALOG_DATA, useValue: {} 
+          provide: MAT_DIALOG_DATA, useValue: {}
           },
       ]
     })

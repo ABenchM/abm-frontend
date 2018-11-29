@@ -26,9 +26,10 @@ export class BsNavbarComponent implements OnInit {
     return userOb.asObservable();
   }
 
-  isAdmin(){
-    if(localStorage.getItem('currentUserRole') === 'UserAdmin')
+  isAdmin() {
+    if (localStorage.getItem('currentUserRole') === 'UserAdmin') {
     return true;
+    }
   }
 
   ngOnInit() {

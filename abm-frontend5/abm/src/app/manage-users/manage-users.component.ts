@@ -4,7 +4,7 @@ import {MatPaginator, MatTableDataSource, MatSort, MatDialog} from '@angular/mat
 import { SelectionModel} from '@angular/cdk/collections';
 import { DeleteDialogboxComponent } from '../delete-dialogbox/delete-dialogbox.component';
 import { UserService } from '../services/user.service';
-import { User} from '../models/user.model'
+import { User} from '../models/user.model';
 
 @Component({
   selector: 'abm-manage-users',
@@ -12,14 +12,16 @@ import { User} from '../models/user.model'
   styleUrls: ['./manage-users.component.css']
 })
 export class ManageUsersComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public usersList: any[] = [];
   loading: boolean;
-  confirm:boolean=false;
-  displayedColumns: string[] = ['select','username', 'firstname', 'email', 'affiliation' ,'Account_status','Lockaction'];
+  confirm = false;
+  displayedColumns: string[] = ['select', 'username', 'firstname', 'email', 'affiliation' , 'Account_status', 'Lockaction'];
   dataSource = new MatTableDataSource<User>();
   selection = new SelectionModel<User>(true, []);
 
-  constructor(private service:UserService ,private orderPipe: OrderPipe, public dialog: MatDialog) {
+  constructor(private service: UserService , private orderPipe: OrderPipe, public dialog: MatDialog) {
   }
 
   loadUsers() {
@@ -34,22 +36,19 @@ export class ManageUsersComponent implements OnInit {
     this.loading = false;
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  openDialog(user: string) : void{
+  openDialog(user: string): void {
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
       width: '300px',
-      data: {name:user}
+      data: {name: user}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.confirm = dialogRef.componentInstance.callback();       
-        if(this.confirm){
+      this.confirm = dialogRef.componentInstance.callback();
+        if (this.confirm) {
         this.deleteUser(user);
-      } 
-    });      
+      }
+    });
   }
 
    ngOnInit() {
@@ -72,49 +71,50 @@ export class ManageUsersComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  deleteUser(user: string ){
+  deleteUser(user: string ) {
     this.service.deleteUsers(user).subscribe(result => {
       this.loadUsers();
     });
   }
 
-  lockUser(user: User ){
-    this.service.lockunlockUser(user,true).subscribe(result => {
+  lockUser(user: User ) {
+    this.service.lockunlockUser(user, true).subscribe(result => {
       this.loadUsers();
     });
   }
 
-  unlockUser(user: User ){
-    this.service.lockunlockUser(user,false).subscribe(result => {
+  unlockUser(user: User ) {
+    this.service.lockunlockUser(user, false).subscribe(result => {
       this.loadUsers();
     });
   }
 
-  updateRoletoAdmin(user: User ){
-    this.service.updateUserRole(user,"UserAdmin").subscribe(result => {
+  updateRoletoAdmin(user: User ) {
+    this.service.updateUserRole(user, 'UserAdmin').subscribe(result => {
       this.loadUsers();
     });
   }
 
-  updateRoletoUser(user: User ){
-    this.service.updateUserRole(user,"RegisteredUser").subscribe(result => {
+  updateRoletoUser(user: User ) {
+    this.service.updateUserRole(user, 'RegisteredUser').subscribe(result => {
       this.loadUsers();
     });
   }
 
   deleteSelectedUsers() {
-    let userlist: string = "";
+    let userlist = '';
     this.selection.selected.forEach(item => {
-      userlist= userlist.concat(item.username,",");      
+      userlist = userlist.concat(item.username, ',');
     });
     this.openDialog(userlist);
   }
 
-  isselected(){
-    if(this.selection.selected.length >=1)
+  isselected() {
+    if (this.selection.selected.length >= 1) {
       return false;
-      else
+    } else {
       return true;
+    }
   }
 
 }
