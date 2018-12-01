@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http , Response, Headers, RequestOptions  } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
-import {throwError as observableThrowError,  Observable } from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import { IfObservable } from 'rxjs/observable/IfObservable';
 
@@ -23,15 +23,15 @@ export class BuildService {
 
   private onSuccess(res: Response) {
     const statusCode = res.status;
-   return statusCode;
-}
+    return statusCode;
+  }
 
-private handleError(error: any) {
+  private handleError(error: any) {
 
     console.error('post error : ', error);
     return observableThrowError(error.statusText);
 
-}
+  }
 
   postBuild(version) {
     return this.http.post('/rest/build', version, null);
@@ -43,13 +43,13 @@ private handleError(error: any) {
   }
 
   getBuild(versionId) {
-      return this.http.get('/rest/build/' + versionId);
+    return this.http.get('/rest/build/' + versionId);
   }
 
-  getUserBuild(user):Observable<any> {
+  getUserBuild(user): Observable<any> {
     return this.http.get('/rest/builds/' + user).pipe(
       map(this.onSuccess),
-      catchError(this.handleError), );
+      catchError(this.handleError));
   }
 
   addListener(buildId) {

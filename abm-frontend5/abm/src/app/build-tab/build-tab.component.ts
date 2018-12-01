@@ -45,9 +45,9 @@ export class BuildTabComponent implements OnInit {
               this.addBuildListener(resp[i].id);
             }
           } else if (response.status === 403) {
-             console.log('Login first');
+            console.log('Login first');
           }
-        } 
+        }
       );
     }
   }

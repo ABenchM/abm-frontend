@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   reverse = false;
   sortType: any = 'name';
   disabled: boolean;
-  // subscription: Subscription;
+
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
     private orderPipe: OrderPipe) { }
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
 
-      console.log('pin ka response'+ response.json());
+      console.log('pin ka response' + response.json());
       if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json(), this.sortType);
       }

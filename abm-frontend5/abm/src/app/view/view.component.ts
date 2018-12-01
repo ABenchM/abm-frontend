@@ -153,43 +153,43 @@ export class ViewComponent implements OnInit {
               // this.commits = response.json()[0].versions[0].commits;
               this.commits = this.versions[0].commits;
 
-              this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => 
-                { if (s.status === 200) {
-                  this.buildResultsExists = s.json()
-                } else if(s.status === 403) {
+              this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => {
+                if (s.status === 200) {
+                  this.buildResultsExists = s.json();
+                } else if (s.status === 403) {
                   this.toastr.error('Your session has expried. Please login first ');
                   this.router.navigateByUrl('/login');
-                } 
+                }
 
-                });
+              });
               this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => {
                 if (s.status === 200) {
-                  this.hermesResultsExists = s.json()
-                } else if(s.status === 403) {
+                  this.hermesResultsExists = s.json();
+                } else if (s.status === 403) {
                   this.toastr.error('Your session has expried. Please login first ');
                   this.router.navigateByUrl('/login');
-                } 
+                }
               });
               if (this.loggedInStatus()) {
                 this.pinService.checkPinned(this.viewCollection[0]).subscribe(
                   data => {
                     if (data.status === 200) {
                       this.viewCollection[0].pinned = data.json();
-                    } else if(data.status === 403) {
+                    } else if (data.status === 403) {
                       this.toastr.error('Your session has expried. Please login first ');
                       this.router.navigateByUrl('/login');
-                    } 
-                    
+                    }
+
 
                   }
                 );
 
               }
             }
-          } else if(response.status === 403) {
+          } else if (response.status === 403) {
             this.toastr.error('Your session has expried. Please login first ');
             this.router.navigateByUrl('/login');
-          } 
+          }
 
         }
       );

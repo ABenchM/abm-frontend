@@ -75,10 +75,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
 import {ToastModule} from 'primeng/toast';
-
-//ng-idle
-import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
 
