@@ -3,7 +3,7 @@
   <div style="max-height:1000px;overflow:auto">
     <h2 class="float-left" style="margin-top:0px" *ngIf="getTotalItems() > 0"> {{getTotalItems() | projectCount }} selected</h2>
     <div class="alert alert-warning" role="alert" *ngIf="getTotalItems() === 0">
-      Your collection is empty
+      Search for projects to add to your collection.
     </div>
 
     <div class="table-responsive col-lg-12" *ngIf="getTotalItems()>0" style="max-height:600px">
