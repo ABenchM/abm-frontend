@@ -13,7 +13,7 @@ export class DeleteDialogboxComponent {
   val = false;
 
   constructor(public dialogRef: MatDialogRef<DeleteDialogboxComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User) { }
+    @Inject(MAT_DIALOG_DATA) public data: {}) { }
 
   onNoClick() {
     this.dialogRef.close();

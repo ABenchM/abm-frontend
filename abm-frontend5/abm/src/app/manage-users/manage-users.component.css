@@ -1,7 +1,12 @@
 .red{color:red;}
 .green{color:green;}
 
-mat-form-field {
+html, body, #wrapper {
+  width: 100%;
+  min-height: 100%;
+}
+
+.mat-form-field {
   font-size: 14px;
   width: 100%;
   margin-top: 8px;
@@ -32,4 +37,25 @@ mat-form-field {
   position: relative;
   left:20px;
   top: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .selectCheckbox{
+    display: none;
+  }
+  .button_alignR{
+    display: none;
+  }
+  .mobile-label {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .selectCheckbox{
+    display: none;
+  }
+  .button_alignR{
+    display: none;
+  }
 }
