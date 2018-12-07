@@ -3,12 +3,12 @@
 
   <form #form="ngForm" (submit)="loginForm()">
     <div class="form-group" [class.has-error]=" username.invalid && username.dirty">
-      <label for="username"> Username</label>
+      <label class="control-label required" for="username"> Username</label>
       <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username" id="username">
       <span *ngIf="username.invalid && username.dirty" class="help-block"> Username is required</span>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label class="control-label required" for="password">Password</label>
       <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
       <span *ngIf="password.invalid && password.dirty" class="help-block"> password is required</span>
     </div>
