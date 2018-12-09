@@ -74,6 +74,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
+import {ToastModule} from 'primeng/toast';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'angular2-moment';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -135,6 +139,7 @@ const routes: Routes = [
     ModalModule.forRoot(),
     FormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     BootstrapModalModule.forRoot({ container: document.body }),
     SocialLoginModule,
@@ -146,7 +151,10 @@ const routes: Routes = [
     DataTableModule,
     PaginatorModule,
     ConfirmDialogModule,
-    CheckboxModule
+    CheckboxModule,
+    MomentModule,
+    NgIdleKeepaliveModule.forRoot(),
+    ToastModule
 
 
   ],

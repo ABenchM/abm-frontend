@@ -17,11 +17,11 @@ export class CommitSelectorComponent implements OnInit {
   commits = [];
   page = 1;
   cols: any[];
-  branchCols :any[];
-  tagCols:any[];
+  branchCols: any[];
+  tagCols: any[];
   constructor(public activeModal: NgbActiveModal, private commitService: CommitService) { }
 
-  
+
 
   loadBranches() {
     this.loading = true;
@@ -94,12 +94,12 @@ export class CommitSelectorComponent implements OnInit {
       { field: 'creationDate', header: 'creationDate' },
       { field: 'message', header: 'message' }
     ];
-    
+
     this.branchCols = [
       { field: 'commit', header: 'commit' },
       { field: 'name', header: 'name' }
     ];
-    
+
     this.tagCols = [
       { field: 'commit', header: 'commit' },
       { field: 'name', header: 'name' }

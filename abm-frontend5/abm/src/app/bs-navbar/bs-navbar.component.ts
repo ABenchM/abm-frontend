@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../services/login.service';
 
-import { BehaviorSubject ,  Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CurrentUserService } from '../services/current-user.service';
 @Component({
   selector: 'abm-bs-navbar',

@@ -30,6 +30,7 @@ console.log(document.cookie);
     }
     logout(): Observable<any> {
       //  this.getBearerToken();
+      console.log('logout called');
         const headers = new Headers({ 'Content-type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
         return this.http.get('/rest/logout', options).pipe(

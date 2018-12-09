@@ -125,44 +125,72 @@ export class ViewComponent implements OnInit {
 
   loadViewCollection(viewCollectionId) {
     this.loading = true;
+    console.log(localStorage.getItem('currentUser'));
     if (viewCollectionId) {
       this.service.getViewCollection(viewCollectionId).pipe(take(1)).subscribe(
         response => {
-          if (response.json() !== undefined) {
-            this.viewCollection = response.json();
-            this.versions = response.json()[0].versions;
-            console.log('versions length ' + this.versions.length);
-            let i = 0;
-            while (i < this.versions.length) {
-              console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
-              if (this.versions[i].privateStatus === true) {
-                console.log('Deleting version ' + this.versions[i].id);
-                this.versions.splice(i, 1);
+          if (response.status === 200) {
+            if (response.json() !== undefined) {
+              this.viewCollection = response.json();
+              this.versions = response.json()[0].versions;
+              console.log('versions length ' + this.versions.length);
+              let i = 0;
+              while (i < this.versions.length) {
+                console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+                if (this.versions[i].privateStatus === true) {
+                  console.log('Deleting version ' + this.versions[i].id);
+                  this.versions.splice(i, 1);
 
-              } else {
-                i = i + 1;
+                } else {
+                  i = i + 1;
+                }
+              }
+
+              // this.version = response.json()[0].versions[0];
+              this.version = this.versions[0];
+              console.log('versions' + this.versions.length);
+              console.log('version' + this.version.id);
+              // this.commits = response.json()[0].versions[0].commits;
+              this.commits = this.versions[0].commits;
+
+              this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => {
+                if (s.status === 200) {
+                  this.buildResultsExists = s.json();
+                } else if (s.status === 403) {
+                  this.toastr.error('Your session has expried. Please login first ');
+                  this.router.navigateByUrl('/login');
+                }
+
+              });
+              this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => {
+                if (s.status === 200) {
+                  this.hermesResultsExists = s.json();
+                } else if (s.status === 403) {
+                  this.toastr.error('Your session has expried. Please login first ');
+                  this.router.navigateByUrl('/login');
+                }
+              });
+              if (this.loggedInStatus()) {
+                this.pinService.checkPinned(this.viewCollection[0]).subscribe(
+                  data => {
+                    if (data.status === 200) {
+                      this.viewCollection[0].pinned = data.json();
+                    } else if (data.status === 403) {
+                      this.toastr.error('Your session has expried. Please login first ');
+                      this.router.navigateByUrl('/login');
+                    }
+
+
+                  }
+                );
+
               }
             }
-
-            // this.version = response.json()[0].versions[0];
-            this.version = this.versions[0];
-            console.log('versions' + this.versions.length);
-            console.log('version' + this.version.id);
-            // this.commits = response.json()[0].versions[0].commits;
-            this.commits = this.versions[0].commits;
-
-             this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => this.buildResultsExists = s.json());
-            this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => this.hermesResultsExists = s.json());
-            if (this.loggedInStatus()) {
-              this.pinService.checkPinned(this.viewCollection[0]).subscribe(
-                data => {
-                  this.viewCollection[0].pinned = data.json();
-
-                }
-              );
-
-            }
+          } else if (response.status === 403) {
+            this.toastr.error('Your session has expried. Please login first ');
+            this.router.navigateByUrl('/login');
           }
+
         }
       );
     }
