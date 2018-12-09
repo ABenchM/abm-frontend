@@ -15,6 +15,8 @@ import { CurrentUserService } from '../services/current-user.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 describe('LoginComponent', () => {
   let component: LoginComponent;
+  let el: DebugElement;
+  let element : HTMLElement;
   let fixture: ComponentFixture<LoginComponent>;
   beforeEach(async(() => {
 
@@ -54,6 +56,8 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    el = fixture.debugElement;
+    element = el.nativeElement;
     fixture.detectChanges();
   });
 
@@ -72,4 +76,14 @@ describe('LoginComponent', () => {
     spyOn(component, 'loginForm').and.returnValue(false);
     expect(component.loginForm()).toBeFalsy();
   }));
+  
+  fit('check for Asterisk in the Login label', () => {
+    el = fixture.debugElement;
+    console.log(el);
+    element = el.nativeElement;
+    fixture.detectChanges();
+    expect(element.textContent).toContain('Login');
+    
+  });
+  
 });
