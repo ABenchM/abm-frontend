@@ -16,15 +16,15 @@ describe('Login', () => {
     expect(service).toBeTruthy();
   }));
   it('Login Success', inject([Login], (service: Login) => {
-     service.postLoginForm(new Credentials('demo', 'demo'))
+    service.postLoginForm(new Credentials('demo', 'demo'))
       .subscribe(
         data => expect(data).toBe(200),
         err => err);
   }));
   it('Login Success', inject([Login], (service: Login) => {
     service.postLoginForm(new Credentials('demo', '123'))
-     .subscribe(
-       data => data,
-       err => expect(err).toBe(404));
- }));
+      .subscribe(
+        data => data,
+        err => expect(err).toBe(404));
+  }));
 });

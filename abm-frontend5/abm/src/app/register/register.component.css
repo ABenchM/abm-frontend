@@ -6,3 +6,8 @@
 
     border: 2px solid red;
 }
+
+.required::after{
+    content:'*';
+    color: red;
+}
