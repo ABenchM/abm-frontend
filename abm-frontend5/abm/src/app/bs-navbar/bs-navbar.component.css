@@ -12,3 +12,12 @@
  .active-link .nav-link{
     color: black;
 }
+.dropdown-menu > a:hover{
+    color: #45D9F6;
+} 
+.dropdown-menu > a:active{
+    background-color:transparent;
+}
+#dropdown01{
+    background-color:transparent;
+}
