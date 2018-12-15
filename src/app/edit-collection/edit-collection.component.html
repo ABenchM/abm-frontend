@@ -1,0 +1,112 @@
+<div class="container-fluid" *ngIf="!loading">
+
+  <form>
+    <div class="form-group">
+      <label for="id">Collection Id</label>
+      <input id="id" name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="collection[0].name" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description"
+        class="form-control">
+      </textarea>
+    </div>
+    <div class="form-actions float-right">
+      <button class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
+        Save Changes
+      </button>
+      <button title="{{(!version.privateStatus?' This version is public' : '')}}" class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus"  (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
+        Make public</button>
+    </div>
+
+  </form>
+  <span ngbDropdown>
+    <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving">
+      Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+      <span class="caret"></span>
+    </button>
+    <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+      <li *ngFor="let row of versions">
+        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp;
+          {{row.creationDate | date:'short'}} </button>
+      </li>
+      <li class="dropdown-divider"></li>
+      <li class="dropdown-item">
+        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version
+          {{latestVersion.number}}</button>
+      </li>
+    </ul>
+  </span>
+
+  <div class="card-body">
+    {{version.comment}}
+
+    <br>
+    <br>
+    <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
+      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button>
+
+      <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
+        <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
+      <button [disabled]="loading || saving || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeCollection(collection[0].id)">
+        <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
+    </div>
+    <div id="frozen" *ngIf="version.frozen">
+      <!-- This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
+      <strong>Be aware, that the previous build result will be deleted!</strong>
+      <br/>
+      <br/> -->
+      <button class="btn btn-primary btn-sm" (click)="addBuild()">Show Build</button>
+      <span style="float:right;">
+        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving || !version.privateStatus"
+          (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
+        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show
+          Hermes Results</button>
+        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus" class="btn btn-danger btn-sm"
+          (click)="removeFilter(version)">Unfilter</button>
+      </span>
+
+      <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
+    </div>
+
+  </div>
+  <br>
+  <table class="table table-bordered table-striped table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th>Name</th>
+        <th>Commit</th>
+        <th [hidden]="version.frozen"></th>
+        <th [hidden]="version.frozen"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commit of version.commits">
+        <td>{{commit.repository.name}}</td>
+        <td>
+          <div class="dropdown" *ngIf="!version.frozen">
+            <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="commitSelect">
+              <span style="font-family:monospace">{{commit.commitId}}</span>
+              <span class="caret" *ngIf="!loading"></span>
+            </button>
+
+          </div>
+          <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
+        </td>
+        <td [hidden]="version.frozen">&nbsp;&nbsp;
+          <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
+            id="{{commit.repository.id}}" />
+        </td>
+        <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
+          <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm">Back to Collections</button>
+</div>
