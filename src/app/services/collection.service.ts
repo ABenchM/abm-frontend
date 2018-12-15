@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http , Response} from '@angular/http';
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { catchError, map} from 'rxjs/operators';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CollectionService {
@@ -10,10 +13,17 @@ export class CollectionService {
   constructor(private http: Http) { }
 
   private onSuccess(res: Response) {
-
+    const statusCode = res.status;
+    return statusCode;
   }
 
-  private handleError() {
+  private handleError(error: any) {
+
+    console.error('post error : ', error);
+    if (error.status === 403) {
+      localStorage.removeItem('loggedIn');
+    }
+    return observableThrowError(error.statusText);
 
   }
 
@@ -31,9 +41,11 @@ export class CollectionService {
     return this.http.get('/rest/collection', { params: data });
   }
 
-  getCollections(username) {
-    return this.http.get('/rest/collection' + '?user=' + username);
-    // .map(this.onSuccess);
+  getCollections(username): Observable<any> {
+    const data = {'user': username };
+    return this.http.get('/rest/collection', {params: data}).pipe(
+       catchError(this.handleError));
+
 
 
   }

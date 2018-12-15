@@ -36,7 +36,6 @@ export class BuildTabComponent implements OnInit {
     if (localStorage.getItem('currentUser') !== null) {
       this.buildService.getUserBuild(localStorage.getItem('currentUser')).subscribe(
         response => {
-          console.log('bc stats bata' + response.status);
           if (response.status === 200) {
             const resp = response.json();
             for (let i = 0; i < resp.length; i++) {

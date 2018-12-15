@@ -81,7 +81,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'collection', component: CollectionComponent },
+  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService]},
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
