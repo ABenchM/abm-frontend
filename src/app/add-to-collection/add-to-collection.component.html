@@ -1,0 +1,68 @@
+<section>
+
+  <div *ngIf="!(userCollections[0]=== undefined)">
+    <h2>Select a Collection</h2>
+
+    <div class="wrapper" *ngIf="loading">
+      <h2>Loading...</h2>
+      <span class="cssload-loader"></span>
+    </div>
+
+    <div *ngIf="!loading">
+      <span ngbDropdown>
+        <button id="single-button" ngbDropdownToggle class="btn btn-success btn-sm">
+          {{collection.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{ collection.creation_date | date:'short'}} &nbsp;&nbsp;
+          <span class="caret"></span>
+        </button>
+        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+          <li *ngFor="let row of userCollections">
+            <button class="dropdown-item" (click)="editCollection(row)"> {{row.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{ row.creation_date | date:'short'}} &nbsp;&nbsp;
+            </button>
+          </li>
+        </ul>
+      </span>
+
+      <span ngbDropdown>
+        <button id="single-button" ngbDropdownToggle class="btn btn-success btn-sm">
+          {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{ version.creationDate | date:'short'}} &nbsp;&nbsp;
+          <span class="caret"></span>
+        </button>
+        <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+          <li *ngFor="let row of collection.versions">
+            <button class="dropdown-item" (click)="version=row"> {{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{ row.creationDate | date:'short'}} &nbsp;&nbsp;
+            </button>
+          </li>
+        </ul>
+      </span>
+
+      <span style="float:right;">
+        <button class="btn btn-success" (click)="addProjects(version)">Add Projects to this Collection</button>
+      </span>
+      <br><br>
+      <h3>
+        Current Version:
+      </h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Commit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let commit of version.commits">
+            <td>{{commit.repository.name}}</td>
+            <td>{{commit.commitId}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+  <div *ngIf="userCollections[0]===undefined">
+    <p class="highlight">You have no private collections.</p>
+  </div>
+
+</section>
