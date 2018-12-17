@@ -2,3 +2,7 @@
     content:'*';
     color: red;
 }
+
+.btn-margin{
+    margin-left : 1em;
+}

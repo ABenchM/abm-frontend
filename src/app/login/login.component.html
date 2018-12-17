@@ -3,12 +3,12 @@
 
   <form #form="ngForm" (submit)="loginForm()">
     <div class="form-group" [class.has-error]=" username.invalid && username.dirty">
-      <label class="control-label required" for="username"> Username</label>
+      <label for="username"> Username</label>
       <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username" id="username">
       <span *ngIf="username.invalid && username.dirty" class="help-block"> Username is required</span>
     </div>
     <div class="form-group">
-      <label class="control-label required" for="password">Password</label>
+      <label for="password">Password</label>
       <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
       <span *ngIf="password.invalid && password.dirty" class="help-block"> password is required</span>
     </div>
@@ -17,8 +17,9 @@
     </div>
     <div class="text-right">
       
-      <button type="submit" [disabled]="form.invalid" class="btn btn-primary"> Login</button>
-      <a class="btn btn-primary" href="" [routerLink]="['/register']"> Register</a>
+      <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-margin"> Login</button>
+      <a class="btn btn-primary btn-margin" href="" [routerLink]="['/register']"> Register</a>
+      <a class="btn-margin" href="" [routerLink]="['/forget-password']"> Forgot Password?</a>
     </div>
    <!-- <div class="text-right" style="margin-top: 10px">
     

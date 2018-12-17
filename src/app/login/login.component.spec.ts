@@ -1,22 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { } from 'jasmine';
 import { LoginComponent } from './login.component';
-import { Router } from '@angular/router';
 import { Login } from '../services/login.service';
 import { Global } from '../services/global.service';
 import { GoogleLoginService } from '../services/google-login.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Location, CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { AboutComponent } from '../about/about.component';
 import { CurrentUserService } from '../services/current-user.service';
+import { HttpModule } from '@angular/http';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let el: DebugElement;
-  let element: HTMLElement;
   let fixture: ComponentFixture<LoginComponent>;
   beforeEach(async(() => {
 
@@ -25,7 +20,7 @@ describe('LoginComponent', () => {
         AboutComponent
       ],
       imports: [
-        FormsModule, ToastrModule.forRoot(),
+        FormsModule, HttpModule, ToastrModule.forRoot(),
         RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
       ],
       providers: [
@@ -56,8 +51,6 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    el = fixture.debugElement;
-    element = el.nativeElement;
     fixture.detectChanges();
   });
 
@@ -75,15 +68,5 @@ describe('LoginComponent', () => {
   fit('Successful Login', async(() => {
     spyOn(component, 'loginForm').and.returnValue(false);
     expect(component.loginForm()).toBeFalsy();
-  }));
-
-  fit('check for Asterisk in the Login label', () => {
-    el = fixture.debugElement;
-    console.log(el);
-    element = el.nativeElement;
-    fixture.detectChanges();
-    expect(element.textContent).toContain('Login');
-
-  });
-
+}));
 });

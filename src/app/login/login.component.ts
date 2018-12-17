@@ -16,6 +16,7 @@ import { CurrentUserService } from '../services/current-user.service';
 export class LoginComponent implements OnInit {
   public ngForm: NgForm;
   public loginFailed = false;
+  userrole: string;
   model = new Credentials('', '');
   google_username = 'google-oauth';
   constructor(private login: Login, private router: Router, private toastr: ToastrService,
@@ -25,6 +26,10 @@ export class LoginComponent implements OnInit {
 
       localStorage.setItem('loggedIn', 'true');
       this.currentUserService.username(this.model.username);
+      this.currentUserService.getuserrole(this.model.username).subscribe(result => {
+        this.userrole = result.json().role;
+        this.currentUserService.userrole(this.userrole);
+      });
       const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       this.router.navigate([returnUrl || '/']);
 
@@ -46,13 +51,17 @@ export class LoginComponent implements OnInit {
 
             localStorage.setItem('loggedIn', 'true');
             this.currentUserService.username(this.model.username);
+            this.currentUserService.getuserrole(this.model.username).subscribe(result => {
+              this.userrole = result.json().role;
+              this.currentUserService.userrole(this.userrole);
+            });
             const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             this.router.navigate([returnUrl || '/']);
 
           }
         },
         (error) => {
-          this.toastr.error('Username or password is not correct');
+          this.toastr.error('You are unauthorized to login. Please try agin later or contact the administrator.');
           console.log(error);
         }
       );
