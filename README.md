@@ -24,4 +24,4 @@ ng test
 ```
 node index.js
 ```
-7) Make sure [8](#in1) is running then navigate to [http://localhost:3000](http://localhost:3000)
+9) Make sure [8](#in1) is running then navigate to [http://localhost:3000](http://localhost:3000)
