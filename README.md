@@ -15,13 +15,13 @@ sudo npm install -g @angular/cli
 ```
 ng build --watch
 ```
-7) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
-8) To test the code, run 
+7) To test the code, run 
 ```
 ng test
 ```
-9) <a name="in1"></a>Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
+8) <a name="in1"></a>Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
 
 ```
 node index.js
 ```
+7) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
