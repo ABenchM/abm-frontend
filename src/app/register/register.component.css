@@ -3,7 +3,7 @@
     border: 2px solid red;
 }
 
-.required::before{
+.required::after{
     content:'*';
     color: red;
 }
