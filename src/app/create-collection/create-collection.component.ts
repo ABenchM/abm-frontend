@@ -59,7 +59,8 @@ export class CreateCollectionComponent implements OnInit {
     this.version = {
       number: 1,
       creationDate: new Date(),
-      comment: 'Initial version'
+      comment: 'Initial version',
+      privateStatus: true
     };
 
     this.collection.versions = [];
