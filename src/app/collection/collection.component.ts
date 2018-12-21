@@ -94,7 +94,9 @@ export class CollectionComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('currentUser') != null) {
 
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+
         if (response.status === 200 && response.json() !== null) {
+
           this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
           for (let i = 0; i < this.userCollections.length; i++) {
             for (let j = 0; j < this.userCollections[i].versions.length; j++) {
@@ -110,7 +112,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
           this.hasCollections = true;
         }
 
-      });
+      },
+        (error) => {
+          console.log('user not logged in');
+        }
+      );
     }
 
   }
