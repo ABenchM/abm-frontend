@@ -3,7 +3,6 @@
 }
 .img-click {
     cursor: pointer;
-    margin-right: 20px;
 }
 
 .active-link {
@@ -22,3 +21,9 @@
 #dropdown01{
     background-color:transparent;
 }
+  
+ 
+  button.mat-menu-item:hover {
+      background-color: transparent;
+      color: #45D9F6;
+  }

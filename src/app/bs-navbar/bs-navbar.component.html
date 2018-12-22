@@ -26,9 +26,9 @@
         <a class="nav-link" routerLink="/login" >Login</a>
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto">
-      <li *ngIf="loggedInStatus()">
-        <button mat-button [matMenuTriggerFor]="menu">{{username}}</button>
+    <ul class="navbar-nav">
+      <li *ngIf="loggedInStatus()" routerLinkActive="active-link">
+        <button class = "nav-link" mat-button [matMenuTriggerFor]="menu">{{username}}<mat-icon>arrow_drop_down</mat-icon></button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/profile">
             <mat-icon>person</mat-icon>
