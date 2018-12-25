@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule, MatCheckboxModule } from '@angular/material';
 
 // Components
 import { AppComponent } from './app.component';
@@ -69,19 +70,19 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
-import {TableModule} from 'primeng/table';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService]},
+  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
@@ -154,9 +155,9 @@ const routes: Routes = [
     CheckboxModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
-    ToastModule
-
-
+    ToastModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -188,6 +189,11 @@ const routes: Routes = [
     CommitSelectorComponent,
     HermesViewerComponent,
     ModalBuildViewerComponent
+  ], exports: [
+
+
+
+    MatTableModule
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material';
 
 
 
@@ -23,10 +25,12 @@ export class SearchComponent implements OnInit {
   toAdd = [];
   language = {};
   searched = false;
-  isSelect ;
+  isSelect;
   SortType: any = 'name';
   reverse = false;
   searchColumns: any[];
+  addColumns: any[];
+  selection = new SelectionModel<any>(true, []);
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe) {
@@ -108,11 +112,15 @@ export class SearchComponent implements OnInit {
   }
 
   removeItem(itemId) {
+    console.log(itemId);
+
+    itemId = itemId.id;
     for (let i = 0; i < this.toAdd.length; i++) {
       if (this.toAdd[i].id === itemId) {
         this.toAdd.splice(i, 1);
       }
     }
+    this.toAdd = [...this.toAdd];
   }
 
   // selectAll() {
@@ -124,17 +132,32 @@ export class SearchComponent implements OnInit {
   //   this.toAdd = this.service.project;
   // }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.results.length;
+    return numSelected === numRows;
+  }
+
   selectDeselectAll() {
 
     this.isSelect = !this.isSelect;
     console.log('isSelect ' + this.isSelect);
-    if (this.isSelect === true) {
+
+
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.results.forEach(row => this.selection.select(row));
+
+
+    if (this.isAllSelected()) {
+
       for (let i = 0; i < this.results.length; i++) {
         this.results[i].singleSelection = true;
         this.service.project.push(this.results[i]);
 
       }
       this.toAdd = this.service.project;
+
     } else {
       for (let i = 0; i < this.results.length; i++) {
         this.results[i].singleSelection = false;
@@ -142,11 +165,12 @@ export class SearchComponent implements OnInit {
         this.toAdd = [];
       }
     }
-
+    this.toAdd = [...this.toAdd];
 
   }
 
   select(item) {
+    this.selection.toggle(item);
 
     for (let i = 0; i < this.results.length; i++) {
       if (this.results[i].id === item.id) {
@@ -155,12 +179,14 @@ export class SearchComponent implements OnInit {
 
           this.service.project.push(item);
           this.toAdd.push(item);
+          this.toAdd = [...this.toAdd];
         } else {
           console.log('Value of item ' + item);
           this.service.project.splice(i, 1);
           console.log(this.toAdd.length);
           this.toAdd.splice(i, 1);
           console.log(this.toAdd.length);
+          this.toAdd = [...this.toAdd];
         }
 
         break;
@@ -181,13 +207,15 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchColumns =  [
-      { field: 'name', header: 'Name' },
-  { field: 'description', header: 'Description' },
-  { field: 'creationdate', header: 'Creation Date' },
-  { field: 'size', header: 'Size' },
-  { field: 'htmlUrl', header: 'Origin' }
-];
+    /*   this.searchColumns =  [
+        { field: 'name', header: 'Name' },
+    { field: 'description', header: 'Description' },
+    { field: 'creationdate', header: 'Creation Date' },
+    { field: 'size', header: 'Size' },
+    { field: 'htmlUrl', header: 'Origin' }
+  ]; */
+    this.searchColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
+    this.addColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
     this.toAdd = [];
     this.results = [];
   }
