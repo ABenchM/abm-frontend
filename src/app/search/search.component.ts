@@ -34,14 +34,12 @@ export class SearchComponent implements OnInit {
   addColumns: any[];
   selection = new SelectionModel<any>(true, []);
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
-  @ViewChild(MatSort) resultSort: MatSort;/* 
-  @ViewChild('toAddPaginator') toAddPaginator: MatPaginator;
-  @ViewChild('toAddPaginator') toAddSort: MatSort; */
+  @ViewChild(MatSort) resultSort: MatSort;
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe) {
 
-  }
+    }
 
 
 
@@ -78,7 +76,7 @@ export class SearchComponent implements OnInit {
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
       this.resultDataSource.data = response.json();
       setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
-      setTimeout(() =>this.resultDataSource.sort = this.resultSort);
+      setTimeout(() => this.resultDataSource.sort = this.resultSort);
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = false;
       }
@@ -222,14 +220,14 @@ export class SearchComponent implements OnInit {
     { field: 'size', header: 'Size' },
     { field: 'htmlUrl', header: 'Origin' }
   ]; */
-    this.searchColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
-    this.addColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
+    this.searchColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
+    this.addColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
     this.toAdd = [];
     this.resultDataSource.data = [];
 
 
-    
-    
+
+
   }
 
 }
