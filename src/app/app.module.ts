@@ -14,7 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatTableModule, MatCheckboxModule } from '@angular/material';
+import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSortModule, MatInputModule } from '@angular/material';
 
 // Components
 import { AppComponent } from './app.component';
@@ -157,7 +157,10 @@ const routes: Routes = [
     NgIdleKeepaliveModule.forRoot(),
     ToastModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

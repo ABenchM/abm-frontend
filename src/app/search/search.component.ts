@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Search } from '../models/search.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 
 
@@ -22,7 +22,9 @@ export class SearchComponent implements OnInit {
   model = new Search('');
   loading: boolean;
   results = [];
+  resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
+  toAddDataSource = new MatTableDataSource<any>(this.toAdd);
   language = {};
   searched = false;
   isSelect;
@@ -31,6 +33,10 @@ export class SearchComponent implements OnInit {
   searchColumns: any[];
   addColumns: any[];
   selection = new SelectionModel<any>(true, []);
+  @ViewChild('resultPaginator') resultPaginator: MatPaginator;
+  @ViewChild(MatSort) resultSort: MatSort;/* 
+  @ViewChild('toAddPaginator') toAddPaginator: MatPaginator;
+  @ViewChild('toAddPaginator') toAddSort: MatSort; */
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe) {
@@ -67,12 +73,14 @@ export class SearchComponent implements OnInit {
 
   search(searchQuery) {
     this.loading = true;
-    this.results = [];
+    this.resultDataSource.data = [];
     const language = '';
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
-      this.results = response.json();
-      for (let i = 0; i < this.results.length; i++) {
-        this.results[i].singleSelection = false;
+      this.resultDataSource.data = response.json();
+      setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
+      setTimeout(() =>this.resultDataSource.sort = this.resultSort);
+      for (let i = 0; i < this.resultDataSource.data.length; i++) {
+        this.resultDataSource.data[i].singleSelection = false;
       }
       // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
       // this.searchResults.count().then(count => this.itemsCount = count);
@@ -85,12 +93,12 @@ export class SearchComponent implements OnInit {
 
 
   isProjectSelected() {
-    if (!this.results) {
+    if (!this.resultDataSource.data) {
       return false;
     }
 
-    for (let i = 0; i < this.results.length; i++) {
-      if (this.results[i].singleSelection === true) {
+    for (let i = 0; i < this.resultDataSource.data.length; i++) {
+      if (this.resultDataSource.data[i].singleSelection === true) {
         return true;
 
       }
@@ -134,7 +142,7 @@ export class SearchComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.results.length;
+    const numRows = this.resultDataSource.data.length;
     return numSelected === numRows;
   }
 
@@ -146,21 +154,21 @@ export class SearchComponent implements OnInit {
 
     this.isAllSelected() ?
       this.selection.clear() :
-      this.results.forEach(row => this.selection.select(row));
+      this.resultDataSource.data.forEach(row => this.selection.select(row));
 
 
     if (this.isAllSelected()) {
 
-      for (let i = 0; i < this.results.length; i++) {
-        this.results[i].singleSelection = true;
-        this.service.project.push(this.results[i]);
+      for (let i = 0; i < this.resultDataSource.data.length; i++) {
+        this.resultDataSource.data[i].singleSelection = true;
+        this.service.project.push(this.resultDataSource.data[i]);
 
       }
       this.toAdd = this.service.project;
 
     } else {
-      for (let i = 0; i < this.results.length; i++) {
-        this.results[i].singleSelection = false;
+      for (let i = 0; i < this.resultDataSource.data.length; i++) {
+        this.resultDataSource.data[i].singleSelection = false;
         this.service.project = [];
         this.toAdd = [];
       }
@@ -172,10 +180,10 @@ export class SearchComponent implements OnInit {
   select(item) {
     this.selection.toggle(item);
 
-    for (let i = 0; i < this.results.length; i++) {
-      if (this.results[i].id === item.id) {
+    for (let i = 0; i < this.resultDataSource.data.length; i++) {
+      if (this.resultDataSource.data[i].id === item.id) {
 
-        if (this.results[i].singleSelection === true) {
+        if (this.resultDataSource.data[i].singleSelection === true) {
 
           this.service.project.push(item);
           this.toAdd.push(item);
@@ -217,7 +225,11 @@ export class SearchComponent implements OnInit {
     this.searchColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
     this.addColumns = ["name", "description", "creationDate", "size", "htmlUrl", "select"];
     this.toAdd = [];
-    this.results = [];
+    this.resultDataSource.data = [];
+
+
+    
+    
   }
 
 }
