@@ -10,8 +10,8 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
-import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule} from '@angular/material';
-import { MatMenuModule, MatIconModule, MatToolbarModule, MatPaginatorModule, MatDialogModule} from '@angular/material';
+import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatToolbarModule, MatPaginatorModule, MatDialogModule } from '@angular/material';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -19,12 +19,13 @@ describe('SearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchComponent , ProjectCountPipe, FileSizePipe, SiteNamePipe],
+      declarations: [SearchComponent, ProjectCountPipe, FileSizePipe, SiteNamePipe],
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
-         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule],
-        providers: [SearchService, CollectionService]
+        MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
+        MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule],
+      providers: [SearchService, CollectionService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

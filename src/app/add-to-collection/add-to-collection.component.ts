@@ -31,7 +31,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   loadUserCollections() {
     this.loading = true;
-     this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+    this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       if (response.status === 200) {
         this.userCollections = response.json();
         this.collection = this.userCollections[0];
@@ -78,7 +78,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
             }
             this.router.navigateByUrl('/editCollection/' + this.collection.id);
           }
-         
+
         } else {
           this.toastr.error('Internal error: the projects cannot be added. Please try again later.' +
             'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { timeOut: 100 });
@@ -94,11 +94,11 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
       this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
         res => {
           if (res.status === 200) {
-               if (res.json()[0] !== null) {
+            if (res.json()[0] !== null) {
 
-                this.commits[i].commitId = res.json()[0].commitId;
-                this.commits[i].id = this.collectionService.toAdd[i].id;
-               }
+              this.commits[i].commitId = res.json()[0].commitId;
+              this.commits[i].id = this.collectionService.toAdd[i].id;
+            }
           }
         }
       );
