@@ -14,7 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatTableModule, MatCheckboxModule, MatPaginatorModule, MatSortModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -60,6 +62,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
+import { UserService } from './services/user.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
 
 
@@ -79,6 +82,8 @@ import { ToastModule } from 'primeng/toast';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
+import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -94,7 +99,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
-  { path: 'profile', component: MyProfileComponent }
+  { path: 'profile', component: MyProfileComponent },
+  { path: 'manageusers', component: ManageUsersComponent }
 ];
 
 @NgModule({
@@ -130,7 +136,9 @@ const routes: Routes = [
     CommitSelectorComponent,
     ModalBuildViewerComponent,
     ProjectCountPipe,
-    AddToCollectionComponent
+    AddToCollectionComponent,
+    DeleteDialogboxComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -147,6 +155,17 @@ const routes: Routes = [
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
     OrderModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    HttpClientModule,
     ContextMenuModule,
     TableModule,
     DataTableModule,
@@ -179,6 +198,7 @@ const routes: Routes = [
     PinService,
     CurrentUserService,
     ViewService,
+    UserService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     HermesService,
     CommitService,
@@ -187,6 +207,7 @@ const routes: Routes = [
     RouterLinkActive
   ],
   entryComponents: [
+    DeleteDialogboxComponent,
     DialogComponentComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
