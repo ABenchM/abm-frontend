@@ -38,6 +38,7 @@
     "ngx-bootstrap": "^2.0.3",
     "ngx-contextmenu": "^5.0.3",
     "ngx-order-pipe": "^2.0.1",
+    "webpack-dev-server": ">=3.1.11",
     "ngx-toastr": "^9.0.2",
     "primeicons": "^1.0.0-beta.10",
     "primeng": "^6.1.3",
