@@ -233,10 +233,10 @@ export class SearchComponent implements OnInit {
     this.addColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
     this.toAdd = [];
     this.resultDataSource.data = [];
+  }
 
-
-
-
+  applyDataSourceFilter(filterValue: string) {
+    this.resultDataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

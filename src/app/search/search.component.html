@@ -148,7 +148,9 @@
     </div> -->
     <br>
 
-
+    <mat-form-field>
+      <input matInput (keyup)="applyDataSourceFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
     <table #resultsTable mat-table  matSort [dataSource]="resultDataSource" class="mat-elevation-z8">
 
 
