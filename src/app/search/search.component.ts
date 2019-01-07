@@ -8,7 +8,7 @@ import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-
+import * as _ from 'lodash';
 
 
 
@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit {
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe) {
 
-    }
+  }
 
 
 
@@ -115,18 +115,27 @@ export class SearchComponent implements OnInit {
   removeCart() {
     this.toAdd = [];
     this.isSelect = !this.isSelect;
+    this.selectDeselectAll();
+
   }
 
-  removeItem(itemId) {
-    console.log(itemId);
+  removeItem(item) {
+    console.log(item);
 
-    itemId = itemId.id;
+    let itemId = item.id;
     for (let i = 0; i < this.toAdd.length; i++) {
       if (this.toAdd[i].id === itemId) {
         this.toAdd.splice(i, 1);
       }
     }
     this.toAdd = [...this.toAdd];
+    console.log(this.resultDataSource.data);
+    let index = _.findIndex(this.resultDataSource.data, function (o) {
+      if (o.id === itemId) {
+        return true;
+      }
+    });
+   this.resultDataSource.data[index].singleSelection = false;
   }
 
   // selectAll() {
