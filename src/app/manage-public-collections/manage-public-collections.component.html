@@ -1,3 +1,76 @@
-<p>
-  manage-public-collections works!
-</p>
+<h2>Manage Public Collections</h2>
+
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="example-container mat-elevation-z8">
+    <mat-table #table  [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="select">
+            <th mat-header-cell class="selectCheckbox" *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell class="selectCheckbox" *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="id">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header> id </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell  *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell  *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+            <mat-header-cell  *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.creation_date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell  *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+
+            <mat-cell *matCellDef="let row;">
+                <!--
+                <button mat-icon-button>
+                    <mat-icon class="red" (click)="openDialog(row)" aria-label="Delete">delete</mat-icon>
+                </button>
+                -->
+                <div *ngIf="row.isActive">
+                    <button mat-button (click)="changeColStatus(row)">Deactivate</button>
+                </div>
+            
+                <div *ngIf="!row.isActive">
+                        <button mat-button (click)="changeColStatus(row)">Activate</button>
+                </div>
+            </mat-cell>
+
+        </ng-container>
+
+        <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-toolbar>
+        <mat-toolbar-row>
+          <!--<button mat-raised-button [disabled]="SelectionIsEmpty()" class="button_alignR" (click)="deleteColsDialog()">Delete Collections</button>-->
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    
+</div>
