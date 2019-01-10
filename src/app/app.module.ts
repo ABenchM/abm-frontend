@@ -83,6 +83,7 @@ import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -137,7 +138,8 @@ const routes: Routes = [
     ProjectCountPipe,
     AddToCollectionComponent,
     DeleteDialogboxComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    ManagePublicCollectionsComponent
   ],
   imports: [
     BrowserModule,
