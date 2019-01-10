@@ -27,7 +27,7 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
 
   }
 
-  openDialog() {
+  /*openDialog() {
     let dialogRef = this.dialog.open(DialogBoxComponent, {
       width: '300px',
     });
@@ -36,7 +36,7 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
       console.log('The dialog was closed');
       this.dialogResult = result;
     });
-  }
+  }*/
 
   loadUsers() {
     this.loading = true;
@@ -72,7 +72,7 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
   }
 
   approveUser(user: string) {
-    this.openDialog();
+    /*this.openDialog();*/
     this.service.approveRejectUser(user, true).subscribe(result => {
       this.loadUsers();
     });
@@ -80,7 +80,7 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
   }
 
   rejectUser(user: string) {
-    this.openDialog();
+    /*this.openDialog();*/
     this.service.approveRejectUser(user, false).subscribe(result => {
       this.loadUsers();
     });
