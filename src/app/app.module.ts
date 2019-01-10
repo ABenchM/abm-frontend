@@ -100,7 +100,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
   { path: 'profile', component: MyProfileComponent },
-  { path: 'manageusers', component: ManageUsersComponent }
+  { path: 'manageusers', component: ManageUsersComponent },
+  { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
 ];
 
 @NgModule({
