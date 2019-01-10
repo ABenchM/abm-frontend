@@ -12,6 +12,7 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -19,12 +20,12 @@ describe('SearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchComponent , ProjectCountPipe, FileSizePipe, SiteNamePipe],
+      declarations: [SearchComponent, ProjectCountPipe, FileSizePipe, SiteNamePipe],
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule, DataTableModule
         , PaginatorModule, TableModule],
-        providers: [SearchService, CollectionService]
+      providers: [SearchService, CollectionService, HttpClient, HttpHandler]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
