@@ -93,7 +93,7 @@ export class CollectionService {
     const id = typeof collection === 'string' ? collection : collection.id;
     const body = { 'collectionid': id };
 
-    return this.httpClient.post<Collection>('/rest/collectionstatus', body, httpOptions).pipe(
+    return this.httpClient.put<Collection>('/rest/collectionstatus', body, httpOptions).pipe(
       tap(_ => this.log(`Change collection status id=${id}`)),
       catchError(this.handleError<Collection>('changeCollectionStatus'))
     );
