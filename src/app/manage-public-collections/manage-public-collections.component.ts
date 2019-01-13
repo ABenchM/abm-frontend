@@ -77,7 +77,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
   }
 
   deleteSingleCol(coll: Collection) {
-    this.service.deleteSingleCol(coll).subscribe(result => {
+    this.service.deleteSelectedCols(coll.id).subscribe(result => {
       this.getAllCollections();
     });
   }

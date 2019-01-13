@@ -46,11 +46,9 @@
             <mat-header-cell  *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
 
             <mat-cell *matCellDef="let row;">
-                <!--
                 <button mat-icon-button>
                     <mat-icon class="red" (click)="openDialog(row)" aria-label="Delete">delete</mat-icon>
                 </button>
-                -->
                 <div *ngIf="row.isActive">
                     <button mat-button (click)="changeColStatus(row)">Deactivate</button>
                 </div>
@@ -68,7 +66,7 @@
 
     <mat-toolbar>
         <mat-toolbar-row>
-          <!--<button mat-raised-button [disabled]="SelectionIsEmpty()" class="button_alignR" (click)="deleteColsDialog()">Delete Collections</button>-->
+          <button mat-raised-button [disabled]="SelectionIsEmpty()" class="button_alignR" (click)="deleteColsDialog()">Delete Collections</button>
           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </mat-toolbar-row>
     </mat-toolbar>

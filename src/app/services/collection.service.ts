@@ -80,13 +80,9 @@ export class CollectionService {
     );
   }
 
-  deleteSelectedCols(colIDs: String): Observable<Collection> {
+  deleteSelectedCols(colIDs: String) {
     const body = { 'deleteCollections': colIDs };
-
-    return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
-      tap(_ => this.log(`deleted Selected Collection`)),
-      catchError(this.handleError<Collection>('deleteCollections'))
-    );
+    return this.http.delete('/rest/deletepubliccollection/' + colIDs);
   }
 
   changeCollectionStatus(collection: Collection | string): Observable<Collection> {
