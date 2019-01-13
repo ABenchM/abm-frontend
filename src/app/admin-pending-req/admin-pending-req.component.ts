@@ -64,7 +64,6 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
@@ -101,6 +100,14 @@ constructor(private service: UserService , private orderPipe: OrderPipe, public 
       userlist = userlist.concat(item.username, ',');
     });
     this.rejectUser(userlist);
+  }
+
+  isselected() {
+    if (this.selection.selected.length >= 1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

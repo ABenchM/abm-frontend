@@ -9,20 +9,20 @@
   
     <mat-table #table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="select">
-        <th mat-header-cell class="selectCheckbox" *matHeaderCellDef>
-          <mat-checkbox id="CheckBox" (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell class="selectCheckbox" *matCellDef="let row">
-          <mat-checkbox id="CheckBox" (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </td>
-</ng-container>
+        <ng-container matColumnDef="select">
+            <th mat-header-cell class="selectCheckbox" *matHeaderCellDef>
+              <mat-checkbox id="CheckBox" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell class="selectCheckbox" *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
       <ng-container matColumnDef="firstname">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
@@ -81,8 +81,8 @@
 
   <mat-toolbar>
       <mat-toolbar-row>
-        <button mat-raised-button  (click)="approveSelectedUsers()" class="button_alignR" id="buttonR">Approve Requests</button>
-        <button mat-raised-button (click)="rejectSelectedUsers()" class="button_alignM" id="buttonL">Reject Requests</button>
+        <button mat-raised-button [disabled]="isselected()" (click)="approveSelectedUsers()" class="button_alignR" id="buttonR">Approve Requests</button>
+        <button mat-raised-button [disabled]="isselected()" (click)="rejectSelectedUsers()" class="button_alignM" id="buttonL">Reject Requests</button>
         <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
       </mat-toolbar-row>
   </mat-toolbar>
