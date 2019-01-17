@@ -145,7 +145,7 @@ const routes: Routes = [
     AddToCollectionComponent,
     DeleteDialogboxComponent,
     ManageUsersComponent,
-    ManagePublicCollectionsComponent
+    ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
     DialogBoxComponent
   ],
