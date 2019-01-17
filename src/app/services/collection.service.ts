@@ -74,7 +74,7 @@ export class CollectionService {
     const id = typeof collection === 'string' ? collection : collection.id;
     const body = { 'deleteCollections': id };
 
-    return this.httpClient.post<Collection>('/rest/deletepubliccollection', body, httpOptions).pipe(
+    return this.httpClient.post<Collection>('/rest/publiccollection', body, httpOptions).pipe(
       tap(_ => this.log(`delete single Collection`)),
       catchError(this.handleError<Collection>('deleteCollection'))
     );
@@ -82,7 +82,7 @@ export class CollectionService {
 
   deleteSelectedCols(colIDs: String) {
     const body = { 'deleteCollections': colIDs };
-    return this.http.delete('/rest/deletepubliccollection/' + colIDs);
+    return this.http.delete('/rest/publiccollection/' + colIDs);
   }
 
   changeCollectionStatus(collection: Collection | string): Observable<Collection> {
