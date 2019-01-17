@@ -52,7 +52,7 @@ describe('ManageUsersComponent', () => {
     expect(trigger.childElementCount).toBe(2);
     });
 
-  xit('DeleteSelectedUsers Button should invoke corresponding method', () => {
+  fit('DeleteSelectedUsers Button should invoke corresponding method', () => {
     const deleteUser = spyOn(component, 'deleteSelectedUsers');
     fixture.debugElement.query(By.css('#buttonL')).triggerEventHandler('click', null);
     expect(deleteUser).toHaveBeenCalled();
