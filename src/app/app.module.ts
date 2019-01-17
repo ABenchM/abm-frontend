@@ -84,6 +84,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
+import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -102,6 +104,9 @@ const routes: Routes = [
   { path: 'profile', component: MyProfileComponent },
   { path: 'manageusers', component: ManageUsersComponent },
   { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
+  { path: 'pendingRequest', component: AdminPendingReqComponent }
+
+
 ];
 
 @NgModule({
@@ -141,6 +146,8 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     ManageUsersComponent,
     ManagePublicCollectionsComponent
+    AdminPendingReqComponent,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -208,6 +215,7 @@ const routes: Routes = [
   entryComponents: [
     DeleteDialogboxComponent,
     DialogComponentComponent,
+    DialogBoxComponent,
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
