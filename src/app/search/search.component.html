@@ -118,8 +118,8 @@
         <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)"
           class="btn-left-mrgn btn btn-success btn-sm align-middle">Search</button>
         <span class="btn-left-mrgn">
-          <button class="btn btn-success btn-sm align-middle "> Show Filtering Options</button>
-          <button class="btn btn-success" *ngIf="false"> Hide Filtering Options</button>
+          <button class="btn btn-success btn-sm align-middle "  (click)="isFilterVisible=true" *ngIf="!isFilterVisible"> Show Filtering Options</button>
+          <button class="btn btn-success" *ngIf="isFilterVisible" (click)="isFilterVisible=false"> Hide Filtering Options</button>
         </span>
       </div>
     </form>
@@ -148,7 +148,7 @@
     </div> -->
     <br>
 
-    <mat-form-field>
+    <mat-form-field  *ngIf="isFilterVisible">
       <input matInput (keyup)="applyDataSourceFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
     <table #resultsTable mat-table  matSort [dataSource]="resultDataSource" class="mat-elevation-z8">
