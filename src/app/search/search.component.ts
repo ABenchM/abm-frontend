@@ -75,6 +75,8 @@ export class SearchComponent implements OnInit {
     const language = '';
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
       this.resultDataSource.data = response.json();
+    
+      this.resultDataSource.data = [...this.resultDataSource.data];
       setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
       setTimeout(() => this.resultDataSource.sort = this.resultSort);
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
@@ -114,8 +116,10 @@ export class SearchComponent implements OnInit {
 
   removeCart() {
     this.toAdd = [];
-    this.isSelect = !this.isSelect;
-    this.selectDeselectAll();
+    this.toAdd = [...this.toAdd];
+   // this.isSelect = !this.isSelect;
+   // this.selectDeselectAll();
+    this.selection.clear() 
 
   }
 
@@ -165,13 +169,14 @@ export class SearchComponent implements OnInit {
 
 
     if (this.isAllSelected()) {
-
+      this.service.project = [];
+      this.toAdd = [];
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = true;
         this.service.project.push(this.resultDataSource.data[i]);
 
       }
-      this.toAdd = this.service.project;
+      this.toAdd = [...this.service.project];
 
     } else {
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
@@ -207,6 +212,9 @@ export class SearchComponent implements OnInit {
         break;
       }
     }
+
+    this.toAdd = _.uniq(this.toAdd);
+    this.toAdd = [...this.toAdd];
   }
 
   getTotalItems() {
@@ -215,7 +223,6 @@ export class SearchComponent implements OnInit {
   }
 
   openSource(item) {
-
     // window.location.href = item.repositoryUrl;
     window.open(item.repositoryUrl, '_blank');
 
