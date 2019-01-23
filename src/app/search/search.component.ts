@@ -75,7 +75,6 @@ export class SearchComponent implements OnInit {
     const language = '';
     this.service.getSearchResults(searchQuery, language).subscribe(response => {
       this.resultDataSource.data = response.json();
-    
       this.resultDataSource.data = [...this.resultDataSource.data];
       setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
       setTimeout(() => this.resultDataSource.sort = this.resultSort);
@@ -117,10 +116,9 @@ export class SearchComponent implements OnInit {
   removeCart() {
     this.toAdd = [];
     this.toAdd = [...this.toAdd];
-   // this.isSelect = !this.isSelect;
-   // this.selectDeselectAll();
-    this.selection.clear() 
-
+    // this.isSelect = !this.isSelect;
+    // this.selectDeselectAll();
+    this.selection.clear();
   }
 
   removeItem(item) {
@@ -139,7 +137,7 @@ export class SearchComponent implements OnInit {
         return true;
       }
     });
-   this.resultDataSource.data[index].singleSelection = false;
+    this.resultDataSource.data[index].singleSelection = false;
   }
 
   // selectAll() {
