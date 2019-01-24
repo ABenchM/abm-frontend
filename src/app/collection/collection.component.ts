@@ -7,11 +7,11 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import * as _ from 'lodash';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-//Talal Code
+// Talal Code
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Collection } from '../models/collection.model';
 import { take } from 'rxjs/operators';
-///////////////
+// /////////////
 
 @Component({
   selector: 'abm-collection',
@@ -21,7 +21,7 @@ import { take } from 'rxjs/operators';
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  //Talal Code
+  // Talal Code
   public publicCollections: any[] = [];
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'privateStatus', 'versions'];
   dataSource = new MatTableDataSource<Collection>();
@@ -29,7 +29,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   versions: any = [{}];
   version: any = {};
   latestVersion: any = {};
-//////////////////////////
+  // //////////////////////
 
   hasCollections = false;
   SortType: any = 'name';
@@ -45,7 +45,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   }
 
-  //Talal Code
+  // Talal Code
   getCollections() {
     this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       this.publicCollections = this.orderPipe.transform(response.json());
