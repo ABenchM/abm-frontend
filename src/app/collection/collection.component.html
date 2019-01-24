@@ -13,25 +13,25 @@
 <mat-table #table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.id}}
+    <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.id}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+    <mat-cell *matCellDef="let element" class="navigateToCol">
       {{element.name}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="description">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+    <mat-cell *matCellDef="let element" class="navigateToCol">
       {{element.description}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="creationDate">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+    <mat-cell *matCellDef="let element" class="navigateToCol">
       {{element.creation_date}} </mat-cell>
   </ng-container>
 
@@ -39,10 +39,13 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Versions - Status</mat-header-cell>
     <mat-cell *matCellDef="let row;">
       <mat-form-field>
-        <mat-select [(value)]="selected">
-          <mat-option value="Version{{version.number}}" *ngFor="let version of row.versions" >
-            <div *ngIf="!version.privateStatus"> Version{{version.number}} - Status: Public </div>
-            <div *ngIf="version.privateStatus"> Version{{version.number}} - Status: Private </div>
+        <mat-select>
+          <mat-option value="Version{{version.number}}" *ngFor="let version of row.versions">
+            <div *ngIf="!version.privateStatus"> Version{{version.number}} - Public
+            </div>
+            <div *ngIf="version.privateStatus"> Version{{version.number}} - Private
+              <button class="makePublic" mat-raised-button color="primary">Make Public</button>
+            </div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -54,7 +57,7 @@
 </mat-table>
 
 <mat-toolbar>
-    <mat-toolbar-row>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-toolbar-row>
 </mat-toolbar>

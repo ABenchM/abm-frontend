@@ -3,3 +3,7 @@
     width: 100%;
     margin-top: 8px;
   }
+
+  .makePublic{
+    float: right;
+  }

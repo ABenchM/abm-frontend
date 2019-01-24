@@ -8,7 +8,6 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Collection } from '../models/collection.model';
 
-
 @Component({
   selector: 'abm-collection',
   templateUrl: './collection.component.html',
@@ -16,8 +15,6 @@ import { Collection } from '../models/collection.model';
   providers: [ConfirmationService]
 })
 export class CollectionComponent implements OnInit {
-
-  selected = 'Version1';
   public userCollections: any[] = [];
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
   dataSource = new MatTableDataSource<Collection>();
