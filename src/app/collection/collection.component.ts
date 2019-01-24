@@ -17,6 +17,7 @@ import { Collection } from '../models/collection.model';
 })
 export class CollectionComponent implements OnInit {
 
+  selected = 'Version1';
   public userCollections: any[] = [];
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
   dataSource = new MatTableDataSource<Collection>();

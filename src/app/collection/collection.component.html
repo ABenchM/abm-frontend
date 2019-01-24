@@ -39,8 +39,8 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Versions - Status</mat-header-cell>
     <mat-cell *matCellDef="let row;">
       <mat-form-field>
-        <mat-select>
-          <mat-option value="Version{{version.number}}" *ngFor="let version of row.versions">
+        <mat-select [(value)]="selected">
+          <mat-option value="Version{{version.number}}" *ngFor="let version of row.versions" >
             <div *ngIf="!version.privateStatus"> Version{{version.number}} - Status: Public </div>
             <div *ngIf="version.privateStatus"> Version{{version.number}} - Status: Private </div>
           </mat-option>
