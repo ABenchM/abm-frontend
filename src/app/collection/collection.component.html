@@ -1,166 +1,56 @@
-<section>
-  <div *ngIf="loggedInStatus()">
-    <h2>My Collections</h2>
-    <hr>
-    <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new
-      collection, collect projects using the search feature and create a collection
-      from them in the Projects tab or clone an existing collection.</p>
-  </div>
-  <br>
+<div *ngIf="loggedInStatus()">
+  <h2>My Collections</h2>
+  <hr>
+  <p class="alert alert-warning" *ngIf="publicCollections[0]===undefined">You have no collections. To create a new
+    collection, collect projects using the search feature and create a collection
+    from them in the Projects tab or clone an existing collection.</p>
+</div>
 
-  <div class="input-group mb-3 ">
-    <div class="input-group-prepend" ngbDropdown>
-      <button class="btn btn-outline-secondary" ngbDropdownToggle type="button">Filter By: {{filterType}}</button>
-      <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
-        <li>
-          <button class="dropdown-item" (click)="setFilterType('name')">Name</button>
-          <button class="dropdown-item" (click)="setFilterType('description')">Description</button>
-          <button class="dropdown-item" (click)="setFilterType('builtStatus')">BuiltStatus</button>
-          <button class="dropdown-item" (click)="setFilterType('privateStatus')">PrivateStatus</button>
-        </li>
-      </ul>
-    </div>
-    <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
-  </div>
+<br>
 
-  <br>
-  <br>
+<mat-form-field>
+  <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
 
-  <p-table *ngIf="!(userCollections[0]===undefined)" #collectionDt [value]="filteredCollections" [columns]="collectionColumns"
-    [scrollable]="true" [paginator]="true" [rows]="10">
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of collectionColumns">
-          {{col.header}}
-        </th>
-      </tr>
-    </ng-template>
+<mat-table #table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.id}}
+    </mat-cell>
+  </ng-container>
 
-    <ng-template pTemplate="body" let-row>
-      <tr style="cursor:pointer;" (contextmenu)="onContextMenu($event, row)" [contextMenu]="basicMenu"
-        [contextMenuSubject]="row">
-        <td (click)="open(row)">{{row.name}}</td>
-        <td (click)="open(row)">{{row.description}}</td>
-        <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-        <td>{{row.id}}</td>
-        <td> {{row.builtStatus | builtStatus}}
-        </td>
-        <td>{{row.privateStatus | privateStatus}}</td>
-      </tr>
-    </ng-template>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+      {{element.name}} </mat-cell>
+  </ng-container>
 
-  </p-table>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+      {{element.description}} </mat-cell>
+  </ng-container>
 
+  <ng-container matColumnDef="creationDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
+      {{element.creation_date}} </mat-cell>
+  </ng-container>
 
+  <ng-container matColumnDef="versions">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Versions - Status</mat-header-cell>
+    <mat-cell *matCellDef="let row;">
+      <mat-form-field>
+        <mat-select>
+          <mat-option value="Version{{version.number}}" *ngFor="let version of row.versions">
+            <div *ngIf="!version.privateStatus"> Version{{version.number}} - Status: Public </div>
+            <div *ngIf="version.privateStatus"> Version{{version.number}} - Status: Private </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
 
-
-  <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)"> {{element.id}}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
-        {{element.name}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
-        {{element.description}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="creationDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
-        {{element.creation_date}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="privateStatus">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Collection Status </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="navigateToCol" (click)="NavigateToCollection(element)">
-        <div *ngIf="!element.privateStatus"> Public </div>
-        <div *ngIf="element.privateStatus"> Private </div>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="versions">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Versions</mat-header-cell>
-      <mat-cell *matCellDef="let row;">
-        <mat-form-field>
-          <mat-select >
-            <mat-option>None</mat-option>
-            <mat-option value="option1">Version 1</mat-option>
-            <mat-option value="option2">Version 2</mat-option>
-            <mat-option value="option3">Version 3</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-cell>
-
-    </ng-container>
-
-    <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-
-
-
-
-
-
-
-  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
-
-  <!-- <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;"
-    *ngIf="hasCollections">
-    <thead class="thead-light">
-      <tr style="cursor:pointer;">
-        <th (click)="setSortType('name')">Name
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('description')">Description
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('creation_date')">Creation Date
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('id')">Id
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('builtStatus')">Built Status
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('privateStatus')">Private Status
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="cursor:pointer;" (contextmenu)="onContextMenu($event, row)" *ngFor="let row of filteredCollections | orderBy: SortType:reverse:'case-insensitive'" [contextMenu]="basicMenu"
-        [contextMenuSubject]="row">
-        <td (click)="open(row)">{{row.name}}</td>
-        <td (click)="open(row)">{{row.description}}</td>
-        <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-        <td>{{row.id}}</td>
-        <td> {{row.builtStatus | builtStatus}}
-        </td>
-        <td>{{row.privateStatus | privateStatus}}</td>
-        
-      </tr>
-    </tbody>
-  </table> -->
-
-  <context-menu>
-    <ng-template #basicMenu>
-      Make Public
-    </ng-template>
-  </context-menu>
+  <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
