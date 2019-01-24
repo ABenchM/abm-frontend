@@ -7,6 +7,11 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import * as _ from 'lodash';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+//Talal Code
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { Collection } from '../models/collection.model';
+import { take } from 'rxjs/operators';
+///////////////
 
 @Component({
   selector: 'abm-collection',
@@ -15,6 +20,16 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
   providers: [ConfirmationService]
 })
 export class CollectionComponent implements OnInit, OnDestroy {
+
+  //Talal Code
+  public publicCollections: any[] = [];
+  displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'privateStatus', 'versions'];
+  dataSource = new MatTableDataSource<Collection>();
+
+  versions: any = [{}];
+  version: any = {};
+  latestVersion: any = {};
+//////////////////////////
 
   hasCollections = false;
   SortType: any = 'name';
@@ -29,6 +44,26 @@ export class CollectionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) {
 
   }
+
+  //Talal Code
+  getCollections() {
+    this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+      this.publicCollections = this.orderPipe.transform(response.json());
+      this.dataSource.data = this.publicCollections;
+    });
+  }
+
+  loadCollection() {
+    for (let i = 0; i < this.publicCollections.length; i++) {
+      let collectionId = this.publicCollections[i].id;
+      this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
+        this.versions = response.json()[0].versions;
+        this.version = response.json()[0].versions[0];
+        this.latestVersion = response.json()[0].versions[this.versions.length - 1];
+      });
+    }
+  }
+  ///////////////////////////////
 
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
@@ -82,6 +117,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
+    this.getCollections();
     this.collectionColumns = [
       { field: 'name', header: 'Name' },
       { field: 'description', header: 'Description' },
@@ -153,32 +189,32 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
 }
 
- /* Collection status can change both ways
+/* Collection status can change both ways
 
- onContextMenu(event, item) {
-  console.log("isnide method",item, event);
-  let msg="";
-  if(item.privateStatus == true){
-    msg= 'Make Collection Public!';
-  } else{
-    msg = 'Make Collection Private!'
+onContextMenu(event, item) {
+ console.log("isnide method",item, event);
+ let msg="";
+ if(item.privateStatus == true){
+   msg= 'Make Collection Public!';
+ } else{
+   msg = 'Make Collection Private!'
 
-  }
-  this.confirmationService.confirm({
-    message: msg,
-    accept: () => {
-      console.log("isnide accet method");
-      let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
+ }
+ this.confirmationService.confirm({
+   message: msg,
+   accept: () => {
+     console.log("isnide accet method");
+     let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
 
-      this.filteredCollections[selectedRowIndex].privateStatus = (item.privateStatus == true)?false:true;
-      console.log(this.filteredCollections[selectedRowIndex]);
-      this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
-        response => {
-          if (response.status === 200) {
-            this.router.navigateByUrl('/collection');
-          }
-        });
-    }
+     this.filteredCollections[selectedRowIndex].privateStatus = (item.privateStatus == true)?false:true;
+     console.log(this.filteredCollections[selectedRowIndex]);
+     this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
+       response => {
+         if (response.status === 200) {
+           this.router.navigateByUrl('/collection');
+         }
+       });
+   }
 });
 
 }
