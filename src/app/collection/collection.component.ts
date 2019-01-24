@@ -1,16 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { OrderPipe } from 'ngx-order-pipe';
-import { ContextMenuComponent } from 'ngx-contextmenu';
-import * as _ from 'lodash';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
-import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Collection } from '../models/collection.model';
-import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -21,11 +17,12 @@ import { take } from 'rxjs/operators';
 })
 export class CollectionComponent implements OnInit {
 
-  public publicCollections: any[] = [];
+  public userCollections: any[] = [];
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
   dataSource = new MatTableDataSource<Collection>();
 
-  userCollections: any[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) { }
@@ -42,8 +39,10 @@ export class CollectionComponent implements OnInit {
     if (localStorage.getItem('currentUser') != null) {
       this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
         if (response.status === 200 && response.json() !== null) {
-          this.publicCollections = this.orderPipe.transform(response.json());
-          this.dataSource.data = this.publicCollections;
+          this.userCollections = this.orderPipe.transform(response.json());
+          this.dataSource.data = this.userCollections;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       }, (error) => {
         console.log('user not logged in');

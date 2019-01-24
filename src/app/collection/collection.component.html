@@ -1,12 +1,10 @@
 <div *ngIf="loggedInStatus()">
   <h2>My Collections</h2>
   <hr>
-  <p class="alert alert-warning" *ngIf="publicCollections[0]===undefined">You have no collections. To create a new
+  <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new
     collection, collect projects using the search feature and create a collection
     from them in the Projects tab or clone an existing collection.</p>
 </div>
-
-<br>
 
 <mat-form-field>
   <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -54,3 +52,9 @@
   <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+
+<mat-toolbar>
+    <mat-toolbar-row>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-toolbar-row>
+</mat-toolbar>
