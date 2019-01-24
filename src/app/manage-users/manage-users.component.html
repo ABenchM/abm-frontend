@@ -82,9 +82,9 @@
               </ng-template>
             </mat-menu>             
   
-            <!-- <button class="deleteIcon" id="deletebutton" mat-icon-button >
+            <button class="deleteIcon" id="deletebutton" mat-icon-button >
               <mat-icon class="red" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
-            </button> -->
+            </button>
           </mat-cell>
         </ng-container>
   
@@ -94,7 +94,7 @@
 
       <mat-toolbar>
         <mat-toolbar-row>
-          <!-- <button mat-raised-button  [disabled]="isselected()" id="buttonL" (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button> -->
+          <button mat-raised-button  [disabled]="isselected()" id="buttonL" (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button>
           <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
         </mat-toolbar-row>
       </mat-toolbar>

@@ -62,13 +62,12 @@ describe('UserService', () => {
       fit('deleteUsers should be called with the correct request parameters', inject([UserService, MockBackend],
         fakeAsync((userService: UserService, mockBackend: MockBackend) => {
           mockBackend.connections.subscribe((conn: MockConnection) => {
-            expect(conn.request.method).toBe(RequestMethod.Post);
-            expect(conn.request.url).toBe('/rest/adminDeleteUsers');
-            expect(conn.request.json().deleteUsers).toBe('vjv');
-            conn.mockRespond(new Response(new ResponseOptions({status: 201})));
+            expect(conn.request.method).toBe(RequestMethod.Delete);
+            expect(conn.request.url).toBe('/rest/adminDeleteUsers/vjv');
           });
           userService.deleteUsers('vjv').subscribe(() => {
          });
+         tick();
         })));
 
         fit('lockunlockUser should be called with the correct request parameters', inject([UserService, MockBackend],
