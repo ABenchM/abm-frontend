@@ -1,6 +1,6 @@
 # Abm
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
 
 ## Development server
 
@@ -35,29 +35,21 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ```
 npm install
 ```
-5) <a name="in1"></a>Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
+5) Then install angular cli with sudo access
+```
+sudo npm install -g @angular/cli
+```
+6) <a name="in2"></a> During the development, to continually build, run with watch flag
+```
+ng build --watch
+```
+7) To test the code, run 
+```
+ng test
+```
+8) <a name="in1"></a>Start Node.js server with express middleware using (In some systems `nodejs` should be used instead of `node`)
 
 ```
 node index.js
 ```
-6) Navigate to 
-```
-cd abm-frontend5/abm/
-```
-7) Run
-```
-npm install
-```
-8) Then install angular cli with sudo access
-```
-sudo npm install -g @angular/cli
-```
-9) <a name="in2"></a> During the development, to continually build, run with watch flag
-```
-ng build --watch
-```
-10) Make sure both [3](#in1) and [7](#in2) are running then navigate to [http://localhost:3000](http://localhost:3000)
-11) To test the code, run (Make sure Google Chrome is installed) 
-```
-ng test
-```
+9) Make sure [8](#in1) is running then navigate to [http://localhost:3000](http://localhost:3000)
