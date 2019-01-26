@@ -64,6 +64,7 @@ import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
 import { UserService } from './services/user.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
+import { ResetPasswordService } from './services/reset-password.service';
 
 
 import { HermesService } from './services/hermes.service';
@@ -86,6 +87,10 @@ import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.co
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -96,6 +101,10 @@ const routes: Routes = [
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'confirm-password', component: ConfirmPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password-success', component: ResetPasswordSuccessComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
@@ -144,7 +153,11 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     ManageUsersComponent,
     AdminPendingReqComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordSuccessComponent,
+    ConfirmPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -210,6 +223,7 @@ const routes: Routes = [
     CommitService,
     BuildService,
     ContextMenuService,
+    ResetPasswordService,
     RouterLinkActive
   ],
   entryComponents: [
