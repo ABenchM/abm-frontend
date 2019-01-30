@@ -48,3 +48,7 @@
     left: 1000px;
     top: 0px;
   }
+
+  .hidden-item {
+    display: none;
+  }

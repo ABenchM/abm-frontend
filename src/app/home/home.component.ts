@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource, MatSort, MatIconModule} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatInputModule} from '@angular/material/input';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatSort, MatIconModule } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatInputModule } from '@angular/material/input';
 import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { Collection } from '../models/collection.model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-  export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit {
   pinned: any[] = [];
   public publicCollections: any[] = [];
   cancelSearch: boolean;
@@ -26,8 +26,10 @@ import { Collection } from '../models/collection.model';
   dataSourcePin = new MatTableDataSource<Collection>();
   selection = new SelectionModel<Collection>(true, []);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('paginator2') paginator2: MatPaginator;
+  @ViewChild('sort') sort: MatSort;
+  @ViewChild('sort2') sort2: MatSort;
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
@@ -41,8 +43,6 @@ import { Collection } from '../models/collection.model';
       if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json());
         this.dataSourcePub.data = this.publicCollections;
-        this.dataSourcePub.paginator = this.paginator;
-        this.dataSourcePub.sort = this.sort;
         this.selection = new SelectionModel<Collection>(true, []);
         if (this.loggedInStatus()) {
           this.loadPinned();
@@ -62,14 +62,19 @@ import { Collection } from '../models/collection.model';
       if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json());
         this.dataSourcePin.data = this.pinned;
-        this.dataSourcePin.paginator = this.paginator;
-        this.dataSourcePin.sort = this.sort;
         this.selection = new SelectionModel<Collection>(true, []);
-        }
+      }
 
     });
 
     this.loading = false;
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.dataSourcePub.paginator = this.paginator);
+    setTimeout(() => this.dataSourcePub.sort = this.sort);
+    setTimeout(() => this.dataSourcePin.paginator = this.paginator2);
+    setTimeout(() => this.dataSourcePin.sort = this.sort2);
   }
 
   checkPinned(item) {
@@ -97,30 +102,6 @@ import { Collection } from '../models/collection.model';
     return localStorage.getItem('loggedIn') === 'true';
   }
 
-  /*search(searchQuery) {
-    let searching = true;
-    this.cancelSearch = true;
-    this.service.getSearchCollections(searchQuery).subscribe(
-      response => {
-        if (response.status === 200 && response.json() !== null) {
-          this.dataSourcePub.data = response.json();
-          if (this.loggedInStatus()) {
-            for (let i = 0; i < this.dataSourcePub.data.length; i++) {
-              this.checkPinned(this.dataSourcePub.data[i]);
-            }
-          }
-        }
-
-      });
-    searching = false;
-  }
-
-  cancel() {
-    this.model.query = '';
-    this.cancelSearch = false;
-    this.loadPublicCollections();
-  }*/
-
   unpin(row) {
     this.disabled = true;
     this.pinService.deletePin(row).subscribe(
@@ -144,7 +125,7 @@ import { Collection } from '../models/collection.model';
         this.dataSourcePin.data.push(row);
         const targetIndex = this.dataSourcePub.data.findIndex(this.checkId, row.id);
         this.dataSourcePub.data.splice(targetIndex, 1);
-
+        this.loadPublicCollections();
       }
     );
     this.disabled = false;
@@ -155,8 +136,6 @@ import { Collection } from '../models/collection.model';
   }
 
   ngOnInit() {
-    this.dataSourcePub.paginator = this.paginator;
-    this.dataSourcePub.sort = this.sort;
     this.loadPublicCollections();
   }
 
@@ -179,20 +158,21 @@ import { Collection } from '../models/collection.model';
 
   masterTogglePub() {
     this.isAllSelectedPub() ?
-        this.selection.clear() :
-        this.dataSourcePub.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSourcePub.data.forEach(row => this.selection.select(row));
   }
 
-isAllSelectedPin() {
-  const numSelected = this.selection.selected.length;
-  const numRows = this.dataSourcePin.data.length;
-  return numSelected === numRows;
-}
+  isAllSelectedPin() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSourcePin.data.length;
+    return numSelected === numRows;
+  }
 
-masterTogglePin() {
-  this.isAllSelectedPin() ?
+  masterTogglePin() {
+    this.isAllSelectedPin() ?
       this.selection.clear() :
       this.dataSourcePin.data.forEach(row => this.selection.select(row));
-}
+  }
+
 }
 
