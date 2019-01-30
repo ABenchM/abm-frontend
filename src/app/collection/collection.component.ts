@@ -7,17 +7,30 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Collection } from '../models/collection.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'abm-collection',
   templateUrl: './collection.component.html',
   styleUrls: ['./collection.component.css'],
+  animations: [
+    trigger('detailExpand', [
+        state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+        state('expanded', style({ height: '*' })),
+        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+],
   providers: [ConfirmationService]
 })
 export class CollectionComponent implements OnInit {
   public userCollections: any[] = [];
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID','Status', 'Actions'];
   dataSource = new MatTableDataSource<Collection>();
+  data = new MatTableDataSource<any>();
+
+  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
+  expandedElement: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
