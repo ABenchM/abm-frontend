@@ -10,7 +10,7 @@
   <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<mat-table #table [dataSource]="dataSource" multiTemplateDataRows matSort>
+<table mat-table class="fullwidth" [dataSource]="dataSource" multiTemplateDataRows matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
     <mat-cell *matCellDef="let element" class="navigateToCol"> {{element.id}}
@@ -37,48 +37,46 @@
 
   <ng-container matColumnDef="versions">
     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
-                    (click)="expandedElement = expandedElement === element ? null : element; data = row.versions">
-                     <button mat-button [ngClass] = "'customOutline'">
-                        Show Versions
-                    </button>
-                </mat-cell>
-            </ng-container>
+    <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element; data = row.versions">
+      <button mat-button [ngClass]="'customOutline'">
+        Show Versions
+      </button>
+    </mat-cell>
+  </ng-container>
 
   <!-- Expanded Content Column - The detail row is made up of this one column -->
-  
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" >
-        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <table mat-table [dataSource]="data" class="mat-elevation-z8">
-                <ng-container matColumnDef="versionNo">
-                    <th mat-header-cell *matHeaderCellDef> Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.number}} </td>
-                </ng-container>
-                <ng-container matColumnDef="VersionID">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
-                <ng-container matColumnDef="Status">
-                  <th mat-header-cell *matHeaderCellDef> Status </th>
-                  <td mat-cell *matCellDef="let element"> 
-                    <div *ngIf="element.privateStatus" >Private</div>
-                    <div *ngIf="!element.privateStatus" >Public</div>
-                    </td>
-              </ng-container>
-                <ng-container matColumnDef="Actions">
-                  <th mat-header-cell *matHeaderCellDef> Make Public </th>
-                  <td mat-cell *matCellDef="let element">
-                  <button class="makePublic" [disabled]="!element.privateStatus" mat-raised-button color="primary">Make Public</button> 
-                </td>
-              </ng-container>
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-            </table>
-
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <table mat-table [dataSource]="data" class="mat-elevation-z8 fullwidth">
+          <ng-container matColumnDef="versionNo">
+            <th mat-header-cell *matHeaderCellDef> Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+          </ng-container>
+          <ng-container matColumnDef="VersionID">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.privateStatus">Private</div>
+              <div *ngIf="!element.privateStatus">Public</div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef> Make Public </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="makePublic" [disabled]="!element.privateStatus" mat-raised-button color="primary">Make Public</button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+          </table>
         </div>
     </td>
-</ng-container>
+  </ng-container>
 
   <!-- <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
@@ -86,7 +84,7 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</mat-table>
+</table>
 
 <mat-toolbar>
   <mat-toolbar-row>

@@ -15,25 +15,23 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: ['./collection.component.css'],
   animations: [
     trigger('detailExpand', [
-        state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
-        state('expanded', style({ height: '*' })),
-        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
-],
+  ],
   providers: [ConfirmationService]
 })
 export class CollectionComponent implements OnInit {
-  public userCollections: any[] = [];
-  displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
-  columnsToDisplay: string[] = ['versionNo', 'VersionID','Status', 'Actions'];
-  dataSource = new MatTableDataSource<Collection>();
-  data = new MatTableDataSource<any>();
-
-  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
-  expandedElement: any;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  public userCollections: any[] = [];
+  displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'Status', 'Actions'];
+  dataSource = new MatTableDataSource<Collection>();
+  data = new MatTableDataSource<any>();
+  expandedElement: any;
+  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) { }
