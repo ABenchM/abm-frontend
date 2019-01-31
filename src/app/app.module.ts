@@ -17,6 +17,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
 import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 
+
 // Components
 import { AppComponent } from './app.component';
 import { BuildTabComponent } from './build-tab/build-tab.component';
@@ -72,12 +73,12 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
-import {TableModule} from 'primeng/table';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
@@ -89,7 +90,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService]},
+  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
@@ -183,9 +184,12 @@ const routes: Routes = [
     CheckboxModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
-    ToastModule
-
-
+    ToastModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatInputModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -220,6 +224,11 @@ const routes: Routes = [
     CommitSelectorComponent,
     HermesViewerComponent,
     ModalBuildViewerComponent
+  ], exports: [
+
+
+
+    MatTableModule
   ],
   bootstrap: [AppComponent]
 })
