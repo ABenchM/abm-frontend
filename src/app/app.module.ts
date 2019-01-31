@@ -86,6 +86,8 @@ import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.co
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SaveSuccessComponent } from './save-success/save-success.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -101,9 +103,9 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
-  { path: 'profile', component: MyProfileComponent },
   { path: 'manageusers', component: ManageUsersComponent },
-  { path: 'pendingRequest', component: AdminPendingReqComponent }
+  { path: 'pendingRequest', component: AdminPendingReqComponent },
+  { path: 'profile', component: UserProfileComponent }
 
 ];
 
@@ -135,7 +137,6 @@ const routes: Routes = [
     CreateCollectionComponent,
     CapitalizeFirstPipe,
     DialogComponentComponent,
-    MyProfileComponent,
     BuiltStatusPipe,
     CommitSelectorComponent,
     ModalBuildViewerComponent,
@@ -144,7 +145,9 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     ManageUsersComponent,
     AdminPendingReqComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    UserProfileComponent,
+    SaveSuccessComponent
   ],
   imports: [
     BrowserModule,
