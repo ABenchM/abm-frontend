@@ -39,14 +39,6 @@ describe('ManagePublicCollectionsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Checkbox click should select a row', () => {
-    const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox');
-    checkbox.click();
-    fixture.whenStable().then(() => {
-      expect(component.selection.selected).not.toBeNull();
-    });
-  });
-
   fit('Mat-select trigger should return 2 items for selection', () => {
     const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
     trigger.click();

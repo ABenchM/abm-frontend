@@ -23,26 +23,24 @@ import { take } from 'rxjs/operators';
   ],
 })
 export class ManagePublicCollectionsComponent implements OnInit {
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public publicCollections: any[] = [];
   loading: boolean;
   confirm = false;
-  displayedColumns: any[] = ['select', 'id', 'name', 'description', 'creationDate', 'versions', 'actions'];
-  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'Status', 'Actions'];
+  displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'actions', 'versions'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'Actions'];
   dataSource = new MatTableDataSource<Collection>();
   selection = new SelectionModel<Collection>(true, []);
   data = new MatTableDataSource<any>();
   expandedElement: any;
-  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
   versions: any[] = [{}];
   viewCollection: any = [{}];
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private router: Router, private service: CollectionService, private orderPipe: OrderPipe, public dialog: MatDialog) { }
 
-  openDialog(col: Collection): void {
+  openDialog(versionID: String): void {
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
       width: '300px',
       data: {}
@@ -52,7 +50,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
       console.log('The dialog was closed');
       this.confirm = dialogRef.componentInstance.callback();
       if (this.confirm) {
-        this.deleteSingleCol(col);
+        this.deleteSingleCol(versionID);
       }
     });
   }
@@ -76,7 +74,22 @@ export class ManagePublicCollectionsComponent implements OnInit {
     this.loading = true;
     this.service.getAllCollections().subscribe(response => {
       this.publicCollections = this.orderPipe.transform(response.json());
-      for(int i=0;i<this.publicCollections.)
+      let j: any;
+      for (j = 0; j < this.publicCollections.length; j++) {
+        this.versions = this.publicCollections[j].versions;
+        console.log('versions length ' + this.versions.length);
+        let i = 0;
+        while (i < this.versions.length) {
+          console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.versions[i].privateStatus === true) {
+            console.log('Deleting version ' + this.versions[i].id);
+            this.versions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+      }
       this.dataSource.data = this.publicCollections;
     });
     this.loading = false;
@@ -92,8 +105,8 @@ export class ManagePublicCollectionsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteSingleCol(coll: Collection) {
-    this.service.deleteSelectedCols(coll.id).subscribe(result => {
+  deleteSingleCol(versionID: String) {
+    this.service.deleteVersion(versionID).subscribe(result => {
       this.getAllCollections();
     });
   }
@@ -119,48 +132,6 @@ export class ManagePublicCollectionsComponent implements OnInit {
     this.service.changeCollectionStatus(coll).subscribe(result => {
       this.getAllCollections();
     });
-  }
-
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  SelectionIsEmpty() {
-    return this.selection.selected.length === 0;
-  }
-
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  getVersions(row: Collection) {
-    this.service.getViewCollection(row.id).pipe(take(1)).subscribe(
-      response => {
-        if (response.status === 200) {
-          if (response.json() !== undefined) {
-            this.viewCollection = response.json();
-            this.versions = response.json()[0].versions;
-            console.log('versions length ' + this.versions.length);
-            let i = 0;
-            while (i < this.versions.length) {
-              console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
-              if (this.versions[i].privateStatus === true) {
-                console.log('Deleting version ' + this.versions[i].id);
-                this.versions.splice(i, 1);
-
-              } else {
-                i = i + 1;
-              }
-            }
-            return this.versions;
-          }
-        }
-      }
-    );
   }
 
 }
