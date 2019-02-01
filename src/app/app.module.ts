@@ -103,6 +103,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
+  { path: 'save-success', component: SaveSuccessComponent},
   { path: 'manageusers', component: ManageUsersComponent },
   { path: 'pendingRequest', component: AdminPendingReqComponent },
   { path: 'profile', component: UserProfileComponent }
