@@ -13,25 +13,25 @@
 <table mat-table class="fullwidth" [dataSource]="dataSource" multiTemplateDataRows matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
-    <mat-cell (click)="open(element)" *matCellDef="let element" class="navigateToCol"> {{element.id}}
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)"> {{element.id}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-    <mat-cell (click)="open(element)" *matCellDef="let element" class="navigateToCol">
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
       {{element.name}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="description">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-    <mat-cell (click)="open(element)" *matCellDef="let element" class="navigateToCol">
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
       {{element.description}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="creationDate">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
-    <mat-cell (click)="open(element)" *matCellDef="let element" class="navigateToCol">
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
       {{element.creation_date}} </mat-cell>
   </ng-container>
 

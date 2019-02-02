@@ -4,6 +4,10 @@
     margin-top: 8px;
   }
 
+.navigateToCol{
+  cursor: pointer;
+}
+
   .example-element-detail {
     overflow: hidden;
     display: flex;
