@@ -4,10 +4,6 @@
     margin-top: 8px;
   }
 
-  .makePublic{
-    float: right;
-  }
-
   .example-element-detail {
     overflow: hidden;
     display: flex;
