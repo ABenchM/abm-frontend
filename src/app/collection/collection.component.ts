@@ -5,9 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { OrderPipe } from 'ngx-order-pipe';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DialogboxMakePublicComponent } from '../dialogbox-make-public/dialogbox-make-public.component';
 
 @Component({
   selector: 'abm-collection',
@@ -31,10 +32,12 @@ export class CollectionComponent implements OnInit {
   dataSource = new MatTableDataSource<Collection>();
   data = new MatTableDataSource<any>();
   expandedElement: any;
+  confirm = true;
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router,
-    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) { }
+    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService,
+    public dialog: MatDialog) { }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -65,7 +68,32 @@ export class CollectionComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/view/' + row.id);
     }
+  }
 
+  openDialog(collection: Collection, version: any): void {
+    const dialogRef = this.dialog.open(DialogboxMakePublicComponent, {
+      width: '300px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.confirm = dialogRef.componentInstance.callback();
+      if (this.confirm) {
+        version.privateStatus = false;
+        this.service.updateCollection(collection).subscribe(
+          response => {
+            if (response.status === 200) {
+              this.service.updateVersion(version).subscribe(data => {
+                if (data.status === 200) {
+                  this.router.navigateByUrl('/collection');
+                }
+              });
+
+            }
+          });
+      }
+    });
   }
 
 }
