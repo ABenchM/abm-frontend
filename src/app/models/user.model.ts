@@ -8,7 +8,8 @@ export class User {
         public email: string,
         public firstname: string,
         public lastname: string,
-        public locked: Boolean
+        public oldpassword: string,
+        public locked: Boolean,
 
     ) {
 
