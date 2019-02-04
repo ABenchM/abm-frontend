@@ -30,7 +30,7 @@ describe('ViewComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

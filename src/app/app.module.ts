@@ -116,7 +116,7 @@ const routes: Routes = [
   { path: 'save-success', component: SaveSuccessComponent},
   { path: 'manageusers', component: ManageUsersComponent },
   { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
-  { path: 'pendingRequest', component: AdminPendingReqComponent }
+  { path: 'pendingRequest', component: AdminPendingReqComponent },
   { path: 'profile', component: UserProfileComponent }
 
 ];
