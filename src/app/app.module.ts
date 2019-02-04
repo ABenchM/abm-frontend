@@ -157,13 +157,12 @@ const routes: Routes = [
     AdminPendingReqComponent,
     DialogBoxComponent,
     UserProfileComponent,
-    SaveSuccessComponent
+    SaveSuccessComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent
-    
-  ],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
