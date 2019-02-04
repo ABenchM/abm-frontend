@@ -10,8 +10,9 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule } from '@angular/material';
-import { MatMenuModule, MatIconModule, MatToolbarModule, MatPaginatorModule, MatDialogModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule } from '@angular/material';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -23,7 +24,7 @@ describe('SearchComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule],
-      providers: [SearchService, CollectionService]
+      providers: [SearchService, CollectionService, HttpClient, HttpHandler]
     })
       .compileComponents();
   }));
