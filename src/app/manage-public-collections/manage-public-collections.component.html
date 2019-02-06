@@ -34,7 +34,10 @@
             <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
             <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
                 (click)="expandedElement = expandedElement === element ? null : element; data = row.versions">
-                <button mat-stroked-button [ngClass]="'customOutline'">Show Versions <mat-icon>arrow_drop_down</mat-icon></button>
+                <button mat-stroked-button [ngClass]="'customOutline'">Show Versions 
+                    <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
+                    <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
+                </button>
             </mat-cell>
         </ng-container>
 
@@ -70,10 +73,10 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
     <mat-cell *matCellDef="let row;">
         <div *ngIf="row.isActive">
-            <button mat-button (click)="changeColStatus(row)">Deactivate</button>
+            <button mat-stroked-button (click)="changeColStatus(row)">Deactivate</button>
         </div>
         <div *ngIf="!row.isActive">
-            <button mat-button (click)="changeColStatus(row)">Activate</button>
+            <button mat-stroked-button (click)="changeColStatus(row)">Activate</button>
         </div>
     </mat-cell>
 </ng-container>
