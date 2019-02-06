@@ -86,6 +86,7 @@ import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.co
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { DialogboxMakePublicComponent } from './dialogbox-make-public/dialogbox-make-public.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -144,7 +145,8 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     ManageUsersComponent,
     AdminPendingReqComponent,
-    DialogBoxComponent
+    DialogBoxComponent,
+    DialogboxMakePublicComponent
   ],
   imports: [
     BrowserModule,
@@ -218,7 +220,8 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
-    ModalBuildViewerComponent
+    ModalBuildViewerComponent,
+    DialogboxMakePublicComponent
   ],
   bootstrap: [AppComponent]
 })
