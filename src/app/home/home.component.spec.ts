@@ -28,9 +28,9 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
       imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, DataTableModule, PaginatorModule,
-        TableModule, OrderModule, BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule, MatIconModule, MatTableModule,
-        MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSortModule, MatPaginatorModule,
-        OrderModule, MatDialogModule],
+        TableModule, OrderModule, BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule,
+        MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSortModule,
+        MatPaginatorModule, OrderModule, MatDialogModule],
       providers: [CollectionService, PinService, DataServiceService, HttpClient, HttpHandler]
     })
       .compileComponents();
