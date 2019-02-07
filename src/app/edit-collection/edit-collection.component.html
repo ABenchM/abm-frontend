@@ -79,15 +79,15 @@
     <thead class="thead-light">
       <tr>
         <th>Name</th>
-        <th>Commit</th>
-        <th [hidden]="version.frozen"></th>
+        <!-- <th>Commit</th> -->
+        <!-- <th [hidden]="version.frozen"></th> -->
         <th [hidden]="version.frozen"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let commit of version.commits">
-        <td>{{commit.repository.name}}</td>
-        <td>
+      <tr *ngFor="let project of version.projects">
+        <td>{{project.project_id}}</td>
+        <!-- <td>
           <div class="dropdown" *ngIf="!version.frozen">
             <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="commitSelect">
@@ -97,13 +97,13 @@
 
           </div>
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
-        </td>
-        <td [hidden]="version.frozen">&nbsp;&nbsp;
+        </td> -->
+        <!-- <td [hidden]="version.frozen">&nbsp;&nbsp;
           <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
             id="{{commit.repository.id}}" />
-        </td>
+        </td> -->
         <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
-          <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
+          <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(project)" class="btn btn-danger btn-block">Delete</button>
         </td>
       </tr>
     </tbody>

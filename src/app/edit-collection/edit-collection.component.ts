@@ -32,7 +32,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   version: any = {};
   latestVersion: any = {};
   buildprojects: any = {};
-  commits = [{}];
+  projects = [{}];
   derivedVersion: any = {};
   id;
   loading: boolean;
@@ -72,9 +72,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
         this.latestVersion = response.json()[0].versions[this.versions.length - 1];
-        this.commits = response.json()[0].versions[0].commits;
-        for (let i = 0; i < this.version.commits.length; i++) {
-          this.version.commits[i].selectProject = true;
+        this.projects = response.json()[0].versions[0].projects;
+        for (let i = 0; i < this.version.projects.length; i++) {
+          this.version.projects[i].selectProject = true;
         }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
@@ -90,8 +90,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
   selectVersion(fargVersion) {
     this.version = fargVersion;
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = true;
     }
   }
   deriveVersion(ver) {
@@ -380,19 +380,19 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteProject(fargCommit) {
+  deleteProject(fargProject) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
       message: 'Removal is irreversible! Continue?'
     })
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-          this.commitService.deleteRepos(fargCommit.id).subscribe(
+          this.commitService.deleteRepos(fargProject.id).subscribe(
             response => {
               if (response.status === 200) {
-                const d: any = this.version.commits;
+                const d: any = this.version.projects;
                 for (let i = 0; i < d.length; i++) {
-                  if (d[i].id === fargCommit.id) {
+                  if (d[i].id === fargProject.id) {
                     d.splice(i, 1);
                     // this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
                     break;
