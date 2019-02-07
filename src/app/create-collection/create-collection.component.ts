@@ -19,9 +19,11 @@ export class CreateCollectionComponent implements OnInit {
   loading: boolean;
   collection: any = {};
   repositoryList: any[];
+  projects: any = [{}];
+  project: any = {};
   version: any = {};
-  commit: any = {};
-  commits: any = [{}];
+  // commit: any = {};
+  // commits: any = [{}];
   constructor(private toastr: ToastrService,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
     this.repositoryList = this.collectService.toCreate;
@@ -34,17 +36,17 @@ export class CreateCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let i = 0; i < this.repositoryList.length; i++) {
-   this.commits[i] = {};
-      this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
-        res => {
-          if (res.status === 200) {
-            this.commits[i].commitId = res.json()[0].commitId;
-            this.commits[i].id = this.repositoryList[i].id;
-          }
-        }
-      );
-    }
+  //   for (let i = 0; i < this.repositoryList.length; i++) {
+  //  this.commits[i] = {};
+  //     this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
+  //       res => {
+  //         if (res.status === 200) {
+  //           this.commits[i].commitId = res.json()[0].commitId;
+  //           this.commits[i].id = this.repositoryList[i].id;
+  //         }
+  //       }
+  //     );
+  //   }
 
   }
 
@@ -63,26 +65,35 @@ export class CreateCollectionComponent implements OnInit {
       privateStatus: true
     };
 
+    this.project = {
+      project_id: 'test_project',
+      version_id: this.version.id,
+      source: 'Maven'      
+    };
+
     this.collection.versions = [];
+    
+    this.version.projects = [];
+
+    // if (this.repositoryList.length === 0) {
+    //   // To-DO NgCart feature
+    // }
+
+    // this.version.commits = [];
+    // for (let i = 0; i < this.repositoryList.length; i++) {
+
+    //   if (this.repositoryList[i].id === this.projects[i].id) {
+    //     this.project = {
+    //       project_id: this.projects[i].project_id
+    //     };
+    //   }
+
+    //   this.commit.repository = this.repositoryList[i];
+    //   this.commit.branchId = this.commit.repository.defaultBranch;
+    
+    this.version.projects.push(this.project);
     this.collection.versions.push(this.version);
-
-    if (this.repositoryList.length === 0) {
-      // To-DO NgCart feature
-    }
-
-    this.version.commits = [];
-    for (let i = 0; i < this.repositoryList.length; i++) {
-
-      if (this.repositoryList[i].id === this.commits[i].id) {
-        this.commit = {
-          commitId: this.commits[i].commitId
-        };
-      }
-
-      this.commit.repository = this.repositoryList[i];
-      this.commit.branchId = this.commit.repository.defaultBranch;
-      this.version.commits.push(this.commit);
-    }
+// }
     this.collectService.createCollection(this.collection).subscribe(response => {
       if (response.status === 200) {
         this.toastr.success('Collection successfully copied');

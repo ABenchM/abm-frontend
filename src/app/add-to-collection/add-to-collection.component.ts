@@ -21,8 +21,10 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   collection: any = {};
   version: any = {};
   updatedVersion: any = {};
-  commits: any = [{}];
-
+  //commits: any = [{}];
+  projects: any = [{}];
+  project: any = {};
+    
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
     private commitService: CommitService) {
@@ -51,18 +53,30 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.updatedVersion = this.version;
     console.log(this.updatedVersion);
-    for (let i = 0; i < this.collectionService.toAdd.length; i++) {
-      console.log(this.collectionService.toAdd[i]);
-      const commit: any = {};
-      if (this.collectionService.toAdd[i].id === this.commits[i].id) {
-        commit.commitId = this.commits[i].commitId;
-      }
-
-
-      commit.repository = this.collectionService.toAdd[i];
-      commit.branchId = commit.repository.defaultBranch;
-      this.updatedVersion.commits.push(commit);
-      console.log(this.updatedVersion);
+    this.project = {
+      project_id: 'test_project_selected',
+      version_id: this.version.id,
+      source: 'Maven'      
+    };
+    this.projects = [];
+    this.projects.push(this.project);
+    for (let i = 0; i < this.projects.length; i++) {
+      console.log('debug-->  '+this.projects[i].id);
+      //const project: any = {};
+      // if (this.collectionService.toAdd[i].id === this.projects[i].id) {
+      //   project.id = this.projects[i].id;
+      // }
+      // if (this.collectionService.toAdd[i].id === this.projects[i].id) {
+      //   console.log('check - '+this.projects[i].id);
+      //   //project.id = this.projects[i].id;
+      // }
+      // project.project_id = this.projects[i].project_id;
+      // project.version_id = fargVersion.id;
+      // project.source = 'maven';
+      // commit.repository = this.collectionService.toAdd[i];
+      // commit.branchId = commit.repository.defaultBranch;
+      fargVersion.projects.push(this.projects[i]);
+      console.log(fargVersion);
 
     }
 
@@ -89,20 +103,20 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   }
 
   loadCommits() {
-    for (let i = 0; i < this.collectionService.toAdd.length; i++) {
+    // for (let i = 0; i < this.collectionService.toAdd.length; i++) {
 
-      this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
-        res => {
-          if (res.status === 200) {
-            if (res.json()[0] !== null) {
+    //   this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
+    //     res => {
+    //       if (res.status === 200) {
+    //         if (res.json()[0] !== null) {
 
-              this.commits[i].commitId = res.json()[0].commitId;
-              this.commits[i].id = this.collectionService.toAdd[i].id;
-            }
-          }
-        }
-      );
-    }
+    //           this.commits[i].commitId = res.json()[0].commitId;
+    //           this.commits[i].id = this.collectionService.toAdd[i].id;
+    //         }
+    //       }
+    //     }
+    //   );
+    // }
   }
 
   ngOnInit() {
