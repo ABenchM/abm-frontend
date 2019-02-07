@@ -52,3 +52,7 @@
   .hidden-item {
     display: none;
   }
+
+  .view{
+    cursor: pointer;
+  }

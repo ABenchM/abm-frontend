@@ -9,43 +9,30 @@
 
     <div *ngIf="dataSourcePin.data.length>0">
         <mat-form-field class="example-full-width">
-          <input matInput (keyup)="applyFilterPin($event.target.value)" placeholder="Filter">
+          <input id="filter_data1" matInput (keyup)="applyFilterPin($event.target.value)" placeholder="Filter">
         </mat-form-field>
 
       <div *ngIf="dataSourcePin.data.length>0" class="example-container mat-elevation-z8 mat-table">
         <mat-table #table [dataSource]="dataSourcePin" matSort>
 
-          <ng-container matColumnDef="select">
-            <mat-header-cell class="selectCheckbox" *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterTogglePin() : null" [checked]="selection.hasValue() && isAllSelectedPin()"
-                [indeterminate]="selection.hasValue() && !isAllSelectedPin()">
-              </mat-checkbox>
-            </mat-header-cell>
-            <mat-cell class="selectCheckbox" *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                [checked]="selection.isSelected(row)">
-              </mat-checkbox>
-            </mat-cell>
-          </ng-container>
-
           <ng-container matColumnDef="name">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="description">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.description}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="creation_date">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element"> {{element.creation_date}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.creation_date}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="id">
             <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.id}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="pin">
@@ -79,7 +66,7 @@
 
 <div>
   <mat-form-field class="example-full-width">
-    <input matInput (keyup)="applyFilterPub($event.target.value)" placeholder="Search for collection">
+    <input id="filter_data1" matInput (keyup)="applyFilterPub($event.target.value)" placeholder="Search for collection">
   </mat-form-field>
   <br>
 
@@ -94,42 +81,30 @@
     <div *ngIf="!(dataSourcePub.data[0] === undefined)" class="example-container mat-elevation-z8 mat-table">
       <mat-table #table [dataSource]="dataSourcePub" matSort>
 
-        <ng-container matColumnDef="select">
-          <mat-header-cell class="selectCheckbox" *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterTogglePub() : null" [checked]="selection.hasValue() && isAllSelectedPub()"
-              [indeterminate]="selection.hasValue() && !isAllSelectedPub()">
-            </mat-checkbox>
-          </mat-header-cell>
-          <mat-cell class="selectCheckbox" *matCellDef="let row" >
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-            </mat-checkbox>
-          </mat-cell>
-        </ng-container>
-
         <ng-container matColumnDef="name">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="description">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.description}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="creation_date">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let element"> {{element.creation_date}} </mat-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)" > {{element.creation_date}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="id">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-          <mat-cell mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="pin">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Pin </mat-header-cell>
           <mat-cell *matCellDef="let row; let i=index;">
-            <button class="btn btn-primary btn-sm" mat-raised-button (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
+            <button class="btn btn-primary btn-sm" mat-raised-button id="buttonR" (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
             <button class="btn btn-primary btn-sm" mat-raised-button (click)="unpin(row)" *ngIf="row.dataSourcePin">Unpin</button>
           </mat-cell>
           <mat-header-cell *ngIf="loggedInStatus()"></mat-header-cell>

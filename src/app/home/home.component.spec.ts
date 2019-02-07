@@ -14,10 +14,12 @@ import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
 import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
+import { DebugElement } from '@angular/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let debugElement: DebugElement;
 
 //  let request = require('request');
   let base_url = 'http://localhost:3000/rest/collection';
@@ -37,6 +39,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -44,11 +47,18 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // fit('returns status code 200', function (done) {
-  //   request.get(base_url, function (error, response, body) {
-  //     expect(response.statusCode).toBe(200);
-  //     done();
-  //   });
-  // });
+  fit('should have a h2 tag of `Public Collection', () => {
+    fixture.detectChanges();
+    const de = fixture.debugElement.nativeElement;
+    expect(de.querySelector('h2').textContent).toContain('Public Collection');
+  });
 
+  fit('should check for apply filter keyup event', () => {
+    spyOn(component, 'applyFilterPub');
+    fixture.detectChanges();
+    const input = debugElement.query(By.css('#filter_data1'));
+    const inputElement = input.nativeElement;
+    inputElement.dispatchEvent(new Event('keyup'));
+    expect(component.applyFilterPub).toHaveBeenCalled();
+    });
 });

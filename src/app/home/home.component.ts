@@ -18,13 +18,12 @@ import { Collection } from '../models/collection.model';
 export class HomeComponent implements OnInit {
   pinned: any[] = [];
   public publicCollections: any[] = [];
-  cancelSearch: boolean;
   loading: boolean;
   disabled: boolean;
-  displayedColumns: string[] = ['select', 'name', 'description', 'creation_date', 'id', 'pin'];
+  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
-  selection = new SelectionModel<Collection>(true, []);
+
 
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
@@ -43,7 +42,6 @@ export class HomeComponent implements OnInit {
         this.dataSourcePub.data = this.publicCollections;
         setTimeout(() => this.dataSourcePub.paginator = this.paginator.toArray()[1]);
         setTimeout(() => this.dataSourcePub.sort = this.sort.toArray()[1]);
-        this.selection = new SelectionModel<Collection>(true, []);
         if (this.loggedInStatus()) {
           this.loadPinned();
         }
@@ -65,7 +63,6 @@ export class HomeComponent implements OnInit {
         this.dataSourcePin.data = this.pinned;
         setTimeout(() => this.dataSourcePin.paginator = this.paginator.toArray()[0]);
         setTimeout(() => this.dataSourcePin.sort = this.sort.toArray()[0]);
-        this.selection = new SelectionModel<Collection>(true, []);
       }
 
     });
@@ -85,12 +82,11 @@ export class HomeComponent implements OnInit {
     );
   }
   view(collectionId) {
-
     this.router.navigateByUrl('/view/' + collectionId);
   }
 
-  open(collection) {
-    this.router.navigateByUrl('/view/' + collection.id);
+  open(col: Collection) {
+    this.router.navigateByUrl('/view/' + col.id);
   }
 
   loggedInStatus() {
@@ -141,30 +137,6 @@ export class HomeComponent implements OnInit {
 
   applyFilterPin(filterValue: string) {
     this.dataSourcePin.filter = filterValue.trim().toLowerCase();
-  }
-
-  isAllSelectedPub() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSourcePub.data.length;
-    return numSelected === numRows;
-  }
-
-  masterTogglePub() {
-    this.isAllSelectedPub() ?
-      this.selection.clear() :
-      this.dataSourcePub.data.forEach(row => this.selection.select(row));
-  }
-
-  isAllSelectedPin() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSourcePin.data.length;
-    return numSelected === numRows;
-  }
-
-  masterTogglePin() {
-    this.isAllSelectedPin() ?
-      this.selection.clear() :
-      this.dataSourcePin.data.forEach(row => this.selection.select(row));
   }
 
 }
