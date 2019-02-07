@@ -70,6 +70,21 @@ export class CollectionComponent implements OnInit {
     }
   }
 
+  openVersion(collection, versionID) {
+    let i = 0;
+    let index;
+    while (i < collection.versions.length) {
+      if (collection.versions[i].id === versionID) {
+        index = i;
+      }
+      i++;
+    }
+    if (index != null) {
+      index++;
+      this.router.navigateByUrl('/editCollection/' + collection.id + '/' + index);
+    }
+  }
+
   openDialog(collection: Collection, version: any): void {
     const dialogRef = this.dialog.open(DialogboxMakePublicComponent, {
       width: '300px',

@@ -15,8 +15,10 @@ import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule,
-  MatSelectModule, MatTooltipModule} from '@angular/material';
+import {
+  MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule,
+  MatSelectModule, MatTooltipModule
+} from '@angular/material';
 
 // Components
 import { AppComponent } from './app.component';
@@ -73,12 +75,12 @@ import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-view
 import { ProjectCountPipe } from './project-count.pipe';
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
 import { BuildService } from './services/build.service';
-import {TableModule} from 'primeng/table';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ContextMenuModule, ContextMenuService} from 'ngx-contextmenu';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
@@ -90,9 +92,10 @@ import { DialogboxMakePublicComponent } from './dialogbox-make-public/dialogbox-
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService]},
+  { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'editCollection/:id/:versionIndex', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
