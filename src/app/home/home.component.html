@@ -4,25 +4,26 @@
   <div *ngIf="!this.loading">
 
     <h3> Pinned Collection</h3>
-    <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
+    <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections
+      yet.To pin a collection, Click the button next to it in the table below.</p>
 
     <div *ngIf="dataSourcePin.data.length>0">
-      <form class="example-form">
         <mat-form-field class="example-full-width">
           <input matInput (keyup)="applyFilterPin($event.target.value)" placeholder="Filter">
         </mat-form-field>
-      </form>
 
       <div *ngIf="dataSourcePin.data.length>0" class="example-container mat-elevation-z8 mat-table">
-        <mat-table #table #sort2="matSort" [dataSource]="dataSourcePin.data" matSort matSortActive="ID" matSortDirection="asc">
+        <mat-table #table [dataSource]="dataSourcePin" matSort>
 
           <ng-container matColumnDef="select">
             <mat-header-cell class="selectCheckbox" *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterTogglePin() : null" [checked]="selection.hasValue() && isAllSelectedPin()" [indeterminate]="selection.hasValue() && !isAllSelectedPin()">
+              <mat-checkbox (change)="$event ? masterTogglePin() : null" [checked]="selection.hasValue() && isAllSelectedPin()"
+                [indeterminate]="selection.hasValue() && !isAllSelectedPin()">
               </mat-checkbox>
             </mat-header-cell>
             <mat-cell class="selectCheckbox" *matCellDef="let row">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)">
               </mat-checkbox>
             </mat-cell>
           </ng-container>
@@ -48,7 +49,7 @@
           </ng-container>
 
           <ng-container matColumnDef="pin">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Unpin </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Unpin </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let row; let i=index;">
               <button mat-raised-button class="btn btn-sm btn-primary" (click)="unpin(row)">Unpin</button>
             </mat-cell>
@@ -59,10 +60,10 @@
         </mat-table>
 
         <mat-toolbar>
-            <mat-toolbar-row>
-                <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" [length]="dataSourcePin.data.length" ></mat-paginator>
-            </mat-toolbar-row>
-          </mat-toolbar>
+          <mat-toolbar-row>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </mat-toolbar-row>
+        </mat-toolbar>
       </div>
 
     </div>
@@ -77,12 +78,9 @@
 </div>
 
 <div>
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput (keyup)="applyFilterPub($event.target.value)" placeholder="Search for collection">
-    </mat-form-field>
-  </form>
-
+  <mat-form-field class="example-full-width">
+    <input matInput (keyup)="applyFilterPub($event.target.value)" placeholder="Search for collection">
+  </mat-form-field>
   <br>
 
   <div class="wrapper" *ngIf="this.loading">
@@ -94,14 +92,15 @@
     <p *ngIf="(dataSourcePub.data[0] === undefined)" class="alert alert-warning">No results found.</p>
 
     <div *ngIf="!(dataSourcePub.data[0] === undefined)" class="example-container mat-elevation-z8 mat-table">
-      <mat-table #table #sort="matSort" [dataSource]="dataSourcePub.data" matSort matSortActive="ID" matSortDirection="asc">
+      <mat-table #table [dataSource]="dataSourcePub" matSort>
 
         <ng-container matColumnDef="select">
-          <mat-header-cell class="selectCheckbox" *matHeaderCellDef [ngClass]="{'hidden-item': !loggedInStatus()}">
-            <mat-checkbox (change)="$event ? masterTogglePub() : null" [checked]="selection.hasValue() && isAllSelectedPub()" [indeterminate]="selection.hasValue() && !isAllSelectedPub()">
+          <mat-header-cell class="selectCheckbox" *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterTogglePub() : null" [checked]="selection.hasValue() && isAllSelectedPub()"
+              [indeterminate]="selection.hasValue() && !isAllSelectedPub()">
             </mat-checkbox>
           </mat-header-cell>
-          <mat-cell class="selectCheckbox" *matCellDef="let row" [ngClass]="{'hidden-item': !loggedInStatus()}">
+          <mat-cell class="selectCheckbox" *matCellDef="let row" >
             <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
             </mat-checkbox>
           </mat-cell>
@@ -128,23 +127,23 @@
         </ng-container>
 
         <ng-container matColumnDef="pin">
-          <mat-header-cell *matHeaderCellDef [ngClass]="{'hidden-item': !loggedInStatus()}" mat-sort-header> Pin </mat-header-cell>
-          <mat-cell *matCellDef="let row; let i=index;" [ngClass]="{'hidden-item': !loggedInStatus()}">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Pin </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i=index;">
             <button class="btn btn-primary btn-sm" mat-raised-button (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
             <button class="btn btn-primary btn-sm" mat-raised-button (click)="unpin(row)" *ngIf="row.dataSourcePin">Unpin</button>
           </mat-cell>
           <mat-header-cell *ngIf="loggedInStatus()"></mat-header-cell>
         </ng-container>
 
-        <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
       </mat-table>
 
       <mat-toolbar>
-  <mat-toolbar-row>
-      <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" [length]="dataSourcePub.data.length" ></mat-paginator>
-  </mat-toolbar-row>
-</mat-toolbar>
+        <mat-toolbar-row>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-toolbar-row>
+      </mat-toolbar>
     </div>
   </div>
 </div>

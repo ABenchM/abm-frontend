@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort, MatIconModule } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatInputModule } from '@angular/material/input';
@@ -26,10 +26,8 @@ export class HomeComponent implements OnInit {
   dataSourcePin = new MatTableDataSource<Collection>();
   selection = new SelectionModel<Collection>(true, []);
 
-  @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild('paginator2') paginator2: MatPaginator;
-  @ViewChild('sort') sort: MatSort;
-  @ViewChild('sort2') sort2: MatSort;
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
@@ -43,6 +41,8 @@ export class HomeComponent implements OnInit {
       if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json());
         this.dataSourcePub.data = this.publicCollections;
+        setTimeout(() => this.dataSourcePub.paginator = this.paginator.toArray()[1]);
+        setTimeout(() => this.dataSourcePub.sort = this.sort.toArray()[1]);
         this.selection = new SelectionModel<Collection>(true, []);
         if (this.loggedInStatus()) {
           this.loadPinned();
@@ -59,22 +59,18 @@ export class HomeComponent implements OnInit {
       this.checkPinned(this.dataSourcePub.data[i]);
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
-      if (response.status === 200 && response.json() !== null) {
+      if (response.status === 200 && response.json()
+       !== null) {
         this.pinned = this.orderPipe.transform(response.json());
         this.dataSourcePin.data = this.pinned;
+        setTimeout(() => this.dataSourcePin.paginator = this.paginator.toArray()[0]);
+        setTimeout(() => this.dataSourcePin.sort = this.sort.toArray()[0]);
         this.selection = new SelectionModel<Collection>(true, []);
       }
 
     });
 
     this.loading = false;
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.dataSourcePub.paginator = this.paginator);
-    setTimeout(() => this.dataSourcePub.sort = this.sort);
-    setTimeout(() => this.dataSourcePin.paginator = this.paginator2);
-    setTimeout(() => this.dataSourcePin.sort = this.sort2);
   }
 
   checkPinned(item) {
@@ -139,7 +135,6 @@ export class HomeComponent implements OnInit {
     this.loadPublicCollections();
   }
 
-
   applyFilterPub(filterValue: string) {
     this.dataSourcePub.filter = filterValue.trim().toLowerCase();
   }
@@ -147,8 +142,6 @@ export class HomeComponent implements OnInit {
   applyFilterPin(filterValue: string) {
     this.dataSourcePin.filter = filterValue.trim().toLowerCase();
   }
-
-
 
   isAllSelectedPub() {
     const numSelected = this.selection.selected.length;
@@ -175,4 +168,3 @@ export class HomeComponent implements OnInit {
   }
 
 }
-
