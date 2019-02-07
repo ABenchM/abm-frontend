@@ -1,6 +1,8 @@
 .red{color:red;}
 .green{color:green;}
 
+h2{color:red;}
+
 html, body, #wrapper {
   width: 100%;
   min-height: 100%;
@@ -17,6 +19,10 @@ html, body, #wrapper {
   flex-direction: column;
   max-height: 500px;
   min-width: 300px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
 }
 
 .selectCheckbox{
@@ -39,6 +45,41 @@ html, body, #wrapper {
   top: 30px;
 }
 
+.makePublic{
+  float: right;
+}
+
+.email {
+  padding-right: 25px;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.customOutline {
+  outline: none;
+}
+
+.fullwidth{width:100%;}
+
 @media screen and (max-width: 600px) {
   .selectCheckbox{
     display: none;
@@ -59,3 +100,7 @@ html, body, #wrapper {
     display: none;
   }
 }
+
+
+
+

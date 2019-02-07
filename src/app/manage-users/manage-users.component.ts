@@ -9,7 +9,7 @@ import { User} from '../models/user.model';
 @Component({
   selector: 'abm-manage-users',
   templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.css']
+  styleUrls: ['../manage-public-collections/adminStyles.css']
 })
 export class ManageUsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

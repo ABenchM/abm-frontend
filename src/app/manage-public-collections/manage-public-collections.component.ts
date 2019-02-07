@@ -13,7 +13,7 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'abm-manage-public-collections',
   templateUrl: './manage-public-collections.component.html',
-  styleUrls: ['./manage-public-collections.component.css'],
+  styleUrls: ['./adminStyles.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),

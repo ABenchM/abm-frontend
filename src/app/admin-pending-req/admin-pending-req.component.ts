@@ -10,7 +10,7 @@ import { User} from '../models/user.model';
 @Component({
   selector: 'abm-admin-pending-req',
   templateUrl: './admin-pending-req.component.html',
-  styleUrls: ['./admin-pending-req.component.css']
+  styleUrls: ['../manage-public-collections/adminStyles.css']
 })
 export class AdminPendingReqComponent implements OnInit {
   public usersList: any[] = [];
