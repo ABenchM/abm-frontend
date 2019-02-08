@@ -58,7 +58,6 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
