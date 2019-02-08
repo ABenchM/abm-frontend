@@ -10,7 +10,6 @@ export class User {
         public lastname: string,
         public oldpassword: string,
         public locked: Boolean,
-
     ) {
 
     }

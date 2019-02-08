@@ -85,6 +85,7 @@ import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -114,6 +115,7 @@ const routes: Routes = [
   { path: 'register-success', component: RegisterSuccessComponent },
   { path: 'save-success', component: SaveSuccessComponent},
   { path: 'manageusers', component: ManageUsersComponent },
+  { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
   { path: 'pendingRequest', component: AdminPendingReqComponent },
   { path: 'profile', component: UserProfileComponent }
 
@@ -154,6 +156,7 @@ const routes: Routes = [
     AddToCollectionComponent,
     DeleteDialogboxComponent,
     ManageUsersComponent,
+    ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
     DialogBoxComponent,
     UserProfileComponent,

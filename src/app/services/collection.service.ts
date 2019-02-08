@@ -1,32 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Http , Response} from '@angular/http';
-import { throwError as observableThrowError, Observable } from 'rxjs';
-import { catchError, map} from 'rxjs/operators';
-import 'rxjs/add/operator/map';
+import { Http } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Collection } from '../models/collection.model';
+
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
+@Injectable({ providedIn: 'root' })
 export class CollectionService {
 
+  private headers = new Headers({ 'Content-Type': 'application/json' });
 
   toCreate: any[];
   toAdd: any[];
-  constructor(private http: Http) { }
+  constructor(private http: Http, private httpClient: HttpClient) { }
 
   private onSuccess(res: Response) {
-    const statusCode = res.status;
-    return statusCode;
   }
 
-  private handleError(error: any) {
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
-    console.error('post error : ', error);
-    if (error.status === 403) {
-      localStorage.removeItem('loggedIn');
-    }
-    return observableThrowError(error.statusText);
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
 
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
+  private log(message: string) {
+  }
 
   createCollection(collection) {
     return this.http.post('/rest/collection', collection, null);
@@ -41,13 +53,9 @@ export class CollectionService {
     return this.http.get('/rest/collection', { params: data });
   }
 
-  getCollections(username): Observable<any> {
-    const data = {'user': username };
-    return this.http.get('/rest/collection', {params: data}).pipe(
-       catchError(this.handleError));
-
-
-
+  getCollections(username) {
+    return this.http.get('/rest/collection' + '?user=' + username);
+    // .map(this.onSuccess);
   }
 
   updateVersion(version) {
@@ -62,19 +70,47 @@ export class CollectionService {
     return this.http.delete('rest/collection/' + collectionId);
   }
 
+  deleteSingleCol(collection: Collection | string): Observable<Collection> {
+    const id = typeof collection === 'string' ? collection : collection.id;
+    const body = { 'deleteCollections': id };
+
+    return this.httpClient.post<Collection>('/rest/publiccollection', body, httpOptions).pipe(
+      tap(_ => this.log(`delete single Collection`)),
+      catchError(this.handleError<Collection>('deleteCollection'))
+    );
+  }
+
+  deleteSelectedCols(colIDs: String) {
+    const body = { 'deleteCollections': colIDs };
+    return this.http.delete('/rest/publiccollection/' + colIDs);
+  }
+
+  changeCollectionStatus(collection: Collection | string): Observable<Collection> {
+    const id = typeof collection === 'string' ? collection : collection.id;
+    const body = { 'collectionid': id };
+
+    return this.httpClient.put<Collection>('/rest/collectionstatus', body, httpOptions).pipe(
+      tap(_ => this.log(`Change collection status id=${id}`)),
+      catchError(this.handleError<Collection>('changeCollectionStatus'))
+    );
+  }
+
   postDeriveVersion(version) {
-
     return this.http.post('rest/version/derive', version);
-
   }
 
   getPublicCollections() {
+
     const data = { 'privateStatus': false };
     return this.http.get('/rest/collection', { params: data });
     // .subscribe(
     // response => { console.log(response.json());
-
     // });
+  }
+
+  getAllCollections() {
+    const data = { 'isAdmin': true };
+    return this.http.get('/rest/collection', { params: data });
   }
 
   getSearchCollections(query) {
@@ -88,7 +124,6 @@ export class CollectionService {
   }
 
   updateCollection(fargCollection) {
-
     return this.http.put('/rest/collection', fargCollection, null);
   }
 
@@ -101,5 +136,3 @@ export class CollectionService {
   }
 
 }
-
-

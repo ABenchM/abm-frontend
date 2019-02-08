@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpModule } from '@angular/http';
 import { DataTableModule, PaginatorModule } from 'primeng/primeng';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 import { CollectionService } from '../services/collection.service';
 import { PinService } from '../services/pin.service';
@@ -24,7 +25,7 @@ describe('HomeComponent', () => {
       declarations: [HomeComponent],
       imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, DataTableModule, PaginatorModule,
         TableModule, OrderModule],
-      providers: [CollectionService, PinService, DataServiceService]
+      providers: [CollectionService, HttpClient, HttpHandler, PinService, DataServiceService]
     })
       .compileComponents();
   }));
