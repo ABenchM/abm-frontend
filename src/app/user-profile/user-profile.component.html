@@ -23,7 +23,7 @@
       <label for="uname">
         <b>User Name</b>
       </label>
-      <input disabled #username="ngModel" type="text" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
+      <input disabled #username="ngModel" type="text" (blur)="checkSpace(username)" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
         require d>
       <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
       <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
