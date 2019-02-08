@@ -23,8 +23,8 @@
       <label for="uname">
         <b>User Name</b>
       </label>
-      <input disabled #username="ngModel" type="text" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
-        require d>
+      <input disabled #username="ngModel" type="text" (blur)="checkSpace(model.username)" placeholder="Enter User Name" name="uname"
+        [(ngModel)]="model.username" required>
       <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
       <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
       <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
@@ -58,53 +58,54 @@
 
     <div class="clearfix">
       <button type="submit" [disabled]="form.invalid" class="signupbtn">Save Changes</button>
-      </div>
-      </div>
+    </div>
+  </div>
 </form>
 
 <form #form1="ngForm" (submit)="savePassword(form1)">
-<div class="container">
+  <div class="container">
 
 
-  <div class="form-group">
-    <label for="oldpassword">
-      <b>Old Password</b>
-    </label>
-    <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="oldPassword"
-      required>
+    <div class="form-group">
+      <label for="oldpassword">
+        <b>Old Password</b>
+      </label>
+      <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="oldPassword"
+        required>
       <!-- <div *ngIf="oldpassword.dirty && !check" class="alert alert-danger"> Old password is incorrect </div> -->
-  </div>
+    </div>
 
 
-  <div class="form-group">
-    <label for="newpassword">
-      <b>New Password</b>
-    </label>
-    <input #newpassword="ngModel" type="password" placeholder="Enter New Password" name="newpassword" [(ngModel)]="newPassword"
-      required>
-    <div *ngIf="newpassword.dirty && model.oldpassword == newPassword" class="alert alert-danger"> new password should
-      be different from old password </div>
-  </div>
+    <div class="form-group">
+      <label for="newpassword">
+        <b>New Password</b>
+      </label>
+      <input #newpassword="ngModel" type="password" placeholder="Enter New Password" name="newpassword" [(ngModel)]="newPassword"
+        required>
+      <div *ngIf="newpassword.dirty && model.oldpassword == newPassword" class="alert alert-danger"> new password
+        should
+        be different from old password </div>
+    </div>
 
-  <div class="form-group">
-    <label for="confirmnewpassword">
-      <b>Retype - Password</b>
-    </label>
-    <input #confirmpassword="ngModel" type="password" placeholder="Confirm New Password" name="confirmnewpassword"
-      [(ngModel)]="confirmNewPassword" required>
-    <div *ngIf="confirmpassword.dirty && (newPassword != confirmNewPassword) " class="alert alert-danger">password
-      do not match</div>
-  </div>
+    <div class="form-group">
+      <label for="confirmnewpassword">
+        <b>Retype - Password</b>
+      </label>
+      <input #confirmpassword="ngModel" type="password" placeholder="Confirm New Password" name="confirmnewpassword"
+        [(ngModel)]="confirmNewPassword" required>
+      <div *ngIf="confirmpassword.dirty && (newPassword != confirmNewPassword) " class="alert alert-danger">password
+        do not match</div>
+    </div>
 
-  <div class="clearfix">
-    <button type="submit" [disabled]="form1.invalid" class="btn btn-success">Update Password</button>
+    <div class="clearfix">
+      <button type="submit" [disabled]="form1.invalid" class="btn btn-success">Update Password</button>
 
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn" (click)="deleteUser()">Delete Account</button>
-      <h3>Be careful. This action is irreversible</h3>
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn" (click)="deleteUser()">Delete Account</button>
+        <h3>Be careful. This action is irreversible</h3>
 
+      </div>
     </div>
   </div>
-  </div>
-  
+
 </form>

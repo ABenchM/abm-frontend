@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   public newPassword: string;
   public oldPassword: string;
   public confirmNewPassword: string;
+  public cannotContainSpace: boolean;
   public passwordMatched = false;
 
   model = new User('', '', '', '', '', '', '', '', true);
@@ -70,7 +71,7 @@ export class UserProfileComponent implements OnInit {
     return this.passwordMatched;
   }
 
-  savePassword() {
+  savePassword(form) {
     console.log('New Password' + this.newPassword);
     this.model.password = this.newPassword;
     console.log('old password' + this.oldPassword);
@@ -91,6 +92,13 @@ export class UserProfileComponent implements OnInit {
       }
     );
 
+  }
+
+
+  checkSpace(username) {
+    if ((username.value as string).indexOf(' ') > 0) {
+      this.cannotContainSpace = true;
+    }
   }
 
   ngOnInit() {

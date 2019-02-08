@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit {
   isSelect;
   SortType: any = 'name';
   reverse = false;
+  isFilterVisible = false;
   searchColumns: any[];
   addColumns: any[];
   selection = new SelectionModel<any>(true, []);
