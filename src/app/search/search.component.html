@@ -1,0 +1,261 @@
+<section>
+
+  <div style="max-height:1000px;overflow:auto">
+    <h2 class="float-left" style="margin-top:0px" *ngIf="getTotalItems() > 0"> {{getTotalItems() | projectCount }}
+      selected</h2>
+    <div class="alert alert-warning" role="alert" *ngIf="getTotalItems() === 0">
+      Search for projects to add to your collection.
+    </div>
+
+    <div class="col-lg-12" *ngIf="getTotalItems()>0" style="max-height:600px">
+
+
+
+      <table mat-table [dataSource]="toAdd" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name. </th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+          <th mat-header-cell *matHeaderCellDef> Creation Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.creationDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="size">
+          <th mat-header-cell *matHeaderCellDef> Size </th>
+          <td mat-cell *matCellDef="let row"> {{row.size}} </td>
+        </ng-container>
+        <ng-container matColumnDef="htmlUrl">
+          <th mat-header-cell *matHeaderCellDef> Origin </th>
+          <td mat-cell *matCellDef="let row"> {{row.htmlUrl}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <button class="btn btn-sm btn-danger" (click)="removeItem(row)">Remove</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="addColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: addColumns"></tr>
+      </table>
+      <!--    <p-table  #searchDt [value]="toAdd"  [columns]="searchColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th style="width: 10%;">Name</th>
+            <th style="width: 50%;">Description</th>
+            <th style="width: 10%;">Creation Date</th>
+            <th style="width: 10%;">Size</th>
+            <th style="width: 10%;">Origin</th>
+            <th style="width: 10%;"></th>
+          </tr>
+      </ng-template>
+      
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td style="white-space: pre-wrap;" style="width: 10%;">{{row.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 50%;">{{row.description}}</td>
+            <td style="width: 10%;">{{row.creationDate | date:'short'}}</td>
+            <td style="width: 10%;">{{row.size | fileSize}}</td>
+            <td style="width: 10%;">{{row.htmlUrl | siteName }}</td>
+            <td style="width: 10%;">
+              <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
+            </td>
+      </tr>
+    </ng-template>
+    
+    </p-table> -->
+      <!--  <table class="table table-condensed table-bordered table-hover ngCart cart">
+        <thead>
+          <tr>
+            <th style="width: 7%;">Name</th>
+            <th style="width: 64%;">Description</th>
+            <th style="width: 15%;">Creation Date</th>
+            <th style="width: 5%;">Size</th>
+            <th style="width: 7%;">Origin</th>
+            <th style="width: 5%;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of toAdd">
+            <td style="white-space: pre-wrap;" style="width: 7%;">{{project.name}}</td>
+            <td style="white-space: pre-wrap;" style="width: 64%;">{{project.description}}</td>
+            <td style="width: 15%;">{{project.creationDate | date:'short'}}</td>
+            <td style="width: 5%;">{{project.size | fileSize}}</td>
+            <td style="width: 7%;">{{project.htmlUrl | siteName }}</td>
+            <td style="width: 5%;">
+              <button class="btn btn-sm btn-danger" (click)="removeItem(project.id)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+    </div>
+
+    <div class="col-lg-12 text-right" *ngIf="getTotalItems()>0">
+      <button class="btn btn-success" (click)="addAll()">Add Selected Projects to a existing Collection</button>
+      <button class="btn btn-success" (click)="createCollection()">Create New Collection</button>
+      <button class="btn btn-danger" (click)="removeCart()">Remove all</button>
+    </div>
+
+  </div>
+
+  <div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form #form="ngForm">
+      <div class="search_bar">
+        <input type="text" #query="ngModel" class="form-control" name="query" placeholder="use user:ownername for search by Repository Owner"
+          required [(ngModel)]="model.query" class="search_align">
+        <button type="submit" [disabled]="query.value === '' || query === undefined" (click)="search(model.query)"
+          class="btn-left-mrgn btn btn-success btn-sm align-middle">Search</button>
+        <span class="btn-left-mrgn">
+          <button class="btn btn-success btn-sm align-middle "  (click)="isFilterVisible=true" *ngIf="!isFilterVisible"> Show Filtering Options</button>
+          <button class="btn btn-success" *ngIf="isFilterVisible" (click)="isFilterVisible=false"> Hide Filtering Options</button>
+        </span>
+      </div>
+    </form>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="wrapper" *ngIf="loadStatus()">
+    <h2>Searching</h2>
+    <span class="cssload-loader"></span>
+  </div>
+
+  <p class="alert alert-warning" *ngIf="resultDataSource.data.length === 0 && searched && !loadStatus()">No results found</p>
+
+  <div id="results" *ngIf="resultDataSource.data.length>0">
+
+    <!-- <div class="row">
+      <div class="col-lg-12 text-right">
+        <button class="btn btn-success" (click)="selectAll()">Select all</button>
+        <button class="btn btn-danger" [disabled]="!isProjectSelected()" (click)="deselectAll()">Deselect all</button>
+      </div>
+    </div> -->
+    <br>
+
+    <mat-form-field  *ngIf="isFilterVisible">
+      <input matInput (keyup)="applyDataSourceFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <table #resultsTable mat-table  matSort [dataSource]="resultDataSource" class="mat-elevation-z8">
+
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name. </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </th>
+        <td mat-cell *matCellDef="let row"> {{row.creationDate | date:'short'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Size </th>
+        <td mat-cell *matCellDef="let row"> {{row.size | fileSize}} </td>
+      </ng-container>
+      <ng-container matColumnDef="htmlUrl">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Origin </th>
+        <td mat-cell *matCellDef="let row"> {{row.htmlUrl | siteName}} </td>
+      </ng-container>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? selectDeselectAll() : null" [checked]="selection.hasValue() &&  isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="null" (change)="$event ? select(row) : null" [checked]="selection.isSelected(row)"
+            [(ngModel)]="row.singleSelection">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="searchColumns"></tr>
+      <tr mat-row *matRowDef="let rowDef; columns: searchColumns;"></tr>
+
+    </table>
+
+    <mat-paginator #resultPaginator [pageSizeOptions]="[5, 10, 20]" [length]="resultDataSource.data.length" showFirstLastButtons></mat-paginator>
+
+    <!-- <p-table #searchDt1 [value]="results" [columns]="searchColumns" [scrollable]="true" [paginator]="true" [rows]="10">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th style="width: 35%;">Name
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span></th>
+              <th style="width: 20%;">Description</th>
+              <th>Creation Date</th>
+              <th>Size</th>
+              <th>Origin</th>
+              <th>
+                <input type="checkbox" [(ngModel)]="isSelect" (click)="selectDeselectAll()" name="row.name" />
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-row>
+            <tr style="cursor:pointer;">
+              <td style="width: 35%;" (click)="openSource(row)">{{row.name}}</td>
+              <td style="width: 20%;" (click)="openSource(row)">{{row.description }}</td>
+              <td>{{row.creationDate | date:'short'}}</td>
+              <td>{{row.size | fileSize}}</td>
+              <td>{{row.htmlUrl | siteName}}</td>
+              <td>
+                <input type="checkbox" [(ngModel)]="row.singleSelection" (change)="select(row)" name="row.name" />
+              </td>
+            </tr>
+          </ng-template>
+
+        </p-table> -->
+    <!-- <table class="table table-bordered table-striped table-hover table-style" style="table-layout:fixed;">
+          <thead class="thead-light">
+            <tr>
+              <th>Name  
+                <span [hidden]="reverse">▼</span>
+                <span [hidden]="!reverse">▲</span></th>
+              <th>Description</th>
+              <th>Creation Date</th>
+              <th>Size</th>
+              <th>Origin</th>
+              <th>
+                <input type="checkbox" [(ngModel)]="isSelect" (click)="selectDeselectAll()" name="row.name" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="cursor:pointer;" *ngFor="let row of results">
+              <td style="width: 40%;" (click)="openSource(row)">{{row.name}}</td>
+              <td (click)="openSource(row)">{{row.description }}</td>
+              <td>{{row.creationDate | date:'short'}}</td>
+              <td>{{row.size | fileSize}}</td>
+              <td>{{row.htmlUrl | siteName}}</td>
+              <td>
+                <input type="checkbox" [(ngModel)]="row.singleSelection" (change)="select(row)" name="row.name" />
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+
+  </div>
+</section>

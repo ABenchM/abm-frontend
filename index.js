@@ -12,7 +12,7 @@ var proxyServer = httpProxy.createProxyServer();
 var config_file = require('./abm-config.' + env_type + '.json');
 var jsonParser = bodyParser.json();
 const app = express();
-app.use(express.static('abm-frontend5/abm/dist'));
+app.use(express.static('dist'));
 
 app.use('/download/*', function (req, res) {
 
@@ -44,7 +44,7 @@ app.all('/rest/*', function (req, res) {
 //https://github.com/angular-ui/ui-router/wiki/Frequently-Asked-Questions#how-to-configure-your-server-to-work-with-html5mode
 app.use('/', function (req, res, next) {
 
-    res.sendFile('abm-frontend5/abm/dist/index.html', {
+    res.sendFile('dist/index.html', {
         root: __dirname
     });
 });

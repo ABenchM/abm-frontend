@@ -1,0 +1,73 @@
+<div class="col-md-6 col-md-offset-3" class="container">
+  <h2>Register</h2>
+
+
+  <form #form="ngForm" (submit)="registerForm(form)">
+
+
+
+    <div class="form-group" [class.invalid]="username.invalid && username.dirty">
+      <label class="control-label required" for="username"> Username</label>
+      <input #username="ngModel" type="text" class="form-control" (blur)="checkSpace(username)" name="username" required [(ngModel)]="model.username" (ngModelChange)="resetUsername($event)">
+      <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
+      <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
+      <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
+    </div>
+
+    <div class="form-group" [class.invalid]="password.touched && password.invalid">
+      <label class="control-label required" for="password "> Password</label>
+      <input #password="ngModel" type="password" class="form-control" name="password" required [(ngModel)]="model.password">
+      <div *ngIf="password.touched && password.invalid" class="alert alert-danger">Password is required</div>
+    </div>
+
+    <div class="form-group" [class.invalid]="confirmpassword.dirty && (model.password != model.confirmpassword)">
+      <label class="control-label required" for="confirmpassword">Confirm Password</label>
+      <input #confirmpassword="ngModel" type="password" class="form-control" name="confirmpassword" required [(ngModel)]="model.confirmpassword">
+      <div *ngIf="confirmpassword.touched && confirmpassword.invalid" class="alert alert-danger">Confirm Password field is required</div>
+      <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">password do not match</div>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label class="control-label required" for="firstname">First Name</label>
+      <input #firstname="ngModel" type="text" class="form-control" name="firstname" required [(ngModel)]="model.firstname">
+      <div *ngIf="firstname.touched && firstname.invalid" class="alert alert-danger">First Name is required</div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label required" for="lastname">Last Name</label>
+      <input #lastname="ngModel" type="text" class="form-control" name="lastname" required [(ngModel)]="model.lastname">
+      <div *ngIf="lastname.touched && lastname.invalid" class="alert alert-danger">Last Name is required</div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label required" for="affiliation"> Affiliation</label>
+      <input #affiliation="ngModel" type="text" class="form-control" placeholder="Organization/Institution belongs to..." name="affiliation" required [(ngModel)]="model.affiliation">
+      <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger">Affiliation is required</div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label required" for="email">Email</label>
+      <div class="input-group mb3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" required [(ngModel)]="model.email">
+      </div>
+      <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
+        <div [hidden]="emailref.errors?.pattren">
+          <span class="help-block"> Enter a valid email address </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-right" style="margin-top: 10px">
+      <button type="submit" [disabled]="form.invalid || (model.password != model.confirmpassword)" class="btn btn-primary">Submit</button>
+    </div>
+    <div class="wrapper" *ngIf="loading">
+      <span class="cssload-loader"></span>
+    </div>
+  </form>
+
+</div>

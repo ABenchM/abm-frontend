@@ -1,0 +1,103 @@
+<h2> Manage Users</h2>
+  
+  <mat-form-field>
+      <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>  
+    
+    <ng-container>
+    <div class="example-container mat-elevation-z8">
+    
+      <mat-table #table [dataSource]="dataSource" matSort>
+  
+          <ng-container matColumnDef="select">
+              <th mat-header-cell class="selectCheckbox" *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell class="selectCheckbox" *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+  
+        <ng-container matColumnDef="username">
+          <mat-header-cell class="column" *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+          <mat-cell class="column" *matCellDef="let element"> {{element.username}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="firstname">
+          <mat-header-cell  *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell class="mobile-label" *matHeaderCellDef mat-sort-header>Email-id</mat-header-cell>
+          <mat-cell class="mobile-label" *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="affiliation">
+          <mat-header-cell  *matHeaderCellDef mat-sort-header>Affiliation</mat-header-cell>
+          <mat-cell  *matCellDef="let element"> {{element.affiliation}} </mat-cell>
+        </ng-container>
+ 
+        <ng-container matColumnDef="Account_status">
+          <mat-header-cell class="mobile-label" *matHeaderCellDef mat-sort-header>Account status</mat-header-cell>
+          <mat-cell class="mobile-label" *matCellDef="let element"> 
+            <div *ngIf="!element.locked" >Active</div>
+            <div *ngIf="element.locked" >Locked</div>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="Lockaction">
+          <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+  
+          <mat-cell *matCellDef="let row;">
+  
+            <div *ngIf="!row.locked">
+              <button mat-icon-button color="red">
+                <mat-icon (click)="lockUser(row)" aria-label="Lock" >lock</mat-icon>
+              </button>
+            </div>
+  
+            <div *ngIf="row.locked">
+              <button mat-icon-button color="red">
+                <mat-icon (click)="unlockUser(row)" aria-label="unLock" >lock_open</mat-icon>
+              </button>
+            </div>
+  
+            <div *ngIf="row.role === 'RegisteredUser'" > 
+            <button class="mobile-label" mat-button [matMenuTriggerFor]="menu">User<mat-icon>arrow_drop_down</mat-icon></button>
+              </div>
+              <div *ngIf="row.role === 'UserAdmin'" >              
+                  <button class="mobile-label" mat-button [matMenuTriggerFor]="menu">Admin<mat-icon>arrow_drop_down</mat-icon></button>
+                    </div>
+            <mat-menu #menu="matMenu" yPosition="below">
+                  <ng-template matMenuContent>
+              <button mat-menu-item (click)="updateRoletoUser(row)">User</button>
+              <button mat-menu-item (click)="updateRoletoAdmin(row)">Admin</button>
+              </ng-template>
+            </mat-menu>             
+  
+            <button class="deleteIcon" id="deletebutton" mat-icon-button >
+              <mat-icon class="red" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+      </mat-table>
+
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <button mat-raised-button  [disabled]="isselected()" id="buttonL" (click)="deleteSelectedUsers()" class="button_alignR">Delete Selected Users</button>
+          <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+    </div>
+  </ng-container>
