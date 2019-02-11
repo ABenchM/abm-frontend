@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatExpansionModule, MatGridListModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { } from 'jasmine';
 import { LoginComponent } from './login.component';
 import { Login } from '../services/login.service';
@@ -20,7 +22,7 @@ describe('LoginComponent', () => {
         AboutComponent
       ],
       imports: [
-        FormsModule, HttpModule, ToastrModule.forRoot(),
+        FormsModule, HttpModule, ToastrModule.forRoot(), MatExpansionModule, MatGridListModule,
         RouterTestingModule.withRoutes([{ path: 'about', component: AboutComponent }])
       ],
       providers: [
