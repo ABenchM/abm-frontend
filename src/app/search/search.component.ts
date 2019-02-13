@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
   toAddDataSource = new MatTableDataSource<any>(this.toAdd);
   language = {};
   searched = false;
+  isFilterVisible = false;
   isSelect;
   SortType: any = 'name';
   reverse = false;

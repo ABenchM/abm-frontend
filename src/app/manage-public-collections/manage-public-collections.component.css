@@ -1,0 +1,103 @@
+.red{color:red;}
+.green{color:green;}
+
+html, body, #wrapper {
+  width: 100%;
+  min-height: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.selectCheckbox{
+  border-bottom-style: hidden;
+}
+
+.navigateToCol{
+  cursor: pointer;
+}
+
+.button_alignR {
+  position: relative;
+  left: 12px;
+  top: 30px;
+}
+
+.button_alignM {
+  position: relative;
+  left:20px;
+  top: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .selectCheckbox{
+    display: none;
+  }
+  .button_alignR{
+    display: none;
+  }
+  .mobile-label {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .selectCheckbox{
+    display: none;
+  }
+  .button_alignR{
+    display: none;
+  }
+}
+
+
+
+
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.makePublic{
+  float: right;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.customOutline {
+  outline: none;
+}
+
+.fullwidth{width:100%;}

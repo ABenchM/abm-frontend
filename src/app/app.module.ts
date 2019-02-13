@@ -14,8 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
+import {MatFormFieldModule, MatGridListModule } from '@angular/material';
 
 
 // Components
@@ -58,12 +59,12 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
 import { UserService } from './services/user.service';
 import { BuiltStatusPipe } from './shared/built-status.pipe';
+import { ResetPasswordService } from './services/reset-password.service';
 
 
 import { HermesService } from './services/hermes.service';
@@ -84,8 +85,15 @@ import { MomentModule } from 'angular2-moment';
 import { HttpClientModule } from '@angular/common/http';
 import { DeleteDialogboxComponent } from './delete-dialogbox/delete-dialogbox.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SaveSuccessComponent } from './save-success/save-success.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
+import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -96,14 +104,20 @@ const routes: Routes = [
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'confirm-password', component: ConfirmPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password-success', component: ResetPasswordSuccessComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
-  { path: 'profile', component: MyProfileComponent },
+  { path: 'save-success', component: SaveSuccessComponent},
   { path: 'manageusers', component: ManageUsersComponent },
-  { path: 'pendingRequest', component: AdminPendingReqComponent }
+  { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
+  { path: 'pendingRequest', component: AdminPendingReqComponent },
+  { path: 'profile', component: UserProfileComponent }
 
 ];
 
@@ -135,7 +149,6 @@ const routes: Routes = [
     CreateCollectionComponent,
     CapitalizeFirstPipe,
     DialogComponentComponent,
-    MyProfileComponent,
     BuiltStatusPipe,
     CommitSelectorComponent,
     ModalBuildViewerComponent,
@@ -143,9 +156,16 @@ const routes: Routes = [
     AddToCollectionComponent,
     DeleteDialogboxComponent,
     ManageUsersComponent,
+    ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
-    DialogBoxComponent
-  ],
+    DialogBoxComponent,
+    UserProfileComponent,
+    SaveSuccessComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordSuccessComponent,
+    ConfirmPasswordComponent
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -185,7 +205,9 @@ const routes: Routes = [
     MatCheckboxModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule,
+    MatGridListModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -210,6 +232,7 @@ const routes: Routes = [
     CommitService,
     BuildService,
     ContextMenuService,
+    ResetPasswordService,
     RouterLinkActive
   ],
   entryComponents: [
