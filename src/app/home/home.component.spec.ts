@@ -32,7 +32,6 @@ describe('HomeComponent', () => {
         MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSortModule,
         MatPaginatorModule, OrderModule, MatDialogModule],
       providers: [CollectionService, PinService, DataServiceService, HttpClient, HttpHandler]
-      
     })
       .compileComponents();
   }));

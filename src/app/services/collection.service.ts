@@ -102,7 +102,7 @@ export class CollectionService {
   getPublicCollections(): Observable<any> {
     const data = { 'privateStatus': false };
     return this.http.get('/rest/collection', { params: data }).pipe(
-      catchError(this.handleError));
+      catchError(this.handleError<any>('getPublicCollections')));
   }
 
   getAllCollections() {
@@ -118,7 +118,7 @@ export class CollectionService {
   getPinnedCollections(currentUser): Observable<any>  {
     const data = { 'type': 'collection', 'user': currentUser };
     return this.http.get('/rest/pin', { params: data }).pipe(
-      catchError(this.handleError));
+      catchError(this.handleError<any>('getPinnedCollections')));
   }
 
   updateCollection(fargCollection) {
