@@ -7,16 +7,16 @@
     </div>
     <div class="form-group">
       <label for="name">Name</label>
-      <input id="name" name="name" [(ngModel)]="collection[0].name" type="text" class="form-control">
+      <input id="name" name="name" [(ngModel)]="collection[0].name" type="text" [disabled]="isPublic()" class="form-control">
     </div>
     <div class="form-group">
       <label for="description">Description</label>
       <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description"
-        class="form-control">
+      [disabled]="isPublic()" class="form-control">
       </textarea>
     </div>
     <div class="form-actions float-right">
-      <button class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
+      <button class="btn btn-primary btn-sm" [disabled]="isPublic()" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
         Save Changes
       </button>
       <button title="{{(!version.privateStatus?' This version is public' : '')}}" class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus"  (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
@@ -103,7 +103,7 @@
             id="{{commit.repository.id}}" />
         </td> -->
         <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
-          <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(project)" class="btn btn-danger btn-block">Delete</button>
+          <button [hidden]="version.frozen" [disabled]="!version.privateStatus || version.projects.length <= 1" (click)="deleteProject(project)" class="btn btn-danger btn-block">Delete</button>
         </td>
       </tr>
     </tbody>

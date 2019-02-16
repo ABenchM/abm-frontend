@@ -485,5 +485,14 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     localStorage.removeItem('id');
   }
 
+  isPublic(){
+    for (let i = 0; i < this.versions.length; i++) {
+      if (this.versions[i].privateStatus == 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
 
