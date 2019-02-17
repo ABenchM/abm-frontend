@@ -17,7 +17,6 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatGridListModule} from '@angular/material';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
 import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
-import {MatGridListModule } from '@angular/material';
 
 // Components
 import { AppComponent } from './app.component';
@@ -161,7 +160,6 @@ const routes: Routes = [
     ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
     DialogBoxComponent,
-    ChangeMyCollectionView,
     DialogboxMakePublicComponent,
     UserProfileComponent,
     SaveSuccessComponent,
@@ -248,9 +246,8 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
-    ChangeMyCollectionView,
     ModalBuildViewerComponent,
-    DialogboxMakePublicComponent
+    DialogboxMakePublicComponent,
     ModalBuildViewerComponent
   ], exports: [
 
