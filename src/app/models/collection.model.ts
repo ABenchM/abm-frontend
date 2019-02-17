@@ -6,6 +6,7 @@ export class Collection {
         public id: string,
         public pinned: boolean,
         public privateStatus: boolean,
+        public isActive: boolean
     ) {
 
     }

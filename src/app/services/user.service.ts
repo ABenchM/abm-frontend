@@ -28,10 +28,7 @@ export class UserService {
   }
 
   deleteUsers(user: string): Observable<any> {
-    const body = { 'deleteUsers': user };
-   const headers = new Headers({'Content-type': 'application/json'});
-   const options = new RequestOptions({headers: headers});
-   return this.http.post('/rest/adminDeleteUsers', body, options).pipe(
+   return this.http.delete('/rest/adminDeleteUsers/' + user).pipe(
    map(this.extractData),
    catchError(this.handleError));
   }
