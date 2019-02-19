@@ -235,10 +235,10 @@ export class SearchComponent implements OnInit {
   ]; */
     this.searchColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
     this.addColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
-    this.filterColumns = ["filter", "value", "operand", "action"];
+    this.filterColumns = ['filter', 'value', 'operand', 'action'];
     this.toAdd = [];
     this.resultDataSource.data = [];
-    this.getFilter()
+    this.getFilter();
 
   }
 
@@ -247,56 +247,35 @@ export class SearchComponent implements OnInit {
     /* fetchs filter - ebuka */
     this.loading = true;
     this.service.getFilters().subscribe(resp => {
-      console.log("Response", JSON.parse(resp.json()))
       let response = JSON.parse(resp.json());
       let data = [...response];
       this.filterDataSource.data = data.map(filter => {
         return {
           filter,
-          value: "",
-          operand: "&&"
-        }
-      })
-      setTimeout(() => { this.filterDataSource.paginator = this.filterPaginator });
+          value: '',
+          operand: '&&'
+        };
+      });
+      setTimeout(() => { this.filterDataSource.paginator = this.filterPaginator; });
       this.loading = false;
-      console.log("Filters: ", this.filterDataSource.data)
-    })
+    });
   }
 
   toggleOperand(e: MatButtonToggleChange, row: any) {
-    row.operand = e.value
-    console.log("toggle: ", e)
+    row.operand = e.value;
   }
 
   applyFilter(row: any) {
-    console.log("applied filter to: ", row)
     this.model.query += this.parseFilter(row);
-    row.value = "";
+    row.value = '';
   }
 
   parseFilter(filter: any) {
-    console.log("Text VAlue: ", this.model.query)
     let value = this.model.query;
-    if (value.trim().length < 1) { return `[${filter.filter}] ${filter.value}` }
-    return `${filter.operand} [${filter.filter}] ${filter.value}`
+    if (value.trim().length < 1) { return `[${filter.filter}] ${filter.value}`; }
+    return `${filter.operand} [${filter.filter}] ${filter.value}`;
   }
 
-  searchWithElastic(query: string) {
-    this.loading = true;
-
-    this.service.getFiltersSearch(query).subscribe((response) => {
-      this.resultDataSource.data = response.json();
-      this.resultDataSource.data = [...this.resultDataSource.data];
-      setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
-      setTimeout(() => this.resultDataSource.sort = this.resultSort);
-      for (let i = 0; i < this.resultDataSource.data.length; i++) {
-        this.resultDataSource.data[i].singleSelection = false;
-
-      }
-      this.searched = true;
-      this.loading = false;
-    })
-  }
 
   applyDataSourceFilter(filterValue: string) {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();

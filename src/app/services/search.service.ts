@@ -20,12 +20,11 @@ export class SearchService {
   }
 
   getFilters() {
-    return this.http.get("/rest/delphifeatures");
+    return this.http.get('/rest/delphifeatures');
   }
 
   getFiltersSearch(query: string) {
-    let body = JSON.stringify({query})
-    console.log("Stringified", body)
-    return this.http.post("/rest/searchquery", body);
+    let body = JSON.stringify({query});
+    return this.http.post('/rest/searchquery', body);
   }
 }
