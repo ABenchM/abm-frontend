@@ -4,6 +4,9 @@ table {
     width: 100%;
   }
 
+  .box-padding{
+	  padding: 30px;
+  }
 .mat-column-name{
 	width : 30%;
 }
@@ -20,13 +23,13 @@ table {
 	width: 10%;
 }
   
-.search_bar{	
+/* .search_bar{	
 	left:15%;
 	position: absolute;
 	width: 70% ;
-}
+} */
 .search_align{
-	width:75%;
+	width:100%;
 }
 .heading_align{
 	padding-left:20px;

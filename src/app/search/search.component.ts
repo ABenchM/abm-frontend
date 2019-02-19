@@ -7,8 +7,10 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatButtonToggleChange } from '@angular/material';
 import * as _ from 'lodash';
+import { throwIfEmpty } from 'rxjs/operators';
+import { Promise } from 'q';
 
 
 
@@ -25,16 +27,20 @@ export class SearchComponent implements OnInit {
   resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
   toAddDataSource = new MatTableDataSource<any>(this.toAdd);
+  filterDataSource = new MatTableDataSource<any>([]);
   language = {};
   searched = false;
   isFilterVisible = false;
+  filters: any;
   isSelect;
   SortType: any = 'name';
   reverse = false;
   searchColumns: any[];
   addColumns: any[];
+  filterColumns: any[];
   selection = new SelectionModel<any>(true, []);
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
+  @ViewChild('filterPaginator') filterPaginator: MatPaginator;
   @ViewChild(MatSort) resultSort: MatSort;
 
   constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
@@ -81,6 +87,7 @@ export class SearchComponent implements OnInit {
       setTimeout(() => this.resultDataSource.sort = this.resultSort);
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = false;
+
       }
       // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
       // this.searchResults.count().then(count => this.itemsCount = count);
@@ -140,15 +147,6 @@ export class SearchComponent implements OnInit {
     });
     this.resultDataSource.data[index].singleSelection = false;
   }
-
-  // selectAll() {
-  //   for (let i = 0; i < this.results.length; i++) {
-  //     this.results[i].singleSelection = true;
-  //     this.service.project.push(this.results[i]);
-
-  //   }
-  //   this.toAdd = this.service.project;
-  // }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -237,8 +235,67 @@ export class SearchComponent implements OnInit {
   ]; */
     this.searchColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
     this.addColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
+    this.filterColumns = ["filter", "value", "operand", "action"];
     this.toAdd = [];
     this.resultDataSource.data = [];
+    this.getFilter()
+
+  }
+
+
+  getFilter() {
+    /* fetchs filter - ebuka */
+    this.loading = true;
+    this.service.getFilters().subscribe(resp => {
+      console.log("Response", JSON.parse(resp.json()))
+      let response = JSON.parse(resp.json());
+      let data = [...response];
+      this.filterDataSource.data = data.map(filter => {
+        return {
+          filter,
+          value: "",
+          operand: "&&"
+        }
+      })
+      setTimeout(() => { this.filterDataSource.paginator = this.filterPaginator });
+      this.loading = false;
+      console.log("Filters: ", this.filterDataSource.data)
+    })
+  }
+
+  toggleOperand(e: MatButtonToggleChange, row: any) {
+    row.operand = e.value
+    console.log("toggle: ", e)
+  }
+
+  applyFilter(row: any) {
+    console.log("applied filter to: ", row)
+    this.model.query += this.parseFilter(row);
+    row.value = "";
+  }
+
+  parseFilter(filter: any) {
+    console.log("Text VAlue: ", this.model.query)
+    let value = this.model.query;
+    if (value.trim().length < 1) { return `[${filter.filter}] ${filter.value}` }
+    return `${filter.operand} [${filter.filter}] ${filter.value}`
+  }
+
+  searchWithElastic(query: string) {
+    this.loading = true;
+
+    this.service.getFiltersSearch(query).subscribe((response) => {
+      this.resultDataSource.data = response.json();
+      this.resultDataSource.data = [...this.resultDataSource.data];
+      setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
+      setTimeout(() => this.resultDataSource.sort = this.resultSort);
+      for (let i = 0; i < this.resultDataSource.data.length; i++) {
+        this.resultDataSource.data[i].singleSelection = false;
+
+      }
+      this.searched = true;
+      this.loading = false;
+    })
   }
 
   applyDataSourceFilter(filterValue: string) {

@@ -16,7 +16,7 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
 import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
-import {MatFormFieldModule, MatGridListModule } from '@angular/material';
+import {MatFormFieldModule, MatGridListModule, MatButtonToggleModule } from '@angular/material';
 
 
 // Components
@@ -207,7 +207,8 @@ const routes: Routes = [
     MatSortModule,
     MatInputModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonToggleModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
