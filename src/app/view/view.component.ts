@@ -22,7 +22,7 @@ export class ViewComponent implements OnInit {
   versions: any[] = [{}];
   version: any = {};
   toCreate = [];
-  commits = [{}];
+  projects = [{}];
   derivedVersion: any = {};
   id;
   loading: boolean;
@@ -52,25 +52,25 @@ export class ViewComponent implements OnInit {
 
   selectall() {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = true;
 
     }
 
   }
   deselectall() {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = false;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = false;
     }
 
   }
 
   select(fargCommit) {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].id === fargCommit.id) {
-        // this.version.commits[i].selectProject = !this.version.commits[i].selectProject;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].id === fargCommit.id) {
+        //this.version.projects[i].selectProject = !this.version.projects[i].selectProject;
         break;
       }
 
@@ -80,7 +80,7 @@ export class ViewComponent implements OnInit {
 
   deriveVersion(fargVersion) {
     this.disabled = true;
-    this.service.postDeriveVersion(fargVersion).subscribe(
+    this.service.postDeriveVersion(fargVersion,'test').subscribe(
       response => {
         if (response.status === 200) {
 
@@ -96,13 +96,13 @@ export class ViewComponent implements OnInit {
 
   copy() {
     this.service.toCreate = [];
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].selectProject === true) {
-        this.service.toCreate.push(this.version.commits[i].repository);
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].selectProject === true) {
+        this.service.toCreate.push(this.version.projects[i]);
       }
 
     }
-    // this.dataService.repositoryList = this.toCreate;
+    //this.dataService.repositoryList = this.toCreate;
 
     this.router.navigateByUrl('/createCollection');
   }
@@ -110,12 +110,12 @@ export class ViewComponent implements OnInit {
 
   // This function is to check if any project is selected on the page.if no, then deselect all button will be disabled.
   isRepoSelected() {
-    if (!this.version.commits) {
+    if (!this.version.projects) {
       return false;
     }
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].selectProject === true) {
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].selectProject === true) {
         return true;
 
       }
@@ -150,8 +150,8 @@ export class ViewComponent implements OnInit {
               this.version = this.versions[0];
               console.log('versions' + this.versions.length);
               console.log('version' + this.version.id);
-              // this.commits = response.json()[0].versions[0].commits;
-              this.commits = this.versions[0].commits;
+              // this.projects = response.json()[0].versions[0].projects;
+              this.projects = this.versions[0].projects;
 
               this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => {
                 if (s.status === 200) {

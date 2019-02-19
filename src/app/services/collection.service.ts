@@ -95,8 +95,8 @@ export class CollectionService {
     );
   }
 
-  postDeriveVersion(version) {
-    return this.http.post('rest/version/derive', version);
+  postDeriveVersion(version,versionName) {
+    return this.http.post('rest/version/'+versionName, version);
   }
 
   getPublicCollections() {

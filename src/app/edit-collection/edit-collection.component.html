@@ -1,5 +1,8 @@
 <div class="container-fluid" *ngIf="!loading">
 
+
+
+
   <form>
     <div class="form-group">
       <label for="id">Collection Id</label>
@@ -11,15 +14,16 @@
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description"
-      [disabled]="isPublic()" class="form-control">
+      <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description" [disabled]="isPublic()"
+        class="form-control">
       </textarea>
     </div>
     <div class="form-actions float-right">
       <button class="btn btn-primary btn-sm" [disabled]="isPublic()" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
         Save Changes
       </button>
-      <button title="{{(!version.privateStatus?' This version is public' : '')}}" class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus"  (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
+      <button title="{{(!version.privateStatus?' This version is public' : '')}}" class="btn btn-primary btn-sm" [disabled]="!version.privateStatus"
+        (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
         Make public</button>
     </div>
 
@@ -31,28 +35,28 @@
     </button>
     <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
       <li *ngFor="let row of versions">
-        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp;
-          {{row.creationDate | date:'short'}} </button>
+        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
       <li class="dropdown-item">
-        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version
-          {{latestVersion.number}}</button>
+        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version {{latestVersion.number}}
+        </button>
       </li>
     </ul>
   </span>
 
+  <label for="id">Parent Version</label>
   <div class="card-body">
-    {{version.comment}}
+    {{version.derivedFrom}}
 
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
-      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button>
+      <!-- <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button> -->
 
       <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
-      <button [disabled]="loading || saving || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeCollection(collection[0].id)">
+      <button [disabled]="loading || saving || isPublic()" class="btn btn-sm btn-danger" (click)="removeCollection(collection[0].id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
     </div>
     <div id="frozen" *ngIf="version.frozen">
@@ -64,10 +68,9 @@
       <span style="float:right;">
         <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving || !version.privateStatus"
           (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
-        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show
-          Hermes Results</button>
-        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus" class="btn btn-danger btn-sm"
-          (click)="removeFilter(version)">Unfilter</button>
+        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show Hermes Results</button>
+        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus"
+          class="btn btn-danger btn-sm" (click)="removeFilter(version)">Unfilter</button>
       </span>
 
       <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
@@ -103,7 +106,8 @@
             id="{{commit.repository.id}}" />
         </td> -->
         <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
-          <button [hidden]="version.frozen" [disabled]="!version.privateStatus || version.projects.length <= 1" (click)="deleteProject(project)" class="btn btn-danger btn-block">Delete</button>
+          <button [hidden]="version.frozen" [disabled]="!version.privateStatus || version.projects.length <= 1" (click)="deleteProject(project)"
+            class="btn btn-danger btn-block">Delete</button>
         </td>
       </tr>
     </tbody>

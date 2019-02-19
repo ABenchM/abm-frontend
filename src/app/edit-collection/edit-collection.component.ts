@@ -96,7 +96,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
   deriveVersion(ver) {
     this.disabled = true;
-    this.service.postDeriveVersion(ver).subscribe(
+    this.service.postDeriveVersion(ver,'test123').subscribe(
       response => {
         if (response.status === 200) {
 

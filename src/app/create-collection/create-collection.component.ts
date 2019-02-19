@@ -26,7 +26,7 @@ export class CreateCollectionComponent implements OnInit {
   // commits: any = [{}];
   constructor(private toastr: ToastrService,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
-    this.repositoryList = this.collectService.toCreate;
+    this.projects = this.collectService.toCreate;
   }
 
 
@@ -65,33 +65,34 @@ export class CreateCollectionComponent implements OnInit {
       privateStatus: true
     };
 
-    this.project = {
-      project_id: 'test_project',
-      version_id: this.version.id,
-      source: 'Maven'      
-    };
+    // this.project = {
+    //   project_id: 'test_project',
+    //   version_id: this.version.id,
+    //   source: 'Maven'      
+    // };
 
     this.collection.versions = [];
     
-    this.version.projects = [];
+    // this.version.projects = [];
 
     // if (this.repositoryList.length === 0) {
     //   // To-DO NgCart feature
     // }
 
-    // this.version.commits = [];
-    // for (let i = 0; i < this.repositoryList.length; i++) {
-
-    //   if (this.repositoryList[i].id === this.projects[i].id) {
-    //     this.project = {
-    //       project_id: this.projects[i].project_id
-    //     };
-    //   }
-
+    this.version.projects = [];
+    console.log(this.projects[0]);
+    for (let i = 0; i < this.projects.length; i++) {
+    this.project = {
+          project_id: this.projects[i].project_id,
+          version_id: this.version.id,
+          source: 'Maven'
+        };
+        this.version.projects.push(this.project);
+     }
+    //this.version.projects = this.projects;
     //   this.commit.repository = this.repositoryList[i];
     //   this.commit.branchId = this.commit.repository.defaultBranch;
     
-    this.version.projects.push(this.project);
     this.collection.versions.push(this.version);
 // }
     this.collectService.createCollection(this.collection).subscribe(response => {
