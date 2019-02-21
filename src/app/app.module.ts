@@ -14,10 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatGridListModule} from '@angular/material';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
 import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
-import {MatFormFieldModule, MatGridListModule } from '@angular/material';
-
 
 // Components
 import { AppComponent } from './app.component';
@@ -88,6 +87,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { DialogboxMakePublicComponent } from './dialogbox-make-public/dialogbox-make-public.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SaveSuccessComponent } from './save-success/save-success.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
@@ -100,6 +100,7 @@ const routes: Routes = [
   { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'editCollection/:id/:versionIndex', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
@@ -159,6 +160,7 @@ const routes: Routes = [
     ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
     DialogBoxComponent,
+    DialogboxMakePublicComponent,
     UserProfileComponent,
     SaveSuccessComponent,
     ForgetPasswordComponent,
@@ -187,6 +189,8 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatTooltipModule,
     MatInputModule,
     MatSortModule,
     MatDialogModule,
@@ -242,6 +246,8 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
+    ModalBuildViewerComponent,
+    DialogboxMakePublicComponent,
     ModalBuildViewerComponent
   ], exports: [
 

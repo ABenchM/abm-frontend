@@ -1,186 +1,114 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { OrderPipe } from 'ngx-order-pipe';
-import { ContextMenuComponent } from 'ngx-contextmenu';
-import * as _ from 'lodash';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { Collection } from '../models/collection.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DialogboxMakePublicComponent } from '../dialogbox-make-public/dialogbox-make-public.component';
 
 @Component({
   selector: 'abm-collection',
   templateUrl: './collection.component.html',
   styleUrls: ['./collection.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
   providers: [ConfirmationService]
 })
-export class CollectionComponent implements OnInit, OnDestroy {
+export class CollectionComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  public userCollections: any[] = [];
+  displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'versions'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'Status', 'Actions'];
+  dataSource = new MatTableDataSource<Collection>();
+  data = new MatTableDataSource<any>();
+  expandedElement: any;
+  confirm = true;
+  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
-  hasCollections = false;
-  SortType: any = 'name';
-  filterType: any = 'name';
-  reverse = false;
-  userCollections: any[] = [];
-  filteredCollections: any[];
-  collectionColumns: any[];
-  @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
-  // subscription: Subscription;
   constructor(private service: CollectionService, private router: Router,
-    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService) {
+    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService,
+    public dialog: MatDialog) { }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   loggedInStatus() {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
-
-  setSortType(value) {
-    if (this.SortType === value) {
-      this.reverse = !this.reverse;
+  ngOnInit() {
+    if (localStorage.getItem('currentUser') != null) {
+      this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
+        if (response.status === 200 && response.json() !== null) {
+          this.userCollections = this.orderPipe.transform(response.json());
+          this.dataSource.data = this.userCollections;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      }, (error) => {
+        console.log('user not logged in');
+      });
     }
-    this.SortType = value;
   }
+
   open(row) {
     if (row.privateStatus) {
       this.router.navigateByUrl('/editCollection/' + row.id);
     } else {
       this.router.navigateByUrl('/view/' + row.id);
     }
-
   }
 
-  setFilterType(item) {
-    this.filterType = item;
-  }
-
-  filter(query) {
-    if (this.filterType === 'name') {
-      this.filteredCollections = (query) ?
-        this.userCollections.filter(p => p.name.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
-    } else if (this.filterType === 'description') {
-      this.filteredCollections = (query) ?
-        this.userCollections.filter(p => p.description.toLowerCase().includes(query.toLowerCase())) : this.userCollections;
-    } else if (this.filterType === 'builtStatus') {
-
-      if (query.toLowerCase().includes('n')) {
-        this.filteredCollections = this.userCollections.filter(p => p.builtStatus === false);
-      } else {
-        this.filteredCollections = this.userCollections.filter(p => p.builtStatus === true);
+  openVersion(collection, versionID) {
+    let i = 0;
+    let index;
+    while (i < collection.versions.length) {
+      if (collection.versions[i].id === versionID) {
+        index = i;
       }
+      i++;
+    }
+    if (index != null) {
+      index++;
+      this.router.navigateByUrl('/editCollection/' + collection.id + '/' + index);
+    }
+  }
 
-    } else if (this.filterType === 'privateStatus') {
+  openDialog(collection: Collection, version: any): void {
+    const dialogRef = this.dialog.open(DialogboxMakePublicComponent, {
+      width: '300px',
+      data: {}
+    });
 
-      if (query.toLowerCase().includes('pr')) {
-        this.filteredCollections = this.userCollections.filter(p => p.privateStatus === true);
-      } else {
-        this.filteredCollections = this.userCollections.filter(p => p.privateStatus === false);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.confirm = dialogRef.componentInstance.callback();
+      if (this.confirm) {
+        version.privateStatus = false;
+        this.service.updateCollection(collection).subscribe(
+          response => {
+            if (response.status === 200) {
+              this.service.updateVersion(version).subscribe(data => {
+                if (data.status === 200) {
+                  this.router.navigateByUrl('/collection');
+                }
+              });
+
+            }
+          });
       }
-
-    }
-
-
-  }
-  ngOnInit() {
-    this.collectionColumns = [
-      { field: 'name', header: 'Name' },
-      { field: 'description', header: 'Description' },
-      { field: 'creationdate', header: 'Creation Date' },
-      { field: 'id', header: 'Id' },
-      { field: 'builtsstatus', header: 'Built Status' },
-      { field: 'privatestatus', header: 'Private Status' }
-    ];
-
-    if (localStorage.getItem('currentUser') != null) {
-
-      this.service.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
-
-        if (response.status === 200 && response.json() !== null) {
-
-          this.userCollections = this.filteredCollections = this.orderPipe.transform(response.json(), this.SortType);
-          for (let i = 0; i < this.userCollections.length; i++) {
-            for (let j = 0; j < this.userCollections[i].versions.length; j++) {
-              if (this.userCollections[i].versions[j].frozen === true) {
-                this.userCollections[i].builtStatus = true;
-                break;
-              }
-            }
-            if (this.userCollections[i].builtStatus === undefined) {
-              this.userCollections[i].builtStatus = false;
-            }
-          }
-          this.hasCollections = true;
-        }
-
-      },
-        (error) => {
-          console.log('user not logged in');
-        }
-      );
-    }
-
-  }
-
-  ngOnDestroy() {
-    //  this.subscription.unsubscribe();
-  }
-
-  onContextMenu(event, item) {
-    console.log('isnide method', item, event);
-    let msg = '';
-    if (item.privateStatus === true) {
-      msg = 'Make Collection Public!';
-      this.confirmationService.confirm({
-        message: msg,
-        accept: () => {
-          console.log('isnide accet method');
-          let selectedRowIndex = _.findIndex(this.filteredCollections, function (o) { return (o.id === item.id); });
-
-          this.filteredCollections[selectedRowIndex].privateStatus = false;
-          console.log(this.filteredCollections[selectedRowIndex]);
-          this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
-            response => {
-              if (response.status === 200) {
-                this.router.navigateByUrl('/collection');
-              }
-            });
-        }
-      });
-
-    }
-
+    });
   }
 
 }
-
- /* Collection status can change both ways
-
- onContextMenu(event, item) {
-  console.log("isnide method",item, event);
-  let msg="";
-  if(item.privateStatus == true){
-    msg= 'Make Collection Public!';
-  } else{
-    msg = 'Make Collection Private!'
-
-  }
-  this.confirmationService.confirm({
-    message: msg,
-    accept: () => {
-      console.log("isnide accet method");
-      let selectedRowIndex = _.findIndex(this.filteredCollections, function(o){return (o.id === item.id)})
-
-      this.filteredCollections[selectedRowIndex].privateStatus = (item.privateStatus == true)?false:true;
-      console.log(this.filteredCollections[selectedRowIndex]);
-      this.service.updateCollection(this.filteredCollections[selectedRowIndex]).subscribe(
-        response => {
-          if (response.status === 200) {
-            this.router.navigateByUrl('/collection');
-          }
-        });
-    }
-});
-
-}
-
-} */

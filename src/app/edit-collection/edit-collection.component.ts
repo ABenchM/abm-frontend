@@ -35,6 +35,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   commits = [{}];
   derivedVersion: any = {};
   id;
+  versionIndex;
   loading: boolean;
   saving: boolean;
   disabled: boolean;
@@ -56,6 +57,10 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     private modalService: NgbModal, private commitService: CommitService,
     private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.versionIndex = this.route.snapshot.paramMap.get('versionIndex');
+    if (this.versionIndex != null) {
+      this.versionIndex--;
+    }
     localStorage.setItem('id', this.id);
     // this.toastr.setRootViewContainerRef(viewf);
 
@@ -70,7 +75,11 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
-        this.version = response.json()[0].versions[0];
+        if (this.versionIndex === null) {
+          this.version = response.json()[0].versions[0];
+        } else {
+          this.version = response.json()[0].versions[this.versionIndex];
+        }
         this.latestVersion = response.json()[0].versions[this.versions.length - 1];
         this.commits = response.json()[0].versions[0].commits;
         for (let i = 0; i < this.version.commits.length; i++) {
