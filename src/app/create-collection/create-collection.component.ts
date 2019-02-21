@@ -22,11 +22,13 @@ export class CreateCollectionComponent implements OnInit {
   projects: any = [{}];
   project: any = {};
   version: any = {};
+  parentVersion: any;
   // commit: any = {};
   // commits: any = [{}];
   constructor(private toastr: ToastrService,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
     this.projects = this.collectService.toCreate;
+    this.parentVersion = this.collectService.parentVersionId;
   }
 
 
@@ -62,7 +64,8 @@ export class CreateCollectionComponent implements OnInit {
       number: 1,
       creationDate: new Date(),
       comment: 'Initial version',
-      privateStatus: true
+      privateStatus: true,
+      derivedFrom: this.parentVersion
     };
 
     // this.project = {
@@ -80,13 +83,13 @@ export class CreateCollectionComponent implements OnInit {
     // }
 
     this.version.projects = [];
-    console.log(this.projects[0]);
+    //console.log(this.projects[0]);
     for (let i = 0; i < this.projects.length; i++) {
-    this.project = {
-          project_id: this.projects[i].project_id,
-          version_id: this.version.id,
-          source: 'Maven'
-        };
+      this.project = {
+        project_id: 'test_project',
+        version_id: this.version.id,
+        source: 'Maven'      
+      };
         this.version.projects.push(this.project);
      }
     //this.version.projects = this.projects;

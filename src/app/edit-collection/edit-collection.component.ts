@@ -42,6 +42,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   message = {};
   filtered: boolean;
   running: boolean;
+  parentCollName;
+  parentVersName;
 
 
   isOpen = false;
@@ -71,6 +73,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
         this.version = response.json()[0].versions[0];
+        this.loadParentVersion(this.version.derivedFrom);
         this.latestVersion = response.json()[0].versions[this.versions.length - 1];
         this.projects = response.json()[0].versions[0].projects;
         for (let i = 0; i < this.version.projects.length; i++) {
@@ -84,6 +87,14 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  loadParentVersion(parentId){
+    this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
+      this.parentCollName= response.json().name;
+      this.parentVersName= response.json().versions[0].name;
+    }
+    );
+  }
+
   selectCommit(fargCommit) {
 
     this.openCommitModal(fargCommit);
@@ -93,6 +104,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.version.projects.length; i++) {
       this.version.projects[i].selectProject = true;
     }
+    this.loadParentVersion(fargVersion.derivedFrom);
+    
   }
   deriveVersion(ver) {
     this.disabled = true;

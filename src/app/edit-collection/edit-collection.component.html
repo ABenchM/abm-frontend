@@ -39,7 +39,7 @@
       </li>
       <li class="dropdown-divider"></li>
       <li class="dropdown-item">
-        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version {{latestVersion.number}}
+        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version {{version.number}}
         </button>
       </li>
     </ul>
@@ -47,7 +47,7 @@
 
   <label for="id">Parent Version</label>
   <div class="card-body">
-    {{version.derivedFrom}}
+    {{parentCollName}} {{parentVersName}}
 
     <br>
     <br>

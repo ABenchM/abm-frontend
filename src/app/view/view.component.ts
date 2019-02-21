@@ -102,6 +102,7 @@ export class ViewComponent implements OnInit {
       }
 
     }
+    this.service.parentVersionId = this.version.id;
     //this.dataService.repositoryList = this.toCreate;
 
     this.router.navigateByUrl('/createCollection');
