@@ -89,8 +89,10 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   loadParentVersion(parentId){
     this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
-      this.parentCollName= response.json().name;
-      this.parentVersName= response.json().versions[0].name;
+      if(response.arrayBuffer().byteLength > 0){
+        this.parentCollName= response.json().name;
+        this.parentVersName= response.json().versions[0].name;
+      }
     }
     );
   }
