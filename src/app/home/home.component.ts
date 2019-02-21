@@ -1,26 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatSort, MatIconModule } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatInputModule } from '@angular/material/input';
 import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
 import { OrderPipe } from 'ngx-order-pipe';
-import { Subscription } from 'rxjs';
+import { Collection } from '../models/collection.model';
 
 @Component({
   selector: 'abm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-
+export class HomeComponent implements OnInit {
   pinned: any[] = [];
   public publicCollections: any[] = [];
-  cancelSearch: boolean;
   loading: boolean;
-  reverse = false;
-  sortType: any = 'name';
   disabled: boolean;
+  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin'];
+  dataSourcePub = new MatTableDataSource<Collection>();
+  dataSourcePin = new MatTableDataSource<Collection>();
+
+
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
@@ -32,7 +38,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.service.getPublicCollections().subscribe(response => {
       if (response.status === 200 && response.json() !== null) {
-        this.publicCollections = this.orderPipe.transform(response.json(), this.sortType);
+        this.publicCollections = this.orderPipe.transform(response.json());
+        this.dataSourcePub.data = this.publicCollections;
+        setTimeout(() => this.dataSourcePub.paginator = this.paginator.toArray()[1]);
+        setTimeout(() => this.dataSourcePub.sort = this.sort.toArray()[1]);
         if (this.loggedInStatus()) {
           this.loadPinned();
         }
@@ -42,25 +51,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  setSortType(value) {
-    if (this.sortType === value) {
-      this.reverse = !this.reverse;
-    }
-    this.sortType = value;
-
-  }
-
   loadPinned() {
     this.loading = true;
-    for (let i = 0; i < this.publicCollections.length; i++) {
-      this.checkPinned(this.publicCollections[i]);
-
+    for (let i = 0; i < this.dataSourcePub.data.length; i++) {
+      this.checkPinned(this.dataSourcePub.data[i]);
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
-
-
-      if (response.status === 200 && response.json() !== null) {
-        this.pinned = this.orderPipe.transform(response.json(), this.sortType);
+      if (response.status === 200 && response.json()
+       !== null) {
+        this.pinned = this.orderPipe.transform(response.json());
+        this.dataSourcePin.data = this.pinned;
+        setTimeout(() => this.dataSourcePin.paginator = this.paginator.toArray()[0]);
+        setTimeout(() => this.dataSourcePin.sort = this.sort.toArray()[0]);
       }
 
     });
@@ -72,21 +74,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.pinService.checkPinned(item).subscribe(
       response => {
         if (response.status === 200) {
-          item.pinned = response.json();
+          item.dataSourcePin = response.json();
 
         }
 
       }
     );
   }
-
   view(collectionId) {
-
     this.router.navigateByUrl('/view/' + collectionId);
-
   }
-  open(collection) {
-    this.router.navigateByUrl('/view/' + collection.id);
+
+  open(col: Collection) {
+    this.router.navigateByUrl('/view/' + col.id);
   }
 
   loggedInStatus() {
@@ -94,40 +94,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
-  search(searchQuery) {
-    let searching = true;
-    this.cancelSearch = true;
-    this.service.getSearchCollections(searchQuery).subscribe(
-      response => {
-        if (response.status === 200 && response.json() !== null) {
-          this.publicCollections = response.json();
-          if (this.loggedInStatus()) {
-            for (let i = 0; i < this.publicCollections.length; i++) {
-              this.checkPinned(this.publicCollections[i]);
-            }
-          }
-        }
-
-      });
-    searching = false;
-  }
-
-  cancel() {
-    this.model.query = '';
-    this.cancelSearch = false;
-    this.loadPublicCollections();
-  }
-
-
   unpin(row) {
     this.disabled = true;
     this.pinService.deletePin(row).subscribe(
       response => {
-        const pinnedIndex = this.pinned.findIndex(this.checkId, row.id);
-        const publicIndex = this.publicCollections.findIndex(this.checkId, row.id);
-        this.pinned.splice(pinnedIndex, 1);
+        const pinnedIndex = this.dataSourcePin.data.findIndex(this.checkId, row.id);
+        const publicIndex = this.dataSourcePub.data.findIndex(this.checkId, row.id);
+        this.dataSourcePin.data.splice(pinnedIndex, 1);
         if (publicIndex >= 0) {
-          this.publicCollections[publicIndex].pinned = false;
+          this.dataSourcePub.data[publicIndex].pinned = false;
         }
         this.loadPublicCollections();
       }
@@ -139,10 +114,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.disabled = true;
     this.pinService.postPin(row).subscribe(
       response => {
-        this.pinned.push(row);
-        const targetIndex = this.publicCollections.findIndex(this.checkId, row.id);
-        this.publicCollections.splice(targetIndex, 1);
-
+        this.dataSourcePin.data.push(row);
+        const targetIndex = this.dataSourcePub.data.findIndex(this.checkId, row.id);
+        this.dataSourcePub.data.splice(targetIndex, 1);
+        this.loadPublicCollections();
       }
     );
     this.disabled = false;
@@ -151,10 +126,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   checkId(item) {
     return (item.id === this);
   }
+
   ngOnInit() {
     this.loadPublicCollections();
   }
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
+
+  applyFilterPub(filterValue: string) {
+    this.dataSourcePub.filter = filterValue.trim().toLowerCase();
   }
+
+  applyFilterPin(filterValue: string) {
+    this.dataSourcePin.filter = filterValue.trim().toLowerCase();
+  }
+
 }

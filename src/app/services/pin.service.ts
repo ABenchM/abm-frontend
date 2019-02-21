@@ -1,23 +1,36 @@
 import { Injectable } from '@angular/core';
 import {Http, RequestOptions, RequestMethod} from '@angular/http';
 
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import {throwError as observableThrowError} from 'rxjs';
+
 
 @Injectable()
 export class PinService {
 
   constructor(private http: Http) { }
 
-  deletePin(target) {
+  private extractData(res: Response) {
+  }
+
+  handleError(error: any) {
+    console.error('post error : ', error );
+    return observableThrowError(error.statusText);
+}
+
+  deletePin(target): Observable<any> {
     const currentUser = localStorage.getItem('currentUser');
     const body = JSON.stringify(
       {'type': 'collection',
       'user': currentUser,
       'id': target.id});
     const options = new RequestOptions({body: body});
-    return this.http.delete('/rest/pin/', options);
+    return this.http.delete('/rest/pin/', options).pipe(
+      catchError(this.handleError));
   }
 
-  postPin(target) {
+  postPin(target): Observable<any> {
 
    const currentUser = localStorage.getItem('currentUser');
    const body = JSON.stringify(
@@ -32,7 +45,8 @@ export class PinService {
     body: body
     }
     );
-   return this.http.post('/rest/pin/', body);
+   return this.http.post('/rest/pin/', body).pipe(
+    catchError(this.handleError));
   }
 
   checkPinned(item) {
@@ -41,3 +55,4 @@ export class PinService {
   }
 
 }
+
