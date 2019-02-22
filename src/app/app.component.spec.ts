@@ -1,6 +1,6 @@
-import { TestBed, async,ComponentFixture } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HttpModule} from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -47,7 +47,7 @@ fdescribe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpModule,
         FormsModule,
-        ReactiveFormsModule, 
+        ReactiveFormsModule,
         TableModule,
         DataTableModule,
         ToastModule,
@@ -64,8 +64,8 @@ fdescribe('AppComponent', () => {
         BuildColourPipe,
         TabTitlePipe
       ],
-      providers: [Idle,{provide : IdleExpiry, useClass: MockExpiry} ,
-        Keepalive,MessageService,HttpClient, HttpHandler,Logout,Login,CurrentUserService, BuildService,ToastrService]
+      providers: [Idle, { provide: IdleExpiry, useClass: MockExpiry },
+        Keepalive, MessageService, HttpClient, HttpHandler, Logout, Login, CurrentUserService, BuildService, ToastrService]
     }).compileComponents();
   }));
 
