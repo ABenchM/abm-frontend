@@ -52,7 +52,7 @@ import { SearchService } from './services/search.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { HomeComponent } from './home/home.component';
-import { EditCollectionComponent } from './edit-collection/edit-collection.component';
+import { EditCollectionComponent, DialogVersionDialog } from './edit-collection/edit-collection.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
@@ -166,7 +166,8 @@ const routes: Routes = [
     ForgetPasswordComponent,
     ResetPasswordComponent,
     ResetPasswordSuccessComponent,
-    ConfirmPasswordComponent
+    ConfirmPasswordComponent,
+    DialogVersionDialog
     ],
   imports: [
     BrowserModule,
@@ -248,7 +249,8 @@ const routes: Routes = [
     HermesViewerComponent,
     ModalBuildViewerComponent,
     DialogboxMakePublicComponent,
-    ModalBuildViewerComponent
+    ModalBuildViewerComponent,
+    DialogVersionDialog
   ], exports: [
 
 

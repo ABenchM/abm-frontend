@@ -1,6 +1,6 @@
 
 import { take } from 'rxjs/operators';
-import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
@@ -19,6 +19,7 @@ import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
 import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
 import { BuildService } from '../services/build.service';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -52,6 +53,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   socket: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
+    private dialog: MatDialog,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastrService, private viewf: ViewContainerRef,
     private modalService: NgbModal, private commitService: CommitService,
@@ -103,7 +105,27 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.version.commits[i].selectProject = true;
     }
   }
+  openDialog(ver): void {
+    const dialogRef = this.dialog.open(DialogVersionDialog, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     
+      if(result){
+      ver.name = result;
+      this.deriveVersion(ver);
+      console.log('The dialog was closed:', result);
+      }
+      
+    });
+    
+
+   
+  }
   deriveVersion(ver) {
+
+    console.log(ver);
     this.disabled = true;
     this.service.postDeriveVersion(ver).subscribe(
       response => {
@@ -496,3 +518,22 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
 }
 
+
+
+
+
+
+@Component({
+  selector: 'dialog-version-dialog',
+  templateUrl: 'dialog-version-dialog.html',
+})
+export class DialogVersionDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogVersionDialog>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
