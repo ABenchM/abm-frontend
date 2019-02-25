@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit {
     this.loading = true;
     this.resultDataSource.data = [];
     const language = '';
-    this.service.getSearchResults(searchQuery, language).subscribe(response => {
+    this.service.getFiltersSearch(searchQuery).subscribe(response => {
       this.resultDataSource.data = response.json();
       this.resultDataSource.data = [...this.resultDataSource.data];
       setTimeout(

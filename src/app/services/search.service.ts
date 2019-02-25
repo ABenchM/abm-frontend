@@ -25,6 +25,7 @@ export class SearchService {
 
   getFiltersSearch(query: string) {
     let body = JSON.stringify({query});
+    console.log('Json format '  + body);
     return this.http.post('/rest/searchquery', body);
   }
 }
