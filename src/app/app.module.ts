@@ -52,7 +52,7 @@ import { SearchService } from './services/search.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { HomeComponent } from './home/home.component';
-import { EditCollectionComponent, DialogVersionDialog } from './edit-collection/edit-collection.component';
+import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
@@ -94,6 +94,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
+import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -167,7 +168,7 @@ const routes: Routes = [
     ResetPasswordComponent,
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent,
-    DialogVersionDialog
+    DialogVersionDialogComponent
     ],
   imports: [
     BrowserModule,
@@ -250,7 +251,7 @@ const routes: Routes = [
     ModalBuildViewerComponent,
     DialogboxMakePublicComponent,
     ModalBuildViewerComponent,
-    DialogVersionDialog
+    DialogVersionDialogComponent
   ], exports: [
 
 

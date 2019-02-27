@@ -49,7 +49,7 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
-      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button>
+      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
 
       <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
@@ -80,15 +80,14 @@
     <thead class="thead-light">
       <tr>
         <th>Name</th>
-        <th>Commit</th>
-        <th [hidden]="version.frozen"></th>
+         <th [hidden]="version.frozen"></th>
         <th [hidden]="version.frozen"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let commit of version.commits">
         <td>{{commit.repository.name}}</td>
-        <td>
+        <!-- <td>
           <div class="dropdown" *ngIf="!version.frozen">
             <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="commitSelect">
@@ -98,7 +97,7 @@
 
           </div>
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
-        </td>
+        </td> -->
         <td [hidden]="version.frozen">&nbsp;&nbsp;
           <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
             id="{{commit.repository.id}}" />
