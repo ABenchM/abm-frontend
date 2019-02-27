@@ -1,6 +1,5 @@
-
 import { take } from 'rxjs/operators';
-import { Component, OnInit, ViewContainerRef, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy, Inject, Input } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
@@ -20,6 +19,7 @@ import { HermesService } from '../services/hermes.service';
 import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
 import { BuildService } from '../services/build.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { DialogVersionDialogComponent } from './dialog-version-dialog.component';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -35,7 +35,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   buildprojects: any = {};
   commits = [{}];
   derivedVersion: any = {};
-  id;
+
+id;
   versionIndex;
   loading: boolean;
   saving: boolean;
@@ -101,27 +102,30 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
   selectVersion(fargVersion) {
     this.version = fargVersion;
+    console.log(fargVersion);
     for (let i = 0; i < this.version.commits.length; i++) {
       this.version.commits[i].selectProject = true;
     }
   }
   openDialog(ver): void {
-    const dialogRef = this.dialog.open(DialogVersionDialog, {
+    const dialogRef = this.dialog.open(DialogVersionDialogComponent, {
       width: '250px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-     
-      if(result){
-      ver.name = result;
-      this.deriveVersion(ver);
-      console.log('The dialog was closed:', result);
-      }
-      
-    });
-    
 
-   
+      if (result) {
+        ver.name = result;
+        ver.derivedFrom = this.versions[this.versions.length - 1].id;
+        console.log(ver.derivedFrom);
+        this.deriveVersion(ver);
+        console.log('The dialog was closed:', result);
+      }
+
+    });
+
+
+
   }
   deriveVersion(ver) {
 
@@ -522,18 +526,3 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
 
 
-
-@Component({
-  selector: 'dialog-version-dialog',
-  templateUrl: 'dialog-version-dialog.html',
-})
-export class DialogVersionDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogVersionDialog>) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}

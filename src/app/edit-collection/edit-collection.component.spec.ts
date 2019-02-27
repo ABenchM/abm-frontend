@@ -13,6 +13,7 @@ import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
 import { BuildService } from '../services/build.service';
+import { MatDialogModule } from '@angular/material';
 
 describe('EditCollectionComponent', () => {
   let component: EditCollectionComponent;
@@ -21,7 +22,8 @@ describe('EditCollectionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditCollectionComponent],
-      imports: [FormsModule, ReactiveFormsModule, RouterTestingModule, HttpModule, ToastrModule.forRoot(), NgbModule.forRoot()],
+      imports: [FormsModule, ReactiveFormsModule, MatDialogModule,
+             RouterTestingModule, HttpModule, ToastrModule.forRoot(), NgbModule.forRoot()],
       providers: [HttpClient, HttpHandler, CollectionService, DialogService,
         ToastrService, CommitService, DataServiceService, HermesService, BuildService]
     })
