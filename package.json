@@ -10,7 +10,8 @@
     "test": "ng test --watch=false --browsers ChromeHeadless --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "npm run lint && npm run test"
+    "precommit": "npm run lint && npm run test",
+    "htmllint" : "node htmlchecker.js"
   },
   "author": "",
   "private": true,
@@ -27,14 +28,14 @@
     "@angular/platform-browser": "^7.0.1",
     "@angular/platform-browser-dynamic": "^7.0.1",
     "@angular/router": "^7.0.1",
-    "@ng-bootstrap/ng-bootstrap": "^2.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "@ng-idle/core": "^6.0.0-beta.3",
     "@ng-idle/keepalive": "^6.0.0-beta.3",
     "angular-6-social-login": "^1.1.1",
     "angular-ui-bootstrap": "^2.5.6",
     "angular2-moment": "^1.9.0",
     "boostrap": "^2.0.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.3.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "core-js": "^2.4.1",
@@ -62,15 +63,22 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "husky": "^0.14.3",
-    "@angular-devkit/build-angular": "~0.10.0",
+
+    
+
+    "@angular-devkit/build-angular": "^0.13.1",
+
     "@angular/cli": "^7.0.3",
-    "@angular/compiler-cli": "^7.0.1",
+    "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "^7.0.1",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+
+    "htmlhint": "^0.10.1",
+
+    "husky": "^0.14.3",
     "intl": "^1.2.5",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -82,6 +90,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-phantomjs-launcher": "^1.0.4",
     "protractor": "^5.4.0",
+    "readdirp": "^2.2.1",
     "source-map-explorer": "^1.5.0",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",

@@ -1,102 +1,98 @@
-<section>
-  <div *ngIf="loggedInStatus()">
-    <h2>My Collections</h2>
-    <hr>
-    <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new collection, collect projects using the search feature and create a collection
-      from them in the Projects tab or clone an existing collection.</p>
-  </div>
-  <br>
+<div *ngIf="loggedInStatus()">
+  <h2>My Collections</h2>
+  <hr>
+  <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new
+    collection, collect projects using the search feature and create a collection
+    from them in the Projects tab or clone an existing collection.</p>
+</div>
 
-  <div class="input-group mb-3 ">
-    <div class="input-group-prepend" ngbDropdown>
-      <button class="btn btn-outline-secondary" ngbDropdownToggle type="button">Filter By: {{filterType}}</button>
-      <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
-        <li>
-          <button class="dropdown-item" (click)="setFilterType('name')">Name</button>
-          <button class="dropdown-item" (click)="setFilterType('description')">Description</button>
-          <button class="dropdown-item" (click)="setFilterType('builtStatus')">BuiltStatus</button>
-          <button class="dropdown-item" (click)="setFilterType('privateStatus')">PrivateStatus</button>
-        </li>
-      </ul>
-    </div>
-    <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
-  </div>
+<mat-form-field>
+  <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
 
-  <br>
-  <br>
+<table mat-table class="fullwidth" [dataSource]="dataSource" multiTemplateDataRows matSort>
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)"> {{element.id}}
+    </mat-cell>
+  </ng-container>
 
-  <p-table *ngIf="!(userCollections[0]===undefined)" #collectionDt [value]="filteredCollections"  [columns]="collectionColumns" [scrollable]="true" [paginator]="true" [rows]="10">
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-          <th *ngFor="let col of collectionColumns">
-              {{col.header}}
-          </th>
-      </tr>
-  </ng-template>
-  
-<ng-template pTemplate="body" let-row>
-  <tr style="cursor:pointer;" (contextmenu)="onContextMenu($event, row)" [contextMenu]="basicMenu" [contextMenuSubject]="row">
-    <td (click)="open(row)">{{row.name}}</td>
-    <td (click)="open(row)">{{row.description}}</td>
-    <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-    <td>{{row.id}}</td>
-    <td> {{row.builtStatus | builtStatus}}
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
+      {{element.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
+      {{element.description}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="creationDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)">
+      {{element.creation_date}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="versions">
+    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+    <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element; data = row">
+      <button mat-stroked-button [ngClass]="'customOutline'">
+        Show Versions
+        <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
+        <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element">
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <table mat-table [dataSource]="data.versions" class="mat-elevation-z8 fullwidth">
+          <ng-container matColumnDef="versionNo">
+    <th mat-header-cell *matHeaderCellDef> Number </th>
+    <td mat-cell *matCellDef="let version" class="navigateToCol" (click)="openVersion(data,version.id)">
+      {{version.number}} </td>
+  </ng-container>
+  <ng-container matColumnDef="VersionID">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let version" class="navigateToCol" (click)="openVersion(data,version.id)"> {{version.id}}
     </td>
-    <td>{{row.privateStatus | privateStatus}}</td>
-  </tr>
-</ng-template>
+  </ng-container>
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let version">
+      <div *ngIf="version.privateStatus">Private</div>
+      <div *ngIf="!version.privateStatus">Public</div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef> Make Public </th>
+    <td mat-cell *matCellDef="let version">
+      <button [disabled]="!version.privateStatus" mat-raised-button color="primary" (click)="openDialog(element,version)">Make
+        Public</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>
+</div>
+</td>
+</ng-container>
 
-</p-table>
+<!-- <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
 
-  <!-- <table class="table table-bordered  table-striped table-hover table-responsive-sm table-md" style="max-height:400px;max-width:2500px;table-layout:flexible;"
-    *ngIf="hasCollections">
-    <thead class="thead-light">
-      <tr style="cursor:pointer;">
-        <th (click)="setSortType('name')">Name
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('description')">Description
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('creation_date')">Creation Date
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('id')">Id
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('builtStatus')">Built Status
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th (click)="setSortType('privateStatus')">Private Status
-          <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="cursor:pointer;" (contextmenu)="onContextMenu($event, row)" *ngFor="let row of filteredCollections | orderBy: SortType:reverse:'case-insensitive'" [contextMenu]="basicMenu"
-        [contextMenuSubject]="row">
-        <td (click)="open(row)">{{row.name}}</td>
-        <td (click)="open(row)">{{row.description}}</td>
-        <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-        <td>{{row.id}}</td>
-        <td> {{row.builtStatus | builtStatus}}
-        </td>
-        <td>{{row.privateStatus | privateStatus}}</td>
-        
-      </tr>
-    </tbody>
-  </table> -->
-  
-  <context-menu>
-      <ng-template  #basicMenu   >
-        Make Public
-      </ng-template>
-    </context-menu>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-toolbar-row>
+</mat-toolbar>

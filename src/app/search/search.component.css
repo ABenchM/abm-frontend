@@ -4,6 +4,40 @@ table {
     width: 100%;
   }
 
+  .row{
+	  display: flex
+  }
+.column.is-12{
+flex: 1 100%;
+-moz-box-flex: 0 1 100%
+}
+
+.column.is-10{
+	flex:0 1 83.333%;
+	}
+	.column.is-8{
+		flex:0 1 66.666%;
+		
+		}
+		.column.is-4{
+			flex: 0 1 33.333%;
+			}
+			.column.is-2{
+				flex: 0 1 16.666%;
+				}
+				
+				.mat-form-field{
+					display: block
+				}	
+				
+				
+.hide{
+	display: none
+}
+.show{display: block}
+  .box-padding{
+	  padding: 30px;
+  }
 .mat-column-name{
 	width : 30%;
 }
@@ -19,14 +53,10 @@ table {
 .mat-column-htmlUrl{
 	width: 10%;
 }
-  
-.search_bar{	
-	left:15%;
-	position: absolute;
-	width: 70% ;
-}
+ 
+
 .search_align{
-	width:75%;
+	width:100%;
 }
 .heading_align{
 	padding-left:20px;

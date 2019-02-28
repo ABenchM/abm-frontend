@@ -14,8 +14,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule} from '@angular/material';
+import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
+
 
 
 // Components
@@ -58,7 +60,6 @@ import { CollectionService } from './services/collection.service';
 import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
-import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
@@ -88,6 +89,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManagePublicCollectionsComponent } from './manage-public-collections/manage-public-collections.component';
 import { AdminPendingReqComponent } from './admin-pending-req/admin-pending-req.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { DialogboxMakePublicComponent } from './dialogbox-make-public/dialogbox-make-public.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SaveSuccessComponent } from './save-success/save-success.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
@@ -100,6 +102,7 @@ const routes: Routes = [
   { path: 'collection', component: CollectionComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
+  { path: 'editCollection/:id/:versionIndex', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
@@ -159,6 +162,7 @@ const routes: Routes = [
     ManagePublicCollectionsComponent,
     AdminPendingReqComponent,
     DialogBoxComponent,
+    DialogboxMakePublicComponent,
     UserProfileComponent,
     SaveSuccessComponent,
     ForgetPasswordComponent,
@@ -187,6 +191,8 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatTooltipModule,
     MatInputModule,
     MatSortModule,
     MatDialogModule,
@@ -205,7 +211,10 @@ const routes: Routes = [
     MatCheckboxModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatButtonToggleModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -240,6 +249,8 @@ const routes: Routes = [
     ModalHermesComponent,
     CommitSelectorComponent,
     HermesViewerComponent,
+    ModalBuildViewerComponent,
+    DialogboxMakePublicComponent,
     ModalBuildViewerComponent
   ], exports: [
 

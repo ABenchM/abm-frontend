@@ -80,7 +80,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
         console.log('versions length ' + this.versions.length);
         let i = 0;
         while (i < this.versions.length) {
-          console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
           if (this.versions[i].privateStatus === true) {
             console.log('Deleting version ' + this.versions[i].id);
             this.versions.splice(i, 1);

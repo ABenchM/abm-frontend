@@ -1,80 +1,73 @@
-<section>
-  <h2>Public Collections</h2>
-  <hr>
-  <div *ngIf="loggedInStatus()">
-    <div *ngIf="!this.loading">
-      <h3>Pinned Collections</h3>
-      <p *ngIf="(pinned[0] === undefined)" class="alert alert-warning">You have not pinned any collections yet.To pin a collection, Click the button next to it in the table below.</p>
+<h2> Public Collection</h2>
+<hr>
+<div *ngIf="loggedInStatus()">
+  <div *ngIf="!this.loading">
 
-     <!--  <table class="table table-bordered table-striped table-hover" style="max-height:300px;table-layout:fixed;" *ngIf="!(pinned[0] === undefined)">
-        <thead class="thead-light">
-          <tr style="cursor:pointer;">
-            <th (click)="setSortType('name')">Name <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span> </th>
-            <th (click)="setSortType('description')">Description <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span> </th>
-            <th (click)="setSortType('creation_date')">Creation Date <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span> </th>
-            <th (click)="setSortType('id')">Id <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="cursor:pointer;" *ngFor="let row of pinned | orderBy: sortType:reverse:'case-insensitive'">
-            <td (click)="view(row.id)">{{row.name}}</td>
-            <td (click)="view(row.id)">{{row.description}} </td>
-            <td>{{row.creation_date | date:'short'}}</td>
-            <td> {{row.id}}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
-      <p-table  *ngIf="pinned.length>0" [value]="pinned"   [scrollable]="true" [paginator]="true" [rows]="10">
-          <ng-template pTemplate="header" let-columns>
-              <tr style="cursor:pointer;">
-                  <th (click)="setSortType('name')">Name <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span> </th>
-                  <th (click)="setSortType('description')">Description <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span> </th>
-                  <th (click)="setSortType('creation_date')">Creation Date <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span> </th>
-                  <th (click)="setSortType('id')">Id <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span></th>
-                  <th></th>
-                </tr>
-        </ng-template>
-        
-      <ng-template pTemplate="body" let-row>
-        <tr style="cursor:pointer;">
-            <td (click)="view(row.id)">{{row.name}}</td>
-            <td (click)="view(row.id)">{{row.description}} </td>
-            <td>{{row.creation_date | date:'short'}}</td>
-            <td> {{row.id}}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" style="width:100%;" (click)="unpin(row)">Unpin</button>
-            </td>
-        </tr>
-      </ng-template>
-      
-      </p-table>
+    <h3> Pinned Collection</h3>
+    <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections
+      yet.To pin a collection, Click the button next to it in the table below.</p>
+
+    <div *ngIf="dataSourcePin.data.length>0">
+        <mat-form-field class="example-full-width">
+          <input id="filter_data1" matInput (keyup)="applyFilterPin($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+      <div *ngIf="dataSourcePin.data.length>0" class="example-container mat-elevation-z8 mat-table">
+        <mat-table #table [dataSource]="dataSourcePin" matSort>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.description}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="creation_date">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.creation_date}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="pin">
+            <mat-header-cell *matHeaderCellDef> Unpin </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let row; let i=index;">
+              <button mat-raised-button class="btn btn-sm btn-primary" (click)="unpin(row)">Unpin</button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+        </mat-table>
+
+        <mat-toolbar>
+          <mat-toolbar-row>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </mat-toolbar-row>
+        </mat-toolbar>
+      </div>
+
     </div>
 
-    <div class="wrapper" *ngIf="this.loading">
-      <h2>Loading...</h2>
-      <span class="cssload-loader"></span>
-    </div>
-    <hr>
   </div>
 
-  <form #f="ngForm">
-    <input #searchQuery="ngModel" type="text" name="query" id="query" size="36" [(ngModel)]="model.query" style="width:80%" placeholder="Search for collections...">
-    <button type="submit" class="btn btn-success" (click)="search(model.query)" *ngIf="!cancelSearch" [disabled]="searchQuery.value==='' || searchQuery===undefined">Search</button>
-    <button type="submit" class="btn btn-success" (click)="cancel()" *ngIf="cancelSearch">Cancel Search</button>
-  </form>
+  <div class="wrapper" *ngIf="this.loading">
+    <h2>Loading...</h2>
+    <span class="cssload-loader"></span>
+  </div>
+  <hr>
+</div>
 
+<div>
+  <mat-form-field class="example-full-width">
+    <input id="filter_data1" matInput (keyup)="applyFilterPub($event.target.value)" placeholder="Search for collection">
+  </mat-form-field>
   <br>
 
   <div class="wrapper" *ngIf="this.loading">
@@ -83,81 +76,50 @@
   </div>
 
   <div>
-    <p *ngIf="(publicCollections[0] === undefined)" class="alert alert-warning">No results found.</p>
-   <!--  <table class="table table-bordered table-striped table-hover table-sm table-condensed table-responsive-sm" style="table-layout:fixed;"
-      *ngIf="!(publicCollections[0] === undefined)">
-      <thead class="thead-light">
-        <tr style="cursor:pointer;">
-          <th (click)="setSortType('name')">Name
-              <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span>
-          </th>
-          <th (click)="setSortType('description')">Description
-              <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span>
-          </th>
-          <th (click)="setSortType('creation_date')">Creation Date
-              <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span>
-          </th>
-          <th (click)="setSortType('id')">Id
-              <span [hidden]="reverse">▼</span>
-              <span [hidden]="!reverse">▲</span>
-          </th>
-          <th *ngIf="loggedInStatus()"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="cursor:pointer;" *ngFor="let row of publicCollections | orderBy: sortType:reverse:'case-insensitive'">
-          <td (click)="open(row)">{{row.name}}</td>
-          <td (click)="open(row)">{{row.description}}</td>
-          <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-          <td>{{row.id}}</td>
-          <td *ngIf="loggedInStatus()">
-            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="pin(row)" *ngIf="!row.pinned">Pin</button>
-            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="unpin(row)" *ngIf="row.pinned">Unpin</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
- -->
-    <p-table *ngIf="!(publicCollections[0] === undefined)" [(value)]="publicCollections"   [scrollable]="true" [paginator]="true" [rows]="10">
-        <ng-template pTemplate="header" let-columns>
-            <tr style="cursor:pointer;">
-                <th (click)="setSortType('name')">Name
-                    <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span>
-                </th>
-                <th (click)="setSortType('description')">Description
-                    <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span>
-                </th>
-                <th (click)="setSortType('creation_date')">Creation Date
-                    <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span>
-                </th>
-                <th (click)="setSortType('id')">Id
-                    <span [hidden]="reverse">▼</span>
-                    <span [hidden]="!reverse">▲</span>
-                </th>
-                <th *ngIf="loggedInStatus()"></th>
-              </tr>
-      </ng-template>
-      
-    <ng-template pTemplate="body" let-row>
-      <tr style="cursor:pointer;">
-          <td (click)="open(row)">{{row.name}}</td>
-          <td (click)="open(row)">{{row.description}}</td>
-          <td (click)="open(row)">{{row.creation_date | date:'short'}}</td>
-          <td>{{row.id}}</td>
-          <td *ngIf="loggedInStatus()">
-            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="pin(row)" *ngIf="!row.pinned">Pin</button>
-            <button class="btn btn-primary btn-sm" style="width:100%;" (click)="unpin(row)" *ngIf="row.pinned">Unpin</button>
-          </td>
-      </tr>
-    </ng-template>
-    
-    </p-table>
-  </div>
+    <p *ngIf="(dataSourcePub.data[0] === undefined)" class="alert alert-warning">No results found.</p>
 
-</section>
+    <div *ngIf="!(dataSourcePub.data[0] === undefined)" class="example-container mat-elevation-z8 mat-table">
+      <mat-table #table [dataSource]="dataSourcePub" matSort>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="creation_date">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Creation Date </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)" > {{element.creation_date}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+          <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="pin">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Pin </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button class="btn btn-primary btn-sm" mat-raised-button id="buttonR" (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
+            <button class="btn btn-primary btn-sm" mat-raised-button (click)="unpin(row)" *ngIf="row.dataSourcePin">Unpin</button>
+          </mat-cell>
+          <mat-header-cell *ngIf="loggedInStatus()"></mat-header-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+      </mat-table>
+
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatExpansionModule, MatGridListModule } from '@angular/material';
 import { AboutComponent } from './about.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 fdescribe('AboutComponent', () => {
   let component: AboutComponent;
@@ -8,7 +9,8 @@ fdescribe('AboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
+      declarations: [ AboutComponent ],
+      imports: [ MatExpansionModule, MatGridListModule, BrowserAnimationsModule ]
     })
     .compileComponents();
   }));

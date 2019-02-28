@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SearchComponent } from './search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -12,7 +12,7 @@ import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule } from '@angular/material';
-import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonToggleModule } from '@angular/material';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -23,7 +23,8 @@ describe('SearchComponent', () => {
       declarations: [SearchComponent, ProjectCountPipe, FileSizePipe, SiteNamePipe],
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
-        MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule],
+        MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
+        BrowserAnimationsModule],
       providers: [SearchService, CollectionService, HttpClient, HttpHandler]
     })
       .compileComponents();

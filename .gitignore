@@ -18,11 +18,12 @@
 *.tar.gz
 *.rar
 
-*.lock.json
+*lock.json
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
 node_modules/
+dist/
 abm-frontend5/abm/node_modules
 abm-frontend5/abm/dist
 abm-config.prod.json

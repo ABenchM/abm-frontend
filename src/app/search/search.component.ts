@@ -1,16 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Search } from '../models/search.model';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatPaginator,
+  MatSort,
+  MatButtonToggleChange
+} from '@angular/material';
 import * as _ from 'lodash';
-
-
+import { throwIfEmpty } from 'rxjs/operators';
+import { Promise } from 'q';
 
 @Component({
   selector: 'abm-search',
@@ -18,30 +28,35 @@ import * as _ from 'lodash';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
   model = new Search('');
   loading: boolean;
   results = [];
   resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
   toAddDataSource = new MatTableDataSource<any>(this.toAdd);
+  filterDataSource = new MatTableDataSource<any>([]);
   language = {};
   searched = false;
+  isFilterVisible = false;
+  filters: any;
   isSelect;
   SortType: any = 'name';
   reverse = false;
   searchColumns: any[];
   addColumns: any[];
+  filterColumns: any[];
   selection = new SelectionModel<any>(true, []);
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
+  @ViewChild('filterPaginator') filterPaginator: MatPaginator;
   @ViewChild(MatSort) resultSort: MatSort;
 
-  constructor(private service: SearchService, private collectionService: CollectionService, private router: Router,
-    private route: ActivatedRoute, private orderPipe: OrderPipe) {
-
-  }
-
-
+  constructor(
+    private service: SearchService,
+    private collectionService: CollectionService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private orderPipe: OrderPipe
+  ) {}
 
   setSortType(value) {
     if (this.SortType === value) {
@@ -56,14 +71,11 @@ export class SearchComponent implements OnInit {
     this.router.navigateByUrl('/addToCollection');
   }
 
-
   createCollection() {
     this.collectionService.toCreate = [];
     this.collectionService.toCreate = this.toAdd;
     this.router.navigateByUrl('/createCollection');
   }
-
-
 
   loadStatus() {
     return this.loading;
@@ -73,11 +85,13 @@ export class SearchComponent implements OnInit {
     this.loading = true;
     this.resultDataSource.data = [];
     const language = '';
-    this.service.getSearchResults(searchQuery, language).subscribe(response => {
+    this.service.getFiltersSearch(searchQuery).subscribe(response => {
       this.resultDataSource.data = response.json();
       this.resultDataSource.data = [...this.resultDataSource.data];
-      setTimeout(() => this.resultDataSource.paginator = this.resultPaginator);
-      setTimeout(() => this.resultDataSource.sort = this.resultSort);
+      setTimeout(
+        () => (this.resultDataSource.paginator = this.resultPaginator)
+      );
+      setTimeout(() => (this.resultDataSource.sort = this.resultSort));
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = false;
       }
@@ -86,10 +100,7 @@ export class SearchComponent implements OnInit {
       this.loading = false;
       this.searched = true;
     });
-
   }
-
-
 
   isProjectSelected() {
     if (!this.resultDataSource.data) {
@@ -99,7 +110,6 @@ export class SearchComponent implements OnInit {
     for (let i = 0; i < this.resultDataSource.data.length; i++) {
       if (this.resultDataSource.data[i].singleSelection === true) {
         return true;
-
       }
     }
     return false;
@@ -132,22 +142,13 @@ export class SearchComponent implements OnInit {
     }
     this.toAdd = [...this.toAdd];
     console.log(this.resultDataSource.data);
-    let index = _.findIndex(this.resultDataSource.data, function (o) {
+    let index = _.findIndex(this.resultDataSource.data, function(o) {
       if (o.id === itemId) {
         return true;
       }
     });
     this.resultDataSource.data[index].singleSelection = false;
   }
-
-  // selectAll() {
-  //   for (let i = 0; i < this.results.length; i++) {
-  //     this.results[i].singleSelection = true;
-  //     this.service.project.push(this.results[i]);
-
-  //   }
-  //   this.toAdd = this.service.project;
-  // }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -156,15 +157,10 @@ export class SearchComponent implements OnInit {
   }
 
   selectDeselectAll() {
-
     this.isSelect = !this.isSelect;
-    console.log('isSelect ' + this.isSelect);
-
-
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.resultDataSource.data.forEach(row => this.selection.select(row));
-
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.resultDataSource.data.forEach(row => this.selection.select(row));
 
     if (this.isAllSelected()) {
       this.service.project = [];
@@ -172,10 +168,8 @@ export class SearchComponent implements OnInit {
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = true;
         this.service.project.push(this.resultDataSource.data[i]);
-
       }
       this.toAdd = [...this.service.project];
-
     } else {
       for (let i = 0; i < this.resultDataSource.data.length; i++) {
         this.resultDataSource.data[i].singleSelection = false;
@@ -184,7 +178,6 @@ export class SearchComponent implements OnInit {
       }
     }
     this.toAdd = [...this.toAdd];
-
   }
 
   select(item) {
@@ -192,9 +185,7 @@ export class SearchComponent implements OnInit {
 
     for (let i = 0; i < this.resultDataSource.data.length; i++) {
       if (this.resultDataSource.data[i].id === item.id) {
-
         if (this.resultDataSource.data[i].singleSelection === true) {
-
           this.service.project.push(item);
           this.toAdd.push(item);
           this.toAdd = [...this.toAdd];
@@ -216,14 +207,12 @@ export class SearchComponent implements OnInit {
   }
 
   getTotalItems() {
-
     return this.toAdd.length;
   }
 
   openSource(item) {
     // window.location.href = item.repositoryUrl;
     window.open(item.repositoryUrl, '_blank');
-
   }
 
   ngOnInit() {
@@ -234,14 +223,68 @@ export class SearchComponent implements OnInit {
     { field: 'size', header: 'Size' },
     { field: 'htmlUrl', header: 'Origin' }
   ]; */
-    this.searchColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
-    this.addColumns = ['name', 'description', 'creationDate', 'size', 'htmlUrl', 'select'];
+    this.searchColumns = [
+      'name',
+      'description',
+      'creationDate',
+      'size',
+      'htmlUrl',
+      'select'
+    ];
+    this.addColumns = [
+      'name',
+      'description',
+      'creationDate',
+      'size',
+      'htmlUrl',
+      'select'
+    ];
+    this.filterColumns = ['filter', 'value', 'operand', 'action'];
     this.toAdd = [];
     this.resultDataSource.data = [];
+    this.getFilter();
+  }
+
+  getFilter() {
+    /* fetchs filter - ebuka */
+    this.service.getFilters().subscribe(resp => {
+      let response = JSON.parse(resp.json());
+      let data = [...response];
+      this.filterDataSource.data = data.map(filter => {
+        return {
+          filter,
+          value: '',
+          operand: '&&'
+        };
+      });
+    });
+    setTimeout(() => {
+      this.filterDataSource.paginator = this.filterPaginator;
+    });
+  }
+
+  filter(filterValue: string) {
+    this.filterDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  toggleOperand(e: MatButtonToggleChange, row: any) {
+    row.operand = e.value;
+  }
+
+  applyFilter(row: any) {
+    this.model.query += this.parseFilter(row);
+    row.value = '';
+  }
+
+  parseFilter(filter: any) {
+    let value = this.model.query;
+    if (value.trim().length < 1) {
+      return `[${filter.filter}] ${filter.value}`;
+    }
+    return `${filter.operand} [${filter.filter}] ${filter.value}`;
   }
 
   applyDataSourceFilter(filterValue: string) {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

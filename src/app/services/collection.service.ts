@@ -106,13 +106,10 @@ export class CollectionService {
 
   }
 
-  getPublicCollections() {
-
+  getPublicCollections(): Observable<any> {
     const data = { 'privateStatus': false };
-    return this.http.get('/rest/collection', { params: data });
-    // .subscribe(
-    // response => { console.log(response.json());
-    // });
+    return this.http.get('/rest/collection', { params: data }).pipe(
+      catchError(this.handleError<any>('getPublicCollections')));
   }
 
   getAllCollections() {
@@ -125,9 +122,10 @@ export class CollectionService {
     return this.http.get('rest/collection', { params: data });
   }
 
-  getPinnedCollections(currentUser) {
+  getPinnedCollections(currentUser): Observable<any>  {
     const data = { 'type': 'collection', 'user': currentUser };
-    return this.http.get('/rest/pin', { params: data });
+    return this.http.get('/rest/pin', { params: data }).pipe(
+      catchError(this.handleError<any>('getPinnedCollections')));
   }
 
   updateCollection(fargCollection) {

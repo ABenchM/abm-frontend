@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { ResetPasswordService } from '../services/reset-password.service';
 import { Route } from '@angular/compiler/src/core';
+import { PasswordReset } from '../models/passwordReset.model';
 
 @Component({
   selector: 'abm-reset-password',
@@ -12,7 +13,7 @@ import { Route } from '@angular/compiler/src/core';
 export class ResetPasswordComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private resetPasswordService: ResetPasswordService) { }
-  model = {};
+  model =  new PasswordReset('', '');
   username = '';
   token = '';
   ngOnInit() {
