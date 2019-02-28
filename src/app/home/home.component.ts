@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort, MatIconModule } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatInputModule } from '@angular/material/input';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,30 +7,40 @@ import { PinService } from '../services/pin.service';
 import { DataServiceService } from '../services/data-service.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { Collection } from '../models/collection.model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'abm-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   pinned: any[] = [];
   public publicCollections: any[] = [];
   loading: boolean;
   disabled: boolean;
-  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin'];
+  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin', 'versions' ];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
-
-
+  dataPub = new MatTableDataSource<any>();
+  dataPin = new MatTableDataSource<any>();
+  expandedElement: any;
+  versions: any[] = [{}];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
+  isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
     private pinService: PinService, private dataService: DataServiceService,
     private orderPipe: OrderPipe) { }
-
-  model = new Search('');
 
   loadPublicCollections() {
     this.loading = true;
