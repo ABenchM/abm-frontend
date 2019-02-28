@@ -39,16 +39,7 @@ flex: 1 100%;
 	  padding: 30px;
   }
 .mat-column-name{
-	width : 30%;
-}
-.mat-column-description{
-	width: 20%;
-}
-.mat-column-creationDate{
-	width: 15%;
-}
-.mat-column-size{
-	width: 15%;
+	width : 70%;
 }
 .mat-column-htmlUrl{
 	width: 10%;

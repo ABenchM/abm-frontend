@@ -6,6 +6,7 @@ import { ToastrService, Toast } from 'ngx-toastr';
 import { CollectionComponent } from '../collection/collection.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommitService } from '../services/commit.service';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'abm-add-to-collection',
@@ -25,7 +26,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
-    private commitService: CommitService) {
+    private commitService: CommitService , private searchService: SearchService) {
     // this.toastr.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -51,8 +52,8 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.updatedVersion = this.version;
     console.log(this.updatedVersion);
-    for (let i = 0; i < this.collectionService.toAdd.length; i++) {
-      console.log(this.collectionService.toAdd[i]);
+    for (let i = 0; i < this.searchService.project.length; i++) {
+      console.log(this.searchService.project[i]);
       const commit: any = {};
       if (this.collectionService.toAdd[i].id === this.commits[i].id) {
         commit.commitId = this.commits[i].commitId;
@@ -107,7 +108,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadUserCollections();
-    this.loadCommits();
+    // this.loadCommits();
   }
 
 

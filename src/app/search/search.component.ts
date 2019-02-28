@@ -84,10 +84,10 @@ export class SearchComponent implements OnInit {
   search(searchQuery) {
     this.loading = true;
     this.resultDataSource.data = [];
-    const language = '';
     this.service.getFiltersSearch(searchQuery).subscribe(response => {
-      this.resultDataSource.data = response.json();
-      this.resultDataSource.data = [...this.resultDataSource.data];
+      this.resultDataSource.data = JSON.parse(response.json());
+       this.resultDataSource.data = [...this.resultDataSource.data];
+       console.log(this.resultDataSource.data[0].metadata.artifactId);
       setTimeout(
         () => (this.resultDataSource.paginator = this.resultPaginator)
       );
@@ -115,13 +115,13 @@ export class SearchComponent implements OnInit {
     return false;
   }
 
-  // deselectAll() {
-  //   for (let i = 0; i < this.results.length; i++) {
-  //     this.results[i].singleSelection = false;
-  //     this.service.project = [];
-  //     this.toAdd = [];
-  //   }
-  // }
+  // // deselectAll() {
+  // //   for (let i = 0; i < this.results.length; i++) {
+  // //     this.results[i].singleSelection = false;
+  // //     this.service.project = [];
+  // //     this.toAdd = [];
+  // //   }
+  // // }
 
   removeCart() {
     this.toAdd = [];
@@ -210,10 +210,10 @@ export class SearchComponent implements OnInit {
     return this.toAdd.length;
   }
 
-  openSource(item) {
-    // window.location.href = item.repositoryUrl;
-    window.open(item.repositoryUrl, '_blank');
-  }
+  // openSource(item) {
+  //   // window.location.href = item.repositoryUrl;
+  //   window.open(item.repositoryUrl, '_blank');
+  // }
 
   ngOnInit() {
     /*   this.searchColumns =  [
@@ -225,17 +225,11 @@ export class SearchComponent implements OnInit {
   ]; */
     this.searchColumns = [
       'name',
-      'description',
-      'creationDate',
-      'size',
       'htmlUrl',
       'select'
     ];
     this.addColumns = [
       'name',
-      'description',
-      'creationDate',
-      'size',
       'htmlUrl',
       'select'
     ];
@@ -279,9 +273,9 @@ export class SearchComponent implements OnInit {
   parseFilter(filter: any) {
     let value = this.model.query;
     if (value.trim().length < 1) {
-      return `[${filter.filter}] ${filter.value}`;
+      return `[${filter.filter}]${filter.value}`;
     }
-    return `${filter.operand} [${filter.filter}] ${filter.value}`;
+    return `${filter.operand}[${filter.filter}]${filter.value}`;
   }
 
   applyDataSourceFilter(filterValue: string) {
