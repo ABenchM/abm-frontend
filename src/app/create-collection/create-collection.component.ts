@@ -71,11 +71,11 @@ export class CreateCollectionComponent implements OnInit {
     // this.project = {
     //   project_id: 'test_project',
     //   version_id: this.version.id,
-    //   source: 'Maven'      
+    //   source: 'Maven'
     // };
 
     this.collection.versions = [];
-    
+
     // this.version.projects = [];
 
     // if (this.repositoryList.length === 0) {
@@ -83,20 +83,20 @@ export class CreateCollectionComponent implements OnInit {
     // }
 
     this.version.projects = [];
-    this.version.projects=this.projects;
-    //console.log(this.projects[0]);
+    this.version.projects = this.projects;
+    // console.log(this.projects[0]);
     // for (let i = 0; i < this.projects.length; i++) {
     //   this.project = {
     //     project_id: 'test_project',
     //     version_id: this.version.id,
-    //     source: 'Maven'      
+    //     source: 'Maven'
     //   };
     //     this.version.projects.push(this.project);
     //  }
-    //this.version.projects = this.projects;
+    // this.version.projects = this.projects;
     //   this.commit.repository = this.repositoryList[i];
     //   this.commit.branchId = this.commit.repository.defaultBranch;
-    
+
     this.collection.versions.push(this.version);
 // }
     this.collectService.createCollection(this.collection).subscribe(response => {

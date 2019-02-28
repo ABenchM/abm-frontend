@@ -71,13 +71,13 @@ export class SearchComponent implements OnInit {
     this.collectionService.toAdd = [];
     this.project = {
       project_id: 'test_project',
-      source: 'Maven'      
+      source: 'Maven'
     };
     this.project2 = {
       project_id: 'test_project2',
-      source: 'Maven'      
+      source: 'Maven'
     };
-    this.toAdd = [this.project,this.project2];
+    this.toAdd = [this.project, this.project2];
     this.collectionService.toAdd = this.toAdd;
     this.router.navigateByUrl('/addToCollection');
   }
@@ -85,13 +85,13 @@ export class SearchComponent implements OnInit {
   createCollection() {
     this.project = {
       project_id: 'test_project',
-      source: 'Maven'      
+      source: 'Maven'
     };
     this.project2 = {
       project_id: 'test_project2',
-      source: 'Maven'      
+      source: 'Maven'
     };
-    this.toAdd = [this.project,this.project2];
+    this.toAdd = [this.project, this.project2];
     this.collectionService.toCreate = [];
     this.collectionService.toCreate = this.toAdd;
     this.router.navigateByUrl('/createCollection');
@@ -102,7 +102,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(searchQuery) {
-    this.loading = true;    
+    this.loading = true;
     // this.resultDataSource.data = [];
     // const language = '';
     // this.service.getFiltersSearch(searchQuery).subscribe(response => {

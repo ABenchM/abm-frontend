@@ -70,7 +70,7 @@ export class ViewComponent implements OnInit {
 
     for (let i = 0; i < this.version.projects.length; i++) {
       if (this.version.projects[i].id === fargCommit.id) {
-        //this.version.projects[i].selectProject = !this.version.projects[i].selectProject;
+        // this.version.projects[i].selectProject = !this.version.projects[i].selectProject;
         break;
       }
 
@@ -80,7 +80,7 @@ export class ViewComponent implements OnInit {
 
   deriveVersion(fargVersion) {
     this.disabled = true;
-    this.service.postDeriveVersion(fargVersion,'test').subscribe(
+    this.service.postDeriveVersion(fargVersion, 'test').subscribe(
       response => {
         if (response.status === 200) {
 
@@ -103,7 +103,7 @@ export class ViewComponent implements OnInit {
 
     }
     this.service.parentVersionId = this.version.id;
-    //this.dataService.repositoryList = this.toCreate;
+    // this.dataService.repositoryList = this.toCreate;
 
     this.router.navigateByUrl('/createCollection');
   }

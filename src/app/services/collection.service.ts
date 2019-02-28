@@ -96,12 +96,12 @@ export class CollectionService {
     );
   }
 
-  postDeriveVersion(version,versionName) {
-    return this.http.post('rest/version/'+versionName, version);
+  postDeriveVersion(version, versionName) {
+    return this.http.post('rest/version/' + versionName, version);
   }
 
-  getVersionParentDetails(versionId){
-    //const data = { 'id': versionId };
+  getVersionParentDetails(versionId) {
+    // const data = { 'id': versionId };
     return this.http.get('/rest/versionDetails/' + versionId);
 
   }

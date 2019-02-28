@@ -21,11 +21,11 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   collection: any = {};
   version: any = {};
   updatedVersion: any = {};
-  //commits: any = [{}];
+  // commits: any = [{}];
   projects: any = [{}];
   project: any = {};
   versions: any[] = [{}];
-    
+
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
     private commitService: CommitService) {
@@ -52,9 +52,9 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
             i = i + 1;
           }
         }
-        if(this.userCollections[j].versions.length <=0){
+        if (this.userCollections[j].versions.length <= 0) {
           this.userCollections.splice(j, 1);
-        }        
+        }
       }
         this.collection = this.userCollections[0];
         this.version = this.collection.versions[0];
@@ -76,13 +76,13 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     // this.project = {
     //   project_id: 'test_project_selected',
     //   version_id: this.version.id,
-    //   source: 'Maven'      
+    //   source: 'Maven'
     // };
     this.projects = this.collectionService.toAdd;
-    //this.projects.push(this.project);
+    // this.projects.push(this.project);
     for (let i = 0; i < this.projects.length; i++) {
-      console.log('debug-->  '+this.projects[i].id);
-      //const project: any = {};
+      console.log('debug-->  ' + this.projects[i].id);
+      // const project: any = {};
       // if (this.collectionService.toAdd[i].id === this.projects[i].id) {
       //   project.id = this.projects[i].id;
       // }

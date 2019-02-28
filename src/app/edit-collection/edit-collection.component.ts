@@ -97,11 +97,11 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  loadParentVersion(parentId){
+  loadParentVersion(parentId) {
     this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
-      if(response.arrayBuffer().byteLength > 0){
-        this.parentCollName= response.json().name;
-        this.parentVersName= response.json().versions[0].name;
+      if (response.arrayBuffer().byteLength > 0) {
+        this.parentCollName = response.json().name;
+        this.parentVersName = response.json().versions[0].name;
       }
     }
     );
@@ -117,11 +117,11 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.version.projects[i].selectProject = true;
     }
     this.loadParentVersion(fargVersion.derivedFrom);
-    
+
   }
   deriveVersion(ver) {
     this.disabled = true;
-    this.service.postDeriveVersion(ver,'test123').subscribe(
+    this.service.postDeriveVersion(ver, 'test123').subscribe(
       response => {
         if (response.status === 200) {
 
@@ -510,9 +510,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     localStorage.removeItem('id');
   }
 
-  isPublic(){
+  isPublic() {
     for (let i = 0; i < this.versions.length; i++) {
-      if (this.versions[i].privateStatus == 0) {
+      if (this.versions[i].privateStatus === 0) {
         return true;
       }
     }
