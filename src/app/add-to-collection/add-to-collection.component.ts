@@ -24,6 +24,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   //commits: any = [{}];
   projects: any = [{}];
   project: any = {};
+  versions: any[] = [{}];
     
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
@@ -36,6 +37,25 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       if (response.status === 200) {
         this.userCollections = response.json();
+        let j: any;
+      for (j = 0; j < this.userCollections.length; j++) {
+        // this.versions = this.userCollections[j].versions;
+        // console.log('versions length ' + this.versions.length);
+        let i = 0;
+        while (i < this.userCollections[j].versions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.userCollections[j].versions[i].privateStatus === false) {
+            console.log('Deleting version ' + this.userCollections[j].versions[i].id);
+            this.userCollections[j].versions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+        if(this.userCollections[j].versions.length <=0){
+          this.userCollections.splice(j, 1);
+        }        
+      }
         this.collection = this.userCollections[0];
         this.version = this.collection.versions[0];
       }
@@ -53,13 +73,13 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.updatedVersion = this.version;
     console.log(this.updatedVersion);
-    this.project = {
-      project_id: 'test_project_selected',
-      version_id: this.version.id,
-      source: 'Maven'      
-    };
-    this.projects = [];
-    this.projects.push(this.project);
+    // this.project = {
+    //   project_id: 'test_project_selected',
+    //   version_id: this.version.id,
+    //   source: 'Maven'      
+    // };
+    this.projects = this.collectionService.toAdd;
+    //this.projects.push(this.project);
     for (let i = 0; i < this.projects.length; i++) {
       console.log('debug-->  '+this.projects[i].id);
       //const project: any = {};

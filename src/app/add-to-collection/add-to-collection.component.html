@@ -45,14 +45,14 @@
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Commit</th>
+            <th>Project ID</th>
+            <th>Source</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let commit of version.commits">
-            <td>{{commit.repository.name}}</td>
-            <td>{{commit.commitId}}</td>
+          <tr *ngFor="let project of version.projects">
+            <td>{{project.id}}</td>
+            <td>{{project.source}}</td>
           </tr>
         </tbody>
 

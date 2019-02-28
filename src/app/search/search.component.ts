@@ -45,6 +45,8 @@ export class SearchComponent implements OnInit {
   searchColumns: any[];
   addColumns: any[];
   filterColumns: any[];
+  project: any = {};
+  project2: any = {};
   selection = new SelectionModel<any>(true, []);
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
   @ViewChild('filterPaginator') filterPaginator: MatPaginator;
@@ -67,11 +69,29 @@ export class SearchComponent implements OnInit {
 
   addAll() {
     this.collectionService.toAdd = [];
+    this.project = {
+      project_id: 'test_project',
+      source: 'Maven'      
+    };
+    this.project2 = {
+      project_id: 'test_project2',
+      source: 'Maven'      
+    };
+    this.toAdd = [this.project,this.project2];
     this.collectionService.toAdd = this.toAdd;
     this.router.navigateByUrl('/addToCollection');
   }
 
   createCollection() {
+    this.project = {
+      project_id: 'test_project',
+      source: 'Maven'      
+    };
+    this.project2 = {
+      project_id: 'test_project2',
+      source: 'Maven'      
+    };
+    this.toAdd = [this.project,this.project2];
     this.collectionService.toCreate = [];
     this.collectionService.toCreate = this.toAdd;
     this.router.navigateByUrl('/createCollection');
@@ -82,24 +102,24 @@ export class SearchComponent implements OnInit {
   }
 
   search(searchQuery) {
-    this.loading = true;
-    this.resultDataSource.data = [];
-    const language = '';
-    this.service.getFiltersSearch(searchQuery).subscribe(response => {
-      this.resultDataSource.data = response.json();
-      this.resultDataSource.data = [...this.resultDataSource.data];
-      setTimeout(
-        () => (this.resultDataSource.paginator = this.resultPaginator)
-      );
-      setTimeout(() => (this.resultDataSource.sort = this.resultSort));
-      for (let i = 0; i < this.resultDataSource.data.length; i++) {
-        this.resultDataSource.data[i].singleSelection = false;
-      }
-      // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
-      // this.searchResults.count().then(count => this.itemsCount = count);
-      this.loading = false;
-      this.searched = true;
-    });
+    this.loading = true;    
+    // this.resultDataSource.data = [];
+    // const language = '';
+    // this.service.getFiltersSearch(searchQuery).subscribe(response => {
+    //   this.resultDataSource.data = response.json();
+    //   this.resultDataSource.data = [...this.resultDataSource.data];
+    //   setTimeout(
+    //     () => (this.resultDataSource.paginator = this.resultPaginator)
+    //   );
+    //   setTimeout(() => (this.resultDataSource.sort = this.resultSort));
+    //   for (let i = 0; i < this.resultDataSource.data.length; i++) {
+    //     this.resultDataSource.data[i].singleSelection = false;
+    //   }
+    //   // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
+    //   // this.searchResults.count().then(count => this.itemsCount = count);
+    //   this.loading = false;
+    //   this.searched = true;
+    // });
   }
 
   isProjectSelected() {

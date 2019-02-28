@@ -195,17 +195,17 @@
   <!-- Selected project list -->
   <div style="max-height:1000px;overflow:auto">
     <h5 class="float-left" style="margin-top:0px" *ngIf="getTotalItems() > 0">
-      {{ getTotalItems() | projectCount }} Selected
+      <!-- {{ getTotalItems() | projectCount }} Selected -->
     </h5>
 
-    <div class="col-lg-12 text-right box-padding" *ngIf="getTotalItems() > 0">
+    <div class="col-lg-12 text-right box-padding"  > 
       <button mat-raised-button (click)="addAll()">
         Add Selected Projects to a existing Collection
       </button>
       <button mat-raised-button (click)="createCollection()">
         Create New Collection
       </button>
-      <button mat-raised-button (click)="removeCart()">Remove all</button>
+      <!-- <button mat-raised-button (click)="removeCart()">Remove all</button> -->
     </div>
 
     <div class="col-lg-12" *ngIf="getTotalItems() > 0" style="max-height:600px">
