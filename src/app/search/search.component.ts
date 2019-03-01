@@ -267,15 +267,29 @@ export class SearchComponent implements OnInit {
 
   applyFilter(row: any) {
     this.model.query += this.parseFilter(row);
+    console.log(this.parseFilter(row))
     row.value = '';
   }
 
-  parseFilter(filter: any) {
+
+  searchFilter(searchQuery: string) {
+    this.loading = true;
+    this.resultDataSource.data = [];
+    this.service.getFiltersSearch(searchQuery).subscribe(response => {
+      console.log(response.json());
+      this.loading = false;
+      this.searched = true;
+    });
+  }
+
+  parseFilter(row: any) {
     let value = this.model.query;
+    //remove spaces between filter values
+    row.value = row.value.split(" ").join("")
     if (value.trim().length < 1) {
-      return `[${filter.filter}]${filter.value}`;
-    }
-    return `${filter.operand}[${filter.filter}]${filter.value}`;
+      return `[${row.filter}]${row.value}`;
+    } 
+    return `${row.operand}[${row.filter}]${row.value}`;
   }
 
   applyDataSourceFilter(filterValue: string) {
