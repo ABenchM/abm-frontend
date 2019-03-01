@@ -17,6 +17,8 @@ import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatB
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
+  let filter : string;
+  const selectedfilter : any = {filter: 'if_icmpgt (opcode:163)', value:'< 40', operand:'&&'}
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,6 +37,18 @@ describe('SearchComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+ 
+  fit("should return a parsed filter without operator if search textfield is empty", () => {
+   component.model.query = ''
+   filter = component.parseFilter(selectedfilter);
+   expect(filter).toEqual("[if_icmpgt (opcode:163)]<40") 
+  })
+
+  fit("should return a parsed filter with operator if a filter has been previously applied to the search textfield", () => {
+   component.model.query = '[if_icmpgt (opcode:163)]>34'
+   filter = component.parseFilter(selectedfilter);
+   expect(filter).toEqual("[if_icmpgt (opcode:163)]>34&&[if_icmpgt (opcode:163)]<40") 
+  })
 
   fit('should create', () => {
     expect(component).toBeTruthy();
