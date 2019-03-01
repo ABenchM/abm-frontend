@@ -30,6 +30,7 @@ import { Promise } from 'q';
 export class SearchComponent implements OnInit {
   model = new Search('');
   loading: boolean;
+  onerror : boolean = false;
   results = [];
   resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
@@ -224,13 +225,15 @@ export class SearchComponent implements OnInit {
     { field: 'htmlUrl', header: 'Origin' }
   ]; */
     this.searchColumns = [
-      'name',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.addColumns = [
-      'name',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.filterColumns = ['filter', 'value', 'operand', 'action'];
@@ -267,18 +270,33 @@ export class SearchComponent implements OnInit {
 
   applyFilter(row: any) {
     this.model.query += this.parseFilter(row);
-    console.log(this.parseFilter(row))
     row.value = '';
   }
 
 
   searchFilter(searchQuery: string) {
     this.loading = true;
+    this.onerror = false;
     this.resultDataSource.data = [];
-    this.service.getFiltersSearch(searchQuery).subscribe(response => {
-      console.log(response.json());
+    this.service.getFiltersSearch(searchQuery).subscribe(resp => {
+      let response = JSON.parse(resp.json());
+       let data = [...response];
+      this.resultDataSource.data = data.map(result =>{
+        return {
+          id: result.id,
+          source: result.metadata.source,
+          metric: result.metricResults,
+          singleSelection : false
+        }
+      })
+    setTimeout(()=>  console.log(this.resultDataSource.data));
+    setTimeout(() => (this.resultDataSource.paginator = this.resultPaginator));
+    this.loading = false;
+    this.searched = true;
+    },
+    error => {
+      this.onerror = true;
       this.loading = false;
-      this.searched = true;
     });
   }
 
