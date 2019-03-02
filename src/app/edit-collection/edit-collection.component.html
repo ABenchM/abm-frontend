@@ -1,5 +1,4 @@
 <div class="container-fluid" *ngIf="!loading">
-
   <form>
     <div class="form-group">
       <label for="id">Collection Id</label>
@@ -35,11 +34,13 @@
           {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
+      
       <li class="dropdown-item">
-        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version
+        <button class="dropdown-item" (click)="openDialog(version)">Derive new version from current version
           {{latestVersion.number}}</button>
       </li>
     </ul>
+ 
   </span>
 
   <div class="card-body">

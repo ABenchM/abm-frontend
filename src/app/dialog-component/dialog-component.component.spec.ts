@@ -4,7 +4,7 @@ import { DialogComponentComponent } from './dialog-component.component';
 import { FormsModule } from '@angular/forms';
 import { DialogService } from 'ng2-bootstrap-modal';
 
-describe('DialogComponentComponent', () => {
+describe('ComponentComponent', () => {
   let component: DialogComponentComponent;
   let fixture: ComponentFixture<DialogComponentComponent>;
 
