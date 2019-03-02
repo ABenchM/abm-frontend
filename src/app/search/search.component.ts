@@ -272,8 +272,8 @@ export class SearchComponent implements OnInit {
 
   parseFilter(row: any) {
     let value = this.model.query;
-    //remove spaces between filter values
-    row.value = row.value.split(" ").join("")
+    // remove spaces between filter values
+    row.value = row.value.split(' ').join('');
     if (value.trim().length < 1) {
       return `[${row.filter}]${row.value}`;
     }
