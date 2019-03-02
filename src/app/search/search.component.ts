@@ -30,6 +30,7 @@ import { Promise } from 'q';
 export class SearchComponent implements OnInit {
   model = new Search('');
   loading: boolean;
+  onSearchError = false;
   results = [];
   resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
@@ -83,22 +84,29 @@ export class SearchComponent implements OnInit {
 
   search(searchQuery) {
     this.loading = true;
+    this.onSearchError = false;
     this.resultDataSource.data = [];
-    this.service.getFiltersSearch(searchQuery).subscribe(response => {
-      this.resultDataSource.data = JSON.parse(response.json());
-       this.resultDataSource.data = [...this.resultDataSource.data];
-       console.log(this.resultDataSource.data[0].metadata.artifactId);
+    this.service.getFiltersSearch(searchQuery).subscribe(resp => {
+      let response = JSON.parse(resp.json());
+      let data = [...response];
+      this.resultDataSource.data = data.map(result => {
+       return {
+         id: result.id,
+         source: result.metadata.source,
+         metric: result.metricResults,
+         singleSelection : false
+       };
+     });
       setTimeout(
         () => (this.resultDataSource.paginator = this.resultPaginator)
       );
       setTimeout(() => (this.resultDataSource.sort = this.resultSort));
-      for (let i = 0; i < this.resultDataSource.data.length; i++) {
-        this.resultDataSource.data[i].singleSelection = false;
-      }
-      // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
-      // this.searchResults.count().then(count => this.itemsCount = count);
       this.loading = false;
       this.searched = true;
+    },
+    error => {
+      this.onSearchError = true;
+      this.loading = false;
     });
   }
 
@@ -224,13 +232,15 @@ export class SearchComponent implements OnInit {
     { field: 'htmlUrl', header: 'Origin' }
   ]; */
     this.searchColumns = [
-      'name',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.addColumns = [
-      'name',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.filterColumns = ['filter', 'value', 'operand', 'action'];
