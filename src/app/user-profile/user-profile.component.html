@@ -108,9 +108,9 @@
     <div class="form-group">
       <label for="email">Email</label>
       <div class="input-group mb3">
-        <!-- <div class="input-group-prepend">
+        <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">@</span>
-        </div> -->
+        </div>
 <input #emailref="ngModel" placeholder="Enter Email address" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
   id="email" name="email" required [(ngModel)]="model.email">
 </div>
@@ -147,7 +147,7 @@
       </label>
       <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="oldPassword"
         required>
-      <!-- <div *ngIf="oldpassword.dirty && !check" class="alert alert-danger"> Old password is incorrect </div> -->
+     
     </div>
 
 
