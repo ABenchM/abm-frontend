@@ -280,12 +280,14 @@ export class SearchComponent implements OnInit {
     row.value = '';
   }
 
-  parseFilter(filter: any) {
+  parseFilter(row: any) {
     let value = this.model.query;
+    // remove spaces between filter values
+    row.value = row.value.split(' ').join('');
     if (value.trim().length < 1) {
-      return `[${filter.filter}]${filter.value}`;
+      return `[${row.filter}]${row.value}`;
     }
-    return `${filter.operand}[${filter.filter}]${filter.value}`;
+    return `${row.operand}[${row.filter}]${row.value}`;
   }
 
   applyDataSourceFilter(filterValue: string) {
