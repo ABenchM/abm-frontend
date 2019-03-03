@@ -14,9 +14,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatGridListModule} from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule} from '@angular/material';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
 import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule} from '@angular/material';
+
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -213,7 +215,8 @@ const routes: Routes = [
     MatSortModule,
     MatInputModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonToggleModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
