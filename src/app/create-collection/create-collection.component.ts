@@ -34,17 +34,17 @@ export class CreateCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let i = 0; i < this.repositoryList.length; i++) {
-   this.commits[i] = {};
-      this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
-        res => {
-          if (res.status === 200) {
-            this.commits[i].commitId = res.json()[0].commitId;
-            this.commits[i].id = this.repositoryList[i].id;
-          }
-        }
-      );
-    }
+  //   for (let i = 0; i < this.repositoryList.length; i++) {
+  //  this.commits[i] = {};
+  //     this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
+  //       res => {
+  //         if (res.status === 200) {
+  //           this.commits[i].commitId = res.json()[0].commitId;
+  //           this.commits[i].id = this.repositoryList[i].id;
+  //         }
+  //       }
+  //     );
+  //   }
 
   }
 
@@ -66,9 +66,9 @@ export class CreateCollectionComponent implements OnInit {
     this.collection.versions = [];
     this.collection.versions.push(this.version);
 
-    if (this.repositoryList.length === 0) {
-      // To-DO NgCart feature
-    }
+    // if (this.repositoryList.length === 0) {
+    //   // To-DO NgCart feature
+    // }
 
     this.version.commits = [];
     for (let i = 0; i < this.repositoryList.length; i++) {

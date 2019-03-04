@@ -415,6 +415,12 @@ id;
 
   }
 
+  addProject() {
+
+    this.router.navigateByUrl('/search');
+
+  }
+
   deleteProject(fargCommit) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
