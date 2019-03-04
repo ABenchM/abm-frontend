@@ -15,12 +15,18 @@ flex: 1 100%;
 .column.is-10{
 	flex:0 1 83.333%;
 	}
+	.column.is-9{
+		flex: 0 1 74.5%;
+	}
 	.column.is-8{
 		flex:0 1 66.666%;
 		
 		}
 		.column.is-4{
 			flex: 0 1 33.333%;
+			}
+			.column.is-3{
+				flex: 0 1 25%;
 			}
 			.column.is-2{
 				flex: 0 1 16.666%;
@@ -175,4 +181,16 @@ flex: 1 100%;
 	color: red;
 	padding-top:4px;
 	position:absolute;
+}
+
+.btn-mrgn{
+	margin: 0.75em 0 0.25em 0.25em;
+}
+
+.search-input{
+	line-height: 4em;
+	margin-right: 0.25em;
+}
+.searh-btn-lh{
+	line-height : 3.5em;
 }
