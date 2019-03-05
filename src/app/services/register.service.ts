@@ -11,24 +11,30 @@ import 'rxjs/Observable';
 @Injectable()
 export class Register {
     static invalidUsername: boolean;
+    static emailExists: boolean;
+
     constructor(private http: Http) {
         Register.invalidUsername = false;
+        Register.emailExists = false;
     }
 
     private extractData(res: Response) {
-        const body = res.json();
-        if (body === false) {
+        const body: String = res.json();
+        if (body.indexOf('username exists') > -1) {
             Register.invalidUsername = true;
-            return body;
-        } else {
-            Register.invalidUsername = false;
-            return body.fields || {};
+        } else if (body.indexOf('email exists') > -1) {
+            Register.emailExists = true;
+            // return body.fields || {};
         }
 
 
     }
     get checkUsername() {
         return Register.invalidUsername;
+    }
+
+    get checkEmail() {
+        return Register.emailExists;
     }
     private handleError(error: any) {
 
@@ -71,7 +77,7 @@ export class Register {
         const data = { username: currentUser };
         return this.http.delete('/rest/username/' + currentUser);
     }
-// restAPi method to get the user details
+    // restAPi method to get the user details
     getUserDetails(currentUser) {
         const data = { username: currentUser };
         return this.http.get('/rest/username/', { params: data });
