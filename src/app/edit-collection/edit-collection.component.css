@@ -11,3 +11,23 @@
 .thead-gray {
     color: gray;
 }
+
+.material-form {
+    min-width: 150px;
+    width: 100%;
+  }
+  
+  .material-input-width {
+    width: 100%;
+  }
+  
+  .btn-mrgn{
+	margin: 0.75em 0 0.25em 0.65em;
+}
+
+.btn-mrgn:first{
+    margin :  0.75em 0 0.25em 0em;
+}
+.card-body{
+    padding: 1.25em 0;
+}
