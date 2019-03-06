@@ -8,6 +8,9 @@ import {Component, DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
+   MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -19,7 +22,10 @@ describe('RegisterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [ FormsModule , HttpModule , RouterTestingModule ],
+      imports: [ FormsModule , HttpModule , RouterTestingModule, MatMenuModule,
+        MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
+        MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
+        BrowserAnimationsModule ],
       providers : [Register]
     });
     // .compileComponents();
