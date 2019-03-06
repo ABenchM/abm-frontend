@@ -10,6 +10,11 @@ import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+import {
+  MatFormFieldModule, MatDialogModule, MatMenuModule, MatIconModule, MatPaginatorModule,
+  MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ViewComponent', () => {
   let component: ViewComponent;
@@ -17,11 +22,14 @@ describe('ViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewComponent ],
-      imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, ToastrModule.forRoot()],
-      providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService, HttpClient, HttpHandler ]
+      declarations: [ViewComponent],
+      imports: [HttpModule, FormsModule, ReactiveFormsModule, MatDialogModule, MatMenuModule, MatIconModule,
+        MatFormFieldModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatTableModule, MatInputModule,
+        MatCheckboxModule, MatButtonToggleModule,
+        BrowserAnimationsModule, RouterTestingModule, ToastrModule.forRoot()],
+      providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService, HttpClient, HttpHandler]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

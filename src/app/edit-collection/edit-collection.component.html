@@ -13,6 +13,8 @@
       <textarea rows='3' id="description" matInput [(ngModel)]="collection[0].description" name="description" type="description"
         class="form-control">
 
+
+
       </textarea>
     </mat-form-field>
     <div class="form-actions float-right">
@@ -53,7 +55,8 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
-      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
+      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [disabled]="!version.privateStatus" (click)="addProject()">Add
+        Project</button>
 
       <button mat-raised-button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
         (click)="removeVersion(version.id)">
@@ -117,8 +120,8 @@
     <ng-container matColumnDef="check">
       <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell mat-cell *matCellDef="let commit" class="view">
-        <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
-          id="{{commit.repository.id}}" />
+        <mat-checkbox [hidden]="version.frozen" [(ngModel)]="commit.selectProject" name="{{commit.repository.name}}" id="{{commit.repository.id}}">
+        </mat-checkbox>
       </mat-cell>
     </ng-container>
 
