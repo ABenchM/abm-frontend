@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public invalidEmail: boolean;
+  public emailExists: boolean;
   public invalidUsername: boolean;
   public cannotContainSpace: boolean;
   public loading: boolean;
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.invalidUsername = this.register.checkUsername;
-          if (this.invalidUsername === false) {
+          this.emailExists = this.register.checkEmail;
+          if (this.invalidUsername === false && this.emailExists === false) {
             this.router.navigateByUrl('/register-success');
           }
         },

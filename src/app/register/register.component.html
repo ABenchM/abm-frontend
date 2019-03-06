@@ -8,7 +8,8 @@
 
     <div class="form-group" [class.invalid]="username.invalid && username.dirty">
       <label class="control-label required" for="username"> Username</label>
-      <input #username="ngModel" type="text" class="form-control" (blur)="checkSpace(username)" name="username" required [(ngModel)]="model.username" (ngModelChange)="resetUsername($event)">
+      <input #username="ngModel" type="text" class="form-control" (blur)="checkSpace(username)" name="username"
+        required [(ngModel)]="model.username" (ngModelChange)="resetUsername($event)">
       <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
       <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
       <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
@@ -22,9 +23,12 @@
 
     <div class="form-group" [class.invalid]="confirmpassword.dirty && (model.password != model.confirmpassword)">
       <label class="control-label required" for="confirmpassword">Confirm Password</label>
-      <input #confirmpassword="ngModel" type="password" class="form-control" name="confirmpassword" required [(ngModel)]="model.confirmpassword">
-      <div *ngIf="confirmpassword.touched && confirmpassword.invalid" class="alert alert-danger">Confirm Password field is required</div>
-      <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">password do not match</div>
+      <input #confirmpassword="ngModel" type="password" class="form-control" name="confirmpassword" required
+        [(ngModel)]="model.confirmpassword">
+      <div *ngIf="confirmpassword.touched && confirmpassword.invalid" class="alert alert-danger">Confirm Password field
+        is required</div>
+      <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">password
+        do not match</div>
     </div>
 
     <hr>
@@ -43,7 +47,8 @@
 
     <div class="form-group">
       <label class="control-label required" for="affiliation"> Affiliation</label>
-      <input #affiliation="ngModel" type="text" class="form-control" placeholder="Organization/Institution belongs to..." name="affiliation" required [(ngModel)]="model.affiliation">
+      <input #affiliation="ngModel" type="text" class="form-control" placeholder="Organization/Institution belongs to..."
+        name="affiliation" required [(ngModel)]="model.affiliation">
       <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger">Affiliation is required</div>
     </div>
 
@@ -53,8 +58,10 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">@</span>
         </div>
-        <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" required [(ngModel)]="model.email">
+        <input #emailref="ngModel" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          id="email" name="email" required [(ngModel)]="model.email">
       </div>
+      <div *ngIf="emailExists" class="alert alert-danger">Email already exists</div>
       <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
         <div [hidden]="emailref.errors?.pattren">
           <span class="help-block"> Enter a valid email address </span>
