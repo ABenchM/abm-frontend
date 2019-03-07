@@ -1,4 +1,5 @@
 <div class="container-fluid" *ngIf="!loading">
+    Derived From:{{parentCollName}}->{{parentVersName}}
   <form>
     <div class="form-group">
       <label for="id">Collection Id</label>
@@ -37,21 +38,20 @@
       
       <li class="dropdown-item">
         <button class="dropdown-item" (click)="openDialog(version)">Derive new version from current version
-          {{latestVersion.number}}</button>
+          {{version.number}}</button>
       </li>
     </ul>
  
   </span>
 
   
-  <div class="card-body">
-    Derived From:{{parentCollName}}->{{parentVersName}}
+  <div class="card-body">   
 
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
       <!-- <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button> -->
-      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
+      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="addProject(version)">Add Project</button>
 
       <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>

@@ -80,7 +80,7 @@ export class ViewComponent implements OnInit {
 
   deriveVersion(fargVersion) {
     this.disabled = true;
-    this.service.postDeriveVersion(fargVersion, 'test').subscribe(
+    this.service.postDeriveVersion(fargVersion).subscribe(
       response => {
         if (response.status === 200) {
 

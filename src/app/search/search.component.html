@@ -139,13 +139,14 @@
     </h5>
 
     <div class="col-lg-12 text-right box-padding" *ngIf="getTotalItems() > 0">
-      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" (click)="addAll()">
+      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" *ngIf="!isFromOtherPage()" (click)="addAll()">
         Add Selected Projects to a existing Collection
       </button>
-      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" (click)="createCollection()">
+      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" *ngIf="!isFromOtherPage()" (click)="createCollection()">
         Create New Collection
       </button>
-      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" (click)="removeCart()">Remove all</button>
+      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" *ngIf="!isFromOtherPage()" (click)="removeCart()">Remove all</button>
+      <button mat-raised-button class="btn btn-success btn-mrgn btn-sm align-middle" *ngIf="isFromOtherPage()" (click)="addProjects()">Add to Version</button>
     </div>
 
     <div class="col-lg-12" *ngIf="getTotalItems() > 0" style="max-height:600px">

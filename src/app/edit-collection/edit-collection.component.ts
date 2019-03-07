@@ -110,17 +110,14 @@ id;
     );
   }
 
-  selectCommit(fargCommit) {
-
-    this.openCommitModal(fargCommit);
-  }
   selectVersion(fargVersion) {
     this.version = fargVersion;
+    this.latestVersion = fargVersion;
     // for (let i = 0; i < this.version.projects.length; i++) {
     //   this.version.projects[i].selectProject = true;
     console.log(fargVersion);
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = true;
     }
     this.loadParentVersion(fargVersion.derivedFrom);
 
@@ -145,11 +142,12 @@ id;
 
 
   }
+
   deriveVersion(ver) {
 
     console.log(ver);
     this.disabled = true;
-    this.service.postDeriveVersion(ver, 'test123').subscribe(
+    this.service.postDeriveVersion(ver).subscribe(
       response => {
         if (response.status === 200) {
 
@@ -157,6 +155,7 @@ id;
           this.versions.push(this.derivedVersion);
           this.version = this.derivedVersion;
           this.latestVersion = this.derivedVersion;
+          this.loadParentVersion(this.version.derivedFrom);
 
         }
       }
@@ -164,75 +163,6 @@ id;
     this.disabled = false;
   }
 
-
-  // unfreeze(fargversion) {
-  //   this.disableBuild = true;
-  //   this.service.getBuild(fargversion).subscribe(
-  //    response => {
-  //      const buildResult = response.json();
-  //      if (buildResult.status === 'RUNNING' || buildResult.status === 'WAITING' ) {
-  //             const repoId =  undefined;
-  //             this.sendMsg({msg: 'listen', id: buildResult.id});
-  //             console.log('sending command');
-  //             this.sendMsg({msg: 'cancel', id: buildResult.id});
-  //      } else {
-  //          this.deleteBuild(fargversion);
-  //      }
-  //    }
-  //    );
-  //   this.disableBuild = false;
-  // }
-
-  deleteBuild(fargversion) {
-    this.service.deleteBuild(fargversion).subscribe(response => {
-
-      if (response.status === 200) {
-        this.version = fargversion;
-        this.version.frozen = false;
-      }
-
-    });
-  }
-
-  runFilter(fargversion) {
-
-    this.service.getBuild(fargversion).subscribe(
-      response => {
-        if (response.status === 200) {
-          const buildResult = response.json();
-          if (buildResult.status === 'RUNNING') {
-            this.toastr.error('Build is in progress, try again later');
-          } else {
-            this.version.filtered = true;
-            this.dataService.setRunning(true);
-            this.openHermesModal();
-          }
-        }
-      }
-    );
-
-  }
-
-
-  openHermesModal() {
-    const modalRef = this.modalService.open(ModalHermesComponent, { size: 'lg' });
-    modalRef.componentInstance.version = this.version;
-    modalRef.componentInstance.collection = this.collection;
-
-
-  }
-
-  openCommitModal(commit) {
-    const modalRef = this.modalService.open(CommitSelectorComponent, { size: 'lg' });
-    modalRef.componentInstance.commit = commit;
-
-  }
-
-
-  // sendMsg(message) {
-  //   console.log('Message from client: ', message);
-  //   this.messageService.messages.next(message);
-  // }
 
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
@@ -244,15 +174,6 @@ id;
         if (isConfirmed) {
 
           this.version.privateStatus = false;
-          // let countPublicVersions = 0;
-          // for (let i = 0; i < fargCollection.versions.length; i++) {
-          //   if (fargCollection.versions[i].privateStatus === 0) {
-          //     countPublicVersions++;
-          //   }
-          // }
-          // if (countPublicVersions === fargCollection.versions.length) {
-          //   fargCollection.privateStatus = false;
-          // }
 
           this.service.updateCollection(fargCollection).subscribe(
             response => {
@@ -344,97 +265,15 @@ id;
     }, 10000);
     this.saving = false;
   }
-  addBuild() {
-
-    let targetTab = this.buildService.builds.findIndex(this.findTab, this.version);
-    if (targetTab < 0) {
-      this.buildService.builds.push({
-        'id': this.version.id, 'name': this.collection[0].name,
-        'versionNum': this.version.number, 'progress': 0, 'buildStatus': '', 'hidden': false
-      });
-      targetTab = this.buildService.builds.length - 1;
-      this.getBuildProcess(this.version.id, targetTab);
-    } else {
-      this.buildService.builds[targetTab].hidden = false;
-
-    }
-    this.buildService.initialSelection = this.buildService.builds[targetTab];
-
-    const modalRef = this.modalService.open(ModalBuildViewerComponent, { size: 'lg' });
-    modalRef.componentInstance.showing = this.buildService.initialSelection;
-    modalRef.componentInstance.tabs = this.buildService.builds;
-
-  }
-
-  getBuildProcess(id, targetTab) {
-    this.buildService.getBuild(id).subscribe(
-      res => {
-        if (res.status === 200) {
-          const build = res.json();
-          let progress = 0;
-          if (build.status === 'RUNNING') {
-            for (let i = 0; i < build.projectBuilds.length; i++) {
-              const buildProject = build.projectBuilds[i];
-              for (let j = 0; j < buildProject.buildSteps.length; j++) {
-                if (buildProject.buildSteps[j].status === 'IN_PROGRESS') {
-                  progress = i / build.projectBuilds.length;
-                }
-              }
-            }
-          } else if (build.status === 'FINISHED') {
-            progress = 1;
-          }
-          this.buildService.builds[targetTab].progress = progress;
-          this.buildService.builds[targetTab].buildStatus = build.status;
-          this.buildService.addListener(build.id);
-        }
-      }
-    );
-  }
-
-
-
+  
   findTab(item) {
     return (item.id === this.id);
   }
 
-  build() {
-    let count = 0;
-    for (let i = 0; i < this.version.commits.length; i++) {
+  
 
-      if (this.version.commits[i].selectProject === false) {
-        count = count + 1;
-
-      }
-
-    }
-    if (count === this.version.commits.length) {
-      this.toastr.error('No Project has been selected. Please select atleast one project to build the collection');
-    } else {
-      this.buildService.postBuild(this.version).subscribe(
-        response => {
-          if (response.status === 200) {
-            const buildId = response.json();
-            this.buildprojects.frozen = true;
-            this.version.frozen = true;
-            this.buildService.builds.push({
-              'id': this.version.id, 'name': this.collection[0].name, 'versionNum': this.version.number,
-              'progress': 0, 'buildStatus': 'RUNNING', 'hidden': false
-            });
-            const targetTab = this.buildService.builds.length - 1;
-            this.getBuildProcess(this.version.id, targetTab);
-          } else if (response.status === 403) {
-            this.router.navigateByUrl('/login');
-          }
-        }
-
-      );
-    }
-
-  }
-
-  addProject() {
-
+  addProject(version) {
+    this.service.toAddVersion = version;
     this.router.navigateByUrl('/search');
 
   }
@@ -475,6 +314,7 @@ id;
     this.service.updateCollection(fargCollection).subscribe(
       response => {
         if (response.status === 200) {
+          this.toastr.success('Changes saved successfully');
           this.router.navigateByUrl('/editCollection/' + fargCollection.id);
         }
       }
@@ -487,49 +327,6 @@ id;
     this.router.navigateByUrl('/collection');
   }
 
-  showHermesResults(fargversion) {
-    this.hermesService.getHermesStatus(fargversion.id).subscribe(
-      response => {
-        if (response.json().status === 'RUNNING') {
-          this.toastr.error('Hermes process is still running');
-        } else if (response.json().status === 'FINISHED') {
-          this.openHermesViewerModal();
-        }
-      }
-    );
-
-  }
-
-  openHermesViewerModal() {
-    const modalRef = this.modalService.open(HermesViewerComponent, { size: 'lg' });
-    modalRef.componentInstance.version = this.version;
-  }
-
-  removeFilter(fargversion) {
-
-    this.loading = true;
-    this.version.filtered = false;
-    this.hermesService.getHermesStatus(fargversion.id).subscribe(
-      response => {
-        if (response.json().status === 'RUNNING') {
-          this.toastr.error('Hermes is in progress, Please try again later');
-        } else {
-          this.hermesService.deleteHermes(response.json().id).subscribe(
-            data => {
-              if (data.status === 200) {
-                this.toastr.success('Hermes Results succesfully unfiltered');
-              } else {
-                this.toastr.error('Failed with [' + data.status + '] ' + data.statusText);
-              }
-            }
-          );
-        }
-      }
-    );
-
-    this.loading = false;
-
-  }
 
   ngOnInit() {
 

@@ -19,6 +19,7 @@ export class CollectionService {
   toCreate: any[];
   toAdd: any[];
   parentVersionId: any;
+  toAddVersion: any;
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   private onSuccess(res: Response) {
@@ -96,8 +97,8 @@ export class CollectionService {
     );
   }
 
-  postDeriveVersion(version, versionName) {
-    return this.http.post('rest/version/' + versionName, version);
+  postDeriveVersion(version) {
+    return this.http.post('/rest/version/', version);
   }
 
   getVersionParentDetails(versionId) {

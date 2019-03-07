@@ -89,14 +89,16 @@ export class CreateCollectionComponent implements OnInit {
     // }
 
     this.version.projects = [];
-    this.version.projects = this.projects;
+    //this.version.projects = this.projects;
     // console.log(this.projects[0]);
-    // for (let i = 0; i < this.projects.length; i++) {
-    //   this.project = {
-    //     project_id: 'test_project',
-    //     version_id: this.version.id,
-    //     source: 'Maven'
-    //   };
+    for (let i = 0; i < this.projects.length; i++) {
+      this.project = {
+        project_id: this.projects[i].id,
+        //version_id: this.version.id,
+        source: this.projects[i].source
+      };
+      this.version.projects.push(this.project);
+    }
     //     this.version.projects.push(this.project);
     //  }
     // this.version.projects = this.projects;

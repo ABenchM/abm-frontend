@@ -12,6 +12,7 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ToastrService, Toast } from 'ngx-toastr';
 import {
   MatTableDataSource,
   MatPaginator,
@@ -46,6 +47,7 @@ export class SearchComponent implements OnInit {
   searchColumns: any[];
   addColumns: any[];
   filterColumns: any[];
+  updatedVersion: any = {};
   project: any = {};
   project2: any = {};
   selection = new SelectionModel<any>(true, []);
@@ -58,7 +60,8 @@ export class SearchComponent implements OnInit {
     private collectionService: CollectionService,
     private router: Router,
     private route: ActivatedRoute,
-    private orderPipe: OrderPipe
+    private orderPipe: OrderPipe,
+    private toastr: ToastrService,
   ) {}
 
   setSortType(value) {
@@ -70,29 +73,11 @@ export class SearchComponent implements OnInit {
 
   addAll() {
     this.collectionService.toAdd = [];
-    this.project = {
-      project_id: 'test_project',
-      source: 'Maven'
-    };
-    this.project2 = {
-      project_id: 'test_project2',
-      source: 'Maven'
-    };
-    this.toAdd = [this.project, this.project2];
     this.collectionService.toAdd = this.toAdd;
-    this.router.navigateByUrl('/addToCollection');
+    this.router.navigateByUrl('/addToCollection')
   }
 
   createCollection() {
-    this.project = {
-      project_id: 'test_project',
-      source: 'Maven'
-    };
-    this.project2 = {
-      project_id: 'test_project2',
-      source: 'Maven'
-    };
-    this.toAdd = [this.project, this.project2];
     this.collectionService.toCreate = [];
     this.collectionService.toCreate = this.toAdd;
     this.router.navigateByUrl('/createCollection');
@@ -104,23 +89,6 @@ export class SearchComponent implements OnInit {
 
   search(searchQuery) {
     this.loading = true;
-    // this.resultDataSource.data = [];
-    // const language = '';
-    // this.service.getFiltersSearch(searchQuery).subscribe(response => {
-    //   this.resultDataSource.data = response.json();
-    //   this.resultDataSource.data = [...this.resultDataSource.data];
-    //   setTimeout(
-    //     () => (this.resultDataSource.paginator = this.resultPaginator)
-    //   );
-    //   setTimeout(() => (this.resultDataSource.sort = this.resultSort));
-    //   for (let i = 0; i < this.resultDataSource.data.length; i++) {
-    //     this.resultDataSource.data[i].singleSelection = false;
-    //   }
-    //   // this.searchResults.query({ offset: 0 }).then(items => this.results = items);
-    //   // this.searchResults.count().then(count => this.itemsCount = count);
-    //   this.loading = false;
-    //   this.searched = true;
-    // });
     this.onSearchError = false;
     this.resultDataSource.data = [];
     this.service.getFiltersSearch(searchQuery).subscribe(resp => {
@@ -145,6 +113,7 @@ export class SearchComponent implements OnInit {
       this.onSearchError = true;
       this.loading = false;
     });
+
   }
 
   isProjectSelected() {
@@ -329,5 +298,50 @@ export class SearchComponent implements OnInit {
 
   applyDataSourceFilter(filterValue: string) {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  isFromOtherPage(){
+    if(this.collectionService.toAddVersion == null){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  addProjects(){
+    this.loading = true;
+    this.updatedVersion = this.collectionService.toAddVersion;
+    console.log(this.updatedVersion);
+    //this.projects = this.collectionService.toAdd;
+    // this.projects.push(this.project);
+    for (let i = 0; i < this.toAdd.length; i++) {
+      this.project = {
+        project_id: this.toAdd[i].id,
+        //version_id: this.version.id,
+        source: this.toAdd[i].source
+      };
+      this.updatedVersion.projects.push(this.project);
+    }
+
+    this.collectionService.updateVersion(this.updatedVersion).subscribe(
+      response => {
+        if (response.status === 200) {
+          if (response.json() !== null) {
+            // this.version = response.json();
+            // for (let i = 0; i < this.collection.versions.length; i++) {
+            //   if (this.collection.versions[i].id === this.version.id) {
+            //     this.collection.versions.splice(i, 1, this.version);
+            //   }
+            // }
+            this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + this.updatedVersion.number);
+          }
+
+        } else {
+          this.toastr.error('Internal error: the projects cannot be added. Please try again later.' +
+            'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { timeOut: 100 });
+        }
+      }
+    );
+
   }
 }

@@ -74,44 +74,16 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.updatedVersion = this.version;
     console.log(this.updatedVersion);
-    // this.project = {
-    //   project_id: 'test_project_selected',
-    //   version_id: this.version.id,
-    //   source: 'Maven'
-    // };
     this.projects = this.collectionService.toAdd;
     // this.projects.push(this.project);
     for (let i = 0; i < this.projects.length; i++) {
-      console.log('debug-->  ' + this.projects[i].id);
-      // const project: any = {};
-      // if (this.collectionService.toAdd[i].id === this.projects[i].id) {
-      //   project.id = this.projects[i].id;
-      // }
-      // if (this.collectionService.toAdd[i].id === this.projects[i].id) {
-      //   console.log('check - '+this.projects[i].id);
-      //   //project.id = this.projects[i].id;
-      // }
-      // project.project_id = this.projects[i].project_id;
-      // project.version_id = fargVersion.id;
-      // project.source = 'maven';
-      // commit.repository = this.collectionService.toAdd[i];
-      // commit.branchId = commit.repository.defaultBranch;
-      fargVersion.projects.push(this.projects[i]);
-      console.log(fargVersion);
-    // for (let i = 0; i < this.searchService.project.length; i++) {
-    //   console.log(this.searchService.project[i]);
-    //   const commit: any = {};
-    //   if (this.collectionService.toAdd[i].id === this.commits[i].id) {
-    //     commit.commitId = this.commits[i].commitId;
-    //   }
-
-
-    //   commit.repository = this.collectionService.toAdd[i];
-    //   commit.branchId = commit.repository.defaultBranch;
-    //   this.updatedVersion.commits.push(commit);
-    //   console.log(this.updatedVersion);
-
-     }
+      this.project = {
+        project_id: this.projects[i].id,
+        //version_id: this.version.id,
+        source: this.projects[i].source
+      };
+      fargVersion.projects.push(this.project);
+    }
 
     this.collectionService.updateVersion(fargVersion).subscribe(
       response => {
