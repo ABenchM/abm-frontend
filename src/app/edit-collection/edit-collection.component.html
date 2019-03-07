@@ -1,6 +1,6 @@
 <div class="container-fluid" *ngIf="!loading">
-    Derived From:{{parentCollName}}->{{parentVersName}}
-  <form>
+    <div class="parentversion"> Parent version: <a [routerLink]="" (click)="goToParent()">{{parentVersName}} @{{parentCollName}}</a> </div>
+    <form> 
     <div class="form-group">
       <label for="id">Collection Id</label>
       <input id="id" name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">

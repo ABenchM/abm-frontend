@@ -107,6 +107,7 @@ const routes: Routes = [
   { path: 'editCollection/:id/:versionIndex', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
   { path: 'view/:id/:versionIndex', component: ViewComponent },
+  { path: 'parentview/:id', component: ParentviewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },

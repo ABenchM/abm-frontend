@@ -35,6 +35,7 @@ export class ViewComponent implements OnInit {
   buildResultsExists: boolean;
   parentCollName;
   parentVersName;
+  parentVersId;
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private viewService: ViewService,
@@ -85,22 +86,6 @@ export class ViewComponent implements OnInit {
 
   }
 
-  deriveVersion(fargVersion) {
-    this.disabled = true;
-    this.service.postDeriveVersion(fargVersion).subscribe(
-      response => {
-        if (response.status === 200) {
-
-          this.derivedVersion = response.json();
-          this.versions.push(this.derivedVersion);
-          this.version = this.derivedVersion;
-
-        }
-      }
-    );
-    this.disabled = false;
-  }
-
   copy() {
     this.service.toCreate = [];
     for (let i = 0; i < this.version.projects.length; i++) {
@@ -136,6 +121,7 @@ export class ViewComponent implements OnInit {
       if (response.arrayBuffer().byteLength > 0) {
         this.parentCollName = response.json().name;
         this.parentVersName = response.json().versions[0].name;
+        this.parentVersId = parentId;
       }
     }
     );
@@ -228,35 +214,6 @@ export class ViewComponent implements OnInit {
     this.loading = false;
   }
 
-  downloadBuild(id) {
-
-    this.downloading = true;
-    this.viewService.getBuildResult(id).subscribe(
-      response => {
-        const buildResult = response.json();
-        if (buildResult.status === 'RUNNING') {
-          this.toastr.error('Build is in process, try again later', 'Oops!');
-        } else {
-
-          location.href = '/download/' + buildResult.id;
-        }
-      }
-    );
-    this.downloading = false;
-  }
-
-  downloadHermes(id) {
-    this.downloading = true;
-    this.viewService.getHermesResult(id).subscribe(
-      response => {
-        if (response.status === 200) {
-          const hermesResult = response.json();
-          location.href = '/downloadHermes/' + hermesResult.id;
-        }
-      }
-    );
-    this.downloading = false;
-  }
 
   pin() {
     this.disabled = true;
@@ -282,17 +239,6 @@ export class ViewComponent implements OnInit {
     this.disabled = false;
   }
 
-  // checkFile(id, type) {
-  // this.viewService.checkFileStatus(id, type).subscribe( response => {
-  // if (response.status === 200 ) {
-  //        if (type === 'hermes') {
-  //             this.hermesResultsExists =  response.json();
-  //        } else {
-  //            this.buildResultsExists =  response.json();
-  //        }
-
-  //       }});
-  //   }
 
   back() {
     if (this.loggedInStatus()) {
@@ -304,6 +250,10 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  goToParent(){
+    this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 
 }

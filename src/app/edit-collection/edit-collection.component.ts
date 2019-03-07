@@ -47,6 +47,7 @@ id;
   running: boolean;
   parentCollName;
   parentVersName;
+  parentVersId;
 
 
   isOpen = false;
@@ -105,6 +106,7 @@ id;
       if (response.arrayBuffer().byteLength > 0) {
         this.parentCollName = response.json().name;
         this.parentVersName = response.json().versions[0].name;
+        this.parentVersId = parentId;
       }
     }
     );
@@ -348,6 +350,10 @@ id;
       }
     }
     return false;
+  }
+
+  goToParent(){
+    this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 
 }

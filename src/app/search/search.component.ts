@@ -96,7 +96,7 @@ export class SearchComponent implements OnInit {
       let data = [...response];
       this.resultDataSource.data = data.map(result => {
        return {
-         id: result.id,
+         project_id: result.id,
          source: result.metadata.source,
          metric: result.metricResults,
          singleSelection : false
@@ -198,7 +198,7 @@ export class SearchComponent implements OnInit {
     this.selection.toggle(item);
 
     for (let i = 0; i < this.resultDataSource.data.length; i++) {
-      if (this.resultDataSource.data[i].id === item.id) {
+      if (this.resultDataSource.data[i].project_id === item.project_id) {
         if (this.resultDataSource.data[i].singleSelection === true) {
           this.service.project.push(item);
           this.toAdd.push(item);
@@ -333,6 +333,7 @@ export class SearchComponent implements OnInit {
             //     this.collection.versions.splice(i, 1, this.version);
             //   }
             // }
+            this.collectionService.toAddVersion=null;
             this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + this.updatedVersion.number);
           }
 
