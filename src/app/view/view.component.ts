@@ -2,7 +2,7 @@
 import { take } from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
-
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource , MatCheckboxModule} from '@angular/material';
 import { CollectionService } from '../services/collection.service';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
@@ -36,6 +36,9 @@ export class ViewComponent implements OnInit {
   parentCollName;
   parentVersName;
   parentVersId;
+  displayedColumns: string[] = ['name', 'check'];
+  results = [];
+  publicVersionDataSource = new MatTableDataSource<any>(this.results);
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private viewService: ViewService,
@@ -211,6 +214,7 @@ export class ViewComponent implements OnInit {
         }
       );
     }
+    this.publicVersionDataSource.data = this.version.commits;
     this.loading = false;
   }
 

@@ -18,8 +18,9 @@ import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
 import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
 import { BuildService } from '../services/build.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource } from '@angular/material';
 import { DialogVersionDialogComponent } from './dialog-version-dialog.component';
+import { Collection } from '../models/collection.model';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -35,8 +36,10 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   buildprojects: any = {};
   projects = [{}];
   derivedVersion: any = {};
+  displayedColumns: string[] = ['name', 'check', 'delete'];
+  versionCommitDataSource = new MatTableDataSource<Collection>();
 
-id;
+  id;
   versionIndex;
   loading: boolean;
   saving: boolean;
@@ -95,6 +98,7 @@ id;
         }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
+        this.versionCommitDataSource.data = this.version.commits;
       }
       );
     }
@@ -298,6 +302,7 @@ id;
                     break;
                   }
                 }
+                this.versionCommitDataSource.data = d;
               }
             }
           );

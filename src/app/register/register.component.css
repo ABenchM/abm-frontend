@@ -7,3 +7,12 @@
     content:'*';
     color: red;
 }
+
+.material-form {
+    min-width: 150px;
+    width: 100%;
+  }
+  
+  .material-input-width {
+    width: 100%;
+  }
