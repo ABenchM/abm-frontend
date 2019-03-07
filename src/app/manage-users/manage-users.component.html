@@ -30,18 +30,18 @@
         </ng-container>
   
         <ng-container matColumnDef="firstname">
-          <mat-header-cell  *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
+          <mat-header-cell class="column" *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell class="column" *matCellDef="let element"> {{element.firstname}} {{element.lastname}}  </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="email">
           <mat-header-cell class="mobile-label" *matHeaderCellDef mat-sort-header>Email-id</mat-header-cell>
-          <mat-cell class="mobile-label" *matCellDef="let element"> {{element.email}} </mat-cell>
+          <mat-cell class="mat-column-email"  *matCellDef="let element"> {{element.email}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="affiliation">
+        <ng-container class="margin-left:60px" matColumnDef="affiliation">
           <mat-header-cell  *matHeaderCellDef mat-sort-header>Affiliation</mat-header-cell>
-          <mat-cell  *matCellDef="let element"> {{element.affiliation}} </mat-cell>
+          <mat-cell  class="affiliation-margin" *matCellDef="let element"> {{element.affiliation}} </mat-cell>
         </ng-container>
  
         <ng-container matColumnDef="Account_status">
@@ -82,8 +82,8 @@
               </ng-template>
             </mat-menu>             
   
-            <button class="deleteIcon" id="deletebutton" mat-icon-button >
-              <mat-icon class="red" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
+            <button class="deleteIcon column" id="deletebutton" mat-icon-button >
+              <mat-icon class="red column" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
             </button>
           </mat-cell>
         </ng-container>
