@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   dataPin = new MatTableDataSource<any>();
   expandedElement: any;
   versions: any[] = [{}];
+  pinnedversions: any[] = [{}];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
@@ -47,6 +48,22 @@ export class HomeComponent implements OnInit {
     this.service.getPublicCollections().subscribe(response => {
       if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json());
+        let j: any;
+        for (j = 0; j < this.publicCollections.length; j++) {
+        this.versions = this.publicCollections[j].versions;
+        console.log('versions length ' + this.versions.length);
+        let i = 0;
+        while (i < this.versions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.versions[i].privateStatus === true) {
+            console.log('Deleting version ' + this.versions[i].id);
+            this.versions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+      }
         this.dataSourcePub.data = this.publicCollections;
         setTimeout(() => this.dataSourcePub.paginator = this.paginator.toArray()[1]);
         setTimeout(() => this.dataSourcePub.sort = this.sort.toArray()[1]);
@@ -68,6 +85,22 @@ export class HomeComponent implements OnInit {
       if (response.status === 200 && response.json()
        !== null) {
         this.pinned = this.orderPipe.transform(response.json());
+        let j: any;
+        for (j = 0; j < this.pinned.length; j++) {
+        this.pinnedversions = this.pinned[j].versions;
+        console.log('versions length ' + this.versions.length);
+        let i = 0;
+        while (i < this.pinnedversions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.pinnedversions[i].privateStatus === true) {
+            console.log('Deleting version ' + this.pinnedversions[i].id);
+            this.pinnedversions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+      }
         this.dataSourcePin.data = this.pinned;
         setTimeout(() => this.dataSourcePin.paginator = this.paginator.toArray()[0]);
         setTimeout(() => this.dataSourcePin.sort = this.sort.toArray()[0]);
@@ -76,6 +109,21 @@ export class HomeComponent implements OnInit {
     });
 
     this.loading = false;
+  }
+
+  openVersion(versions, versionID) {
+     let i = 0;
+     let index;
+     while (i < versions.length) {
+       if (versions[i].id === versionID) {
+         index = i;
+       }
+       i++;
+     }
+     if (index != null) {
+       index++;
+      this.router.navigateByUrl('/view/' + versions[0].collectionId + '/' + index);
+     }
   }
 
   checkPinned(item) {

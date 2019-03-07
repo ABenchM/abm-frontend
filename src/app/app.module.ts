@@ -97,6 +97,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
+import { ParentviewComponent } from './parentview/parentview.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -105,6 +106,7 @@ const routes: Routes = [
   { path: 'editCollection/:id', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'editCollection/:id/:versionIndex', component: EditCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'view/:id', component: ViewComponent },
+  { path: 'view/:id/:versionIndex', component: ViewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },
@@ -170,7 +172,8 @@ const routes: Routes = [
     ResetPasswordComponent,
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent,
-    DialogVersionDialogComponent
+    DialogVersionDialogComponent,
+    ParentviewComponent
     ],
   imports: [
     BrowserModule,

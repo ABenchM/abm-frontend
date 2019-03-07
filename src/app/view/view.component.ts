@@ -25,6 +25,7 @@ export class ViewComponent implements OnInit {
   projects = [{}];
   derivedVersion: any = {};
   id;
+  versionIndex;
   loading: boolean;
   selectProject: boolean;
   disabled: boolean;
@@ -32,6 +33,8 @@ export class ViewComponent implements OnInit {
   downloading: boolean;
   hermesResultsExists: boolean;
   buildResultsExists: boolean;
+  parentCollName;
+  parentVersName;
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private viewService: ViewService,
@@ -40,6 +43,10 @@ export class ViewComponent implements OnInit {
     private viewContainerRef: ViewContainerRef, private location: Location) {
 
     this.id = this.route.snapshot.paramMap.get('id');
+    this.versionIndex = this.route.snapshot.paramMap.get('versionIndex');
+    if (this.versionIndex != null) {
+      this.versionIndex--;
+    }
     // this.toastr.setRootViewContainerRef(viewContainerRef);
     this.loadViewCollection(this.id);
 
@@ -124,6 +131,24 @@ export class ViewComponent implements OnInit {
     return false;
   }
 
+  loadParentVersion(parentId) {
+    this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
+      if (response.arrayBuffer().byteLength > 0) {
+        this.parentCollName = response.json().name;
+        this.parentVersName = response.json().versions[0].name;
+      }
+    }
+    );
+  }
+
+  selectVersion(fargVersion) {
+    this.version = fargVersion;
+    // for (let i = 0; i < this.version.projects.length; i++) {
+    //   this.version.projects[i].selectProject = true;
+    console.log(fargVersion);
+    this.loadParentVersion(fargVersion.derivedFrom);
+  }
+
   loadViewCollection(viewCollectionId) {
     this.loading = true;
     console.log(localStorage.getItem('currentUser'));
@@ -148,7 +173,12 @@ export class ViewComponent implements OnInit {
               }
 
               // this.version = response.json()[0].versions[0];
-              this.version = this.versions[0];
+              if (this.versionIndex === null) {
+                this.version = this.versions[0];
+              } else {
+                this.version = this.versions[this.versionIndex];
+              }
+              this.loadParentVersion(this.version.derivedFrom);
               console.log('versions' + this.versions.length);
               console.log('version' + this.version.id);
               // this.projects = response.json()[0].versions[0].projects;
