@@ -78,7 +78,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     // this.projects.push(this.project);
     for (let i = 0; i < this.projects.length; i++) {
       this.project = {
-        project_id: this.projects[i].id,
+        project_id: this.projects[i].project_id,
         //version_id: this.version.id,
         source: this.projects[i].source
       };

@@ -84,21 +84,20 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
-        this.version = response.json()[0].versions[0];
-        this.loadParentVersion(this.version.derivedFrom);
         if (this.versionIndex === null) {
           this.version = response.json()[0].versions[0];
         } else {
           this.version = response.json()[0].versions[this.versionIndex];
         }
+        this.loadParentVersion(this.version.derivedFrom);
         this.latestVersion = response.json()[0].versions[this.versions.length - 1];
-        this.projects = response.json()[0].versions[0].projects;
+        this.projects = this.version.projects;
         for (let i = 0; i < this.version.projects.length; i++) {
           this.version.projects[i].selectProject = true;
         }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
-        this.versionCommitDataSource.data = this.version.commits;
+       // this.versionCommitDataSource.data = this.version.commits;
       }
       );
     }
@@ -186,7 +185,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
               if (response.status === 200) {
                 this.service.updateVersion(this.version).subscribe(data => {
                   if (data.status === 200) {
-                    this.router.navigateByUrl('/collection');
+                   // this.router.navigateByUrl('/collection');
                   }
                 });
 
@@ -350,7 +349,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   isPublic() {
     for (let i = 0; i < this.versions.length; i++) {
-      if (this.versions[i].privateStatus === 0) {
+      if (this.versions[i].privateStatus === false) {
         return true;
       }
     }

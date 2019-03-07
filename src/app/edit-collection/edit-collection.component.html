@@ -1,4 +1,5 @@
 <div class="container-fluid" *ngIf="!loading">
+    <div class="parentversion"> Parent version: <a [routerLink]="" (click)="goToParent()">{{parentVersName}} @{{parentCollName}}</a> </div>
   <form class="material-form">
     <mat-form-field class="material-input-width">
       <mat-label>Collection Id</mat-label>
@@ -60,7 +61,7 @@
       <button mat-raised-button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
         (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
-      <button mat-raised-button [disabled]="loading || saving || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
+      <button mat-raised-button [disabled]="loading || saving || isPublic()" class="btn btn-sm btn-danger btn-mrgn"
         (click)="removeCollection(collection[0].id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
     </div>
@@ -85,34 +86,16 @@
 
   </div>
   <br>
-  <!-- <table class="table table-bordered table-striped table-sm">
+   <table class="table table-bordered table-striped table-sm">
     <thead class="thead-light">
       <tr>
         <th>Name</th>
-        <!-- <th>Commit</th> -->
-        <!-- <th [hidden]="version.frozen"></th> -->
         <th [hidden]="version.frozen"></th>
       </tr>
-    </thead>
+    </thead> 
     <tbody>
       <tr *ngFor="let project of version.projects">
         <td>{{project.project_id}}</td>
-        <!-- <td>
-          <div class="dropdown" *ngIf="!version.frozen">
-            <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="commitSelect">
-              <span style="font-family:monospace">{{commit.commitId}}</span>
-              <span class="caret" *ngIf="!loading"></span>
-            </button>
-
-          </div>
-          <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
-        </td> -->
-        <!-- <td [hidden]="version.frozen">&nbsp;&nbsp;
-        <td [hidden]="version.frozen">&nbsp;&nbsp;
-          <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
-            id="{{commit.repository.id}}" />
-        </td> -->
         <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
           <button [hidden]="version.frozen" [disabled]="!version.privateStatus || version.projects.length <= 1" (click)="deleteProject(project)"
             class="btn btn-danger btn-block">Delete</button>

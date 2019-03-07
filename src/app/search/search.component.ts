@@ -316,7 +316,7 @@ export class SearchComponent implements OnInit {
     // this.projects.push(this.project);
     for (let i = 0; i < this.toAdd.length; i++) {
       this.project = {
-        project_id: this.toAdd[i].id,
+        project_id: this.toAdd[i].project_id,
         //version_id: this.version.id,
         source: this.toAdd[i].source
       };
