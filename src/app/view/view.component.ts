@@ -256,7 +256,7 @@ export class ViewComponent implements OnInit {
 
   }
 
-  goToParent(){
+  goToParent() {
     this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 

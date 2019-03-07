@@ -15,7 +15,7 @@ export class ParentviewComponent implements OnInit {
   loading: boolean;
   version: any = {};
   projects = [{}];
-  id;  
+  id;
   parentCollName;
   parentVersName;
 

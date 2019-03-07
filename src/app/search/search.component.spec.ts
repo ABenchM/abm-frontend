@@ -27,8 +27,8 @@ describe('SearchComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
-        BrowserAnimationsModule,ToastrModule.forRoot()],
-      providers: [SearchService, CollectionService, HttpClient, HttpHandler,ToastrService]
+        BrowserAnimationsModule, ToastrModule.forRoot()],
+      providers: [SearchService, CollectionService, HttpClient, HttpHandler, ToastrService]
     })
       .compileComponents();
   }));

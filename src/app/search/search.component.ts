@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit {
   addAll() {
     this.collectionService.toAdd = [];
     this.collectionService.toAdd = this.toAdd;
-    this.router.navigateByUrl('/addToCollection')
+    this.router.navigateByUrl('/addToCollection');
   }
 
   createCollection() {
@@ -300,24 +300,21 @@ export class SearchComponent implements OnInit {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  isFromOtherPage(){
-    if(this.collectionService.toAddVersion == null){
+  isFromOtherPage() {
+    if (this.collectionService.toAddVersion == null) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
 
-  addProjects(){
+  addProjects() {
     this.loading = true;
     this.updatedVersion = this.collectionService.toAddVersion;
     console.log(this.updatedVersion);
-    //this.projects = this.collectionService.toAdd;
-    // this.projects.push(this.project);
     for (let i = 0; i < this.toAdd.length; i++) {
       this.project = {
         project_id: this.toAdd[i].project_id,
-        //version_id: this.version.id,
         source: this.toAdd[i].source
       };
       this.updatedVersion.projects.push(this.project);
@@ -333,7 +330,7 @@ export class SearchComponent implements OnInit {
             //     this.collection.versions.splice(i, 1, this.version);
             //   }
             // }
-            this.collectionService.toAddVersion=null;
+            this.collectionService.toAddVersion = null;
             this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + this.updatedVersion.number);
           }
 

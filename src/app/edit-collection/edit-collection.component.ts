@@ -270,12 +270,12 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     }, 10000);
     this.saving = false;
   }
-  
+
   findTab(item) {
     return (item.id === this.id);
   }
 
-  
+
 
   addProject(version) {
     this.service.toAddVersion = version;
@@ -356,7 +356,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  goToParent(){
+  goToParent() {
     this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 

@@ -79,7 +79,6 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.projects.length; i++) {
       this.project = {
         project_id: this.projects[i].project_id,
-        //version_id: this.version.id,
         source: this.projects[i].source
       };
       fargVersion.projects.push(this.project);
