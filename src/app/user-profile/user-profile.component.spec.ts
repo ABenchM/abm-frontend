@@ -9,6 +9,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 fdescribe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -21,7 +23,8 @@ fdescribe('UserProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UserProfileComponent],
-      imports: [FormsModule, HttpModule, RouterTestingModule, ToastrModule.forRoot()],
+      imports: [FormsModule, HttpModule, RouterTestingModule, MatFormFieldModule, MatInputModule,
+        BrowserAnimationsModule, ToastrModule.forRoot()],
       providers: [Register, ToastrService, DialogService]
     })
       .compileComponents();

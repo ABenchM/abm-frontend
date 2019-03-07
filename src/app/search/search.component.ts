@@ -30,6 +30,7 @@ import { Promise } from 'q';
 export class SearchComponent implements OnInit {
   model = new Search('');
   loading: boolean;
+  onSearchError = false;
   results = [];
   resultDataSource = new MatTableDataSource<any>(this.results);
   toAdd = [];
@@ -120,6 +121,30 @@ export class SearchComponent implements OnInit {
     //   this.loading = false;
     //   this.searched = true;
     // });
+    this.onSearchError = false;
+    this.resultDataSource.data = [];
+    this.service.getFiltersSearch(searchQuery).subscribe(resp => {
+      let response = JSON.parse(resp.json());
+      let data = [...response];
+      this.resultDataSource.data = data.map(result => {
+       return {
+         id: result.id,
+         source: result.metadata.source,
+         metric: result.metricResults,
+         singleSelection : false
+       };
+     });
+      setTimeout(
+        () => (this.resultDataSource.paginator = this.resultPaginator)
+      );
+      setTimeout(() => (this.resultDataSource.sort = this.resultSort));
+      this.loading = false;
+      this.searched = true;
+    },
+    error => {
+      this.onSearchError = true;
+      this.loading = false;
+    });
   }
 
   isProjectSelected() {
@@ -135,13 +160,13 @@ export class SearchComponent implements OnInit {
     return false;
   }
 
-  // deselectAll() {
-  //   for (let i = 0; i < this.results.length; i++) {
-  //     this.results[i].singleSelection = false;
-  //     this.service.project = [];
-  //     this.toAdd = [];
-  //   }
-  // }
+  // // deselectAll() {
+  // //   for (let i = 0; i < this.results.length; i++) {
+  // //     this.results[i].singleSelection = false;
+  // //     this.service.project = [];
+  // //     this.toAdd = [];
+  // //   }
+  // // }
 
   removeCart() {
     this.toAdd = [];
@@ -230,10 +255,10 @@ export class SearchComponent implements OnInit {
     return this.toAdd.length;
   }
 
-  openSource(item) {
-    // window.location.href = item.repositoryUrl;
-    window.open(item.repositoryUrl, '_blank');
-  }
+  // openSource(item) {
+  //   // window.location.href = item.repositoryUrl;
+  //   window.open(item.repositoryUrl, '_blank');
+  // }
 
   ngOnInit() {
     /*   this.searchColumns =  [
@@ -244,19 +269,15 @@ export class SearchComponent implements OnInit {
     { field: 'htmlUrl', header: 'Origin' }
   ]; */
     this.searchColumns = [
-      'name',
-      'description',
-      'creationDate',
-      'size',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.addColumns = [
-      'name',
-      'description',
-      'creationDate',
-      'size',
-      'htmlUrl',
+      'id',
+      'metric',
+      'source',
       'select'
     ];
     this.filterColumns = ['filter', 'value', 'operand', 'action'];
@@ -296,12 +317,14 @@ export class SearchComponent implements OnInit {
     row.value = '';
   }
 
-  parseFilter(filter: any) {
+  parseFilter(row: any) {
     let value = this.model.query;
+    // remove spaces between filter values
+    row.value = row.value.split(' ').join('');
     if (value.trim().length < 1) {
-      return `[${filter.filter}] ${filter.value}`;
+      return `[${row.filter}]${row.value}`;
     }
-    return `${filter.operand} [${filter.filter}] ${filter.value}`;
+    return `${row.operand}[${row.filter}]${row.value}`;
   }
 
   applyDataSourceFilter(filterValue: string) {

@@ -6,6 +6,7 @@ import { ToastrService, Toast } from 'ngx-toastr';
 import { CollectionComponent } from '../collection/collection.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommitService } from '../services/commit.service';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'abm-add-to-collection',
@@ -28,7 +29,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
-    private commitService: CommitService) {
+    private commitService: CommitService , private searchService: SearchService) {
     // this.toastr.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -97,8 +98,20 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
       // commit.branchId = commit.repository.defaultBranch;
       fargVersion.projects.push(this.projects[i]);
       console.log(fargVersion);
+    // for (let i = 0; i < this.searchService.project.length; i++) {
+    //   console.log(this.searchService.project[i]);
+    //   const commit: any = {};
+    //   if (this.collectionService.toAdd[i].id === this.commits[i].id) {
+    //     commit.commitId = this.commits[i].commitId;
+    //   }
 
-    }
+
+    //   commit.repository = this.collectionService.toAdd[i];
+    //   commit.branchId = commit.repository.defaultBranch;
+    //   this.updatedVersion.commits.push(commit);
+    //   console.log(this.updatedVersion);
+
+     }
 
     this.collectionService.updateVersion(fargVersion).subscribe(
       response => {
@@ -141,7 +154,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadUserCollections();
-    this.loadCommits();
+    // this.loadCommits();
   }
 
 

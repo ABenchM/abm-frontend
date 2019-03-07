@@ -1,8 +1,4 @@
 <div class="container-fluid" *ngIf="!loading">
-
-
-
-
   <form>
     <div class="form-group">
       <label for="id">Collection Id</label>
@@ -38,11 +34,13 @@
         <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
+      
       <li class="dropdown-item">
-        <button class="dropdown-item" (click)="deriveVersion(version)">Derive new version from current version {{version.number}}
-        </button>
+        <button class="dropdown-item" (click)="openDialog(version)">Derive new version from current version
+          {{latestVersion.number}}</button>
       </li>
     </ul>
+ 
   </span>
 
   
@@ -53,6 +51,7 @@
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
       <!-- <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="build()">Build this version</button> -->
+      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
 
       <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
@@ -102,6 +101,7 @@
           <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
         </td> -->
         <!-- <td [hidden]="version.frozen">&nbsp;&nbsp;
+        <td [hidden]="version.frozen">&nbsp;&nbsp;
           <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
             id="{{commit.repository.id}}" />
         </td> -->

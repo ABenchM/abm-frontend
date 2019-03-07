@@ -1,6 +1,5 @@
-
 import { take } from 'rxjs/operators';
-import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy, Inject, Input } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { CollectionService } from '../services/collection.service';
 import { DialogComponentComponent } from '../dialog-component/dialog-component.component';
@@ -19,6 +18,8 @@ import { DataServiceService } from '../services/data-service.service';
 import { HermesService } from '../services/hermes.service';
 import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
 import { BuildService } from '../services/build.service';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { DialogVersionDialogComponent } from './dialog-version-dialog.component';
 
 @Component({
   selector: 'abm-edit-collection',
@@ -34,7 +35,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   buildprojects: any = {};
   projects = [{}];
   derivedVersion: any = {};
-  id;
+
+id;
   versionIndex;
   loading: boolean;
   saving: boolean;
@@ -54,6 +56,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   socket: any;
 
   constructor(private route: ActivatedRoute, private router: Router,
+    private dialog: MatDialog,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastrService, private viewf: ViewContainerRef,
     private modalService: NgbModal, private commitService: CommitService,
@@ -113,13 +116,38 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
   selectVersion(fargVersion) {
     this.version = fargVersion;
-    for (let i = 0; i < this.version.projects.length; i++) {
-      this.version.projects[i].selectProject = true;
+    // for (let i = 0; i < this.version.projects.length; i++) {
+    //   this.version.projects[i].selectProject = true;
+    console.log(fargVersion);
+    for (let i = 0; i < this.version.commits.length; i++) {
+      this.version.commits[i].selectProject = true;
     }
     this.loadParentVersion(fargVersion.derivedFrom);
 
   }
+  openDialog(ver): void {
+    const dialogRef = this.dialog.open(DialogVersionDialogComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        ver.name = result;
+        ver.derivedFrom = this.versions[this.versions.length - 1].id;
+        console.log(ver.derivedFrom);
+        this.deriveVersion(ver);
+        console.log('The dialog was closed:', result);
+      }
+
+    });
+
+
+
+  }
   deriveVersion(ver) {
+
+    console.log(ver);
     this.disabled = true;
     this.service.postDeriveVersion(ver, 'test123').subscribe(
       response => {
@@ -405,6 +433,12 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   }
 
+  addProject() {
+
+    this.router.navigateByUrl('/search');
+
+  }
+
   deleteProject(fargProject) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
@@ -520,4 +554,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
 

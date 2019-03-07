@@ -73,6 +73,12 @@ export class CreateCollectionComponent implements OnInit {
     //   version_id: this.version.id,
     //   source: 'Maven'
     // };
+    this.collection.versions = [];
+    this.collection.versions.push(this.version);
+
+    // if (this.repositoryList.length === 0) {
+    //   // To-DO NgCart feature
+    // }
 
     this.collection.versions = [];
 

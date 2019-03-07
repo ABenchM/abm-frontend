@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "precommit": "npm run lint && npm run test",
-    "htmllint" : "node htmlchecker.js"
+    "htmllint": "node htmlchecker.js"
   },
   "author": "",
   "private": true,
@@ -63,11 +63,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-
-    
-
     "@angular-devkit/build-angular": "^0.13.1",
-
     "@angular/cli": "^7.0.3",
     "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "^7.0.1",
@@ -75,9 +71,7 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
-
     "htmlhint": "^0.10.1",
-
     "husky": "^0.14.3",
     "intl": "^1.2.5",
     "jasmine-core": "~2.8.0",
