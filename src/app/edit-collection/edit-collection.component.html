@@ -1,30 +1,34 @@
 <div class="container-fluid" *ngIf="!loading">
-  <form>
-    <div class="form-group">
-      <label for="id">Collection Id</label>
-      <input id="id" name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" name="name" [(ngModel)]="collection[0].name" type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea rows='3' id="description" [(ngModel)]="collection[0].description" name="description" type="description"
+  <form class="material-form">
+    <mat-form-field class="material-input-width">
+      <mat-label>Collection Id</mat-label>
+      <input id="id" matInput name="id" [(ngModel)]="collection[0].id" type="text" [disabled]=true class="form-control">
+    </mat-form-field>
+    <mat-form-field class="material-input-width">
+      <mat-label>Name</mat-label>
+      <input id="name" matInput name="name" [(ngModel)]="collection[0].name" type="text" class="form-control">
+    </mat-form-field>
+    <mat-form-field class="material-input-width">
+      <mat-label>Description</mat-label>
+      <textarea rows='3' id="description" matInput [(ngModel)]="collection[0].description" name="description" type="description"
         class="form-control">
+
       </textarea>
-    </div>
+    </mat-form-field>
     <div class="form-actions float-right">
-      <button class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus" (click)="update(collection[0])" *ngIf="collection[0].privateStatus">
+      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [disabled]="!version.privateStatus" (click)="update(collection[0])"
+        *ngIf="collection[0].privateStatus">
         Save Changes
       </button>
-      <button title="{{(!version.privateStatus?' This version is public' : '')}}" class="btn btn-primary btn-sm" [disabled] = "!version.privateStatus"  (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
+      <button title="{{(!version.privateStatus?' This version is public' : '')}}" mat-raised-button class="btn btn-primary btn-sm btn-mrgn"
+        [disabled]="!version.privateStatus" (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
         Make public</button>
     </div>
 
   </form>
   <span ngbDropdown>
-    <button id="single-button" type="button" ngbDropdownToggle class="btn btn-success btn-xs" [disabled]="disabled || saving">
+    <button id="single-button" type="button" ngbDropdownToggle mat-raised-button class="btn btn-success btn-xs"
+      [disabled]="disabled || saving">
       Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
       <span class="caret"></span>
     </button>
@@ -34,13 +38,13 @@
           {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
-      
+
       <li class="dropdown-item">
         <button class="dropdown-item" (click)="openDialog(version)">Derive new version from current version
           {{latestVersion.number}}</button>
       </li>
     </ul>
- 
+
   </span>
 
   <div class="card-body">
@@ -49,11 +53,13 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="!version.frozen" style="height:28px">
-      <button class="btn btn-primary btn-sm" [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
+      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [disabled]="!version.privateStatus" (click)="addProject()">Add Project</button>
 
-      <button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeVersion(version.id)">
+      <button mat-raised-button [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
+        (click)="removeVersion(version.id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this version</button>
-      <button [disabled]="loading || saving || !version.privateStatus" class="btn btn-sm btn-danger" (click)="removeCollection(collection[0].id)">
+      <button mat-raised-button [disabled]="loading || saving || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
+        (click)="removeCollection(collection[0].id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
     </div>
     <div id="frozen" *ngIf="version.frozen">
@@ -61,14 +67,15 @@
       <strong>Be aware, that the previous build result will be deleted!</strong>
       <br/>
       <br/> -->
-      <button class="btn btn-primary btn-sm" (click)="addBuild()">Show Build</button>
+      <button mat-raised-button class="btn btn-primary btn-sm" (click)="addBuild()">Show Build</button>
       <span style="float:right;">
-        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving || !version.privateStatus"
-          (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
-        <button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show
+        <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered"
+          [disabled]="disableBuild || loading || saving || !version.privateStatus" (click)="runFilter(version)" class="btn btn-primary btn-sm">Run
+          Hermes Filter</button>
+        <button mat-raised-button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show
           Hermes Results</button>
-        <button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus" class="btn btn-danger btn-sm"
-          (click)="removeFilter(version)">Unfilter</button>
+        <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered"
+          [disabled]="running || !version.privateStatus" class="btn btn-danger btn-sm" (click)="removeFilter(version)">Unfilter</button>
       </span>
 
       <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
@@ -76,37 +83,56 @@
 
   </div>
   <br>
-  <table class="table table-bordered table-striped table-sm">
+  <!-- <table class="table table-bordered table-striped table-sm">
     <thead class="thead-light">
       <tr>
         <th>Name</th>
-         <th [hidden]="version.frozen"></th>
+        
+        <th [hidden]="version.frozen"></th>
         <th [hidden]="version.frozen"></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let commit of version.commits">
         <td>{{commit.repository.name}}</td>
-        <!-- <td>
-          <div class="dropdown" *ngIf="!version.frozen">
-            <button class="btn btn-default btn-sm  dropdown-toggle" (click)="selectCommit(commit)" type="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="commitSelect">
-              <span style="font-family:monospace">{{commit.commitId}}</span>
-              <span class="caret" *ngIf="!loading"></span>
-            </button>
-
-          </div>
-          <span style="font-family:monospace" *ngIf="version.frozen">{{commit.commitId}}</span>
-        </td> -->
+        
         <td [hidden]="version.frozen">&nbsp;&nbsp;
           <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
             id="{{commit.repository.id}}" />
         </td>
-        <td [hidden]="version.frozen" title="{{(!version.privateStatus?' This version is public' : '')}}">
+        <td [hidden]="version.frozengn" title="{{(!version.privateStatus?' This version is public' : '')}}">
           <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
         </td>
       </tr>
     </tbody>
-  </table>
-  <button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm">Back to Collections</button>
+  </table> -->
+
+  <mat-table #table *ngIf="versionCommitDataSource.data.length>0" [dataSource]="versionCommitDataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let commit" class="view"> {{commit.repository.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="check">
+      <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let commit" class="view">
+        <input [hidden]="version.frozen" [(ngModel)]="commit.selectProject" type="checkbox" name="{{commit.repository.name}}"
+          id="{{commit.repository.id}}" />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let commit" class="view">
+        <button [hidden]="version.frozen" [disabled]="!version.privateStatus" (click)="deleteProject(commit)" class="btn btn-danger btn-block">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+  </mat-table>
+
+  <button mat-raised-button [disabled]="loading" (click)="back()" class="btn btn-warning btn-sm btn-mrgn">Back to
+    Collections</button>
 </div>
