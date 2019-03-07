@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './register.component';
 import { Register } from '../services/register.service';
 import { User } from '../models/user.model';
-import {Component, DebugElement} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import { Component, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
-   MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule } from '@angular/material';
+import {
+  MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
+  MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
@@ -21,12 +23,12 @@ describe('RegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ],
-      imports: [ FormsModule , HttpModule , RouterTestingModule, MatMenuModule,
+      declarations: [RegisterComponent],
+      imports: [FormsModule, HttpModule, RouterTestingModule, MatMenuModule,
         MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
-        BrowserAnimationsModule ],
-      providers : [Register]
+        BrowserAnimationsModule],
+      providers: [Register]
     });
     // .compileComponents();
   }));
@@ -43,10 +45,10 @@ describe('RegisterComponent', () => {
   fit('should create', () => {
     expect(component).toBeTruthy();
   });
-//  fit('submit button disabled when any of the field is empty', () => {
-//    affiliationel.nativeElement.value = '';
-//     fixture.detectChanges();
-//    expect(submitEl.nativeElement.disabled).toBeTruthy();
+  //  fit('submit button disabled when any of the field is empty', () => {
+  //    affiliationel.nativeElement.value = '';
+  //     fixture.detectChanges();
+  //    expect(submitEl.nativeElement.disabled).toBeTruthy();
 
-//   });
+  //   });
 });
