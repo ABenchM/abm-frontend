@@ -32,12 +32,12 @@
   <span ngbDropdown>
     <button id="single-button" type="button" ngbDropdownToggle mat-raised-button class="btn btn-success btn-xs"
       [disabled]="disabled || saving">
-      Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+      Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
       <span class="caret"></span>
     </button>
     <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
       <li *ngFor="let row of versions">
-        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
+        <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}} </button>
       </li>
       <li class="dropdown-divider"></li>
 

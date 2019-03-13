@@ -3,7 +3,7 @@
 </div>
 
 <div class="col-md-12 col-md-offset-0" *ngIf="!loading">
-    <div class="parentversion"> Parent version: <a [routerLink]="" (click)="goToParent()">{{parentVersName}} @{{parentCollName}}</a> </div>
+    <div *ngIf="loggedInStatus()" class="parentversion"> Parent version: <a [routerLink]="" (click)="goToParent()">{{parentVersName}} @{{parentCollName}}</a> </div>
   <form>
     <div class="form-group">
       <label for="id">Collection Id</label>

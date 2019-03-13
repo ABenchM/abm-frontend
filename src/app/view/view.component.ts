@@ -245,11 +245,7 @@ export class ViewComponent implements OnInit {
 
 
   back() {
-    if (this.loggedInStatus()) {
-      this.router.navigateByUrl('/collection');
-    } else {
       this.router.navigateByUrl('/');
-    }
   }
 
   ngOnInit() {
