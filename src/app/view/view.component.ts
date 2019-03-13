@@ -120,6 +120,7 @@ export class ViewComponent implements OnInit {
   }
 
   loadParentVersion(parentId) {
+    if(this.loggedInStatus()){
     this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
       if (response.arrayBuffer().byteLength > 0) {
         this.parentCollName = response.json().name;
@@ -128,6 +129,7 @@ export class ViewComponent implements OnInit {
       }
     }
     );
+  }
   }
 
   selectVersion(fargVersion) {
