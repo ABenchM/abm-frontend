@@ -35,12 +35,14 @@
             <mat-cell mat-cell *matCellDef="let element" (click)="view(element.id)" class="view"> {{element.id}} </mat-cell>
           </ng-container>
 
+          <div *ngIf="loggedInStatus()">
           <ng-container matColumnDef="pin">
             <mat-header-cell *matHeaderCellDef> Unpin </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let row; let i=index;">
               <button mat-raised-button class="btn btn-sm btn-primary" (click)="unpin(row)">Unpin</button>
             </mat-cell>
           </ng-container>
+        </div>
           <ng-container matColumnDef="versions">
             <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
             <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
@@ -132,6 +134,7 @@
           <mat-cell mat-cell *matCellDef="let element" class="view" (click)="open(element)"> {{element.id}} </mat-cell>
         </ng-container>
 
+        <div *ngIf="loggedInStatus()">
         <ng-container matColumnDef="pin">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Pin </mat-header-cell>
           <mat-cell *matCellDef="let row; let i=index;">
@@ -140,6 +143,7 @@
           </mat-cell>
           <mat-header-cell *ngIf="loggedInStatus()"></mat-header-cell>
         </ng-container>
+      </div>
 
         <ng-container matColumnDef="versions">
           <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>

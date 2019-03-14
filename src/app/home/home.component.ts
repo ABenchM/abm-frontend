@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   public publicCollections: any[] = [];
   loading: boolean;
   disabled: boolean;
-  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin', 'versions' ];
+  displayedColumns: string[];
   columnsToDisplay: string[] = ['versionNo', 'VersionID'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
@@ -184,6 +184,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  if (this.loggedInStatus()) {
+    this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'pin', 'versions' ];
+  } else {
+    this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'versions' ];
+  }
     this.loadPublicCollections();
   }
 
