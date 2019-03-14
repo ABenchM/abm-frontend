@@ -60,6 +60,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
         }
       }
         this.collection = this.userCollections[0];
+        if(this.collection!=null)
         this.version = this.collection.versions[0];
       }
     }
@@ -109,7 +110,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   }
 
   hasAnyProject(){
-    if (this.collectionService.toAdd == null) {
+    if (this.collectionService.toAdd == null || this.userCollections.length <=0) {
       return false;
     } else {
       return true;
