@@ -33,7 +33,7 @@
         <ng-container matColumnDef="versions">
             <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
             <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
-                (click)="expandedElement = expandedElement === element ? null : element; data = row.versions">
+                (click)="expandedElement = expandedElement === element ? null : element; data = row.versions" (click)=setCollection(row)>
                 <button mat-stroked-button [ngClass]="'customOutline'">Show Versions 
                     <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                     <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>

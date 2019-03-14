@@ -82,7 +82,7 @@ export class CollectionService {
     );
   }
 
-  deleteSelectedCols(colIDs: String) {
+  deleteCollectionByAdmin(colIDs: String) {
     const body = { 'deleteCollections': colIDs };
     return this.http.delete('/rest/publiccollection/' + colIDs);
   }
