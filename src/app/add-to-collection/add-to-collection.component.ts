@@ -108,6 +108,14 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   }
 
+  hasAnyProject(){
+    if (this.collectionService.toAdd == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   loadCommits() {
     // for (let i = 0; i < this.collectionService.toAdd.length; i++) {
 
