@@ -1,0 +1,51 @@
+<div class="wrapper" *ngIf="loading">
+    <span class="cssload-loader"></span>
+  </div>
+  
+  <div class="col-md-12 col-md-offset-0" *ngIf="!loading">
+      
+    <form>
+      <div class="form-group">
+        <label for="id">Collection Id</label>
+        <input id="id" name="id" [(ngModel)]="viewCollection.id" type="text" [disabled]=true class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" name="name" [(ngModel)]="viewCollection.name" type="text" [disabled]=true class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea rows='3' id="description" [(ngModel)]="viewCollection.description" name="description" [disabled]=true type="description"
+          class="form-control">
+        </textarea>
+      </div>
+    </form>
+    <hr>
+    <div class="row">
+      <span class="col-9" ngbDropdown>
+        <button>
+          Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+          <span class="caret"></span>
+        </button>        
+      </span>
+      
+    </div>
+    <br>
+    <br>
+    <table class="table table-bordered table-striped" style="max-height:400px">
+      <thead class="thead-light">
+        <tr>
+          <th>Project ID</th>
+          <th>Source</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of version.projects">
+          <td>{{row.project_id}}</td>
+          <td>{{row.source}}</td>          
+        </tr>
+      </tbody>
+    </table>    
+  
+  </div>
+  

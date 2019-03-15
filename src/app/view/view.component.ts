@@ -22,9 +22,10 @@ export class ViewComponent implements OnInit {
   versions: any[] = [{}];
   version: any = {};
   toCreate = [];
-  commits = [{}];
+  projects = [{}];
   derivedVersion: any = {};
   id;
+  versionIndex;
   loading: boolean;
   selectProject: boolean;
   disabled: boolean;
@@ -32,6 +33,9 @@ export class ViewComponent implements OnInit {
   downloading: boolean;
   hermesResultsExists: boolean;
   buildResultsExists: boolean;
+  parentCollName;
+  parentVersName;
+  parentVersId;
   displayedColumns: string[] = ['name', 'check'];
   results = [];
   publicVersionDataSource = new MatTableDataSource<any>(this.results);
@@ -43,6 +47,10 @@ export class ViewComponent implements OnInit {
     private viewContainerRef: ViewContainerRef, private location: Location) {
 
     this.id = this.route.snapshot.paramMap.get('id');
+    this.versionIndex = this.route.snapshot.paramMap.get('versionIndex');
+    if (this.versionIndex != null) {
+      this.versionIndex--;
+    }
     // this.toastr.setRootViewContainerRef(viewContainerRef);
     this.loadViewCollection(this.id);
 
@@ -55,25 +63,25 @@ export class ViewComponent implements OnInit {
 
   selectall() {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = true;
 
     }
 
   }
   deselectall() {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = false;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = false;
     }
 
   }
 
   select(fargCommit) {
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].id === fargCommit.id) {
-        // this.version.commits[i].selectProject = !this.version.commits[i].selectProject;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].id === fargCommit.id) {
+        // this.version.projects[i].selectProject = !this.version.projects[i].selectProject;
         break;
       }
 
@@ -81,30 +89,15 @@ export class ViewComponent implements OnInit {
 
   }
 
-  deriveVersion(fargVersion) {
-    this.disabled = true;
-    this.service.postDeriveVersion(fargVersion).subscribe(
-      response => {
-        if (response.status === 200) {
-
-          this.derivedVersion = response.json();
-          this.versions.push(this.derivedVersion);
-          this.version = this.derivedVersion;
-
-        }
-      }
-    );
-    this.disabled = false;
-  }
-
   copy() {
     this.service.toCreate = [];
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].selectProject === true) {
-        this.service.toCreate.push(this.version.commits[i].repository);
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].selectProject === true) {
+        this.service.toCreate.push(this.version.projects[i]);
       }
 
     }
+    this.service.parentVersionId = this.version.id;
     // this.dataService.repositoryList = this.toCreate;
 
     this.router.navigateByUrl('/createCollection');
@@ -113,17 +106,43 @@ export class ViewComponent implements OnInit {
 
   // This function is to check if any project is selected on the page.if no, then deselect all button will be disabled.
   isRepoSelected() {
-    if (!this.version.commits) {
+    if (!this.version.projects) {
       return false;
     }
 
-    for (let i = 0; i < this.version.commits.length; i++) {
-      if (this.version.commits[i].selectProject === true) {
+    for (let i = 0; i < this.version.projects.length; i++) {
+      if (this.version.projects[i].selectProject === true) {
         return true;
 
       }
     }
     return false;
+  }
+
+  loadParentVersion(parentId) {
+    if (this.loggedInStatus()) {
+    this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
+      if (response.arrayBuffer().byteLength > 0) {
+        this.parentCollName = response.json().name;
+        this.parentVersName = response.json().versions[0].name;
+        this.parentVersId = parentId;
+      }
+    },
+    (error) => {
+      this.parentCollName = null;
+      this.parentVersName = null;
+      this.parentVersId = null;
+    }
+    );
+  }
+  }
+
+  selectVersion(fargVersion) {
+    this.version = fargVersion;
+    // for (let i = 0; i < this.version.projects.length; i++) {
+    //   this.version.projects[i].selectProject = true;
+    console.log(fargVersion);
+    this.loadParentVersion(fargVersion.derivedFrom);
   }
 
   loadViewCollection(viewCollectionId) {
@@ -150,11 +169,16 @@ export class ViewComponent implements OnInit {
               }
 
               // this.version = response.json()[0].versions[0];
-              this.version = this.versions[0];
+              if (this.versionIndex === null) {
+                this.version = this.versions[0];
+              } else {
+                this.version = this.versions[this.versionIndex];
+              }
+              this.loadParentVersion(this.version.derivedFrom);
               console.log('versions' + this.versions.length);
               console.log('version' + this.version.id);
-              // this.commits = response.json()[0].versions[0].commits;
-              this.commits = this.versions[0].commits;
+              // this.projects = response.json()[0].versions[0].projects;
+              this.projects = this.versions[0].projects;
 
               this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => {
                 if (s.status === 200) {
@@ -201,35 +225,6 @@ export class ViewComponent implements OnInit {
     this.loading = false;
   }
 
-  downloadBuild(id) {
-
-    this.downloading = true;
-    this.viewService.getBuildResult(id).subscribe(
-      response => {
-        const buildResult = response.json();
-        if (buildResult.status === 'RUNNING') {
-          this.toastr.error('Build is in process, try again later', 'Oops!');
-        } else {
-
-          location.href = '/download/' + buildResult.id;
-        }
-      }
-    );
-    this.downloading = false;
-  }
-
-  downloadHermes(id) {
-    this.downloading = true;
-    this.viewService.getHermesResult(id).subscribe(
-      response => {
-        if (response.status === 200) {
-          const hermesResult = response.json();
-          location.href = '/downloadHermes/' + hermesResult.id;
-        }
-      }
-    );
-    this.downloading = false;
-  }
 
   pin() {
     this.disabled = true;
@@ -255,28 +250,17 @@ export class ViewComponent implements OnInit {
     this.disabled = false;
   }
 
-  // checkFile(id, type) {
-  // this.viewService.checkFileStatus(id, type).subscribe( response => {
-  // if (response.status === 200 ) {
-  //        if (type === 'hermes') {
-  //             this.hermesResultsExists =  response.json();
-  //        } else {
-  //            this.buildResultsExists =  response.json();
-  //        }
-
-  //       }});
-  //   }
 
   back() {
-    if (this.loggedInStatus()) {
-      this.router.navigateByUrl('/collection');
-    } else {
       this.router.navigateByUrl('/');
-    }
   }
 
   ngOnInit() {
 
+  }
+
+  goToParent() {
+    this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 
 }
