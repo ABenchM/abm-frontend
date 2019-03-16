@@ -84,6 +84,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
+        
         if (this.versionIndex === null) {
           this.version = response.json()[0].versions[0];
         } else {
@@ -111,6 +112,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.parentVersName = response.json().versions[0].name;
         this.parentVersId = parentId;
       }
+    },
+    (error) => {
+      this.parentCollName = null;
+      this.parentVersName = null;
+      this.parentVersId = null;
+      //this.toastr.('The parent version was deleted by the Owner/Administrator.');
+      //console.log(error);
     }
     );
   }
@@ -257,7 +265,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
                 if (d[i].id === versionId) {
                   d.splice(i, 1);
                   this.version = this.versions[0];
-                  this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
+                  this.router.navigateByUrl('/editCollection/' + this.version.collectionId);
                   break;
                 }
               }
@@ -278,6 +286,15 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
 
   addProject(version) {
+    let i = 0;
+    let index;
+    while (i < this.versions.length) {
+      if (this.versions[i].id === version.id) {
+        index = i;
+      }
+      i++;
+    }
+    this.service.index = index;
     this.service.toAddVersion = version;
     this.router.navigateByUrl('/search');
 
