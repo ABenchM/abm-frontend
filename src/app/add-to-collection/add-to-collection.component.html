@@ -36,7 +36,7 @@
       </span>
 
       <span style="float:right;">
-        <button class="btn btn-success" (click)="addProjects(version)">Add Projects to this Collection</button>
+        <button [disabled]="!hasAnyProject()" class="btn btn-success" (click)="addProjects(version)">Add Projects to this Collection</button>
       </span>
       <br><br>
       <h3>

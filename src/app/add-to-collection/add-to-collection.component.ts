@@ -38,8 +38,8 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       if (response.status === 200) {
         this.userCollections = response.json();
-        let j: any;
-      for (j = 0; j < this.userCollections.length; j++) {
+        let j = 0;
+      while (j < this.userCollections.length) {
         // this.versions = this.userCollections[j].versions;
         // console.log('versions length ' + this.versions.length);
         let i = 0;
@@ -55,9 +55,12 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
         }
         if (this.userCollections[j].versions.length <= 0) {
           this.userCollections.splice(j, 1);
+        }else {
+          j = j + 1;
         }
       }
         this.collection = this.userCollections[0];
+        if(this.collection!=null)
         this.version = this.collection.versions[0];
       }
     }
@@ -104,6 +107,14 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
       }
     );
 
+  }
+
+  hasAnyProject(){
+    if (this.collectionService.toAdd == null || this.userCollections.length <=0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   loadCommits() {

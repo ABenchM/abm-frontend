@@ -49,6 +49,10 @@ export class ParentviewComponent implements OnInit {
             this.router.navigateByUrl('/login');
           }
 
+        },
+        (error) => {
+          this.toastr.error('This version was deleted by the Owner/Administrator.');
+          console.log(error);
         }
       );
     }

@@ -127,6 +127,11 @@ export class ViewComponent implements OnInit {
         this.parentVersName = response.json().versions[0].name;
         this.parentVersId = parentId;
       }
+    },
+    (error) => {
+      this.parentCollName = null;
+      this.parentVersName = null;
+      this.parentVersId = null;
     }
     );
   }
