@@ -21,10 +21,6 @@
               "src/favicon.ico"
             ],
             "styles": [
-              {
-                "input": "src/app-theme.scss"
-
-              },
               "src/styles.css",
               "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/themes/omega/theme.css",
