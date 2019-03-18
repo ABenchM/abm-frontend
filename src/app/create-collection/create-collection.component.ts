@@ -19,12 +19,16 @@ export class CreateCollectionComponent implements OnInit {
   loading: boolean;
   collection: any = {};
   repositoryList: any[];
+  projects: any = [{}];
+  project: any = {};
   version: any = {};
-  commit: any = {};
-  commits: any = [{}];
+  parentVersion: any;
+  // commit: any = {};
+  // commits: any = [{}];
   constructor(private toastr: ToastrService,
     private collectService: CollectionService, private router: Router, private commitService: CommitService) {
-    this.repositoryList = this.collectService.toCreate;
+    this.projects = this.collectService.toCreate;
+    this.parentVersion = this.collectService.parentVersionId;
   }
 
 
@@ -60,29 +64,21 @@ export class CreateCollectionComponent implements OnInit {
       number: 1,
       creationDate: new Date(),
       comment: 'Initial version',
-      privateStatus: true
+      privateStatus: true,
+      derivedFrom: this.parentVersion
     };
-
     this.collection.versions = [];
     this.collection.versions.push(this.version);
-
-    // if (this.repositoryList.length === 0) {
-    //   // To-DO NgCart feature
-    // }
-
-    this.version.commits = [];
-    for (let i = 0; i < this.repositoryList.length; i++) {
-
-      if (this.repositoryList[i].id === this.commits[i].id) {
-        this.commit = {
-          commitId: this.commits[i].commitId
-        };
-      }
-
-      this.commit.repository = this.repositoryList[i];
-      this.commit.branchId = this.commit.repository.defaultBranch;
-      this.version.commits.push(this.commit);
+    this.collection.versions = [];
+    this.version.projects = [];
+    for (let i = 0; i < this.projects.length; i++) {
+      this.project = {
+        project_id: this.projects[i].project_id,
+        source: this.projects[i].source
+      };
+      this.version.projects.push(this.project);
     }
+    this.collection.versions.push(this.version);
     this.collectService.createCollection(this.collection).subscribe(response => {
       if (response.status === 200) {
         this.toastr.success('Collection successfully copied');

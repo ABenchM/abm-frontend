@@ -8,12 +8,12 @@ export class CommitService {
   constructor(private http: Http) { }
 
 
-  deleteRepos (commitId) {
-    const data = {
-      action: 'delete_multi',
-      ids: commitId
-    };
-    return this.http.delete('/rest/commit/' + commitId);
+  deleteRepos (projectId) {
+    // const data = {
+    //   action: 'delete_multi',
+    //   ids: projectId
+    // };
+    return this.http.delete('/rest/removeproject/' + projectId);
   }
 
   getBranches(repo) {

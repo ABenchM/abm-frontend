@@ -12,6 +12,10 @@
     color: gray;
 }
 
+.parentversion{
+    float: right;
+}
+
 .material-form {
     min-width: 150px;
     width: 100%;

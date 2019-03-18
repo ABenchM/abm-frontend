@@ -22,7 +22,10 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
   collection: any = {};
   version: any = {};
   updatedVersion: any = {};
-  commits: any = [{}];
+  // commits: any = [{}];
+  projects: any = [{}];
+  project: any = {};
+  versions: any[] = [{}];
 
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
@@ -35,7 +38,29 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(response => {
       if (response.status === 200) {
         this.userCollections = response.json();
+        let j = 0;
+      while (j < this.userCollections.length) {
+        // this.versions = this.userCollections[j].versions;
+        // console.log('versions length ' + this.versions.length);
+        let i = 0;
+        while (i < this.userCollections[j].versions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.userCollections[j].versions[i].privateStatus === false) {
+            console.log('Deleting version ' + this.userCollections[j].versions[i].id);
+            this.userCollections[j].versions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+        if (this.userCollections[j].versions.length <= 0) {
+          this.userCollections.splice(j, 1);
+        }else {
+          j = j + 1;
+        }
+      }
         this.collection = this.userCollections[0];
+        if(this.collection!=null)
         this.version = this.collection.versions[0];
       }
     }
@@ -52,19 +77,14 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.updatedVersion = this.version;
     console.log(this.updatedVersion);
-    for (let i = 0; i < this.searchService.project.length; i++) {
-      console.log(this.searchService.project[i]);
-      const commit: any = {};
-      if (this.collectionService.toAdd[i].id === this.commits[i].id) {
-        commit.commitId = this.commits[i].commitId;
-      }
-
-
-      commit.repository = this.collectionService.toAdd[i];
-      commit.branchId = commit.repository.defaultBranch;
-      this.updatedVersion.commits.push(commit);
-      console.log(this.updatedVersion);
-
+    this.projects = this.collectionService.toAdd;
+    // this.projects.push(this.project);
+    for (let i = 0; i < this.projects.length; i++) {
+      this.project = {
+        project_id: this.projects[i].project_id,
+        source: this.projects[i].source
+      };
+      fargVersion.projects.push(this.project);
     }
 
     this.collectionService.updateVersion(fargVersion).subscribe(
@@ -89,21 +109,29 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   }
 
-  loadCommits() {
-    for (let i = 0; i < this.collectionService.toAdd.length; i++) {
-
-      this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
-        res => {
-          if (res.status === 200) {
-            if (res.json()[0] !== null) {
-
-              this.commits[i].commitId = res.json()[0].commitId;
-              this.commits[i].id = this.collectionService.toAdd[i].id;
-            }
-          }
-        }
-      );
+  hasAnyProject(){
+    if (this.collectionService.toAdd == null || this.userCollections.length <=0) {
+      return false;
+    } else {
+      return true;
     }
+  }
+
+  loadCommits() {
+    // for (let i = 0; i < this.collectionService.toAdd.length; i++) {
+
+    //   this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
+    //     res => {
+    //       if (res.status === 200) {
+    //         if (res.json()[0] !== null) {
+
+    //           this.commits[i].commitId = res.json()[0].commitId;
+    //           this.commits[i].id = this.collectionService.toAdd[i].id;
+    //         }
+    //       }
+    //     }
+    //   );
+    // }
   }
 
   ngOnInit() {

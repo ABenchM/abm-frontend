@@ -12,6 +12,7 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ToastrService, Toast } from 'ngx-toastr';
 import {
   MatTableDataSource,
   MatPaginator,
@@ -46,6 +47,9 @@ export class SearchComponent implements OnInit {
   searchColumns: any[];
   addColumns: any[];
   filterColumns: any[];
+  updatedVersion: any = {};
+  project: any = {};
+  project2: any = {};
   selection = new SelectionModel<any>(true, []);
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
   @ViewChild('filterPaginator') filterPaginator: MatPaginator;
@@ -56,7 +60,8 @@ export class SearchComponent implements OnInit {
     private collectionService: CollectionService,
     private router: Router,
     private route: ActivatedRoute,
-    private orderPipe: OrderPipe
+    private orderPipe: OrderPipe,
+    private toastr: ToastrService,
   ) {}
 
   setSortType(value) {
@@ -91,7 +96,7 @@ export class SearchComponent implements OnInit {
       let data = [...response];
       this.resultDataSource.data = data.map(result => {
        return {
-         id: result.id,
+         project_id: result.id,
          source: result.metadata.source,
          metric: result.metricResults,
          singleSelection : false
@@ -108,6 +113,7 @@ export class SearchComponent implements OnInit {
       this.onSearchError = true;
       this.loading = false;
     });
+
   }
 
   isProjectSelected() {
@@ -192,7 +198,7 @@ export class SearchComponent implements OnInit {
     this.selection.toggle(item);
 
     for (let i = 0; i < this.resultDataSource.data.length; i++) {
-      if (this.resultDataSource.data[i].id === item.id) {
+      if (this.resultDataSource.data[i].project_id === item.project_id) {
         if (this.resultDataSource.data[i].singleSelection === true) {
           this.service.project.push(item);
           this.toAdd.push(item);
@@ -292,5 +298,50 @@ export class SearchComponent implements OnInit {
 
   applyDataSourceFilter(filterValue: string) {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  isFromOtherPage() {
+    if (this.collectionService.toAddVersion == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  addProjects() {
+    this.loading = true;
+    let index;
+    index = this.collectionService.index;
+    this.updatedVersion = this.collectionService.toAddVersion;
+    console.log(this.updatedVersion);
+    for (let i = 0; i < this.toAdd.length; i++) {
+      this.project = {
+        project_id: this.toAdd[i].project_id,
+        source: this.toAdd[i].source
+      };
+      this.updatedVersion.projects.push(this.project);
+    }
+
+    this.collectionService.updateVersion(this.updatedVersion).subscribe(
+      response => {
+        if (response.status === 200) {
+          if (response.json() !== null) {
+            // this.version = response.json();
+            // for (let i = 0; i < this.collection.versions.length; i++) {
+            //   if (this.collection.versions[i].id === this.version.id) {
+            //     this.collection.versions.splice(i, 1, this.version);
+            //   }
+            // }
+            this.collectionService.toAddVersion = null;
+            this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + index);
+          }
+
+        } else {
+          this.toastr.error('Internal error: the projects cannot be added. Please try again later.' +
+            'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { timeOut: 100 });
+        }
+      }
+    );
+
   }
 }

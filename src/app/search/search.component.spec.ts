@@ -13,6 +13,7 @@ import { SiteNamePipe } from '../shared/site-name.pipe';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule } from '@angular/material';
 import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonToggleModule } from '@angular/material';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -26,8 +27,8 @@ describe('SearchComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
-        BrowserAnimationsModule],
-      providers: [SearchService, CollectionService, HttpClient, HttpHandler]
+        BrowserAnimationsModule, ToastrModule.forRoot()],
+      providers: [SearchService, CollectionService, HttpClient, HttpHandler, ToastrService]
     })
       .compileComponents();
   }));
