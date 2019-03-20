@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.makepublic{
+  background-color:#45D9F6;
+}
+
   .example-element-detail {
     overflow: hidden;
     display: flex;
