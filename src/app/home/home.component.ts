@@ -62,10 +62,10 @@ export class HomeComponent implements OnInit {
             i = i + 1;
           }
         }
-        if(this.versions.length <= 0){
-          this.publicCollections.splice(j,1);
+        if (this.versions.length <= 0) {
+          this.publicCollections.splice(j, 1);
         } else {
-          j = j +1;
+          j = j + 1;
         }
       }
         this.dataSourcePub.data = this.publicCollections;
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
       this.checkPinned(this.dataSourcePub.data[i]);
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
-      if (response.status === 200 && response.json()!== null) {
+      if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json());
         let j = 0;
         while (j < this.pinned.length) {
@@ -102,10 +102,10 @@ export class HomeComponent implements OnInit {
             i = i + 1;
           }
         }
-        if(this.pinnedversions.length <= 0){
-          this.pinned.splice(j,1);
+        if (this.pinnedversions.length <= 0) {
+          this.pinned.splice(j, 1);
         } else {
-          j = j +1;
+          j = j + 1;
         }
       }
         this.dataSourcePin.data = this.pinned;
