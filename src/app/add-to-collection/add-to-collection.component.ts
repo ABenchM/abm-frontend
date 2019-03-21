@@ -55,13 +55,14 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
         }
         if (this.userCollections[j].versions.length <= 0) {
           this.userCollections.splice(j, 1);
-        }else {
+        } else {
           j = j + 1;
         }
       }
         this.collection = this.userCollections[0];
-        if(this.collection!=null)
+        if (this.collection != null) {
         this.version = this.collection.versions[0];
+        }
       }
     }
 
@@ -109,8 +110,8 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   }
 
-  hasAnyProject(){
-    if (this.collectionService.toAdd == null || this.userCollections.length <=0) {
+  hasAnyProject() {
+    if (this.collectionService.toAdd == null || this.userCollections.length <= 0) {
       return false;
     } else {
       return true;

@@ -84,7 +84,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
-        
+
         if (this.versionIndex === null) {
           this.version = response.json()[0].versions[0];
         } else {
@@ -117,8 +117,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.parentCollName = null;
       this.parentVersName = null;
       this.parentVersId = null;
-      //this.toastr.('The parent version was deleted by the Owner/Administrator.');
-      //console.log(error);
+      // this.toastr.('The parent version was deleted by the Owner/Administrator.');
+      // console.log(error);
     }
     );
   }

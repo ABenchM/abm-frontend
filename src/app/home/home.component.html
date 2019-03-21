@@ -39,7 +39,7 @@
           <ng-container matColumnDef="pin">
             <mat-header-cell *matHeaderCellDef> Unpin </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let row; let i=index;">
-              <button mat-raised-button class="btn btn-sm btn-primary" (click)="unpin(row)">Unpin</button>
+              <button mat-raised-button (click)="unpin(row)">Unpin</button>
             </mat-cell>
           </ng-container>
         </div>
@@ -138,8 +138,8 @@
         <ng-container matColumnDef="pin">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Pin </mat-header-cell>
           <mat-cell *matCellDef="let row; let i=index;">
-            <button class="btn btn-primary btn-sm" mat-raised-button id="buttonR" (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
-            <button class="btn btn-primary btn-sm" mat-raised-button (click)="unpin(row)" *ngIf="row.dataSourcePin">Unpin</button>
+            <button  mat-raised-button id="buttonR" (click)="pin(row)" *ngIf="!row.dataSourcePin">Pin</button>
+            <button  mat-raised-button (click)="unpin(row)" *ngIf="row.dataSourcePin">Unpin</button>
           </mat-cell>
           <mat-header-cell *ngIf="loggedInStatus()"></mat-header-cell>
         </ng-container>

@@ -101,3 +101,23 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .fullwidth{width:100%;}
+
+::ng-deep .mat-stroked-button:hover{
+  background-color:#45D9F6
+  !important;
+}
+
+::ng-deep .mat-raised-button:hover {
+  background-color:  #45D9F6
+  !important;
+     }
+
+::ng-deep .mat-form-field-placeholder {
+ color: #45D9F6
+  !important;
+}
+     
+::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+background-color: #45D9F6
+!important;
+}

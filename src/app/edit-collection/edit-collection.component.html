@@ -23,17 +23,17 @@
       </textarea>
     </mat-form-field>
     <div class="form-actions float-right">
-      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [hidden]="isPublic()" (click)="update(collection[0])"
+      <button  mat-raised-button [hidden]="isPublic()" (click)="update(collection[0])"
         *ngIf="collection[0].privateStatus">
         Save Changes
       </button>
-      <button mat-raised-button [hidden]="loading || saving || isPublic()" class="btn btn-sm btn-danger btn-mrgn" (click)="removeCollection(collection[0].id)">
+      <button mat-raised-button [hidden]="loading || saving || isPublic()"  (click)="removeCollection(collection[0].id)">
         <i class="glyphicon glyphicon-trash"></i> Delete this collection</button>
     </div>
 
   </form>
   <span ngbDropdown>
-    <button id="single-button" type="button" ngbDropdownToggle mat-raised-button class="btn btn-success btn-xs" [disabled]="disabled || saving">
+    <button id="single-button" type="button" ngbDropdownToggle mat-raised-button [disabled]="disabled || saving">
       Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate
       | date:'short'}}&nbsp;&nbsp;
       <span class="caret"></span>
@@ -59,13 +59,13 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="version.privateStatus" style="height:28px">
-      <button class="btn btn-primary btn-sm btn-mrgn" mat-raised-button [disabled]="!version.privateStatus" (click)="addProject(version)">Add Projects to this version
+      <button  mat-raised-button [disabled]="!version.privateStatus" (click)="addProject(version)">Add Projects to this version
       </button>
 
       <button mat-raised-button title="{{(versions.length <= 1?' Last contained version. Delete the collection instead.' : '')}}"
        [disabled]="loading || saving || versions.length <= 1 || !version.privateStatus" class="btn btn-sm btn-danger btn-mrgn"
         (click)="removeVersion(version.id)"><i class="glyphicon glyphicon-trash"></i> Delete this version</button>
-      <button title="{{(!version.privateStatus?' This version is public' : '')}}" mat-raised-button class="btn btn-primary btn-sm btn-mrgn"
+      <button title="{{(!version.privateStatus?' This version is public' : '')}}" mat-raised-button 
         [disabled]="!version.privateStatus" (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
         Make this version public</button>
     </div>
@@ -74,13 +74,13 @@
       <strong>Be aware, that the previous build result will be deleted!</strong>
       <br/>
       <br/> -->
-      <button mat-raised-button class="btn btn-primary btn-sm" (click)="addBuild()">Show Build</button>
+      <button mat-raised-button  (click)="addBuild()">Show Build</button>
       <span style="float:right;">
         <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving || !version.privateStatus"
-          (click)="runFilter(version)" class="btn btn-primary btn-sm">Run Hermes Filter</button>
+          (click)="runFilter(version)" >Run Hermes Filter</button>
         <button mat-raised-button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show Hermes Results</button>
         <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus"
-          class="btn btn-danger btn-sm" (click)="removeFilter(version)">Unfilter</button>
+           (click)="removeFilter(version)">Unfilter</button>
       </span>
 
       <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
@@ -99,11 +99,11 @@
       <tr *ngFor="let project of version.projects">
         <td>{{project.project_id}}</td>
         <td [hidden]="!version.privateStatus" title="{{(version.projects.length <= 1?' Last contained project. Delete the version instead.' : '')}}">
-          <button mat-raised-button [disabled]="!version.privateStatus || version.projects.length <= 1" class="btn btn-sm btn-danger btn-mrgn"
+          <button mat-raised-button [disabled]="!version.privateStatus || version.projects.length <= 1" 
             (click)="deleteProject(project)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-  <button mat-raised-button class="btn btn-primary btn-sm btn-mrgn" [disabled]="loading" (click)="back()">Back to Collections</button>
+  <button mat-raised-button  [disabled]="loading" (click)="back()">Back to Collections</button>
 </div>
