@@ -20,6 +20,7 @@ export class CollectionService {
   toAdd: any[];
   parentVersionId: any;
   toAddVersion: any;
+  index: any;
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   private onSuccess(res: Response) {
