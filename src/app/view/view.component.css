@@ -29,6 +29,8 @@
 	margin: 0.75em 0 0.25em 0.65em;
 }
 
+.float-right {float: right;}
+
 .btn-mrgn:first{
     margin :  0.75em 0 0.25em 0em;
 }

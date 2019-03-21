@@ -37,18 +37,25 @@
       </li> -->
        </ul>
     </span>
-    <span class="float-right col">
-      <button mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select All</button>
-      <button mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect All</button>
+    <div class="card-body">
+    <span *ngIf="loggedInStatus()">
+      <button mat-raised-button class="btn-mrgn" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin this Collection</button>
+      <button mat-raised-button class="btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin this Collection</button>
     </span>
+    <button title="{{('Copy required projects from this version into a new collection')}}" mat-raised-button class="btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this Version</button>
+    </div>
+    <br>
+    <div class="float-right col">
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select All</button>
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect All</button>
+    </div>
   </div>
-  <br>
   <br>
   <table class="table table-bordered table-striped" style="max-height:400px">
     <thead class="thead-light">
       <tr>
-        <th>Name</th>
-        <th [hidden]= "!loggedInStatus()"></th>
+        <th>Project ID</th>
+        <th [hidden]= "!loggedInStatus()">Select/Deselect</th>
       </tr>
     </thead>
     <tbody>
@@ -59,12 +66,7 @@
     </tbody>
   </table>
   <div>
-    <button mat-raised-button class="align-bottom" (click)="back()">Return to Collection Search</button>
-    <span *ngIf="loggedInStatus()">
-      <button mat-raised-button class="align-bottom" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin</button>
-      <button mat-raised-button class="align-bottom" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin</button>
-    </span>
-    <button mat-raised-button class="align-bottom" (click)="copy()" *ngIf="loggedInStatus()">Copy this Version</button>
+    <button mat-raised-button class="align-bottom" (click)="back()">Return to Collection Search</button>    
     <!-- <span class="align-middle">
       <button title="{{(!hermesResultsExists?' Hermes Result does not exist' : '')}}" (click)="downloadHermes(version.id)" class="btn btn-success btn-sm" [disabled]= "downloading || !hermesResultsExists" *ngIf="version.filtered">Download Hermes Result</button>
     </span> -->
