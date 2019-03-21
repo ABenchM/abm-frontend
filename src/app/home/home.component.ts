@@ -48,10 +48,9 @@ export class HomeComponent implements OnInit {
     this.service.getPublicCollections().subscribe(response => {
       if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json());
-        let j: any;
-        for (j = 0; j < this.publicCollections.length; j++) {
+        let j = 0;
+        while (j < this.publicCollections.length) {
         this.versions = this.publicCollections[j].versions;
-        console.log('versions length ' + this.versions.length);
         let i = 0;
         while (i < this.versions.length) {
           // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
@@ -62,6 +61,11 @@ export class HomeComponent implements OnInit {
           } else {
             i = i + 1;
           }
+        }
+        if(this.versions.length <= 0){
+          this.publicCollections.splice(j,1);
+        } else {
+          j = j +1;
         }
       }
         this.dataSourcePub.data = this.publicCollections;
@@ -82,13 +86,11 @@ export class HomeComponent implements OnInit {
       this.checkPinned(this.dataSourcePub.data[i]);
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
-      if (response.status === 200 && response.json()
-       !== null) {
+      if (response.status === 200 && response.json()!== null) {
         this.pinned = this.orderPipe.transform(response.json());
-        let j: any;
-        for (j = 0; j < this.pinned.length; j++) {
+        let j = 0;
+        while (j < this.pinned.length) {
         this.pinnedversions = this.pinned[j].versions;
-        console.log('versions length ' + this.versions.length);
         let i = 0;
         while (i < this.pinnedversions.length) {
           // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
@@ -99,6 +101,11 @@ export class HomeComponent implements OnInit {
           } else {
             i = i + 1;
           }
+        }
+        if(this.pinnedversions.length <= 0){
+          this.pinned.splice(j,1);
+        } else {
+          j = j +1;
         }
       }
         this.dataSourcePin.data = this.pinned;
