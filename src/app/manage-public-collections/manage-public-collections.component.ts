@@ -26,6 +26,7 @@ export class ManagePublicCollectionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public publicCollections: any[] = [];
+  selectedCollection: any;
   loading: boolean;
   confirm = false;
   displayedColumns: any[] = ['id', 'name', 'description', 'creationDate', 'actions', 'versions'];
@@ -55,18 +56,9 @@ export class ManagePublicCollectionsComponent implements OnInit {
     });
   }
 
-  deleteColsDialog(): void {
-    const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
-      width: '300px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.confirm = dialogRef.componentInstance.callback();
-      if (this.confirm) {
-        this.deleteSelectedCols();
-      }
+  setCollection(collection: Collection) {
+    this.service.getCollectionById(collection.id).subscribe(response => {
+      this.selectedCollection = this.orderPipe.transform(response.json());
     });
   }
 
@@ -106,20 +98,15 @@ export class ManagePublicCollectionsComponent implements OnInit {
   }
 
   deleteSingleCol(versionID: String) {
-    this.service.deleteVersion(versionID).subscribe(result => {
-      this.getAllCollections();
-    });
-  }
-
-  deleteSelectedCols() {
-    let cols: Collection[] = this.selection.selected;
-    let colIDs: String = '';
-    for (let col of cols) {
-      colIDs = colIDs + col.id + ',';
+    if (this.selectedCollection[0].versions.length <= 1) {
+      this.service.deleteCollectionByAdmin(this.selectedCollection[0].id).subscribe(result => {
+        this.getAllCollections();
+      });
+    } else {
+      this.service.deleteVersion(versionID).subscribe(result => {
+        this.getAllCollections();
+      });
     }
-    this.service.deleteSelectedCols(colIDs).subscribe(result => {
-      this.getAllCollections();
-    });
   }
 
   NavigateToCollection(col: Collection) {
