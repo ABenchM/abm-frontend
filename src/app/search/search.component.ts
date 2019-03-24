@@ -311,7 +311,7 @@ export class SearchComponent implements OnInit {
   addProjects() {
     this.loading = true;
     let index;
-    index = this.collectionService.index;
+    index = this.collectionService.index + 1;
     this.updatedVersion = this.collectionService.toAddVersion;
     console.log(this.updatedVersion);
     for (let i = 0; i < this.toAdd.length; i++) {
