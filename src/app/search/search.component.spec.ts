@@ -11,10 +11,13 @@ import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
 import { HttpClient, HttpHandler } from '@angular/common/http';
+
 import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule, MatAutocompleteModule,
    MatSelectModule } from '@angular/material';
 import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonToggleModule,
   MatChipsModule } from '@angular/material';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -26,8 +29,8 @@ describe('SearchComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
-        BrowserAnimationsModule, MatChipsModule, MatAutocompleteModule, MatSelectModule],
-      providers: [SearchService, CollectionService, HttpClient, HttpHandler]
+        BrowserAnimationsModule, MatChipsModule, MatAutocompleteModule, MatSelectModule, ToastrModule.forRoot()],
+        providers: [SearchService, CollectionService, HttpClient, HttpHandler, ToastrService]
     })
       .compileComponents();
   }));

@@ -34,7 +34,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   version: any = {};
   latestVersion: any = {};
   buildprojects: any = {};
-  commits = [{}];
+  projects = [{}];
   derivedVersion: any = {};
   displayedColumns: string[] = ['name', 'check', 'delete'];
   versionCommitDataSource = new MatTableDataSource<Collection>();
@@ -48,6 +48,9 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
   message = {};
   filtered: boolean;
   running: boolean;
+  parentCollName;
+  parentVersName;
+  parentVersId;
 
 
   isOpen = false;
@@ -81,35 +84,56 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
       this.service.getCollectionById(collectionId).pipe(take(1)).subscribe(response => {
         this.collection = response.json();
         this.versions = response.json()[0].versions;
+
         if (this.versionIndex === null) {
           this.version = response.json()[0].versions[0];
         } else {
           this.version = response.json()[0].versions[this.versionIndex];
         }
+        this.loadParentVersion(this.version.derivedFrom);
         this.latestVersion = response.json()[0].versions[this.versions.length - 1];
-        this.commits = response.json()[0].versions[0].commits;
-        for (let i = 0; i < this.version.commits.length; i++) {
-          this.version.commits[i].selectProject = true;
+        this.projects = this.version.projects;
+        for (let i = 0; i < this.version.projects.length; i++) {
+          this.version.projects[i].selectProject = true;
         }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
-        this.versionCommitDataSource.data = this.version.commits;
+       // this.versionCommitDataSource.data = this.version.commits;
       }
       );
     }
     this.loading = false;
   }
 
-  selectCommit(fargCommit) {
-
-    this.openCommitModal(fargCommit);
+  loadParentVersion(parentId) {
+    this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
+      if (response.arrayBuffer().byteLength > 0) {
+        this.parentCollName = response.json().name;
+        this.parentVersName = response.json().versions[0].name;
+        this.parentVersId = parentId;
+      }
+    },
+    (error) => {
+      this.parentCollName = null;
+      this.parentVersName = null;
+      this.parentVersId = null;
+      // this.toastr.('The parent version was deleted by the Owner/Administrator.');
+      // console.log(error);
+    }
+    );
   }
+
   selectVersion(fargVersion) {
     this.version = fargVersion;
+    this.latestVersion = fargVersion;
+    // for (let i = 0; i < this.version.projects.length; i++) {
+    //   this.version.projects[i].selectProject = true;
     console.log(fargVersion);
-    for (let i = 0; i < this.version.commits.length; i++) {
-      this.version.commits[i].selectProject = true;
+    for (let i = 0; i < this.version.projects.length; i++) {
+      this.version.projects[i].selectProject = true;
     }
+    this.loadParentVersion(fargVersion.derivedFrom);
+
   }
   openDialog(ver): void {
     const dialogRef = this.dialog.open(DialogVersionDialogComponent, {
@@ -131,6 +155,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
 
   }
+
   deriveVersion(ver) {
 
     console.log(ver);
@@ -143,6 +168,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.versions.push(this.derivedVersion);
           this.version = this.derivedVersion;
           this.latestVersion = this.derivedVersion;
+          this.loadParentVersion(this.version.derivedFrom);
 
         }
       }
@@ -150,75 +176,6 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.disabled = false;
   }
 
-
-  // unfreeze(fargversion) {
-  //   this.disableBuild = true;
-  //   this.service.getBuild(fargversion).subscribe(
-  //    response => {
-  //      const buildResult = response.json();
-  //      if (buildResult.status === 'RUNNING' || buildResult.status === 'WAITING' ) {
-  //             const repoId =  undefined;
-  //             this.sendMsg({msg: 'listen', id: buildResult.id});
-  //             console.log('sending command');
-  //             this.sendMsg({msg: 'cancel', id: buildResult.id});
-  //      } else {
-  //          this.deleteBuild(fargversion);
-  //      }
-  //    }
-  //    );
-  //   this.disableBuild = false;
-  // }
-
-  deleteBuild(fargversion) {
-    this.service.deleteBuild(fargversion).subscribe(response => {
-
-      if (response.status === 200) {
-        this.version = fargversion;
-        this.version.frozen = false;
-      }
-
-    });
-  }
-
-  runFilter(fargversion) {
-
-    this.service.getBuild(fargversion).subscribe(
-      response => {
-        if (response.status === 200) {
-          const buildResult = response.json();
-          if (buildResult.status === 'RUNNING') {
-            this.toastr.error('Build is in progress, try again later');
-          } else {
-            this.version.filtered = true;
-            this.dataService.setRunning(true);
-            this.openHermesModal();
-          }
-        }
-      }
-    );
-
-  }
-
-
-  openHermesModal() {
-    const modalRef = this.modalService.open(ModalHermesComponent, { size: 'lg' });
-    modalRef.componentInstance.version = this.version;
-    modalRef.componentInstance.collection = this.collection;
-
-
-  }
-
-  openCommitModal(commit) {
-    const modalRef = this.modalService.open(CommitSelectorComponent, { size: 'lg' });
-    modalRef.componentInstance.commit = commit;
-
-  }
-
-
-  // sendMsg(message) {
-  //   console.log('Message from client: ', message);
-  //   this.messageService.messages.next(message);
-  // }
 
   showConfirm(fargCollection) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
@@ -230,22 +187,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         if (isConfirmed) {
 
           this.version.privateStatus = false;
-          // let countPublicVersions = 0;
-          // for (let i = 0; i < fargCollection.versions.length; i++) {
-          //   if (fargCollection.versions[i].privateStatus === 0) {
-          //     countPublicVersions++;
-          //   }
-          // }
-          // if (countPublicVersions === fargCollection.versions.length) {
-          //   fargCollection.privateStatus = false;
-          // }
 
           this.service.updateCollection(fargCollection).subscribe(
             response => {
               if (response.status === 200) {
                 this.service.updateVersion(this.version).subscribe(data => {
                   if (data.status === 200) {
-                    this.router.navigateByUrl('/collection');
+                   // this.router.navigateByUrl('/collection');
                   }
                 });
 
@@ -317,7 +265,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
                 if (d[i].id === versionId) {
                   d.splice(i, 1);
                   this.version = this.versions[0];
-                  this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
+                  this.router.navigateByUrl('/editCollection/' + this.version.collectionId);
                   break;
                 }
               }
@@ -330,114 +278,41 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     }, 10000);
     this.saving = false;
   }
-  addBuild() {
-
-    let targetTab = this.buildService.builds.findIndex(this.findTab, this.version);
-    if (targetTab < 0) {
-      this.buildService.builds.push({
-        'id': this.version.id, 'name': this.collection[0].name,
-        'versionNum': this.version.number, 'progress': 0, 'buildStatus': '', 'hidden': false
-      });
-      targetTab = this.buildService.builds.length - 1;
-      this.getBuildProcess(this.version.id, targetTab);
-    } else {
-      this.buildService.builds[targetTab].hidden = false;
-
-    }
-    this.buildService.initialSelection = this.buildService.builds[targetTab];
-
-    const modalRef = this.modalService.open(ModalBuildViewerComponent, { size: 'lg' });
-    modalRef.componentInstance.showing = this.buildService.initialSelection;
-    modalRef.componentInstance.tabs = this.buildService.builds;
-
-  }
-
-  getBuildProcess(id, targetTab) {
-    this.buildService.getBuild(id).subscribe(
-      res => {
-        if (res.status === 200) {
-          const build = res.json();
-          let progress = 0;
-          if (build.status === 'RUNNING') {
-            for (let i = 0; i < build.projectBuilds.length; i++) {
-              const buildProject = build.projectBuilds[i];
-              for (let j = 0; j < buildProject.buildSteps.length; j++) {
-                if (buildProject.buildSteps[j].status === 'IN_PROGRESS') {
-                  progress = i / build.projectBuilds.length;
-                }
-              }
-            }
-          } else if (build.status === 'FINISHED') {
-            progress = 1;
-          }
-          this.buildService.builds[targetTab].progress = progress;
-          this.buildService.builds[targetTab].buildStatus = build.status;
-          this.buildService.addListener(build.id);
-        }
-      }
-    );
-  }
-
-
 
   findTab(item) {
     return (item.id === this.id);
   }
 
-  build() {
-    let count = 0;
-    for (let i = 0; i < this.version.commits.length; i++) {
 
-      if (this.version.commits[i].selectProject === false) {
-        count = count + 1;
 
+  addProject(version) {
+    let i = 0;
+    let index;
+    while (i < this.versions.length) {
+      if (this.versions[i].id === version.id) {
+        index = i;
       }
-
+      i++;
     }
-    if (count === this.version.commits.length) {
-      this.toastr.error('No Project has been selected. Please select atleast one project to build the collection');
-    } else {
-      this.buildService.postBuild(this.version).subscribe(
-        response => {
-          if (response.status === 200) {
-            const buildId = response.json();
-            this.buildprojects.frozen = true;
-            this.version.frozen = true;
-            this.buildService.builds.push({
-              'id': this.version.id, 'name': this.collection[0].name, 'versionNum': this.version.number,
-              'progress': 0, 'buildStatus': 'RUNNING', 'hidden': false
-            });
-            const targetTab = this.buildService.builds.length - 1;
-            this.getBuildProcess(this.version.id, targetTab);
-          } else if (response.status === 403) {
-            this.router.navigateByUrl('/login');
-          }
-        }
-
-      );
-    }
-
-  }
-
-  addProject() {
-
+    this.service.index = index;
+    this.service.toAddVersion = version;
     this.router.navigateByUrl('/search');
 
   }
 
-  deleteProject(fargCommit) {
+  deleteProject(fargProject) {
     const disposable = this.dialogService.addDialog(DialogComponentComponent, {
       title: 'Confirm',
       message: 'Removal is irreversible! Continue?'
     })
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-          this.commitService.deleteRepos(fargCommit.id).subscribe(
+          this.commitService.deleteRepos(fargProject.id).subscribe(
             response => {
               if (response.status === 200) {
-                const d: any = this.version.commits;
+                const d: any = this.version.projects;
                 for (let i = 0; i < d.length; i++) {
-                  if (d[i].id === fargCommit.id) {
+                  if (d[i].id === fargProject.id) {
                     d.splice(i, 1);
                     // this.router.navigateByUrl('/editCollection/' + this.version.collection_id);
                     break;
@@ -462,6 +337,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.service.updateCollection(fargCollection).subscribe(
       response => {
         if (response.status === 200) {
+          this.toastr.success('Changes saved successfully');
           this.router.navigateByUrl('/editCollection/' + fargCollection.id);
         }
       }
@@ -474,49 +350,6 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/collection');
   }
 
-  showHermesResults(fargversion) {
-    this.hermesService.getHermesStatus(fargversion.id).subscribe(
-      response => {
-        if (response.json().status === 'RUNNING') {
-          this.toastr.error('Hermes process is still running');
-        } else if (response.json().status === 'FINISHED') {
-          this.openHermesViewerModal();
-        }
-      }
-    );
-
-  }
-
-  openHermesViewerModal() {
-    const modalRef = this.modalService.open(HermesViewerComponent, { size: 'lg' });
-    modalRef.componentInstance.version = this.version;
-  }
-
-  removeFilter(fargversion) {
-
-    this.loading = true;
-    this.version.filtered = false;
-    this.hermesService.getHermesStatus(fargversion.id).subscribe(
-      response => {
-        if (response.json().status === 'RUNNING') {
-          this.toastr.error('Hermes is in progress, Please try again later');
-        } else {
-          this.hermesService.deleteHermes(response.json().id).subscribe(
-            data => {
-              if (data.status === 200) {
-                this.toastr.success('Hermes Results succesfully unfiltered');
-              } else {
-                this.toastr.error('Failed with [' + data.status + '] ' + data.statusText);
-              }
-            }
-          );
-        }
-      }
-    );
-
-    this.loading = false;
-
-  }
 
   ngOnInit() {
 
@@ -529,6 +362,19 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     localStorage.removeItem('id');
+  }
+
+  isPublic() {
+    for (let i = 0; i < this.versions.length; i++) {
+      if (this.versions[i].privateStatus === false) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  goToParent() {
+    this.router.navigateByUrl('/parentview/' + this.parentVersId);
   }
 
 }

@@ -47,7 +47,7 @@ describe('ManagePublicCollectionsComponent', () => {
   });
 
   xit('deleteSelectedCols Button should invoke corresponding method', () => {
-    const deleteCol = spyOn(component, 'deleteColsDialog');
+    const deleteCol = spyOn(component, 'openDialog');
     fixture.debugElement.query(By.css('#button_alignR')).triggerEventHandler('click', null);
     expect(deleteCol).toHaveBeenCalled();
   });

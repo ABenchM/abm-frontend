@@ -18,6 +18,9 @@ export class CollectionService {
 
   toCreate: any[];
   toAdd: any[];
+  parentVersionId: any;
+  toAddVersion: any;
+  index: any;
   constructor(private http: Http, private httpClient: HttpClient) { }
 
   private onSuccess(res: Response) {
@@ -80,7 +83,7 @@ export class CollectionService {
     );
   }
 
-  deleteSelectedCols(colIDs: String) {
+  deleteCollectionByAdmin(colIDs: String) {
     const body = { 'deleteCollections': colIDs };
     return this.http.delete('/rest/publiccollection/' + colIDs);
   }
@@ -96,7 +99,13 @@ export class CollectionService {
   }
 
   postDeriveVersion(version) {
-    return this.http.post('rest/version/derive', version);
+    return this.http.post('/rest/version/', version);
+  }
+
+  getVersionParentDetails(versionId) {
+    // const data = { 'id': versionId };
+    return this.http.get('/rest/versionDetails/' + versionId);
+
   }
 
   getPublicCollections(): Observable<any> {

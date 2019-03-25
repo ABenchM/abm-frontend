@@ -1,3 +1,7 @@
+.parentversion{
+    float: right;
+}
+
 .mat-icon{
     color: white;
 }
@@ -25,9 +29,17 @@
 	margin: 0.75em 0 0.25em 0.65em;
 }
 
+.float-right {float: right;}
+
 .btn-mrgn:first{
     margin :  0.75em 0 0.25em 0em;
 }
 .card-body{
     padding: 1.25em 0;
 }
+
+::ng-deep .mat-raised-button:hover{
+    background-color:#45D9F6
+ 
+    !important;
+  }

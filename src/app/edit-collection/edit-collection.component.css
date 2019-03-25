@@ -12,6 +12,10 @@
     color: gray;
 }
 
+.parentversion{
+    float: right;
+}
+
 .material-form {
     min-width: 150px;
     width: 100%;
@@ -31,3 +35,9 @@
 .card-body{
     padding: 1.25em 0;
 }
+
+::ng-deep .mat-raised-button:hover{
+    background-color:#45D9F6
+ 
+    !important;
+  }

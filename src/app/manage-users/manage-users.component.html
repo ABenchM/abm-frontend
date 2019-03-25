@@ -58,14 +58,14 @@
           <mat-cell *matCellDef="let row;">
   
             <div *ngIf="!row.locked">
-              <button mat-icon-button color="red">
-                <mat-icon (click)="lockUser(row)" aria-label="Lock" >lock</mat-icon>
+              <button (click)="lockUser(row)" mat-icon-button color="red">
+                <mat-icon  aria-label="Lock" >lock</mat-icon>
               </button>
             </div>
   
             <div *ngIf="row.locked">
-              <button mat-icon-button color="red">
-                <mat-icon (click)="unlockUser(row)" aria-label="unLock" >lock_open</mat-icon>
+              <button (click)="unlockUser(row)" mat-icon-button color="red">
+                <mat-icon  aria-label="unLock" >lock_open</mat-icon>
               </button>
             </div>
   
@@ -82,8 +82,8 @@
               </ng-template>
             </mat-menu>             
   
-            <button class="deleteIcon column" id="deletebutton" mat-icon-button >
-              <mat-icon class="red column" aria-label="Delete" (click)="openDialog(row.username)">delete</mat-icon>
+            <button (click)="openDialog(row.username)" class="deleteIcon column" id="deletebutton" mat-icon-button >
+              <mat-icon class="red column" aria-label="Delete" >delete</mat-icon>
             </button>
           </mat-cell>
         </ng-container>

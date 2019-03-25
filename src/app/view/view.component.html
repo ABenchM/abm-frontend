@@ -2,103 +2,80 @@
   <span class="cssload-loader"></span>
 </div>
 
+<div class="col-md-12 col-md-offset-0" *ngIf="!loading">
+    <div *ngIf="loggedInStatus()" class="parentversion"> Parent version: <a [routerLink]="" (click)="goToParent()">{{parentVersName}} @{{parentCollName}}</a> </div>
+  <form>
+    <div class="form-group">
+      <label for="id">Collection Id</label>
+      <input id="id" name="id" [(ngModel)]="viewCollection[0].id" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="viewCollection[0].name" type="text" [disabled]=true class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea rows='3' id="description" [(ngModel)]="viewCollection[0].description" name="description" [disabled]=true type="description"
+        class="form-control">
+      </textarea>
+    </div>
+  </form>
+  <hr>
+  <div class="row">
+    <span class="col-9" ngbDropdown>
+      <button mat-raised-button id="single-button" type="button" ngbDropdownToggle [disabled]="disabled || saving">
+        Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
+        <span class="caret"></span>
+      </button>
+      <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
+        <li *ngFor="let row of versions">
+          <button class="dropdown-item" (click)="selectVersion(row)">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.name}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{row.creationDate | date:'short'}}</button>
+        </li>
+        <li class="dropdown-divider"></li>
+      <!-- <li class="dropdown-item">
+        <button title="{{(!loggedInStatus()? 'please log in to access the edit collections functionalities' : '')}}" class="dropdown-item" [disabled] = "!loggedInStatus()" (click)="deriveVersion(version)">Derive new version from current version {{version.number}}</button>
+      </li> -->
+       </ul>
+    </span>
+    <div class="card-body">
+    <span *ngIf="loggedInStatus()">
+      <button mat-raised-button class="btn-mrgn" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin this Collection</button>
+      <button mat-raised-button class="btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin this Collection</button>
+    </span>
+    <button title="{{('Copy required projects from this version into a new collection')}}" mat-raised-button class="btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this Version</button>
+    </div>
+    <br>
+    <div class="float-right col">
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select All</button>
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect All</button>
+    </div>
+  </div>
+  <br>
+  <table class="table table-bordered table-striped" style="max-height:400px">
+    <thead class="thead-light">
+      <tr>
+        <th>Project ID</th>
+        <th [hidden]= "!loggedInStatus()">Select/Deselect</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of version.projects">
+        <td>{{row.project_id}}</td>
+        <td [hidden]= "!loggedInStatus()">&nbsp;&nbsp;<input [(ngModel)] = "row.selectProject" (change)="select(row)" type="checkbox" name="row.repository.name"/></td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button mat-raised-button class="align-bottom" (click)="back()">Return to Collection Search</button>    
+    <!-- <span class="align-middle">
+      <button title="{{(!hermesResultsExists?' Hermes Result does not exist' : '')}}" (click)="downloadHermes(version.id)" class="btn btn-success btn-sm" [disabled]= "downloading || !hermesResultsExists" *ngIf="version.filtered">Download Hermes Result</button>
+    </span> -->
+    <!-- <span class="float-right">
+      <p *ngIf="!version.frozen">This version is not currently built.</p>
+      <div title="{{(!buildResultsExists?' collection does not exist' : '')}}"> 
+      <button class="btn btn-success btn-sm align-bottom" (click)= "downloadBuild(version.id)" [disabled]= "downloading || !buildResultsExists" *ngIf="version.frozen">Download this version</button>
+    </div>
+    </span> -->
+  </div> 
 
-<div class="container-fluid" *ngIf="!loading">
-    <form class="material-form">
-        <mat-form-field class="material-input-width">
-          <mat-label>Collection Id</mat-label>
-          <input id="id" matInput name="id" [(ngModel)]="viewCollection[0].id" type="text" [disabled]=true class="form-control">
-        </mat-form-field>
-        <mat-form-field class="material-input-width">
-          <mat-label>Name</mat-label>
-          <input id="name" matInput name="name" [(ngModel)]="viewCollection[0].name" type="text" [disabled]=true class="form-control">
-        </mat-form-field>
-        <mat-form-field class="material-input-width">
-          <mat-label>Description</mat-label>
-          <textarea rows='3' id="description" matInput [(ngModel)]="viewCollection[0].description" name="description" [disabled]=true type="description"
-            class="form-control">
-    
-          </textarea>
-        </mat-form-field>
-        
-        <div class="float-right">
-            <input type="button" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All" class="btn btn-success btn-mrgn">
-            <input type="button" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()" value="Deselect All" class="btn btn-danger btn-mrgn">
-        </div>
-       </form>
-
-       <div class="row"> 
-       <span  ngbDropdown>
-          <button id="single-button" type="button" ngbDropdownToggle mat-raised-button class="btn btn-success btn-xs btn-mrgn"
-            [disabled]="disabled || saving">
-            Version {{version.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp; {{version.creationDate | date:'short'}}&nbsp;&nbsp;
-            <span class="caret"></span>
-          </button>
-          <ul style="cursor:pointer;" ngbDropdownMenu class="dropdown-menu" aria-labelledby="simple-dropdown">
-            <li *ngFor="let row of versions">
-              <button class="dropdown-item" (click)="version=row">{{row.number}} &nbsp;&nbsp;&#8208;&nbsp;&nbsp;
-                {{row.creationDate | date:'short'}} </button>
-            </li>
-            <li class="dropdown-divider"></li>
-      
-            <li class="dropdown-item">
-              <button title="{{(!loggedInStatus()? 'please log in to access the edit collections functionalities' : '')}}" class="dropdown-item" [disabled] = "!loggedInStatus()" (click)="deriveVersion(version)">Derive new version from current version
-                {{version.number}}</button>
-            </li>
-          </ul>
-      
-        </span>
-        
-       </div>
-       
-       <br>
-       <br>
-       <br>
-
-       <mat-table #table  [dataSource]="version.commits">
-
-          <ng-container matColumnDef="name">
-            <mat-header-cell mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" class="view"> {{row.repository.name}} </mat-cell>
-          </ng-container>
-      
-          <ng-container matColumnDef="check">
-            <mat-header-cell mat-header-cell *matHeaderCellDef [hidden]= "!loggedInStatus()"> </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let row" class="view">
-                <mat-checkbox [hidden]="!loggedInStatus()" [(ngModel)]="row.selectProject"  name="{{row.repository.name}}"
-                (change)="select(row)" > </mat-checkbox>
-            </mat-cell>
-          </ng-container>
-      
-              
-          <mat-header-row row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
-        </mat-table>
-      
-        <br>
-        <br>
-        <br>
-      
-
-       <div>
-          <button mat-raised-button class="btn btn-primary btn-sm align-bottom btn-mrgn" (click)="back()">Return to Collection Search</button>
-          <span *ngIf="loggedInStatus()">
-            <button mat-raised-button class="btn btn-primary btn-sm align-bottom btn-mrgn" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin</button>
-            <button mat-raised-button class="btn btn-primary btn-sm align-bottom btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin</button>
-          </span>
-          <button mat-raised-button class="btn btn-primary btn-sm align-bottom btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this Collection</button>
-          <span class="align-middle">
-            <button mat-raised-button title="{{(!hermesResultsExists?' Hermes Result does not exist' : '')}}" (click)="downloadHermes(version.id)" class="btn btn-success btn-sm" [disabled]= "downloading || !hermesResultsExists" *ngIf="version.filtered">Download Hermes Result</button>
-          </span>
-          <span class="float-right">
-            <p *ngIf="!version.frozen">This version is not currently built.</p>
-            <div title="{{(!buildResultsExists?' collection does not exist' : '')}}"> 
-            <button class="btn btn-success btn-sm align-bottom" (click)= "downloadBuild(version.id)" [disabled]= "downloading || !buildResultsExists" *ngIf="version.frozen">Download this version</button>
-          </div>
-          </span>
-        </div> 
 </div>
-
-
-
-

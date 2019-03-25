@@ -196,3 +196,27 @@ flex: 1 100%;
 	line-height : 3.5em;
 }
 
+
+::ng-deep .mat-raised-button:hover {
+background-color:  #45D9F6
+!important;
+}
+
+::ng-deep .mat-form-field-placeholder .mat-form-field-ripple {
+background-color: #45D9F6
+!important;
+} 
+
+::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+background-color: #45D9F6
+!important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+background-color: #45D9F6
+!important;
+}
+
+.mat-column-select {
+overflow: initial;
+}

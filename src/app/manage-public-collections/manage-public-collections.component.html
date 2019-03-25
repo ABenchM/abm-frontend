@@ -33,8 +33,8 @@
         <ng-container matColumnDef="versions">
             <mat-header-cell *matHeaderCellDef> Versions </mat-header-cell>
             <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
-                (click)="expandedElement = expandedElement === element ? null : element; data = row.versions">
-                <button mat-stroked-button [ngClass]="'customOutline'">Show Versions 
+                (click)="expandedElement = expandedElement === element ? null : element; data = row.versions" >
+                <button mat-stroked-button [ngClass]="'customOutline'" (click)=setCollection(row)>Show Versions 
                     <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                     <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
                 </button>
@@ -51,14 +51,14 @@
             <td mat-cell *matCellDef="let element">{{element.number}}</td>
         </ng-container>
         <ng-container matColumnDef="VersionID">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
         <ng-container matColumnDef="Actions">
             <th mat-header-cell *matHeaderCellDef> Delete </th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button>
-                    <mat-icon class="red" (click)="openDialog(element.id)" aria-label="Delete">delete</mat-icon>
+                <button mat-icon-button (click)="openDialog(element.id)">
+                    <mat-icon class="red" aria-label="Delete">delete</mat-icon>
                 </button>
             </td>
         </ng-container>

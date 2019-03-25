@@ -63,11 +63,7 @@ export class CollectionComponent implements OnInit {
   }
 
   open(row) {
-    if (row.privateStatus) {
       this.router.navigateByUrl('/editCollection/' + row.id);
-    } else {
-      this.router.navigateByUrl('/view/' + row.id);
-    }
   }
 
   openVersion(collection, versionID) {

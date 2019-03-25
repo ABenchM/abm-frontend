@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   public publicCollections: any[] = [];
   loading: boolean;
   disabled: boolean;
-  displayedColumns: string[] = ['name', 'description', 'creation_date', 'id', 'pin', 'versions' ];
+  displayedColumns: string[];
   columnsToDisplay: string[] = ['versionNo', 'VersionID'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   dataPin = new MatTableDataSource<any>();
   expandedElement: any;
   versions: any[] = [{}];
+  pinnedversions: any[] = [{}];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
@@ -47,6 +48,26 @@ export class HomeComponent implements OnInit {
     this.service.getPublicCollections().subscribe(response => {
       if (response.status === 200 && response.json() !== null) {
         this.publicCollections = this.orderPipe.transform(response.json());
+        let j = 0;
+        while (j < this.publicCollections.length) {
+        this.versions = this.publicCollections[j].versions;
+        let i = 0;
+        while (i < this.versions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.versions[i].privateStatus === true) {
+            console.log('Deleting version ' + this.versions[i].id);
+            this.versions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+        if (this.versions.length <= 0) {
+          this.publicCollections.splice(j, 1);
+        } else {
+          j = j + 1;
+        }
+      }
         this.dataSourcePub.data = this.publicCollections;
         setTimeout(() => this.dataSourcePub.paginator = this.paginator.toArray()[1]);
         setTimeout(() => this.dataSourcePub.sort = this.sort.toArray()[1]);
@@ -65,9 +86,28 @@ export class HomeComponent implements OnInit {
       this.checkPinned(this.dataSourcePub.data[i]);
     }
     this.service.getPinnedCollections(localStorage.getItem('currentUser')).subscribe(response => {
-      if (response.status === 200 && response.json()
-       !== null) {
+      if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json());
+        let j = 0;
+        while (j < this.pinned.length) {
+        this.pinnedversions = this.pinned[j].versions;
+        let i = 0;
+        while (i < this.pinnedversions.length) {
+          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+          if (this.pinnedversions[i].privateStatus === true) {
+            console.log('Deleting version ' + this.pinnedversions[i].id);
+            this.pinnedversions.splice(i, 1);
+
+          } else {
+            i = i + 1;
+          }
+        }
+        if (this.pinnedversions.length <= 0) {
+          this.pinned.splice(j, 1);
+        } else {
+          j = j + 1;
+        }
+      }
         this.dataSourcePin.data = this.pinned;
         setTimeout(() => this.dataSourcePin.paginator = this.paginator.toArray()[0]);
         setTimeout(() => this.dataSourcePin.sort = this.sort.toArray()[0]);
@@ -76,6 +116,21 @@ export class HomeComponent implements OnInit {
     });
 
     this.loading = false;
+  }
+
+  openVersion(versions, versionID) {
+     let i = 0;
+     let index;
+     while (i < versions.length) {
+       if (versions[i].id === versionID) {
+         index = i;
+       }
+       i++;
+     }
+     if (index != null) {
+       index++;
+      this.router.navigateByUrl('/view/' + versions[0].collectionId + '/' + index);
+     }
   }
 
   checkPinned(item) {
@@ -136,6 +191,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  if (this.loggedInStatus()) {
+    this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'pin', 'versions' ];
+  } else {
+    this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'versions' ];
+  }
     this.loadPublicCollections();
   }
 
