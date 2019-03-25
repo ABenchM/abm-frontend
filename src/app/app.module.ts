@@ -6,7 +6,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,9 +14,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule, 
+  MatAutocompleteModule } from '@angular/material';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatChipsModule} from '@angular/material';
 
 
 
@@ -215,7 +216,10 @@ const routes: Routes = [
     MatInputModule,
     MatExpansionModule,
     MatGridListModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
