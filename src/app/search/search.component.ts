@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Search } from '../models/search.model';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
   FormGroup,
   FormControl,
@@ -12,15 +13,14 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  MatTableDataSource,
-  MatPaginator,
-  MatSort,
-  MatButtonToggleChange
-} from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatButtonToggleChange, MatAutocompleteSelectedEvent, MatChipInputEvent,
+MatAutocomplete } from '@angular/material';
 import * as _ from 'lodash';
-import { throwIfEmpty } from 'rxjs/operators';
+import { throwIfEmpty, map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Promise } from 'q';
+import { escapeRegExp } from '@angular/compiler/src/util';
+import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
 
 @Component({
   selector: 'abm-search',
@@ -28,7 +28,7 @@ import { Promise } from 'q';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  model = new Search('');
+  model = new Search('', '', '&&', '', '');
   loading: boolean;
   onSearchError = false;
   results = [];
@@ -38,8 +38,7 @@ export class SearchComponent implements OnInit {
   filterDataSource = new MatTableDataSource<any>([]);
   language = {};
   searched = false;
-  isFilterVisible = false;
-  filters: any;
+  isFilterVisible: false;
   isSelect;
   SortType: any = 'name';
   reverse = false;
@@ -47,6 +46,18 @@ export class SearchComponent implements OnInit {
   addColumns: any[];
   filterColumns: any[];
   selection = new SelectionModel<any>(true, []);
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  queryCtrl = new FormControl();
+  filteredQueries: Observable<string[]>;
+  queries: string[] = [];
+  allFilters: string[] = [];
+
+  @ViewChild('queryInput') queryInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
   @ViewChild('filterPaginator') filterPaginator: MatPaginator;
   @ViewChild(MatSort) resultSort: MatSort;
@@ -57,7 +68,9 @@ export class SearchComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private orderPipe: OrderPipe
-  ) {}
+  ) {
+    this.getFilter();
+  }
 
   setSortType(value) {
     if (this.SortType === value) {
@@ -82,32 +95,40 @@ export class SearchComponent implements OnInit {
     return this.loading;
   }
 
-  search(searchQuery) {
+  search() {
+    let searchQuery: string = this.queries.join('');
     this.loading = true;
     this.onSearchError = false;
     this.resultDataSource.data = [];
-    this.service.getFiltersSearch(searchQuery).subscribe(resp => {
-      let response = JSON.parse(resp.json());
-      let data = [...response];
-      this.resultDataSource.data = data.map(result => {
-       return {
-         id: result.id,
-         source: result.metadata.source,
-         metric: result.metricResults,
-         singleSelection : false
-       };
-     });
-      setTimeout(
-        () => (this.resultDataSource.paginator = this.resultPaginator)
-      );
-      setTimeout(() => (this.resultDataSource.sort = this.resultSort));
-      this.loading = false;
-      this.searched = true;
-    },
-    error => {
-      this.onSearchError = true;
-      this.loading = false;
-    });
+    this.service.getFiltersSearch(searchQuery).subscribe(
+      resp => {
+       try {
+        let response = JSON.parse(resp.json());
+        let data = [...response];
+        this.resultDataSource.data = data.map(result => {
+          return {
+            id: result.id,
+            source: result.metadata.source,
+            metric: result.metricResults,
+            singleSelection: false
+          };
+        });
+        setTimeout(
+          () => (this.resultDataSource.paginator = this.resultPaginator)
+        );
+        setTimeout(() => (this.resultDataSource.sort = this.resultSort));
+        this.loading = false;
+        this.searched = true;
+       } catch (error) {
+        this.onSearchError = true;
+        this.loading = false;
+       }
+      },
+      error => {
+        this.onSearchError = true;
+        this.loading = false;
+      }
+    );
   }
 
   isProjectSelected() {
@@ -123,19 +144,9 @@ export class SearchComponent implements OnInit {
     return false;
   }
 
-  // // deselectAll() {
-  // //   for (let i = 0; i < this.results.length; i++) {
-  // //     this.results[i].singleSelection = false;
-  // //     this.service.project = [];
-  // //     this.toAdd = [];
-  // //   }
-  // // }
-
   removeCart() {
     this.toAdd = [];
     this.toAdd = [...this.toAdd];
-    // this.isSelect = !this.isSelect;
-    // this.selectDeselectAll();
     this.selection.clear();
   }
 
@@ -218,79 +229,94 @@ export class SearchComponent implements OnInit {
     return this.toAdd.length;
   }
 
-  // openSource(item) {
-  //   // window.location.href = item.repositoryUrl;
-  //   window.open(item.repositoryUrl, '_blank');
-  // }
 
   ngOnInit() {
-    /*   this.searchColumns =  [
-        { field: 'name', header: 'Name' },
-    { field: 'description', header: 'Description' },
-    { field: 'creationdate', header: 'Creation Date' },
-    { field: 'size', header: 'Size' },
-    { field: 'htmlUrl', header: 'Origin' }
-  ]; */
-    this.searchColumns = [
-      'id',
-      'metric',
-      'source',
-      'select'
-    ];
-    this.addColumns = [
-      'id',
-      'metric',
-      'source',
-      'select'
-    ];
+    this.searchColumns = ['id', 'metric', 'source', 'select'];
+    this.addColumns = ['id', 'metric', 'source', 'select'];
     this.filterColumns = ['filter', 'value', 'operand', 'action'];
     this.toAdd = [];
-    this.resultDataSource.data = [];
-    this.getFilter();
   }
 
   getFilter() {
     /* fetchs filter - ebuka */
     this.service.getFilters().subscribe(resp => {
       let response = JSON.parse(resp.json());
-      let data = [...response];
-      this.filterDataSource.data = data.map(filter => {
-        return {
-          filter,
-          value: '',
-          operand: '&&'
-        };
-      });
-    });
-    setTimeout(() => {
-      this.filterDataSource.paginator = this.filterPaginator;
-    });
-  }
+
+      this.allFilters = [...response].map(filter => `[${filter}]`);
+      this.filteredQueries = this.queryCtrl.valueChanges.pipe(
+        startWith(null),
+        map((query: string | null) =>
+        query ? this._filter(query) : this.allFilters.slice()
+        )
+      );
+       });
+    }
 
   filter(filterValue: string) {
     this.filterDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  toggleOperand(e: MatButtonToggleChange, row: any) {
-    row.operand = e.value;
+  clear() {
+    this.queries = [];
   }
 
-  applyFilter(row: any) {
-    this.model.query += this.parseFilter(row);
-    row.value = '';
-  }
-
-  parseFilter(row: any) {
-    let value = this.model.query;
-    // remove spaces between filter values
-    row.value = row.value.split(' ').join('');
-    if (value.trim().length < 1) {
-      return `[${row.filter}]${row.value}`;
-    }
-    return `${row.operand}[${row.filter}]${row.value}`;
+  addFilter() {
+    let filter: string;
+   if (this.queries.length > 0) {
+     this.model.value = this.model.value.split(' ').join('');
+     filter = `${this.model.operator}${this.model.negate}${this.model.filter}${this.model.value}`;
+       } else {
+        filter = `${this.model.negate}${this.model.filter}${this.model.value}`;
+   }
+   this.queries.push(filter);
+   this.model.value = '';
   }
 
   applyDataSourceFilter(filterValue: string) {
     this.resultDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  add(event: MatChipInputEvent): void {
+    // Add filter only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our filter
+      if ((value || '').trim()) {
+        this.queries.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.queryCtrl.setValue(null);
+    }
+  }
+
+  remove(query: string): void {
+    const index = this.queries.indexOf(query);
+
+    if (index >= 0) {
+      this.queries.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.queries.push(event.option.viewValue);
+    this.queryInput.nativeElement.value = '';
+    this.queryCtrl.setValue(null);
+  }
+
+  onChangeNegate(event: MatButtonToggleChange) {
+   event.source.checked ? this.model.negate = '!' : this.model.negate = '';
+  }
+
+private _filter(value: string): string[] {
+    let filterValue = value.toLowerCase();
+    return this.allFilters.filter(query  => query.toLowerCase().indexOf(filterValue) === 0);
   }
 }
