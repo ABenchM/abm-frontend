@@ -10,7 +10,7 @@
     "test": "ng test --watch=false --browsers ChromeHeadless --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "npm run lint && npm run test",
+    "precommit": "npm run lint && npm run test && npmvet -r ci",
     "htmllint": "node htmlchecker.js"
   },
   "author": "",
