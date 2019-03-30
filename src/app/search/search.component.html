@@ -1,6 +1,6 @@
 <section>
   <div class="alert alert-warning" role="alert" *ngIf="getTotalItems() === 0">
-    Search for projects to add to your collection.
+    Search for projects to add to your collection. Add the Filters given below to search the projects from Delphi.
   </div>
 
   <p
@@ -31,10 +31,9 @@
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder=""
+                  placeholder="Add the filter such as [astore_3 (opcode:78)]>10"
                   #queryInput
                   [formControl]="queryCtrl"
-                  [matAutocomplete]="auto"
                   [matChipInputFor]="chipList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addOnBlur"
@@ -53,7 +52,7 @@
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
-           <div><a [routerLink]="" title="create query filters " (click)="isFilterVisible = !isFilterVisible">create filters</a></div>
+           <!-- <div><a [routerLink]="" title="create query filters " (click)="isFilterVisible = !isFilterVisible">create filters</a></div> -->
           </div>
           <div class="column is-1">
             <div>
@@ -79,7 +78,7 @@
           </div>
         </div>
         
-        <div class="row" *ngIf="isFilterVisible">
+        <div class="row" >
           <div class="column is-10">
             <div class="row">
               
