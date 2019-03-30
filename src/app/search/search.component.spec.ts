@@ -11,15 +11,17 @@ import { CollectionService } from '../services/collection.service';
 import { FileSizePipe } from '../shared/file-size.pipe';
 import { SiteNamePipe } from '../shared/site-name.pipe';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule } from '@angular/material';
-import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonToggleModule } from '@angular/material';
+
+import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule, MatAutocompleteModule,
+   MatSelectModule } from '@angular/material';
+import { MatMenuModule, MatIconModule, MatPaginatorModule, MatDialogModule, MatButtonToggleModule,
+  MatChipsModule } from '@angular/material';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
-  let filter: string;
-  const selectedfilter: any = {filter: 'if_icmpgt (opcode:163)', value: '< 40', operand: '&&'};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,8 +29,8 @@ describe('SearchComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, HttpModule, RouterTestingModule, OrderModule,
         MatMenuModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatPaginatorModule,
         MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule, MatButtonToggleModule,
-        BrowserAnimationsModule, ToastrModule.forRoot()],
-      providers: [SearchService, CollectionService, HttpClient, HttpHandler, ToastrService]
+        BrowserAnimationsModule, MatChipsModule, MatAutocompleteModule, MatSelectModule, ToastrModule.forRoot()],
+        providers: [SearchService, CollectionService, HttpClient, HttpHandler, ToastrService]
     })
       .compileComponents();
   }));
@@ -38,17 +40,6 @@ describe('SearchComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  fit('should return a parsed filter without operator if search textfield is empty', () => {
-    component.model.query = '';
-    filter = component.parseFilter(selectedfilter);
-    expect(filter).toEqual('[if_icmpgt (opcode:163)]<40');
-  });
-  fit('should return a parsed filter with operator if a filter has been previously applied to the search textfield', () => {
-    component.model.query = '[if_icmpgt (opcode:163)]>34';
-    filter = component.parseFilter(selectedfilter);
-    expect(filter).toEqual('&&[if_icmpgt (opcode:163)]<40');
-   });
 
   fit('should create', () => {
     expect(component).toBeTruthy();

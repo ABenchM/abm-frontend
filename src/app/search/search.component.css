@@ -5,7 +5,8 @@ table {
   }
 
   .row{
-	  display: flex
+		display: flex;
+		justify-content: space-around;
   }
 .column.is-12{
 flex: 1 100%;
@@ -26,7 +27,7 @@ flex: 1 100%;
 			flex: 0 1 33.333%;
 			}
 			.column.is-3{
-				flex: 0 1 25%;
+				flex: 0 1 33.333%;
 			}
 			.column.is-2{
 				flex: 0 1 16.666%;
@@ -194,6 +195,7 @@ flex: 1 100%;
 .searh-btn-lh{
 	line-height : 3.5em;
 }
+
 
 ::ng-deep .mat-raised-button:hover {
 background-color:  #45D9F6
