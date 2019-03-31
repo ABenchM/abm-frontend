@@ -81,7 +81,7 @@
 
         <mat-toolbar>
           <mat-toolbar-row>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons [length]="dataSourcePin.data.length"></mat-paginator>
           </mat-toolbar-row>
         </mat-toolbar>
       </div>
@@ -182,10 +182,9 @@
       </mat-table>
       <mat-toolbar>
         <mat-toolbar-row>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="dataSourcePub.data.length" showFirstLastButtons ></mat-paginator>
         </mat-toolbar-row>
       </mat-toolbar>
     </div>
   </div>
 </div>
-
