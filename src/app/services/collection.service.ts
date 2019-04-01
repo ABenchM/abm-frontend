@@ -124,7 +124,7 @@ export class CollectionService {
     return this.http.get('rest/collection', { params: data });
   }
 
-  getPinnedCollections(currentUser): Observable<any>  {
+  getPinnedCollections(currentUser): Observable<any> {
     const data = { 'type': 'collection', 'user': currentUser };
     return this.http.get('/rest/pin', { params: data }).pipe(
       catchError(this.handleError<any>('getPinnedCollections')));
@@ -137,6 +137,11 @@ export class CollectionService {
   getBuild(version) {
     return this.http.get('/rest/build/' + version.id);
   }
+
+  postPublishCollection(version) {
+    return this.http.post('/rest/publishCollection/', version);
+  }
+
 
   deleteBuild(version) {
     return this.http.post('/rest/version/unfreeze', version);

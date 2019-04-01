@@ -193,6 +193,10 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
               if (response.status === 200) {
                 this.service.updateVersion(this.version).subscribe(data => {
                   if (data.status === 200) {
+
+                    this.service.postPublishCollection(this.version).subscribe(publishResponse => {
+                          console.log(publishResponse.json());
+                    });
                    // this.router.navigateByUrl('/collection');
                   }
                 });
