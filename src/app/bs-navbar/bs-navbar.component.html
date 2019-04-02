@@ -1,39 +1,37 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-  
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <img src = "assets/abm_logo.jpg" class="img-click" routerLink="/" width="60px" height="60px" alt="ABM" align="right">
+    <img src="assets/abm_logo.jpg" class="img-click" routerLink="/" width="60px" height="60px" alt="ABM" align="right">
     <ul class="navbar-nav mr-auto nav-pills">
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/collection">My Collections</a>
       </li>
       <li class="nav-item" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/" >Public collections</a>
-      </li>
-      <li  *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/search" >Create collection</a>
+        <a class="nav-link" routerLink="/">Public collections</a>
       </li>
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
-          <a class="nav-link" routerLink="/filters">Filters</a>
-        </li>
+        <a class="nav-link" routerLink="/search">Create collection</a>
+      </li>
+      <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
+        <a class="nav-link" routerLink="/filters">Filters</a>
+      </li>
       <li class="nav-item" routerLinkActive="active-link">
-         <a class="nav-link" routerLink="/about">About</a>
+        <a class="nav-link" routerLink="/about">About</a>
       </li>
       <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/login" >Login</a>
+        <a class="nav-link" routerLink="/login">Login</a>
       </li>
     </ul>
     <ul class="navbar-nav">
       <li *ngIf="loggedInStatus()" routerLinkActive="active-link">
-        <button class = "nav-link" mat-button [matMenuTriggerFor]="menu">{{username}}<mat-icon>arrow_drop_down</mat-icon></button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/profile">
-            <mat-icon>person</mat-icon>
-            <span>My Profile</span>
+        <button class="nav-link" mat-button [matMenuTriggerFor]="menu">{{username}}<mat-icon>arrow_drop_down</mat-icon>
           </button>
+        <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/profile">
             <mat-icon>person</mat-icon>
             <span>My Profile</span>
