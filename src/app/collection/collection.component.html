@@ -37,7 +37,8 @@
 
   <ng-container matColumnDef="versions">
     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let element; let row" class="example-element-row" [class.example-expanded-row]="expandedElement === element"
+    <mat-cell *matCellDef="let element; let row" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element; data = row">
       <button mat-stroked-button [ngClass]="'customOutline'">
         Show Versions
@@ -59,7 +60,8 @@
   </ng-container>
   <ng-container matColumnDef="VersionID">
     <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let version" class="navigateToCol" (click)="openVersion(data,version.id)"> {{version.name}}
+    <td mat-cell *matCellDef="let version" class="navigateToCol" (click)="openVersion(data,version.id)">
+      {{version.name}}
     </td>
   </ng-container>
   <ng-container matColumnDef="Status">
@@ -72,7 +74,8 @@
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef> Make Public </th>
     <td mat-cell *matCellDef="let version">
-      <button class="makepublic" [disabled]="!version.privateStatus" mat-raised-button (click)="openDialog(element,version)">Make
+      <button class="makepublic" [disabled]="!version.privateStatus" mat-raised-button
+        (click)="openDialog(element,version)">Make
         Public</button>
     </td>
   </ng-container>
