@@ -356,10 +356,13 @@ private _filter(value: string): string[] {
             //     this.collection.versions.splice(i, 1, this.version);
             //   }
             // }
+            if (response.json().comment === 'Project Exists') {
+              this.toastr.error('Can not add Duplicate projects in one Version');
+            } else {
             this.collectionService.toAddVersion = null;
             this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + index);
+            }
           }
-
         } else {
           this.toastr.error('Internal error: the projects cannot be added. Please try again later.' +
             'If the error persists, please report it here: https://github.com/ABenchM/abm/issues', null, { timeOut: 100 });
