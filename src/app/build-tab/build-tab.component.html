@@ -1,9 +1,0 @@
-<div class="sidebar" *ngIf="!hideSidebar">
-  <div *ngFor="let tab of tabs" class="sidebarTab" title="{{tab.name}}">
-    <div *ngIf="!(tab.hidden)">
-      <span class="glyphicon glyphicon-chevron-right" (click)="hide(tab.id)"></span>
-      <a style="background:linear-gradient(to right, {{tab.buildStatus | buildColour}} {{tab.progress * 100}}%, transparent 0%)"
-        (click)="open(tab)">{{tab | tabTitle}}</a>
-    </div>
-  </div>
-</div>

@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {Login} from '../services/login.service';
 import { BsNavbarComponent } from './bs-navbar.component';
-import { CapitalizeFirstPipe } from '../shared/capitalize-first.pipe';
 import { HttpModule } from '@angular/http';
 import { CurrentUserService } from '../services/current-user.service';
 import { MatMenuModule, MatIconModule } from '@angular/material';
@@ -14,7 +13,7 @@ describe('BsNavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BsNavbarComponent, CapitalizeFirstPipe ],
+      declarations: [ BsNavbarComponent],
       imports: [HttpModule, MatMenuModule, MatIconModule, RouterTestingModule, RouterModule],
       providers: [Login, CurrentUserService]
     })

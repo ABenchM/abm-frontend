@@ -56,18 +56,18 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Error message on login failed', async(() => {
+  it('Error message on login failed', async(() => {
     component.loginFailed = true;
     fixture.detectChanges();
     const error_msg = fixture.debugElement.nativeElement;
     expect(error_msg.querySelectorAll('strong').length).toBe(1);
   }));
 
-  fit('Successful Login', async(() => {
+  it('Successful Login', async(() => {
     spyOn(component, 'loginForm').and.returnValue(false);
     expect(component.loginForm()).toBeFalsy();
 }));

@@ -69,22 +69,6 @@
         [disabled]="!version.privateStatus" (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
         Make this version public</button>
     </div>
-    <div id="frozen" *ngIf="version.frozen">
-      <!-- This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
-      <strong>Be aware, that the previous build result will be deleted!</strong>
-      <br/>
-      <br/> -->
-      <button mat-raised-button  (click)="addBuild()">Show Build</button>
-      <span style="float:right;">
-        <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="!version.filtered" [disabled]="disableBuild || loading || saving || !version.privateStatus"
-          (click)="runFilter(version)" >Run Hermes Filter</button>
-        <button mat-raised-button *ngIf="version.filtered" [disabled]="running" class="btn btn-success btn-sm" (click)="showHermesResults(version)">Show Hermes Results</button>
-        <button mat-raised-button title="{{(!version.privateStatus?' This version is public' : '')}}" *ngIf="version.filtered" [disabled]="running || !version.privateStatus"
-           (click)="removeFilter(version)">Unfilter</button>
-      </span>
-
-      <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
-    </div>
 
   </div>
   <br>

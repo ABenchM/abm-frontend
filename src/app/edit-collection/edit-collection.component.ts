@@ -6,18 +6,12 @@ import { DialogComponentComponent } from '../dialog-component/dialog-component.c
 import { DialogService } from 'ng2-bootstrap-modal';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
-
-import { ModalHermesComponent } from '../modal-hermes/modal-hermes.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommitSelectorComponent } from '../commit-selector/commit-selector.component';
-import { ModalBuildViewerComponent } from '../modal-build-viewer/modal-build-viewer.component';
-
 import { buildDriverProvider } from 'protractor/built/driverProviders';
-import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
-import { HermesService } from '../services/hermes.service';
-import { HermesViewerComponent } from '../hermes-viewer/hermes-viewer.component';
-import { BuildService } from '../services/build.service';
+
+
+
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource } from '@angular/material';
 import { DialogVersionDialogComponent } from './dialog-version-dialog.component';
 import { Collection } from '../models/collection.model';
@@ -63,8 +57,8 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private service: CollectionService, private dialogService: DialogService,
     private toastr: ToastrService, private viewf: ViewContainerRef,
-    private modalService: NgbModal, private commitService: CommitService,
-    private dataService: DataServiceService, private hermesService: HermesService, private buildService: BuildService) {
+    private modalService: NgbModal,
+    private dataService: DataServiceService) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.versionIndex = this.route.snapshot.paramMap.get('versionIndex');
     if (this.versionIndex != null) {
@@ -311,7 +305,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
     })
       .subscribe((isConfirmed) => {
         if (isConfirmed) {
-          this.commitService.deleteRepos(fargProject.id).subscribe(
+          this.service.deleteProject(fargProject.id).subscribe(
             response => {
               if (response.status === 200) {
                 const d: any = this.version.projects;

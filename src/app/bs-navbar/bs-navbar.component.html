@@ -17,10 +17,7 @@
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/search">Create collection</a>
       </li>
-      <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/filters">Filters</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active-link">
+       <li class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/about">About</a>
       </li>
       <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active-link">

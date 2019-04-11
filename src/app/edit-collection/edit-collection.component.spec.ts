@@ -9,10 +9,7 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommitService } from '../services/commit.service';
 import { DataServiceService } from '../services/data-service.service';
-import { HermesService } from '../services/hermes.service';
-import { BuildService } from '../services/build.service';
 import { MatDialogModule, MatFormFieldModule, MatSortModule, MatTableModule, MatInputModule, MatCheckboxModule } from '@angular/material';
 import { MatMenuModule, MatIconModule, MatPaginatorModule, MatButtonToggleModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,7 +27,7 @@ describe('EditCollectionComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule, HttpModule, ToastrModule.forRoot(), NgbModule.forRoot()],
       providers: [HttpClient, HttpHandler, CollectionService, DialogService,
-        ToastrService, CommitService, DataServiceService, HermesService, BuildService]
+        ToastrService,  DataServiceService]
     })
       .compileComponents();
   }));

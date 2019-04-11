@@ -6,7 +6,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource , MatCheck
 import { CollectionService } from '../services/collection.service';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
-import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ViewService } from '../services/view.service';
 import { Location } from '@angular/common';
@@ -30,9 +29,6 @@ export class ViewComponent implements OnInit {
   selectProject: boolean;
   disabled: boolean;
   saving: boolean;
-  downloading: boolean;
-  hermesResultsExists: boolean;
-  buildResultsExists: boolean;
   parentCollName;
   parentVersName;
   parentVersId;
@@ -42,7 +38,6 @@ export class ViewComponent implements OnInit {
 
   constructor(private service: CollectionService, private router: Router,
     private route: ActivatedRoute, private viewService: ViewService,
-    private dataService: DataServiceService,
     private pinService: PinService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private location: Location) {
 
@@ -98,7 +93,7 @@ export class ViewComponent implements OnInit {
 
     }
     this.service.parentVersionId = this.version.id;
-    // this.dataService.repositoryList = this.toCreate;
+
 
     this.router.navigateByUrl('/createCollection');
   }
@@ -180,23 +175,6 @@ export class ViewComponent implements OnInit {
               // this.projects = response.json()[0].versions[0].projects;
               this.projects = this.versions[0].projects;
 
-              this.viewService.checkFileStatus(this.version.id, 'build').subscribe(s => {
-                if (s.status === 200) {
-                  this.buildResultsExists = s.json();
-                } else if (s.status === 403) {
-                  this.toastr.error('Your session has expried. Please login first ');
-                  this.router.navigateByUrl('/login');
-                }
-
-              });
-              this.viewService.checkFileStatus(this.version.id, 'hermes').subscribe(s => {
-                if (s.status === 200) {
-                  this.hermesResultsExists = s.json();
-                } else if (s.status === 403) {
-                  this.toastr.error('Your session has expried. Please login first ');
-                  this.router.navigateByUrl('/login');
-                }
-              });
               if (this.loggedInStatus()) {
                 this.pinService.checkPinned(this.viewCollection[0]).subscribe(
                   data => {

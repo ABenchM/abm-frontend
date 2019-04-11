@@ -4,7 +4,6 @@ import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
-import { DataServiceService } from '../services/data-service.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -41,7 +40,7 @@ export class HomeComponent implements OnInit {
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
-    private pinService: PinService, private dataService: DataServiceService,
+    private pinService: PinService,
     private orderPipe: OrderPipe) { }
 
   loadPublicCollections() {

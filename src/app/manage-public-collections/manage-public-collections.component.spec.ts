@@ -35,11 +35,11 @@ describe('ManagePublicCollectionsComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Mat-select trigger should return 2 items for selection', () => {
+  it('Mat-select trigger should return 2 items for selection', () => {
     const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
     trigger.click();
     fixture.detectChanges();
@@ -52,7 +52,7 @@ describe('ManagePublicCollectionsComponent', () => {
     expect(deleteCol).toHaveBeenCalled();
   });
 
-  fit('should check for apply filter keyup event', () => {
+  it('should check for apply filter keyup event', () => {
     spyOn(component, 'applyFilter');
     fixture.detectChanges();
     const input = debugElement.query(By.css('#filter_data'));

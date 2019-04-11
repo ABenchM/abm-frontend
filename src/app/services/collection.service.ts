@@ -134,17 +134,14 @@ export class CollectionService {
     return this.http.put('/rest/collection', fargCollection, null);
   }
 
-  getBuild(version) {
-    return this.http.get('/rest/build/' + version.id);
-  }
 
   postPublishCollection(version) {
     return this.http.post('/rest/publishCollection/', version);
   }
 
 
-  deleteBuild(version) {
-    return this.http.post('/rest/version/unfreeze', version);
+  deleteProject (projectId) {
+     return this.http.delete('/rest/removeproject/' + projectId);
   }
 
 }

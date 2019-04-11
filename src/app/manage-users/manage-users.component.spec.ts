@@ -33,11 +33,11 @@ describe('ManageUsersComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Checkbox click should select a row', () => {
+  it('Checkbox click should select a row', () => {
     const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox');
     checkbox.click();
     fixture.whenStable().then(() => {
@@ -45,20 +45,20 @@ describe('ManageUsersComponent', () => {
     });
    });
 
-   fit('Mat-select trigger should return 2 items for selection', () => {
+   it('Mat-select trigger should return 2 items for selection', () => {
     const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
     trigger.click();
     fixture.detectChanges();
     expect(trigger.childElementCount).toBe(2);
     });
 
-  fit('DeleteSelectedUsers Button should invoke corresponding method', () => {
+  it('DeleteSelectedUsers Button should invoke corresponding method', () => {
     const deleteUser = spyOn(component, 'deleteSelectedUsers');
     fixture.debugElement.query(By.css('#buttonL')).triggerEventHandler('click', null);
     expect(deleteUser).toHaveBeenCalled();
     });
 
-  fit('should check for apply filter keyup event', () => {
+  it('should check for apply filter keyup event', () => {
     spyOn(component, 'applyFilter');
     fixture.detectChanges();
     const input = debugElement.query(By.css('#filter_data'));

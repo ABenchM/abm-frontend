@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { RegisterSuccessComponent } from './register-success.component';
 
-fdescribe('RegisterSuccessComponent', () => {
+describe('RegisterSuccessComponent', () => {
  // let component: RegisterSuccessComponent;
  // let fixture: ComponentFixture<RegisterSuccessComponent>;
   // const de = fixture.debugElement.query(By.css('h2')).nativeElement;
@@ -17,17 +17,8 @@ fdescribe('RegisterSuccessComponent', () => {
       .compileComponents();
   }));
 
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(RegisterSuccessComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
-
-  fit('should have a h2 tag of `Thank you for registering!`', () => {
+  it('should have a h2 tag of `Thank you for registering!`', () => {
     const fixture = TestBed.createComponent(RegisterSuccessComponent);
     fixture.detectChanges();
     const de = fixture.debugElement.nativeElement;

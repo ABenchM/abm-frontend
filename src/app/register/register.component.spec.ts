@@ -42,13 +42,8 @@ describe('RegisterComponent', () => {
 
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-  //  fit('submit button disabled when any of the field is empty', () => {
-  //    affiliationel.nativeElement.value = '';
-  //     fixture.detectChanges();
-  //    expect(submitEl.nativeElement.disabled).toBeTruthy();
 
-  //   });
 });

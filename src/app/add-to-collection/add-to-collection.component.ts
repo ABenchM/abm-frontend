@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { ToastrService, Toast } from 'ngx-toastr';
 import { CollectionComponent } from '../collection/collection.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CommitService } from '../services/commit.service';
 import { SearchService } from '../services/search.service';
 
 @Component({
@@ -29,7 +28,7 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
 
   constructor(private collectionService: CollectionService, private toastr: ToastrService,
     private viewContainerRef: ViewContainerRef, private router: Router, private route: ActivatedRoute,
-    private commitService: CommitService , private searchService: SearchService) {
+   private searchService: SearchService) {
     // this.toastr.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -39,29 +38,29 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
       if (response.status === 200) {
         this.userCollections = response.json();
         let j = 0;
-      while (j < this.userCollections.length) {
-        // this.versions = this.userCollections[j].versions;
-        // console.log('versions length ' + this.versions.length);
-        let i = 0;
-        while (i < this.userCollections[j].versions.length) {
-          // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
-          if (this.userCollections[j].versions[i].privateStatus === false) {
-            console.log('Deleting version ' + this.userCollections[j].versions[i].id);
-            this.userCollections[j].versions.splice(i, 1);
+        while (j < this.userCollections.length) {
+          // this.versions = this.userCollections[j].versions;
+          // console.log('versions length ' + this.versions.length);
+          let i = 0;
+          while (i < this.userCollections[j].versions.length) {
+            // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
+            if (this.userCollections[j].versions[i].privateStatus === false) {
+              console.log('Deleting version ' + this.userCollections[j].versions[i].id);
+              this.userCollections[j].versions.splice(i, 1);
 
+            } else {
+              i = i + 1;
+            }
+          }
+          if (this.userCollections[j].versions.length <= 0) {
+            this.userCollections.splice(j, 1);
           } else {
-            i = i + 1;
+            j = j + 1;
           }
         }
-        if (this.userCollections[j].versions.length <= 0) {
-          this.userCollections.splice(j, 1);
-        } else {
-          j = j + 1;
-        }
-      }
         this.collection = this.userCollections[0];
         if (this.collection != null) {
-        this.version = this.collection.versions[0];
+          this.version = this.collection.versions[0];
         }
       }
     }
@@ -118,26 +117,11 @@ export class AddToCollectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadCommits() {
-    // for (let i = 0; i < this.collectionService.toAdd.length; i++) {
 
-    //   this.commitService.getCommits(this.collectionService.toAdd[i], 1).subscribe(
-    //     res => {
-    //       if (res.status === 200) {
-    //         if (res.json()[0] !== null) {
-
-    //           this.commits[i].commitId = res.json()[0].commitId;
-    //           this.commits[i].id = this.collectionService.toAdd[i].id;
-    //         }
-    //       }
-    //     }
-    //   );
-    // }
-  }
 
   ngOnInit() {
     this.loadUserCollections();
-    // this.loadCommits();
+
   }
 
 

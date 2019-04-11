@@ -14,30 +14,21 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import { MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule,
-  MatAutocompleteModule } from '@angular/material';
+import {
+  MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule,
+  MatAutocompleteModule
+} from '@angular/material';
 import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatChipsModule} from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatChipsModule } from '@angular/material';
 
 
 
 // Components
 import { AppComponent } from './app.component';
-import { BuildTabComponent } from './build-tab/build-tab.component';
-import { BuildColourPipe } from './shared/build-colour.pipe';
-import { FileSizePipe } from './shared/file-size.pipe';
-import { HermesNamePipe } from './shared/hermes-name.pipe';
-import { PrivateStatusPipe } from './shared/private-status.pipe';
-import { SiteNamePipe } from './shared/site-name.pipe';
-import { TabTitlePipe } from './shared/tab-title.pipe';
 import { AboutComponent } from './about/about.component';
 import { CollectionComponent } from './collection/collection.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FilterComponent } from './filter/filter.component';
-import { HermesViewerComponent } from './hermes-viewer/hermes-viewer.component';
-import { ModalBuildComponent } from './modal-build/modal-build.component';
-import { ModalHermesComponent } from './modal-hermes/modal-hermes.component';
 import { SearchComponent } from './search/search.component';
 import { ViewComponent } from './view/view.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from 'angular-6-social-login';
@@ -58,29 +49,22 @@ import { HomeComponent } from './home/home.component';
 import { EditCollectionComponent } from './edit-collection/edit-collection.component';
 import { CreateCollectionComponent } from './create-collection/create-collection.component';
 import { CollectionService } from './services/collection.service';
-import { CapitalizeFirstPipe } from './shared/capitalize-first.pipe';
 import { DialogComponentComponent } from './dialog-component/dialog-component.component';
 import { DataServiceService } from './services/data-service.service';
 import { PinService } from './services/pin.service';
 import { CurrentUserService } from './services/current-user.service';
 import { ViewService } from './services/view.service';
 import { UserService } from './services/user.service';
-import { BuiltStatusPipe } from './shared/built-status.pipe';
 import { ResetPasswordService } from './services/reset-password.service';
 
 
-import { HermesService } from './services/hermes.service';
-import { CommitSelectorComponent } from './commit-selector/commit-selector.component';
-import { CommitService } from './services/commit.service';
-import { ModalBuildViewerComponent } from './modal-build-viewer/modal-build-viewer.component';
-import { ProjectCountPipe } from './project-count.pipe';
+
 import { AddToCollectionComponent } from './add-to-collection/add-to-collection.component';
-import { BuildService } from './services/build.service';
-import { TableModule } from 'primeng/table';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { CheckboxModule } from 'primeng/checkbox';
+
+
+
 import { ContextMenuModule, ContextMenuService } from 'ngx-contextmenu';
-import { DataTableModule, PaginatorModule } from 'primeng/primeng';
+
 import { ToastModule } from 'primeng/toast';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { MomentModule } from 'angular2-moment';
@@ -111,7 +95,6 @@ const routes: Routes = [
   { path: 'parentview/:id', component: ParentviewComponent },
   { path: 'createCollection', component: CreateCollectionComponent, canActivate: [AuthGuardService] },
   { path: 'addToCollection', component: AddToCollectionComponent, canActivate: [AuthGuardService] },
-  { path: 'filters', component: FilterComponent, canActivate: [AuthGuardService] },
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'confirm-password', component: ConfirmPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
@@ -132,21 +115,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    BuildTabComponent,
-    BuildColourPipe,
-    FileSizePipe,
-    HermesNamePipe,
-    PrivateStatusPipe,
-    SiteNamePipe,
-    TabTitlePipe,
     AboutComponent,
     CollectionComponent,
     LoginComponent,
     RegisterComponent,
-    FilterComponent,
-    HermesViewerComponent,
-    ModalBuildComponent,
-    ModalHermesComponent,
     SearchComponent,
     ViewComponent,
     LogoutComponent,
@@ -155,12 +127,7 @@ const routes: Routes = [
     HomeComponent,
     EditCollectionComponent,
     CreateCollectionComponent,
-    CapitalizeFirstPipe,
     DialogComponentComponent,
-    BuiltStatusPipe,
-    CommitSelectorComponent,
-    ModalBuildViewerComponent,
-    ProjectCountPipe,
     AddToCollectionComponent,
     DeleteDialogboxComponent,
     ManageUsersComponent,
@@ -176,7 +143,7 @@ const routes: Routes = [
     ConfirmPasswordComponent,
     DialogVersionDialogComponent,
     ParentviewComponent
-    ],
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -206,11 +173,6 @@ const routes: Routes = [
     MatCheckboxModule,
     HttpClientModule,
     ContextMenuModule,
-    TableModule,
-    DataTableModule,
-    PaginatorModule,
-    ConfirmDialogModule,
-    CheckboxModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
     ToastModule,
@@ -244,9 +206,6 @@ const routes: Routes = [
     ViewService,
     UserService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    HermesService,
-    CommitService,
-    BuildService,
     ContextMenuService,
     ResetPasswordService,
     RouterLinkActive
@@ -255,12 +214,9 @@ const routes: Routes = [
     DeleteDialogboxComponent,
     DialogComponentComponent,
     DialogBoxComponent,
-    ModalHermesComponent,
-    CommitSelectorComponent,
-    HermesViewerComponent,
-    ModalBuildViewerComponent,
+
     DialogboxMakePublicComponent,
-    ModalBuildViewerComponent,
+
     DialogVersionDialogComponent
   ], exports: [
 
