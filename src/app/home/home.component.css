@@ -19,6 +19,9 @@
   width: 100%;
 }
 
+.selectCheckbox{
+  border-bottom-style: hidden;
+}
 
 .mat-form-field {
   font-size: 14px;

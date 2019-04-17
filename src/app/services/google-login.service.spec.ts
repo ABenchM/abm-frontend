@@ -12,7 +12,7 @@ describe('GoogleLoginService', () => {
     });
   });
 
-  fit('should be created', inject([GoogleLoginService], (service: GoogleLoginService) => {
+  it('should be created', inject([GoogleLoginService], (service: GoogleLoginService) => {
     expect(service).toBeTruthy();
   }));
 });

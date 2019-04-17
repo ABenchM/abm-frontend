@@ -11,7 +11,7 @@ describe('PinService', () => {
     });
   });
 
-  fit('should be created', inject([PinService], (service: PinService) => {
+  it('should be created', inject([PinService], (service: PinService) => {
     expect(service).toBeTruthy();
   }));
 });
