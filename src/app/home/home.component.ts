@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   disabled: boolean;
   displayedColumns: string[];
-  columnsToDisplay: string[] = ['versionNo', 'VersionID'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'DoI'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
   dataPub = new MatTableDataSource<any>();
