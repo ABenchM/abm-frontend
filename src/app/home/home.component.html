@@ -1,11 +1,12 @@
-  <h2> Public Collection</h2>
+  <h2> Available collections for download</h2>
   <hr>
   <div *ngIf="loggedInStatus()">
     <div *ngIf="!this.loading">
 
+   <div *ngIf="(dataSourcePub.data[0] !== undefined)">
       <h3> Pinned Collection</h3>
       <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections
-        yet.To pin a collection, Click the button next to it in the table below.</p>
+        yet.To pin a collection, Click the button Pin.</p>
 
       <div *ngIf="dataSourcePin.data.length>0">
         <mat-form-field class="example-full-width">
@@ -119,7 +120,7 @@
     </div>
 
   </div>
-
+  </div>
   <div class="wrapper" *ngIf="this.loading">
     <h2>Loading...</h2>
     <span class="cssload-loader"></span>

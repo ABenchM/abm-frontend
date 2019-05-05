@@ -1,6 +1,6 @@
 <div class="about">
   <section>
-    <p>The ABM web application allows researchers and practitioners to automatically create corpora to test
+    <p>The ABM web application allows researchers and practitioners to  create corpora to test
       software tools and analyses. It crawls open-source platforms, collects projects following user-specified filters, and builds the
       projects. It can upload the resulting collection on Zenodo, which provides a DOI to reference it.</p>
     <p>The collections generated with ABM contain buildable, real-world, open-source projects. They contain both
@@ -31,7 +31,7 @@
         <ul>
           <li>Outdated benchmark suites: Well-established benchmark suites are often created by hand, and remain
             unchanged for years. As a result, analyses and tools are tested on outdated code, which is not representative of real-world
-            software. By automatically constructing the collection, the code base can be regularly updated to provide up-to-date test projects.</li>
+            software. By constructing the collection, the code base can be regularly updated to provide up-to-date test projects.</li>
           <li>Analysis/tool scope: Benchmark suites are very general, and aim to cover many different types of software. On the other hand, 
             analyses and tools are sometimes targeted at specific programs, such as Java web applications for example. Evaluating them on other 
             types of software is insubstantial.</li>
@@ -47,8 +47,14 @@
           <h6>How can I create a collection?</h6>
         </mat-expansion-panel-header>
         <ul class="list-style">
+          <li>We create a collection by selecting particular filters.</li>
           <li>Make sure you are currently logged in or create an account if you don’t already have one.</li>
-          <li>Navigate to the “create collection” page and enter search term based on your requirements in the search box then click the search button.</li>
+          <li>Navigate to the “create collection” page and select the filter based on your requirements in the select filter combo box.</li>
+           <li>Enter any numerical value with operator such as (>,=) for that selected filter in the text area next to it. For example "=100" or ">=100" </li>
+           <li>Add the filter by clicking on Add Filter button.</li>
+           <li>You can add multiple filters. For that add one filter then select other filter with AND or OR opertor given on the form.</li>
+           <li> You can negate the filter by selecting the negation (!) operator given on the form.</li>
+           <li>Then click on search button to search for projects satisfying your filters.</li>
           <li>Select from the search results, project repositories you would like to be a part of your collection.</li>
           <li>Click on the “create a new collection” button to create a new collection.</li> 
           <li>Provide a name and description for the new collection and click on the save button to save changes</li>  
