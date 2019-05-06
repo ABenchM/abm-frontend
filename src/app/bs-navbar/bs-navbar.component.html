@@ -12,15 +12,12 @@
         <a class="nav-link" routerLink="/collection">My Collections</a>
       </li>
       <li class="nav-item" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/">Public collections</a>
+        <a class="nav-link" routerLink="/">Available collections</a>
       </li>
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/search">Create collection</a>
       </li>
-      <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
-        <a class="nav-link" routerLink="/filters">Filters</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active-link">
+       <li class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/about">About</a>
       </li>
       <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active-link">
@@ -42,7 +39,7 @@
           </button>
           <button *ngIf="isAdmin()" mat-menu-item routerLink="/managePublicCollections">
             <mat-icon>collections</mat-icon>
-            <span>Manage Public Collections</span>
+            <span>Manage Available Collections</span>
           </button>
           <button *ngIf="isAdmin()" mat-menu-item routerLink="/pendingRequest">
             <mat-icon>email</mat-icon>

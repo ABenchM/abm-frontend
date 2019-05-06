@@ -74,6 +74,7 @@
         [disabled]="!version.privateStatus" (click)="showConfirm(collection[0])" *ngIf="collection[0].privateStatus">
         Make this version public</button>
     </div>
+<<<<<<< HEAD
     <div id="frozen" *ngIf="version.frozen">
       <!-- This version is frozen, because it has been built. You can make it editable again by clicking unfreeze.
       <strong>Be aware, that the previous build result will be deleted!</strong>
@@ -93,6 +94,8 @@
 
       <!-- <button class="btn btn-primary btn-sm" [disabled]="loading || saving || disableBuild" (click)="unfreeze(version)">Unfreeze</button> -->
     </div>
+=======
+>>>>>>> develop
 
   </div>
   <br>

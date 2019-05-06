@@ -18,17 +18,8 @@ export class ViewService {
     return this.http.get('/rest/fe/', { params: data });
 
   }
-  getBuildResult(id) {
-    const data = { 'id': id, 'privateStatus': false };
-    return this.http.get('/rest/build', { params: data });
-  }
 
-  getHermesResult(id) {
 
-    const data = { 'id': id, 'privateStatus': false };
-    return this.http.get('/rest/instance/', { params: data });
-
-  }
 
 
 

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     }
   }
   private loginReq(cred: Credentials) {
+    cred.username = cred.username.toLowerCase();
     this.login.postLoginForm(cred)
       .subscribe(
         response => {

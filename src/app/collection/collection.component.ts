@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OrderPipe } from 'ngx-order-pipe';
-import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+
 
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { Collection } from '../models/collection.model';
@@ -20,8 +20,7 @@ import { DialogboxMakePublicComponent } from '../dialogbox-make-public/dialogbox
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
-  ],
-  providers: [ConfirmationService]
+  ]
 })
 export class CollectionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,7 +35,7 @@ export class CollectionComponent implements OnInit {
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router,
-    private route: ActivatedRoute, private orderPipe: OrderPipe, private confirmationService: ConfirmationService,
+    private route: ActivatedRoute, private orderPipe: OrderPipe,
     public dialog: MatDialog) { }
 
   applyFilter(filterValue: string) {

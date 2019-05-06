@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CollectionService } from '../services/collection.service';
 import { ViewService } from '../services/view.service';
-import { DataServiceService } from '../services/data-service.service';
 import { PinService } from '../services/pin.service';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -27,7 +26,7 @@ describe('ViewComponent', () => {
         MatFormFieldModule, MatDialogModule, MatPaginatorModule, MatSortModule, MatTableModule, MatInputModule,
         MatCheckboxModule, MatButtonToggleModule,
         BrowserAnimationsModule, RouterTestingModule, ToastrModule.forRoot()],
-      providers: [CollectionService, ViewService, DataServiceService, PinService, ToastrService, HttpClient, HttpHandler]
+      providers: [CollectionService, ViewService,  PinService, ToastrService, HttpClient, HttpHandler]
     })
       .compileComponents();
   }));

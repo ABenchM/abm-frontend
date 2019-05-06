@@ -3,7 +3,6 @@ import { HomeComponent } from './home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpModule } from '@angular/http';
-import { DataTableModule, PaginatorModule } from 'primeng/primeng';
 import { BrowserModule, By} from '@angular/platform-browser';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTableModule, MatInputModule, MatSortModule, MatFormFieldModule, MatCheckboxModule} from '@angular/material';
@@ -11,8 +10,6 @@ import { MatMenuModule, MatIconModule, MatToolbarModule, MatPaginatorModule, Mat
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { CollectionService } from '../services/collection.service';
 import { PinService } from '../services/pin.service';
-import { DataServiceService } from '../services/data-service.service';
-import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
 import { DebugElement } from '@angular/core';
 
@@ -27,11 +24,11 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule, DataTableModule, PaginatorModule,
-        TableModule, OrderModule, BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule,
+      imports: [HttpModule, FormsModule, ReactiveFormsModule, RouterTestingModule,
+         OrderModule, BrowserModule, BrowserAnimationsModule, HttpModule, MatToolbarModule, MatMenuModule,
         MatIconModule, MatTableModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSortModule,
         MatPaginatorModule, OrderModule, MatDialogModule],
-      providers: [CollectionService, PinService, DataServiceService, HttpClient, HttpHandler]
+      providers: [CollectionService, PinService, HttpClient, HttpHandler]
     })
       .compileComponents();
   }));
@@ -43,17 +40,17 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should have a h2 tag of `Public Collection', () => {
+  it('should have a h2 tag of `Public Collection', () => {
     fixture.detectChanges();
     const de = fixture.debugElement.nativeElement;
     expect(de.querySelector('h2').textContent).toContain('Public Collection');
   });
 
-  fit('should check for apply filter keyup event', () => {
+  it('should check for apply filter keyup event', () => {
     spyOn(component, 'applyFilterPub');
     fixture.detectChanges();
     const input = debugElement.query(By.css('#filter_data1'));

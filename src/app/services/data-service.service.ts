@@ -32,8 +32,6 @@ export class DataServiceService {
     if ( type === 'build') {
       console.log(this.buildResultExists.asObservable().subscribe(s => console.log('s ' + s)));
       return this.buildResultExists.asObservable();
-    } else if (type === 'hermes') {
-       return null;
     }
 
   }

@@ -10,7 +10,7 @@ describe('SearchService', () => {
     });
   });
 
-  fit('should be created', inject([SearchService], (service: SearchService) => {
+  it('should be created', inject([SearchService], (service: SearchService) => {
     expect(service).toBeTruthy();
   }));
 });

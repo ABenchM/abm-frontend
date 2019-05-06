@@ -3,10 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
 import { UsernameValidators } from '../register/username.validators';
-import { DataServiceService } from '../services/data-service.service';
 import { CollectionService } from '../services/collection.service';
 import { Router, ActivatedRoute, Route } from '@angular/router';
-import { CommitService } from '../services/commit.service';
+
 
 @Component({
   selector: 'abm-create-collection',
@@ -26,7 +25,7 @@ export class CreateCollectionComponent implements OnInit {
   // commit: any = {};
   // commits: any = [{}];
   constructor(private toastr: ToastrService,
-    private collectService: CollectionService, private router: Router, private commitService: CommitService) {
+    private collectService: CollectionService, private router: Router) {
     this.projects = this.collectService.toCreate;
     this.parentVersion = this.collectService.parentVersionId;
   }
@@ -38,17 +37,7 @@ export class CreateCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-  //   for (let i = 0; i < this.repositoryList.length; i++) {
-  //  this.commits[i] = {};
-  //     this.commitService.getCommits(this.repositoryList[i], 1).subscribe(
-  //       res => {
-  //         if (res.status === 200) {
-  //           this.commits[i].commitId = res.json()[0].commitId;
-  //           this.commits[i].id = this.repositoryList[i].id;
-  //         }
-  //       }
-  //     );
-  //   }
+
 
   }
 

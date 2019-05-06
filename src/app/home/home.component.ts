@@ -4,8 +4,8 @@ import { CollectionService } from '../services/collection.service';
 import { Search } from '../models/search.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PinService } from '../services/pin.service';
-import { DataServiceService } from '../services/data-service.service';
 import { OrderPipe } from 'ngx-order-pipe';
+import { SelectionModel } from '@angular/cdk/collections';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   disabled: boolean;
   displayedColumns: string[];
-  columnsToDisplay: string[] = ['versionNo', 'VersionID'];
+  columnsToDisplay: string[] = ['versionNo', 'VersionID', 'DoI'];
   dataSourcePub = new MatTableDataSource<Collection>();
   dataSourcePin = new MatTableDataSource<Collection>();
   dataPub = new MatTableDataSource<any>();
@@ -35,13 +35,15 @@ export class HomeComponent implements OnInit {
   expandedElement: any;
   versions: any[] = [{}];
   pinnedversions: any[] = [{}];
+  selection = new SelectionModel<Collection>(true, []);
+  pinselection = new SelectionModel<Collection>(true, []);
   @ViewChildren('pinPaginator') pinPaginator = new QueryList<MatPaginator>();
   @ViewChildren('pubPaginator') pubPaginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router, private route: ActivatedRoute,
-    private pinService: PinService, private dataService: DataServiceService,
+    private pinService: PinService,
     private orderPipe: OrderPipe) { }
 
   loadPublicCollections() {
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit {
           while (i < this.versions.length) {
             // console.log('Status and id ' + response.json()[0].versions[i].privateStatus + ' ' + response.json()[0].versions[i].id);
             if (this.versions[i].privateStatus === true) {
-              console.log('Deleting version ' + this.versions[i].id);
+
               this.versions.splice(i, 1);
 
             } else {
@@ -81,6 +83,28 @@ export class HomeComponent implements OnInit {
     this.loading = false;
   }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSourcePub.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSourcePub.data.forEach(row => this.selection.select(row));
+  }
+
+  isAllPinSelected() {
+    const numSelected = this.pinselection.selected.length;
+    const numRows = this.dataSourcePin.data.length;
+    return numSelected === numRows;
+  }
+  masterPinToggle() {
+    this.isAllPinSelected() ?
+      this.pinselection.clear() :
+      this.dataSourcePin.data.forEach(row => this.pinselection.select(row));
+  }
   loadPinned() {
     this.loading = true;
     for (let i = 0; i < this.dataSourcePub.data.length; i++) {
@@ -191,17 +215,47 @@ export class HomeComponent implements OnInit {
     return (item.id === this);
   }
 
+  isselected() {
+    if (this.selection.selected.length >= 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isPinselected() {
+    if (this.pinselection.selected.length >= 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   ngOnInit() {
     if (this.loggedInStatus()) {
-      this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'pin', 'versions'];
+      this.displayedColumns = ['select', 'name', 'description', 'creation_date', 'id', 'pin', 'versions'];
     } else {
-      this.displayedColumns = ['name', 'description', 'creation_date', 'id', 'versions'];
+      this.displayedColumns = ['select', 'name', 'description', 'creation_date', 'id', 'versions'];
     }
     this.loadPublicCollections();
   }
 
   applyFilterPub(filterValue: string) {
     this.dataSourcePub.filter = filterValue.trim().toLowerCase();
+  }
+
+  pinSelectedCollections() {
+    this.selection.selected.forEach(item => {
+      this.pin(item);
+    });
+
+  }
+
+  UnpinSelectedCollections() {
+    this.pinselection.selected.forEach(item => {
+      this.unpin(item);
+    });
+
   }
 
   applyFilterPin(filterValue: string) {

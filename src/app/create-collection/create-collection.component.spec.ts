@@ -6,8 +6,6 @@ import { HttpModule } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CollectionService } from '../services/collection.service';
-import { CommitService } from '../services/commit.service';
-import { DataServiceService } from '../services/data-service.service';
 
 describe('CreateCollectionComponent', () => {
   let component: CreateCollectionComponent;
@@ -17,7 +15,7 @@ describe('CreateCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CreateCollectionComponent ],
       imports: [FormsModule, HttpModule, ReactiveFormsModule, RouterTestingModule, ToastrModule.forRoot()],
-      providers: [ToastrService, CollectionService, CommitService]
+      providers: [ToastrService, CollectionService]
     })
     .compileComponents();
   }));
