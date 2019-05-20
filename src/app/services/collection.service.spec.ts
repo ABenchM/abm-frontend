@@ -12,7 +12,7 @@ describe('CollectionService', () => {
     });
   });
 
-  fit('should be created', inject([CollectionService], (service: CollectionService) => {
+  it('should be created', inject([CollectionService], (service: CollectionService) => {
     expect(service).toBeTruthy();
   }));
 });

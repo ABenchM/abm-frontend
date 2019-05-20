@@ -36,23 +36,20 @@ describe('UserProfileComponent', () => {
 
     debugElement = fixture.debugElement;
     fixture.detectChanges();
-    // savechangesEL = fixture.debugElement;
-    // firstName = fixture.debugElement;
-    // button = fixture.debugElement;
+
   });
 
-  //  const savechangesEL = fixture.debugElement.query(By.css('button'));
+
 
 
   fit('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Save changes button should be disabled if any field is not given', () => {
+  fit('Save changes button should be disabled if any field is not given', () => {
     spyOn(component, 'saveChanges');
     const button = fixture.debugElement.nativeElement.querySelector('button');
-    //  const firstName = fixture.debugElement.query(By.css('input[type=fname]'));
-    //  const fname = firstName.nativeElement = "";
+
 
     fixture.detectChanges();
     fixture.whenStable().then(() => {

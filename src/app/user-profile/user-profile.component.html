@@ -12,17 +12,17 @@
   <mat-form-field class="material-input-width">
     <mat-label>User Name</mat-label>
     <input matInput disabled #username="ngModel" (blur)="checkSpace(username)" placeholder="Enter User Name"
-      name="uname" [(ngModel)]="model.username" required>
+      name="username" [(ngModel)]="model.username" required>
     <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
     <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
     <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
   </mat-form-field>
   <mat-form-field class="material-input-width">
     <mat-label>Email</mat-label>
-    <input matInput #emailref="ngModel" placeholder="Enter Email address" class="form-control"
+    <input matInput #email="ngModel" placeholder="Enter Email address" class="form-control"
       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" name="email" required [(ngModel)]="model.email">
-    <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
-      <div [hidden]="true">
+    <div *ngIf="email.errors &&(email.touched || email.dirty)" class="aler alert-danger">
+      <div>
         <span class="help-block"> Enter a valid email address </span>
       </div>
     </div>

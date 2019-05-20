@@ -31,11 +31,11 @@ describe('DeleteDialogboxComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Confirm button click should invoke corresponding method', () => {
+  it('Confirm button click should invoke corresponding method', () => {
     const button = spyOn(component, 'onConfirm');
     fixture.debugElement.query(By.css('#buttonL')).triggerEventHandler('click', null);
     expect(button).toHaveBeenCalled();

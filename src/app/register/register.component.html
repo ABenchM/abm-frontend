@@ -5,8 +5,8 @@
   <form #form="ngForm" class="material-form" (submit)="registerForm(form)">
     <mat-form-field class="material-input-width">
       <mat-label>Username</mat-label>
-      <input matInput placeholder="Enter username" #username="ngModel" type="text" name="username" (blur)="checkSpace(username)"
-        [(ngModel)]="model.username" (ngModelChange)="resetUsername($event)" required>
+      <input matInput placeholder="Enter username" #username="ngModel" type="text" name="username"
+        (blur)="checkSpace(username)" [(ngModel)]="model.username" (ngModelChange)="resetUsername($event)" required>
       <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
       <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
       <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
@@ -14,19 +14,21 @@
 
     <mat-form-field class="material-input-width" [class.invalid]="password.touched && password.invalid">
       <mat-label>Password</mat-label>
-      <input matInput #password="ngModel" type="password" placeholder="Enter your Password" name="password" [(ngModel)]="model.password"
-        required>
+      <input matInput #password="ngModel" type="password" placeholder="Enter your Password" name="password"
+        [(ngModel)]="model.password" required>
       <div *ngIf="password.touched && password.invalid" class="alert alert-danger">Password is required</div>
     </mat-form-field>
 
 
-    <mat-form-field class="material-input-width" [class.invalid]="confirmpassword.dirty && (model.password != model.confirmpassword)">
+    <mat-form-field class="material-input-width"
+      [class.invalid]="confirmpassword.dirty && (model.password != model.confirmpassword)">
       <mat-label>Confirm Password</mat-label>
-      <input matInput #confirmpassword="ngModel" type="password" placeholder="Repeat your Password" name="confirmpassword"
-        [(ngModel)]="model.confirmpassword" required>
+      <input matInput #confirmpassword="ngModel" type="password" placeholder="Repeat your Password"
+        name="confirmpassword" [(ngModel)]="model.confirmpassword" required>
       <div *ngIf="confirmpassword.touched && confirmpassword.invalid" class="alert alert-danger">Confirm Password field
         is required</div>
-      <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">password
+      <div *ngIf="confirmpassword.dirty && (model.password != model.confirmpassword) " class="alert alert-danger">
+        password
         do not match</div>
     </mat-form-field>
 
@@ -35,32 +37,32 @@
 
     <mat-form-field class="material-input-width">
       <mat-label>First name</mat-label>
-      <input matInput #firstname="ngModel" type="text" placeholder="Enter First Name" name="firstname" [(ngModel)]="model.firstname"
-        required>
+      <input matInput #firstname="ngModel" type="text" placeholder="Enter First Name" name="firstname"
+        [(ngModel)]="model.firstname" required>
       <div *ngIf="firstname.touched && firstname.invalid" class="alert alert-danger">First Name is required</div>
     </mat-form-field>
 
     <mat-form-field class="material-input-width">
       <mat-label>Last name</mat-label>
-      <input matInput #lastname="ngModel" type="text" placeholder="Enter Last Name" name="lastname" [(ngModel)]="model.lastname"
-        required>
+      <input matInput #lastname="ngModel" type="text" placeholder="Enter Last Name" name="lastname"
+        [(ngModel)]="model.lastname" required>
       <div *ngIf="lastname.touched && lastname.invalid" class="alert alert-danger">Last Name is required</div>
     </mat-form-field>
 
     <mat-form-field class="material-input-width">
       <mat-label>Affiliation</mat-label>
-      <input matInput #affiliation="ngModel" type="text" placeholder="Organization/Institution belongs to..." name="affiliation"
-        [(ngModel)]="model.affiliation" required>
+      <input matInput #affiliation="ngModel" type="text" placeholder="Organization/Institution belongs to..."
+        name="affiliation" [(ngModel)]="model.affiliation" required>
       <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger">Affiliation is required</div>
     </mat-form-field>
 
     <mat-form-field class="material-input-width">
       <mat-label>Email</mat-label>
-      <input matInput #emailref="ngModel" placeholder="Enter Email address" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-        id="email" name="email" required [(ngModel)]="model.email">
+      <input matInput #emailref="ngModel" placeholder="Enter Email address" class="form-control"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" name="email" required [(ngModel)]="model.email">
       <div *ngIf="emailExists" class="alert alert-danger">Email already exists</div>
       <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
-        <div [hidden]="emailref.errors?.pattren">
+        <div>
           <span class="help-block"> Enter a valid email address </span>
         </div>
       </div>

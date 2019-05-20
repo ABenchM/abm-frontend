@@ -12,7 +12,7 @@ describe('AuthGuardService', () => {
     });
   });
 
-  fit('should be created', inject([AuthGuardService], (service: AuthGuardService) => {
+  it('should be created', inject([AuthGuardService], (service: AuthGuardService) => {
     expect(service).toBeTruthy();
   }));
 });

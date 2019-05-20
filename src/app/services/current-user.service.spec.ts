@@ -12,7 +12,7 @@ describe('CurrentUserService', () => {
     });
   });
 
-  fit('should be created', inject([CurrentUserService], (service: CurrentUserService) => {
+  it('should be created', inject([CurrentUserService], (service: CurrentUserService) => {
     expect(service).toBeTruthy();
   }));
 });

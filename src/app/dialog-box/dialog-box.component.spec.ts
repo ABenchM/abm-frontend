@@ -31,11 +31,11 @@ describe('DialogBoxComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create dialogbox', () => {
+  it('should create dialogbox', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should invoke onClose button', () => {
+  it('should invoke onClose button', () => {
     const onClose = spyOn(component, 'onClose');
     fixture.debugElement.query(By.css('#button')).triggerEventHandler('click', null);
     expect(onClose).toHaveBeenCalled();

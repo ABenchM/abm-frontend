@@ -33,29 +33,29 @@ describe('AdminPendingReqComponent', () => {
     fixture.detectChanges();
     });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should have a h2 tag of `Pending Request', () => {
+  it('should have a h2 tag of `Pending Request', () => {
     fixture.detectChanges();
     const de = fixture.debugElement.nativeElement;
     expect(de.querySelector('h2').textContent).toContain('Pending Request');
   });
 
-  fit('should invoke approveSelectedUsers button', () => {
+  it('should invoke approveSelectedUsers button', () => {
     const approveSelectedUsers = spyOn(component, 'approveSelectedUsers');
     fixture.debugElement.query(By.css('#buttonR')).triggerEventHandler('click', null);
     expect(approveSelectedUsers).toHaveBeenCalled();
   });
 
-  fit('should invoke rejectSelectedUsers button', () => {
+  it('should invoke rejectSelectedUsers button', () => {
   const rejectSelectedUsers = spyOn(component, 'rejectSelectedUsers');
   fixture.debugElement.query(By.css('#buttonL')).triggerEventHandler('click', null);
   expect(rejectSelectedUsers).toHaveBeenCalled();
   });
 
-  fit('should check for apply filter keyup event', () => {
+  it('should check for apply filter keyup event', () => {
     spyOn(component, 'applyFilter');
     fixture.detectChanges();
     const input = debugElement.query(By.css('#filter_data'));

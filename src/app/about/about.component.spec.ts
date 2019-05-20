@@ -3,7 +3,7 @@ import { MatExpansionModule, MatGridListModule } from '@angular/material';
 import { AboutComponent } from './about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('AboutComponent', () => {
+describe('AboutComponent', () => {
   let component: AboutComponent;
   let fixture: ComponentFixture<AboutComponent>;
 
