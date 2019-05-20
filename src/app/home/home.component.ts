@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
       if (response.status === 200 && response.json() !== null) {
         this.pinned = this.orderPipe.transform(response.json());
         let j = 0;
-        while (j < this.pinned.length) {
+        while (j < this.pinned.length && this.pinned.length !== 0 ) {
           this.pinnedversions = this.pinned[j].versions;
           let i = 0;
           while (i < this.pinnedversions.length) {

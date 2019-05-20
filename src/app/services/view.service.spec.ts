@@ -13,7 +13,7 @@ describe('ViewService', () => {
     });
   });
 
-  fit('should be created', inject([ViewService], (service: ViewService) => {
+  it('should be created', inject([ViewService], (service: ViewService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -11,26 +11,26 @@
   </mat-form-field>
   <mat-form-field class="material-input-width">
     <mat-label>User Name</mat-label>
-    <input matInput disabled #username="ngModel" (blur)="checkSpace(username)" placeholder="Enter User Name" name="uname"
-      [(ngModel)]="model.username" required>
+    <input matInput disabled #username="ngModel" (blur)="checkSpace(username)" placeholder="Enter User Name"
+      name="uname" [(ngModel)]="model.username" required>
     <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
     <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
     <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
   </mat-form-field>
   <mat-form-field class="material-input-width">
     <mat-label>Email</mat-label>
-    <input matInput #emailref="ngModel" placeholder="Enter Email address" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-      id="email" name="email" required [(ngModel)]="model.email">
+    <input matInput #emailref="ngModel" placeholder="Enter Email address" class="form-control"
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" name="email" required [(ngModel)]="model.email">
     <div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
-      <div [hidden]="emailref.errors?.pattren">
+      <div [hidden]="true">
         <span class="help-block"> Enter a valid email address </span>
       </div>
     </div>
   </mat-form-field>
   <mat-form-field class="material-input-width">
     <mat-label>Affiliation</mat-label>
-    <input matInput #affiliation="ngModel" placeholder="Company / University / Institution belongs to" name="Affiliation"
-      [(ngModel)]="model.affiliation" required>
+    <input matInput #affiliation="ngModel" placeholder="Company / University / Institution belongs to"
+      name="Affiliation" [(ngModel)]="model.affiliation" required>
     <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger"> This field can not be empty.
     </div>
   </mat-form-field>
@@ -56,8 +56,8 @@
 
   <mat-form-field class="material-input-width">
     <mat-label>Retype - Password</mat-label>
-    <input matInput #confirmpassword="ngModel" type="password" placeholder="Confirm New Password" name="confirmnewpassword"
-      [(ngModel)]="confirmNewPassword" required>
+    <input matInput #confirmpassword="ngModel" type="password" placeholder="Confirm New Password"
+      name="confirmnewpassword" [(ngModel)]="confirmNewPassword" required>
     <div *ngIf="confirmpassword.dirty && (newPassword != confirmNewPassword) " class="alert alert-danger">password
       do not match</div>
   </mat-form-field>
@@ -72,115 +72,3 @@
     </div>
   </div>
 </form>
-<!-- 
-<h2>User Profile</h2>
-
-<form #form="ngForm" (submit)="saveChanges(form)">
-
-  <div class="container">
-
-    <div class="form-group">
-      <label for="fname">
-        <b>First Name</b>
-      </label>
-      <input type="text" placeholder="Enter First Name" name="fname" [(ngModel)]="model.firstname" required>
-    </div>
-
-
-    <div class="form-group">
-      <label for="sname">
-        <b>Last Name</b>
-      </label>
-      <input type="text" placeholder="Enter Last Name" name="lname" [(ngModel)]="model.lastname" required>
-    </div>
-
-    <div class="form-group">
-      <label for="uname">
-        <b>User Name</b>
-      </label>
-      <input disabled #username="ngModel" type="text" (blur)="checkSpace(username)" placeholder="Enter User Name" name="uname" [(ngModel)]="model.username"
-        require d>
-      <div *ngIf="username.touched && username.invalid" class="alert alert-danger">Username is required</div>
-      <div *ngIf="invalidUsername" class="alert alert-danger">Username already exists</div>
-      <div class="alert alert-danger" *ngIf="cannotContainSpace"> Username cannot contain space</div>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email</label>
-      <div class="input-group mb3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">@</span>
-        </div>
-<input #emailref="ngModel" placeholder="Enter Email address" type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-  id="email" name="email" required [(ngModel)]="model.email">
-</div>
-<div *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)" class="aler alert-danger">
-  <div [hidden]="emailref.errors?.pattren">
-    <span class="help-block"> Enter a valid email address </span>
-  </div>
-</div>
-</div>
-
-<div class="form-group">
-  <label for="affiliation">
-    <b>Affiliation</b>
-  </label>
-  <input #affiliation="ngModel" type="text" placeholder="Company / University / Institution belongs to" name="Affiliation"
-    [(ngModel)]="model.affiliation" required>
-  <div *ngIf="affiliation.touched && affiliation.invalid" class="alert alert-danger"> This field can not be empty.
-  </div>
-</div>
-
-<div class="clearfix">
-  <button type="submit" [disabled]="form.invalid" class="signupbtn">Save Changes</button>
-</div>
-</div>
-</form>
-
-<form #form1="ngForm" (submit)="savePassword(form1)">
-  <div class="container">
-
-
-    <div class="form-group">
-      <label for="oldpassword">
-        <b>Old Password</b>
-      </label>
-      <input #oldpassword="ngModel" type="password" placeholder="Enter your Password" name="oldpassword" [(ngModel)]="oldPassword"
-        required>
-     
-    </div>
-
-
-    <div class="form-group">
-      <label for="newpassword">
-        <b>New Password</b>
-      </label>
-      <input #newpassword="ngModel" type="password" placeholder="Enter New Password" name="newpassword" [(ngModel)]="newPassword"
-        required>
-      <div *ngIf="newpassword.dirty && model.oldpassword == newPassword" class="alert alert-danger"> new password
-        should
-        be different from old password </div>
-    </div>
-
-    <div class="form-group">
-      <label for="confirmnewpassword">
-        <b>Retype - Password</b>
-      </label>
-      <input #confirmpassword="ngModel" type="password" placeholder="Confirm New Password" name="confirmnewpassword"
-        [(ngModel)]="confirmNewPassword" required>
-      <div *ngIf="confirmpassword.dirty && (newPassword != confirmNewPassword) " class="alert alert-danger">password
-        do not match</div>
-    </div>
-
-    <div class="clearfix">
-      <button type="submit" [disabled]="form1.invalid" class="btn btn-success">Update Password</button>
-
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn" (click)="deleteUser()">Delete Account</button>
-        <h3>Be careful. This action is irreversible</h3>
-
-      </div>
-    </div>
-  </div>
-
-</form> -->

@@ -6,11 +6,11 @@
     from them in the Projects tab or clone an existing collection.</p>
 </div>
 
-<mat-form-field>
+<mat-form-field *ngIf="userCollections[0]!==undefined">
   <input id="filter_data" matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<table mat-table class="fullwidth" [dataSource]="dataSource" multiTemplateDataRows matSort>
+<table *ngIf="userCollections[0]!==undefined" mat-table class="fullwidth" [dataSource]="dataSource" multiTemplateDataRows matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> id </mat-header-cell>
     <mat-cell *matCellDef="let element" class="navigateToCol" (click)="open(element)"> {{element.id}}
@@ -94,7 +94,7 @@
 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
 
-<mat-toolbar>
+<mat-toolbar *ngIf="userCollections[0]!==undefined">
   <mat-toolbar-row>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </mat-toolbar-row>

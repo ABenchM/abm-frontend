@@ -24,11 +24,11 @@ describe('UserService', () => {
     });
   });
 
-  fit('should be created', inject([UserService], (service: UserService) => {
+  it('should be created', inject([UserService], (service: UserService) => {
     expect(service).toBeTruthy();
   }));
 
-  fit('getAllUsers should return list of users', inject([UserService, MockBackend],
+  it('getAllUsers should return list of users', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       let res: any;
       mockBackend.connections.subscribe(c => {
@@ -47,7 +47,7 @@ describe('UserService', () => {
       expect(responseArray.length).toBe(2);
     })));
 
-  fit('should use the correct headers and url in the request', inject([UserService, MockBackend],
+  it('should use the correct headers and url in the request', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       let contentType: any;
       mockBackend.connections.subscribe((conn: MockConnection) => {
@@ -60,7 +60,7 @@ describe('UserService', () => {
       });
     })));
 
-  fit('deleteUsers should be called with the correct request parameters', inject([UserService, MockBackend],
+  it('deleteUsers should be called with the correct request parameters', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       mockBackend.connections.subscribe((conn: MockConnection) => {
         expect(conn.request.method).toBe(RequestMethod.Delete);
@@ -71,7 +71,7 @@ describe('UserService', () => {
       tick();
     })));
 
-  fit('lockunlockUser should be called with the correct request parameters', inject([UserService, MockBackend],
+  it('lockunlockUser should be called with the correct request parameters', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       mockBackend.connections.subscribe((conn: MockConnection) => {
         expect(conn.request.method).toBe(RequestMethod.Post);
@@ -84,7 +84,7 @@ describe('UserService', () => {
       });
     })));
 
-  fit('updateUserRole should be called with the correct request parameters', inject([UserService, MockBackend],
+  it('updateUserRole should be called with the correct request parameters', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       mockBackend.connections.subscribe((conn: MockConnection) => {
         expect(conn.request.method).toBe(RequestMethod.Put);
@@ -97,7 +97,7 @@ describe('UserService', () => {
       });
     })));
 
-  fit('error handler is called if there is an error in server response', inject([UserService, MockBackend],
+  it('error handler is called if there is an error in server response', inject([UserService, MockBackend],
     fakeAsync((userService: UserService, mockBackend: MockBackend) => {
       let window = spyOn(userService, 'handleError');
       mockBackend.connections.subscribe((conn: MockConnection) => {

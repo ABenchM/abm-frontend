@@ -1,9 +1,9 @@
   <h2> Available collections for download</h2>
   <hr>
-  <div *ngIf="loggedInStatus()">
+  <div *ngIf="loggedInStatus() && (dataSourcePub.data[0] !== undefined)">
     <div *ngIf="!this.loading">
 
-   <div *ngIf="(dataSourcePub.data[0] !== undefined)">
+   <div >
       <h3> Pinned Collection</h3>
       <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections
         yet.To pin a collection, Click the button Pin.</p>
@@ -141,7 +141,7 @@
     </div>
 
     <div>
-      <p *ngIf="(dataSourcePub.data[0] === undefined)" class="alert alert-warning">No results found.</p>
+      <p *ngIf="(dataSourcePub.data[0] === undefined)" class="alert alert-warning">No collection is available for download.</p>
 
       <div *ngIf="!(dataSourcePub.data[0] === undefined)" class="example-container mat-elevation-z8 mat-table">
         <mat-table #table [dataSource]="dataSourcePub" matSort multiTemplateDataRows>

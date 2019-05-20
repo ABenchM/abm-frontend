@@ -12,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('UserProfileComponent', () => {
+describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
   // let savechangesEL: any;
@@ -48,7 +48,7 @@ fdescribe('UserProfileComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Save changes button should be disabled if any field is not given', () => {
+  it('Save changes button should be disabled if any field is not given', () => {
     spyOn(component, 'saveChanges');
     const button = fixture.debugElement.nativeElement.querySelector('button');
     //  const firstName = fixture.debugElement.query(By.css('input[type=fname]'));
