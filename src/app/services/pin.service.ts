@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, RequestOptions, RequestMethod} from '@angular/http';
-
+import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {throwError as observableThrowError} from 'rxjs';
@@ -9,7 +9,7 @@ import {throwError as observableThrowError} from 'rxjs';
 @Injectable()
 export class PinService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private httpclient: HttpClient) { }
 
   private extractData(res: Response) {
   }
@@ -51,7 +51,8 @@ export class PinService {
 
   checkPinned(item) {
        const currentUser = localStorage.getItem('currentUser');
-   return this.http.get('/rest/pin/' + currentUser + '/' + item.id);
+      return this.http.get('/rest/pin/' + currentUser + '/' + item.id);
+
   }
 
 }

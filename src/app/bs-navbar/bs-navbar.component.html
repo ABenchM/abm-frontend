@@ -6,7 +6,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <img src="assets/abm_logo.jpg" class="img-click" routerLink="/" width="60px" height="60px" alt="ABM" align="right">
+    <img src="assets/abm_logo.jpg" class="img-click" routerLink="/" align="right" width="60px" height="60px" alt="ABM" >
     <ul class="navbar-nav mr-auto nav-pills">
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/collection">My Collections</a>
@@ -17,7 +17,7 @@
       <li *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/search">Create collection</a>
       </li>
-       <li class="nav-item" routerLinkActive="active-link">
+      <li class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/about">About</a>
       </li>
       <li *ngIf="!loggedInStatus()" class="nav-item" routerLinkActive="active-link">
@@ -27,7 +27,7 @@
     <ul class="navbar-nav">
       <li *ngIf="loggedInStatus()" routerLinkActive="active-link">
         <button class="nav-link" mat-button [matMenuTriggerFor]="menu">{{username}}<mat-icon>arrow_drop_down</mat-icon>
-          </button>
+        </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/profile">
             <mat-icon>person</mat-icon>

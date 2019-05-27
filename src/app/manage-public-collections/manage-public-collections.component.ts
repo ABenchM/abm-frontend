@@ -3,8 +3,8 @@ import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/m
 import { Router, ActivatedRoute } from '@angular/router';
 import { DeleteDialogboxComponent } from '../delete-dialogbox/delete-dialogbox.component';
 import { OrderPipe } from 'ngx-order-pipe';
-import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { CollectionService } from '../services/collection.service';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -39,7 +39,8 @@ export class ManagePublicCollectionsComponent implements OnInit {
   viewCollection: any = [{}];
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
-  constructor(private router: Router, private service: CollectionService, private orderPipe: OrderPipe, public dialog: MatDialog) { }
+  constructor(private router: Router, private service: CollectionService,
+    private toastr: ToastrService, private viewf: ViewContainerRef, private orderPipe: OrderPipe, public dialog: MatDialog) { }
 
   openDialog(versionID: String): void {
     const dialogRef = this.dialog.open(DeleteDialogboxComponent, {
@@ -98,10 +99,13 @@ export class ManagePublicCollectionsComponent implements OnInit {
   }
 
   deleteSingleCol(versionID: String) {
+
     if (this.selectedCollection[0].versions.length <= 1) {
-      this.service.deleteCollectionByAdmin(this.selectedCollection[0].id).subscribe(result => {
-        this.getAllCollections();
-      });
+
+      //  this.service.deleteCollectionByAdmin(this.selectedCollection[0].id).subscribe(result => {
+      //    this.getAllCollections();
+      //  });
+      this.toastr.error('You are not allowed to delete a Collection with only version left');
     } else {
       this.service.deleteVersion(versionID).subscribe(result => {
         this.getAllCollections();

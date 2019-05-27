@@ -13,11 +13,12 @@ export class ForgetPasswordComponent implements OnInit {
   constructor(private router: Router, private resetPasswordService: ResetPasswordService) { }
 
   model: any = {};
-
+  public cannotContainSpace: boolean;
   ngOnInit() {
   }
 
-  resetPassword(form: NgForm) {
+  // Removed the ngform parameter from here and html file it was irrelevant.
+  resetPassword() {
     this.resetPasswordService.resetPassword(this.model)
       .subscribe(
         data => {
@@ -26,5 +27,13 @@ export class ForgetPasswordComponent implements OnInit {
         err => console.log('error: ', err)
       );
 
+  }
+
+  checkSpace(username) {
+    if (username.indexOf(' ') > 0) {
+      this.cannotContainSpace = true;
+    } else {
+      this.cannotContainSpace = false;
+    }
   }
 }

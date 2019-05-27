@@ -15,9 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
-  // let savechangesEL: any;
-  // let firstName: any;
-  // let button: any;
   let debugElement: DebugElement;
 
   beforeEach(async(() => {
@@ -42,11 +39,11 @@ describe('UserProfileComponent', () => {
 
 
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('Save changes button should be disabled if any field is not given', () => {
+  it('Save changes button should be disabled if any field is not given', () => {
     spyOn(component, 'saveChanges');
     const button = fixture.debugElement.nativeElement.querySelector('button');
 

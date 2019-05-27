@@ -14,7 +14,7 @@ import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatPaginator, MatSort, MatButtonToggleChange, MatAutocompleteSelectedEvent, MatChipInputEvent,
-MatAutocomplete } from '@angular/material';
+MatAutocomplete , MatMenuTrigger } from '@angular/material';
 import { ToastrService, Toast } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { throwIfEmpty, map, startWith } from 'rxjs/operators';
@@ -22,6 +22,8 @@ import { Observable } from 'rxjs';
 import { Promise } from 'q';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { modelGroupProvider } from '@angular/forms/src/directives/ng_model_group';
+import { ContextMenu } from 'primeng/primeng';
+import { Collection } from '../models/collection.model';
 
 @Component({
   selector: 'abm-search',
@@ -65,6 +67,9 @@ export class SearchComponent implements OnInit {
   @ViewChild('resultPaginator') resultPaginator: MatPaginator;
   @ViewChild('filterPaginator') filterPaginator: MatPaginator;
   @ViewChild(MatSort) resultSort: MatSort;
+  @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
+
+  contextMenuPosition = { x: '0px', y: '0px' };
 
   constructor(
     private service: SearchService,
@@ -75,6 +80,22 @@ export class SearchComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.getFilter();
+  }
+
+  onContextMenu(event: MouseEvent, colItem: Collection) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': colItem };
+    this.contextMenu.openMenu();
+  }
+
+  onContextMenuAction1(item) {
+    alert(`Click on Action 1 for ${item}`);
+  }
+
+  onContextMenuAction2(item) {
+    this.createCollection(item);
   }
 
   setSortType(value) {
@@ -90,9 +111,18 @@ export class SearchComponent implements OnInit {
     this.router.navigateByUrl('/addToCollection');
   }
 
-  createCollection() {
+  createCollection(item) {
+    if (item === undefined) {
     this.collectionService.toCreate = [];
     this.collectionService.toCreate = this.toAdd;
+    console.log(this.collectionService.toCreate);
+  } else {
+      this.collectionService.toCreate = [];
+      this.collectionService.toCreate.push(item);
+      console.log(Object.entries(item));
+      console.log(Array.from(item));
+      console.log(this.collectionService.toCreate);
+    }
     this.router.navigateByUrl('/createCollection');
   }
 

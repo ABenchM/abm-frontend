@@ -31,7 +31,7 @@ export class CollectionComponent implements OnInit {
   dataSource = new MatTableDataSource<Collection>();
   data = new MatTableDataSource<any>();
   expandedElement: any;
-  confirm = true;
+confirm = true;
   isExpansionDetailRow = (row: any) => row.hasOwnProperty('detailRow');
 
   constructor(private service: CollectionService, private router: Router,

@@ -8,6 +8,7 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'abm-home',
@@ -161,10 +162,15 @@ export class HomeComponent implements OnInit {
   checkPinned(item) {
     this.pinService.checkPinned(item).subscribe(
       response => {
-        if (response.status === 200) {
-          item.dataSourcePin = response.json();
+          item.dataSourcePin = response;
 
-        }
+        } , (err: HttpErrorResponse) => {
+         if (err.error instanceof Error) {
+            console.log('client side error occured');
+
+         } else {
+            console.log('Server side error occured');
+         }
 
       }
     );

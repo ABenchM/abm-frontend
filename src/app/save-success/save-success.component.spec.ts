@@ -1,25 +1,22 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SaveSuccessComponent } from './save-success.component';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+
 
 describe('SaveSuccessComponent', () => {
-  let component: SaveSuccessComponent;
-  let fixture: ComponentFixture<SaveSuccessComponent>;
+ let fixture: ComponentFixture<SaveSuccessComponent>;
+beforeEach(() => {
+ TestBed.configureTestingModule({
+   declarations: [SaveSuccessComponent],
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SaveSuccessComponent ]
-    })
-    .compileComponents();
-  }));
+ });
+ fixture = TestBed.createComponent(SaveSuccessComponent);
+});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SaveSuccessComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+fit('should render the success message under p tag', () => {
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  fixture.detectChanges();
+  expect(fixture.nativeElement.querySelector('p').textContent).toContain('Your details have been saved successfully.');
+
+});
+
 });
