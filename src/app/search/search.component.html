@@ -150,9 +150,9 @@
       showFirstLastButtons></mat-paginator>
 
     <mat-menu #contextMenu="matMenu">
-      <ng-template matMenuContent let-item="item">
-        <button mat-menu-item (click)="onContextMenuAction1(item)">Add to existing collection</button>
-        <button mat-menu-item (click)="onContextMenuAction2(item)">Create new collection</button>
+      <ng-template matMenuContent let-row="row">
+        <button mat-menu-item (click)="onContextMenuAction1(row)">Add to existing collection</button>
+        <button mat-menu-item (click)="onContextMenuAction2(row)">Create new collection</button>
       </ng-template>
     </mat-menu>
   </div>

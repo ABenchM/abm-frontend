@@ -13,8 +13,10 @@ import { SearchService } from '../services/search.service';
 import { CollectionService } from '../services/collection.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatPaginator, MatSort, MatButtonToggleChange, MatAutocompleteSelectedEvent, MatChipInputEvent,
-MatAutocomplete , MatMenuTrigger } from '@angular/material';
+import {
+  MatTableDataSource, MatPaginator, MatSort, MatButtonToggleChange, MatAutocompleteSelectedEvent, MatChipInputEvent,
+  MatAutocomplete, MatMenuTrigger
+} from '@angular/material';
 import { ToastrService, Toast } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { throwIfEmpty, map, startWith } from 'rxjs/operators';
@@ -52,6 +54,8 @@ export class SearchComponent implements OnInit {
   project: any = {};
   project2: any = {};
   selection = new SelectionModel<any>(true, []);
+  userCollections = [];
+  selectedCollection = {};
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -91,11 +95,25 @@ export class SearchComponent implements OnInit {
   }
 
   onContextMenuAction1(item) {
-    alert(`Click on Action 1 for ${item}`);
+    this.selectedCollection = item;
+    console.log(item);
+    // this.getVersionByCollectionId(item);
   }
 
   onContextMenuAction2(item) {
     this.createCollection(item);
+  }
+
+  getUserCollections() {
+       this.collectionService.getCollections(localStorage.getItem('currentUser')).subscribe(
+         response => this.userCollections = response.json()
+      );
+    }
+
+  getVersionByCollectionId(collectionID) {
+    this.collectionService.getVersionsByCollection(collectionID).subscribe(
+      response => console.log(response.json)
+    );
   }
 
   setSortType(value) {
@@ -113,10 +131,10 @@ export class SearchComponent implements OnInit {
 
   createCollection(item) {
     if (item === undefined) {
-    this.collectionService.toCreate = [];
-    this.collectionService.toCreate = this.toAdd;
-    console.log(this.collectionService.toCreate);
-  } else {
+      this.collectionService.toCreate = [];
+      this.collectionService.toCreate = this.toAdd;
+      console.log(this.collectionService.toCreate);
+    } else {
       this.collectionService.toCreate = [];
       this.collectionService.toCreate.push(item);
       console.log(Object.entries(item));
@@ -136,7 +154,7 @@ export class SearchComponent implements OnInit {
     this.onSearchError = false;
     this.resultDataSource.data = [];
     this.service.getFiltersSearch(searchQuery).subscribe(resp => {
-       try {
+      try {
         let response = JSON.parse(resp.json());
         let data = [...response];
         this.resultDataSource.data = data.map(result => {
@@ -153,11 +171,11 @@ export class SearchComponent implements OnInit {
         setTimeout(() => (this.resultDataSource.sort = this.resultSort));
         this.loading = false;
         this.searched = true;
-       } catch (error) {
+      } catch (error) {
         this.onSearchError = true;
         this.loading = false;
-       }
-      },
+      }
+    },
       error => {
         this.onSearchError = true;
         this.loading = false;
@@ -195,7 +213,7 @@ export class SearchComponent implements OnInit {
     }
     this.toAdd = [...this.toAdd];
     console.log(this.resultDataSource.data);
-    let index = _.findIndex(this.resultDataSource.data, function(o) {
+    let index = _.findIndex(this.resultDataSource.data, function (o) {
       if (o.id === itemId) {
         return true;
       }
@@ -280,11 +298,11 @@ export class SearchComponent implements OnInit {
       this.filteredQueries = this.queryCtrl.valueChanges.pipe(
         startWith(null),
         map((query: string | null) =>
-        query ? this._filter(query) : this.allFilters.slice()
+          query ? this._filter(query) : this.allFilters.slice()
         )
       );
-       });
-    }
+    });
+  }
 
   filter(filterValue: string) {
     this.filterDataSource.filter = filterValue.trim().toLowerCase();
@@ -296,14 +314,14 @@ export class SearchComponent implements OnInit {
 
   addFilter() {
     let filter: string;
-   if (this.queries.length > 0) {
-     this.model.value = this.model.value.split(' ').join('');
-     filter = `${this.model.operator}${this.model.negate}${this.model.filter}${this.model.value}`;
-       } else {
-        filter = `${this.model.negate}${this.model.filter}${this.model.value}`;
-   }
-   this.queries.push(filter);
-   this.model.value = '';
+    if (this.queries.length > 0) {
+      this.model.value = this.model.value.split(' ').join('');
+      filter = `${this.model.operator}${this.model.negate}${this.model.filter}${this.model.value}`;
+    } else {
+      filter = `${this.model.negate}${this.model.filter}${this.model.value}`;
+    }
+    this.queries.push(filter);
+    this.model.value = '';
   }
 
   applyDataSourceFilter(filterValue: string) {
@@ -346,12 +364,12 @@ export class SearchComponent implements OnInit {
   }
 
   onChangeNegate(event: MatButtonToggleChange) {
-   event.source.checked ? this.model.negate = '!' : this.model.negate = '';
+    event.source.checked ? this.model.negate = '!' : this.model.negate = '';
   }
 
-private _filter(value: string): string[] {
+  private _filter(value: string): string[] {
     let filterValue = value.toLowerCase();
-    return this.allFilters.filter(query  => query.toLowerCase().indexOf(filterValue) === 0);
+    return this.allFilters.filter(query => query.toLowerCase().indexOf(filterValue) === 0);
   }
 
   isFromOtherPage() {
@@ -389,8 +407,8 @@ private _filter(value: string): string[] {
             if (response.json().comment === 'Project Exists') {
               this.toastr.error('Can not add Duplicate projects in one Version');
             } else {
-            this.collectionService.toAddVersion = null;
-            this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + index);
+              this.collectionService.toAddVersion = null;
+              this.router.navigateByUrl('/editCollection/' + this.updatedVersion.collectionId + '/' + index);
             }
           }
         } else {

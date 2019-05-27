@@ -14,12 +14,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
-import {
-  MatFormFieldModule, MatSelectModule, MatTooltipModule, MatButtonToggleModule, MatGridListModule,
-  MatAutocompleteModule
-} from '@angular/material';
-import { MatButtonModule, MatMenuModule, MatSortModule, MatIconModule, MatTableModule, MatExpansionModule } from '@angular/material';
-import { MatDialogModule, MatCheckboxModule, MatPaginatorModule, MatInputModule, MatChipsModule } from '@angular/material';
+
+
+
 
 
 
@@ -83,6 +80,7 @@ import { ResetPasswordSuccessComponent } from './reset-password-success/reset-pa
 import { ConfirmPasswordComponent } from './confirm-password/confirm-password.component';
 import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
 import { ParentviewComponent } from './parentview/parentview.component';
+import { MdComponentModule } from './md-component.module';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -159,33 +157,13 @@ const routes: Routes = [
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
     OrderModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCheckboxModule,
+    MdComponentModule,
     HttpClientModule,
     ContextMenuModule,
     MomentModule,
     NgIdleKeepaliveModule.forRoot(),
     ToastModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -218,11 +196,6 @@ const routes: Routes = [
     DialogboxMakePublicComponent,
 
     DialogVersionDialogComponent
-  ], exports: [
-
-
-
-    MatTableModule
   ],
   bootstrap: [AppComponent]
 })

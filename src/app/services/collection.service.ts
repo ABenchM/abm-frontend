@@ -61,6 +61,12 @@ export class CollectionService {
     // .map(this.onSuccess);
   }
 
+ getVersionsByCollection(collectionId) {
+
+  return this.http.get('/rest/collectionversions/' + collectionId);
+
+ }
+
   updateVersion(version) {
     return this.http.put('/rest/version/', version);
   }
