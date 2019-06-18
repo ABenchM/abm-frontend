@@ -1,25 +1,48 @@
 
-import { throwError as observableThrowError } from 'rxjs';
-
+import { throwError , Observable} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { User } from '../models/user.model';
-import { IfObservable } from 'rxjs/observable/IfObservable';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/Observable';
+import { HttpClient , HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { CollectionTrackerError } from '../collectionTrackerError';
+
+
 @Injectable()
 export class Register {
     static invalidUsername: boolean;
     static emailExists: boolean;
 
-    constructor(private http: Http) {
+    constructor(private httpclient: HttpClient) {
         Register.invalidUsername = false;
         Register.emailExists = false;
     }
 
-    private extractData(res: Response) {
-        const body: String = res.json();
+
+    get checkUsername() {
+        return Register.invalidUsername;
+    }
+
+    get checkEmail() {
+        return Register.emailExists;
+    }
+
+
+    postRegisterForm(user: User): Observable<void | CollectionTrackerError> {
+       // const body = JSON.stringify(user);
+        const httpOptions = { headers : new HttpHeaders({ 'Content-type': 'application/json' }) };
+        // const options = new RequestOptions({ headers: headers });
+        return this.httpclient.post<String>('/rest/username', user, httpOptions).pipe(
+            map(b =>  this.extractData(b)),
+            catchError(err => this.handleError(err)));
+
+
+
+
+    }
+
+    private extractData(res: String) {
+
+        const body: String = res;
         if (body.indexOf('username exists') > -1) {
             Register.invalidUsername = true;
         } else if (body.indexOf('email exists') > -1) {
@@ -29,58 +52,57 @@ export class Register {
 
 
     }
-    get checkUsername() {
-        return Register.invalidUsername;
-    }
 
-    get checkEmail() {
-        return Register.emailExists;
-    }
-    private handleError(error: any) {
-
-        console.error('post error : ', error);
-        return observableThrowError(error.statusText);
-
-
-    }
-    postRegisterForm(user: User): Observable<any> {
-        const body = JSON.stringify(user);
-        const headers = new Headers({ 'Content-type': 'application/json' });
-        const options = new RequestOptions({ headers: headers });
-        return this.http.post('/rest/username', body, options).pipe(
-            map(this.extractData),
-            catchError(this.handleError));
-
-
-
-
-    }
-
-    checkPassword(password) {
+    checkPassword(password): Observable<Boolean | CollectionTrackerError> {
         const data = {
             username: localStorage.getItem('currentUser'),
             password: password
         };
-        return this.http.get('/rest/ispasswordmatched/', { params: data });
+        return this.httpclient.get<Boolean>('/rest/ispasswordmatched/', { params: data })
+        .pipe(
+            catchError(err => this.handleError(err))
+        );
     }
 
 
-    updateUser(user: User) {
+    updateUser(user: User): Observable<Boolean | CollectionTrackerError> {
         const body = JSON.stringify(user);
-        console.log(user.password);
-        const headers = new Headers({ 'Content-type': 'application/json' });
-        const options = new RequestOptions({ headers: headers });
-        return this.http.put('/rest/username/', body, options);
+        const httpOptions = { headers : new HttpHeaders({ 'Content-type': 'application/json' }) };
+         return this.httpclient.put<Boolean>('/rest/username/', user, httpOptions)
+         .pipe(
+             catchError(err => this.handleError(err))
+         );
     }
 
-    deleteUser(currentUser) {
-        const data = { username: currentUser };
-        return this.http.delete('/rest/username/' + currentUser);
+    deleteUser(currentUser): Observable<void | CollectionTrackerError> {
+
+        return this.httpclient.delete<void>(`/rest/username/${currentUser}`)
+        .pipe(
+            catchError( err => this.handleError(err))
+        );
     }
+
     // restAPi method to get the user details
-    getUserDetails(currentUser) {
-        const data = { username: currentUser };
-        return this.http.get('/rest/username/', { params: data });
+
+    getUserDetails(currentUser): Observable<User | CollectionTrackerError>  {
+
+        const data = {'username': currentUser};
+         return this.httpclient.get<User>('/rest/username/', {params: data})
+          .pipe(
+              catchError( err => this.handleError(err))
+            );
     }
+
+
+    private handleError(error: HttpErrorResponse): Observable <CollectionTrackerError> {
+        let dataError = new CollectionTrackerError();
+        if (error.status === 403) {
+        dataError.errorNumber = 403;
+        dataError.message = error.statusText;
+        dataError.userfriendlyMessage = 'Your session has expried. Please login first ';
+
+    }
+    return throwError(dataError);
 }
 
+}
