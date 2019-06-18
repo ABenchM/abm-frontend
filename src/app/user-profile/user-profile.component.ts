@@ -100,7 +100,6 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
   ngOnInit() {
     this.loadUserData();
 
