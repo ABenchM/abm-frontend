@@ -9,6 +9,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Collection } from '../models/collection.model';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CollectionTrackerError } from '../collectionTrackerError';
 
 @Component({
   selector: 'abm-home',
@@ -212,7 +213,8 @@ export class HomeComponent implements OnInit {
         const targetIndex = this.dataSourcePub.data.findIndex(this.checkId, row.id);
         this.dataSourcePub.data.splice(targetIndex, 1);
         this.loadPublicCollections();
-      }
+      } ,
+      (err: CollectionTrackerError) => console.log(err.userfriendlyMessage)
     );
     this.disabled = false;
   }

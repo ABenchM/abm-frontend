@@ -2,13 +2,14 @@
 import { take } from 'rxjs/operators';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute, Route } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource , MatCheckboxModule} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatCheckboxModule } from '@angular/material';
 import { CollectionService } from '../services/collection.service';
 // import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastrService } from 'ngx-toastr';
 import { PinService } from '../services/pin.service';
 import { ViewService } from '../services/view.service';
 import { Location } from '@angular/common';
+import { CollectionTrackerError } from '../collectionTrackerError';
 
 @Component({
   selector: 'abm-view',
@@ -116,20 +117,20 @@ export class ViewComponent implements OnInit {
 
   loadParentVersion(parentId) {
     if (this.loggedInStatus()) {
-    this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
-      if (response.arrayBuffer().byteLength > 0) {
-        this.parentCollName = response.json().name;
-        this.parentVersName = response.json().versions[0].name;
-        this.parentVersId = parentId;
-      }
-    },
-    (error) => {
-      this.parentCollName = null;
-      this.parentVersName = null;
-      this.parentVersId = null;
+      this.service.getVersionParentDetails(parentId).pipe(take(1)).subscribe(response => {
+        if (response.arrayBuffer().byteLength > 0) {
+          this.parentCollName = response.json().name;
+          this.parentVersName = response.json().versions[0].name;
+          this.parentVersId = parentId;
+        }
+      },
+        (error) => {
+          this.parentCollName = null;
+          this.parentVersName = null;
+          this.parentVersId = null;
+        }
+      );
     }
-    );
-  }
   }
 
   selectVersion(fargVersion) {
@@ -177,16 +178,15 @@ export class ViewComponent implements OnInit {
 
               if (this.loggedInStatus()) {
                 this.pinService.checkPinned(this.viewCollection[0]).subscribe(
-                  data => {
-                    if (data.status === 200) {
-                      this.viewCollection[0].pinned = data.json();
-                    } else if (data.status === 403) {
-                      this.toastr.error('Your session has expried. Please login first ');
+
+                  (data: Boolean) => this.viewCollection[0].pinned = data,
+                  (err: CollectionTrackerError) => {
+                    if (err.errorNumber === 403) {
+                      this.toastr.error(err.userfriendlyMessage);
                       this.router.navigateByUrl('/login');
                     }
-
-
                   }
+
                 );
 
               }
@@ -208,10 +208,11 @@ export class ViewComponent implements OnInit {
     this.disabled = true;
     this.pinService.postPin(this.viewCollection[0]).subscribe(
       response => {
-        if (response.status === 200) {
-          this.viewCollection[0].pinned = true;
-        }
-      }
+
+        this.viewCollection[0].pinned = true;
+
+      },
+      (err: CollectionTrackerError) => this.toastr.error(err.userfriendlyMessage)
     );
     this.disabled = false;
   }
@@ -220,17 +221,18 @@ export class ViewComponent implements OnInit {
     this.disabled = true;
     this.pinService.deletePin(this.viewCollection[0]).subscribe(
       response => {
-        if (response.status === 200) {
-          this.viewCollection[0].pinned = false;
-        }
-      }
+
+        this.viewCollection[0].pinned = false;
+
+      },
+      (err: CollectionTrackerError) => console.log(err.userfriendlyMessage)
     );
     this.disabled = false;
   }
 
 
   back() {
-      this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/');
   }
 
   ngOnInit() {

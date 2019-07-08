@@ -6,6 +6,7 @@ import { DialogComponentComponent } from '../dialog-component/dialog-component.c
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { DialogService } from 'ng2-bootstrap-modal';
+import { CollectionTrackerError } from '../collectionTrackerError';
 
 @Component({
   selector: 'abm-user-profile',
@@ -21,7 +22,7 @@ export class UserProfileComponent implements OnInit {
   public oldPassword: string;
   public confirmNewPassword: string;
   public cannotContainSpace: boolean;
-  public passwordMatched = false;
+  public passwordMatched: Boolean = false;
 
   model = new User('', '', '', '', '', '', '', '', true);
 
@@ -40,7 +41,8 @@ export class UserProfileComponent implements OnInit {
 
 
   loadUserData() {
-    this.register.getUserDetails(localStorage.getItem('currentUser')).subscribe(response => this.model = response.json());
+    this.register.getUserDetails(localStorage.getItem('currentUser'))
+             .subscribe((response: User) => this.model = response);
   }
 
   deleteUser() {
@@ -51,10 +53,11 @@ export class UserProfileComponent implements OnInit {
       if (isConfirmed) {
         this.register.deleteUser(localStorage.getItem('currentUser')).subscribe(
           response => {
-            if (response.status === 200) {
+
               this.router.navigateByUrl('/login');
-            }
-          }
+
+          },
+          (err: CollectionTrackerError) => this.toastr.error(err.userfriendlyMessage)
         );
       }
     }
@@ -66,7 +69,7 @@ export class UserProfileComponent implements OnInit {
   checkPassword() {
 
     this.register.checkPassword('demo').subscribe(
-      response => this.passwordMatched = response.json()
+      (response: Boolean) => this.passwordMatched = response
     );
     return this.passwordMatched;
   }
@@ -77,19 +80,19 @@ export class UserProfileComponent implements OnInit {
     console.log('old password' + this.oldPassword);
     this.register.checkPassword(this.oldPassword).subscribe(
       response => {
-        if (response.json() === true) {
+       // if (response.json() === true) {
           this.register.updateUser(this.model).subscribe(
             data => {
-              if (data.status === 200) {
-                this.router.navigateByUrl('/save-success');
-              }
 
-            }
+                this.router.navigateByUrl('/save-success');
+
+
+            },
+            (err: CollectionTrackerError) => this.toastr.error(err.userfriendlyMessage)
           );
-        } else {
-          this.toastr.error('Old Password is incorrect');
-        }
-      }
+        },
+        (err: CollectionTrackerError) =>  this.toastr.error('Old Password is incorrect')
+
     );
 
   }
