@@ -43,12 +43,18 @@
       <button mat-raised-button class="btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin this Collection</button>
     </span>
     <button title="{{('Copy required projects from this version into a new collection')}}" mat-raised-button class="btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this Version</button>
+    <br> <br>
+    <div *ngIf="!version.privateStatus">
+      <span>Link to download: <a href="{{version.doi}}">{{version.doi}}</a> </span>
+    </div>
     </div>
     <br>
-    <div class="float-right col">
+
+     <div class="float-right col">
       <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select All</button>
       <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect All</button>
     </div>
+  
   </div>
   <br>
   <table class="table table-bordered table-striped" style="max-height:400px">

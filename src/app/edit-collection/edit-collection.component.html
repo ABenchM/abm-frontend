@@ -75,13 +75,20 @@
         Make this version public</button>
     </div>
 
+    <div *ngIf="(!version.privateStatus) && (version.doi!=='')" >
+     <span>This version is now available under the "Available collections" menu. </span>
+      <br>     
+     <span>
+       Link to download: <a href="{{version.doi}}">{{version.doi}}</a> </span>
+    </div>
+
   </div>
   <br>
   <table class="table table-bordered table-striped table-sm">
     <thead class="thead-light">
       <tr>
         <th>Project ID</th>
-        <th [hidden]="!version.privateStatus"> Remove Projects</th>
+        <th [hidden]="!version.privateStatus "> Remove Projects</th>
       </tr>
     </thead>
     <tbody>
