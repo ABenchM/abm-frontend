@@ -183,7 +183,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
           this.version.privateStatus = false;
 
           this.service.postPublishCollection(this.version).subscribe(publishResponse => {
-            this.toastr.info('Publishing a collection may take some time!!');
+
             if (publishResponse.status === 200) {
 
               this.service.updateCollection(fargCollection).subscribe(
@@ -193,7 +193,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
                     this.service.updateVersion(this.version).subscribe(data => {
                       if (data.status === 200) {
-                        this.toastr.info('This collection published successfully!!');
+
                         this.publishedMessage = publishResponse.json();
                         // this.router.navigateByUrl('/');
                       }
