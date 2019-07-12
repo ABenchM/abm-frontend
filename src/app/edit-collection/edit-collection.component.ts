@@ -25,14 +25,14 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
   collection: any = [{}];
   versions: any = [{}];
-  version: any = {};
+  version: any = { doi: null };
   latestVersion: any = {};
   buildprojects: any = {};
   projects = [{}];
   derivedVersion: any = {};
   displayedColumns: string[] = ['name', 'check', 'delete'];
   versionCommitDataSource = new MatTableDataSource<Collection>();
-
+  publishedMessage = '';
   id;
   versionIndex;
   loading: boolean;
@@ -92,7 +92,7 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         }
         // console.log(response.json()[0].versions[0].number);
         // console.log(this.version.number);
-       // this.versionCommitDataSource.data = this.version.commits;
+        // this.versionCommitDataSource.data = this.version.commits;
       }
       );
     }
@@ -107,13 +107,13 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
         this.parentVersId = parentId;
       }
     },
-    (error) => {
-      this.parentCollName = null;
-      this.parentVersName = null;
-      this.parentVersId = null;
-      // this.toastr.('The parent version was deleted by the Owner/Administrator.');
-      // console.log(error);
-    }
+      (error) => {
+        this.parentCollName = null;
+        this.parentVersName = null;
+        this.parentVersId = null;
+        // this.toastr.('The parent version was deleted by the Owner/Administrator.');
+        // console.log(error);
+      }
     );
   }
 
@@ -182,21 +182,33 @@ export class EditCollectionComponent implements OnInit, OnDestroy {
 
           this.version.privateStatus = false;
 
-          this.service.updateCollection(fargCollection).subscribe(
-            response => {
-              if (response.status === 200) {
-                this.service.updateVersion(this.version).subscribe(data => {
-                  if (data.status === 200) {
+          this.service.postPublishCollection(this.version).subscribe(publishResponse => {
+            this.toastr.info('Publishing a collection may take some time!!');
+            if (publishResponse.status === 200) {
 
-                    this.service.postPublishCollection(this.version).subscribe(publishResponse => {
-                          console.log(publishResponse.json());
+              this.service.updateCollection(fargCollection).subscribe(
+                response => {
+                  if (response.status === 200) {
+                    this.version.doi = publishResponse.json();
+
+                    this.service.updateVersion(this.version).subscribe(data => {
+                      if (data.status === 200) {
+                        this.toastr.info('This collection published successfully!!');
+                        this.publishedMessage = publishResponse.json();
+                        // this.router.navigateByUrl('/');
+                      }
                     });
-                   // this.router.navigateByUrl('/collection');
+
                   }
                 });
+            } else {
+              this.router.navigateByUrl('/collection');
+            }
 
-              }
-            });
+
+          });
+
+
         } else {
           // alert('declined');
         }

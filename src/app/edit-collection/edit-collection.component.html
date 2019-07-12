@@ -70,6 +70,10 @@
         Make this version public</button>
     </div>
 
+    <div *ngIf="!version.privateStatus" >
+     <span>This version is now available under Available Collection and link to download is: <a href="{{version.doi}}">{{version.doi}}</a> </span>
+    </div>
+
   </div>
   <br>
   <table class="table table-bordered table-striped table-sm">
