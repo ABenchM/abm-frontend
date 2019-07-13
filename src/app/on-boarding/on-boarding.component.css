@@ -20,11 +20,10 @@
 .btn{
     border: 1px solid #424242;
     padding: 6px;
-    min-width: 67px;
+    min-width: 46px;
     background-color: transparent;
     margin-right: 7px;
     color: #000;
-    font-weight: 700;
     font-size: 14px
 }
 .btn-next{
