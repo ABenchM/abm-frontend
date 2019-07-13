@@ -81,6 +81,8 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password.co
 import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
 import { ParentviewComponent } from './parentview/parentview.component';
 import { MdComponentModule } from './md-component.module';
+import { OnBoardingComponent } from './on-boarding/on-boarding.component';
+import { CookieService } from 'ngx-cookie-service';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -140,7 +142,8 @@ const routes: Routes = [
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent,
     DialogVersionDialogComponent,
-    ParentviewComponent
+    ParentviewComponent,
+    OnBoardingComponent
   ],
   imports: [
     BrowserModule,
@@ -186,7 +189,8 @@ const routes: Routes = [
     { provide: ErrorHandler, useClass: AppErrorHandler },
     ContextMenuService,
     ResetPasswordService,
-    RouterLinkActive
+    RouterLinkActive,
+    CookieService
   ],
   entryComponents: [
     DeleteDialogboxComponent,

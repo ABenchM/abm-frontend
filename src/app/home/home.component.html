@@ -1,4 +1,6 @@
-  <h2> Available collections for download</h2>
+<abm-on-boarding></abm-on-boarding>
+  
+<h2> Available collections for download</h2>
   <hr>
   <div *ngIf="loggedInStatus() && (dataSourcePub.data[0] !== undefined)">
     <div *ngIf="!this.loading">
@@ -140,7 +142,7 @@
       <span class="cssload-loader"></span>
     </div>
 
-    <div>
+    <div id="step5">
       <p *ngIf="(dataSourcePub.data[0] === undefined)" class="alert alert-warning">No collection is available for download.</p>
 
       <div *ngIf="!(dataSourcePub.data[0] === undefined)" class="example-container mat-elevation-z8 mat-table">
@@ -250,3 +252,5 @@
     </div>
   </div>
   </div>
+  
+  

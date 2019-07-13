@@ -1,0 +1,23 @@
+<ng-container *ngIf="loggedInStatus()">
+  <div class="overlay"  [ngClass]="{hide: (currentStepIndex === steps + 1) || isShowModal()}">
+
+    <div class="tooltips">
+      <p class="step">{{currentStepIndex + 1}}</p>
+      <p [innerHTML]="sanitizeHtml(currentStep.message)"></p>
+     <ul class="jumper">
+      <li class="jump" [ngClass]="{active: (currentStepIndex == i)}" *ngFor="let step of states; let i = index" (click)="jump(i)"></li>
+     </ul>
+      <div>
+        <button class="btn" (click)="onSkip($event)">Skip</button> 
+        <button class="btn" [disabled]="currentStepIndex == 0"
+          (click)="nextPrev($event)">Previous</button> <button class="btn btn-next" (click)="nextPrev($event)">
+            <span
+            *ngIf="currentStepIndex < states.length - 1">Next</span>
+            <span *ngIf="currentStepIndex == states.length - 1">Finish</span>
+          </button>
+      </div>
+    </div>
+    
+    </div>
+    
+</ng-container>
