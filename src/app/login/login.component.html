@@ -4,7 +4,7 @@
   <form #form="ngForm" (submit)="loginForm()">
     <div class="form-group" [class.has-error]=" username.invalid && username.dirty">
       <label class="control-label required" for="username"> Username</label> <span class="useralert"
-        *ngIf="!invalidUsername"> Username either does not exist or invalid.</span>
+        *ngIf="!invalidUsername"> Either Username or password is invalid.</span>
       <input #username="ngModel" type="text" class="form-control" name="username" required [(ngModel)]="model.username"
         id="username">
       <span *ngIf="username.invalid && username.dirty" class="help-block"> Username is required</span>
