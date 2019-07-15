@@ -10,7 +10,7 @@
     "test": "ng test --watch=false --browsers ChromeHeadless --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "npm run lint && npm run test && npmvet -r ci",
+    
     "htmllint": "node htmlchecker.js"
   },
   "author": "",
@@ -22,6 +22,7 @@
     "angular-6-social-login": "^1.1.1",
     "angular-ui-bootstrap": "^2.5.6",
     "angular2-moment": "^1.9.0",
+    "ngx-cookie-service": "^2.2.0",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.3.1",
     "chai-http": "^4.2.1",
@@ -52,7 +53,7 @@
     "@angular-devkit/build-angular": "^0.13.6",
     "@angular/animations": "^7.2.9",
     "@angular/cdk": "^7.3.4",
-  "@angular/cli": "^7.3.6",
+    "@angular/cli": "^7.3.6",
     "@angular/common": "^7.2.9",
     "@angular/compiler": "^7.2.9",
     "@angular/compiler-cli": "^7.2.9",
