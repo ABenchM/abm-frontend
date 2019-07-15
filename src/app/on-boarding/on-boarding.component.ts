@@ -143,21 +143,26 @@ export class OnBoardingComponent implements OnInit {
   }
 
   getPosition(element) {
-    let container = this.document.body;
+    let container = window;
     let tooltip = this.el.nativeElement.querySelector(`.tooltips`);
     let tooltipRef = this.document.querySelector(element);
     let top = tooltipRef.offsetTop;
     let left = tooltipRef.offsetLeft + tooltipRef.offsetWidth + 11;
 
-    if (left + tooltip.offsetWidth > container.offsetWidth) { // handles case where tooltip is off right screen
-      if ( tooltipRef.offsetLeft - tooltip.offsetWidth < 1) { // handles case where tooltip is off left screen
-        top = tooltipRef.offsetTop + tooltipRef.offsetHeight ;
-        left = tooltipRef.offsetLeft;
-      } else {
-        left = tooltipRef.offsetLeft - tooltip.offsetWidth;
+    if (left + tooltip.offsetWidth > container.innerWidth) { // handles case where tooltip is off right screen
+        if ( tooltipRef.offsetLeft - tooltip.offsetWidth < 1) { // handles case where tooltip is off left screen
+         left = tooltipRef.offsetLeft + 9;
+          if ((top + tooltipRef.offsetHeight + tooltip.offsetHeight) < window.innerHeight) { 
+            top = tooltipRef.offsetTop + tooltipRef.offsetHeight; }
+              
+        } else {
+              left = tooltipRef.offsetLeft - tooltip.offsetWidth;
       }
 
     }
+
+
+
     return {
       x: left + 'px',
       y: top + 'px'
