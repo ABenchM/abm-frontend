@@ -1,5 +1,5 @@
 <div *ngIf="loggedInStatus()">
-  <h2>My Collections</h2>
+  <h2>My collections</h2>
   <hr>
   <p class="alert alert-warning" *ngIf="userCollections[0]===undefined">You have no collections. To create a new
     collection, collect projects using the search feature and create a collection
@@ -42,7 +42,7 @@
       [class.example-expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element; data = row">
       <button mat-stroked-button [ngClass]="'customOutline'">
-        Show Versions
+        Show versions
         <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
         <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
       </button>
