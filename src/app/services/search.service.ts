@@ -24,7 +24,7 @@ export class SearchService {
   }
 
   getFiltersSearch(query: string) {
-    let limit = 10000;
+    let limit = 500;
     let body = JSON.stringify({query, limit});
     return this.http.post('/rest/searchquery', body);
   }
