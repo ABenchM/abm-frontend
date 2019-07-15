@@ -67,7 +67,7 @@
               <mat-cell *matCellDef="let element; let row" class="example-element-row"
                 [class.example-expanded-row]="expandedElement === element"
                 (click)="expandedElement = expandedElement === element ? null : element; dataPin = row.versions">
-                <button mat-stroked-button [ngClass]="'customOutline'">Show Versions
+                <button mat-stroked-button [ngClass]="'customOutline'">Show versions
                   <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                   <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
                 </button>
@@ -200,7 +200,7 @@
             <mat-cell *matCellDef="let element; let row" class="example-element-row"
               [class.example-expanded-row]="expandedElement === element"
               (click)="expandedElement = expandedElement === element ? null : element; dataPub = row.versions">
-              <button mat-stroked-button [ngClass]="'customOutline'">Show Versions
+              <button mat-stroked-button [ngClass]="'customOutline'">Show versions
                 <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                 <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
               </button>
