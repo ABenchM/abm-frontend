@@ -39,10 +39,10 @@
     </span>
     <div class="card-body">
     <span *ngIf="loggedInStatus()">
-      <button mat-raised-button class="btn-mrgn" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin this Collection</button>
-      <button mat-raised-button class="btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin this Collection</button>
+      <button mat-raised-button class="btn-mrgn" (click)="pin()" *ngIf="!viewCollection[0].pinned">Pin this collection</button>
+      <button mat-raised-button class="btn-mrgn" (click)="unpin()" *ngIf="viewCollection[0].pinned">Unpin this collection</button>
     </span>
-    <button title="{{('Copy required projects from this version into a new collection')}}" mat-raised-button class="btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this Version</button>
+    <button title="{{('Copy required projects from this version into a new collection')}}" mat-raised-button class="btn-mrgn" (click)="copy()" *ngIf="loggedInStatus()">Copy this version</button>
     <br> <br>
     <div *ngIf="!version.privateStatus">
       <span>Link to download: <a href="{{version.doi}}">{{version.doi}}</a> </span>
@@ -51,8 +51,8 @@
     <br>
 
      <div class="float-right col">
-      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select All</button>
-      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect All</button>
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" (click)="selectall()" value="Select All">Select all</button>
+      <button class="float-right" mat-raised-button [hidden] = "!loggedInStatus()" [disabled] = "!isRepoSelected()" (click)="deselectall()">Deselect all</button>
     </div>
   
   </div>
@@ -72,7 +72,7 @@
     </tbody>
   </table>
   <div>
-    <button mat-raised-button class="align-bottom" (click)="back()">Return to Collection Search</button>    
+    <button mat-raised-button class="align-bottom" (click)="back()">Return to collection search</button>    
 
   </div> 
 

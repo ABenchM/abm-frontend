@@ -59,7 +59,7 @@
     <br>
     <br>
     <div id="not-frozen" *ngIf="version.privateStatus" style="height:28px">
-      <button  mat-raised-button [disabled]="!version.privateStatus" (click)="addProject(version)">Add Projects to this version
+      <button  mat-raised-button [disabled]="!version.privateStatus" (click)="addProject(version)">Add projects to this version
       </button>
 
       <button mat-raised-button title="{{(versions.length <= 1?' Last contained version. Delete the collection instead.' : '')}}"
@@ -83,7 +83,7 @@
     <thead class="thead-light">
       <tr>
         <th>Project ID</th>
-        <th [hidden]="!version.privateStatus "> Remove Projects</th>
+        <th [hidden]="!version.privateStatus ">Remove projects</th>
       </tr>
     </thead>
     <tbody>
@@ -96,5 +96,5 @@
       </tr>
     </tbody>
   </table>
-  <button mat-raised-button  [disabled]="loading" (click)="back()">Back to Collections</button>
+  <button mat-raised-button  [disabled]="loading" (click)="back()">Back to collections</button>
 </div>
