@@ -25,29 +25,31 @@ export class OnBoardingComponent implements OnInit {
   public currentStep: State;
   @Input() states: State[] = [
     {
-      message: `Welcome to ABM, a web application for creating corporas to analyze and test software tools. <br> <br>
-      To find out more about ABM visit the <a href=/about>about</a> section`,
+      message: `Welcome to ABM, where you can create, edit, and persist collections of software projects. <br>
+       To find out more about ABM, visit the <a href=/about>about</a> section.`,
       top: '20vh',
       left: '35%'
     },
     {
-      message: `Available collections are a list of public collections. You can search for public collection
-      and also use them to create your own collection.`,
+      message: `Collections that others have publicized are in the "Available collections" page.`,
       element: '#step1'
     },
     {
-      message: `A list of public collections that can be downloaded from Zenodo are show here`,
+      message: `The available collections are shown in this list. You can download 
+      them or reuse them to create your own collections.`,
       element: '#step5'
     },
       {
-      message: `Go to 'My Collections' to find a list of all the collections you have created. You can edit, create a new version, pin and
-      create another collection from one of your existing collections.`,
+      message: `Your collections are available under the "My Collections" page. 
+      From there, you can edit your collections, delete them, create new versions, or make them public.`,
       element: '#step0'
     },
        {
       message:
-        `To Create collections, first you have to create a filter, then you select projects you wish to be a
-         part of your collection after which you can decide to add to an existing collection or create an entirely new collection`,
+        `You can search for projects to create your own collections. <br><br>First, write a query using the metrics.
+         For example, type "[astore_3 (opcode:78)]>0", click on the "Search" button, select a few projects,
+          and click on the "Create New Collection" button.<br><br> You can also add projects to existing collections 
+          with the button "Add Selected Projects to an Existing Collection"`,
       element: '#step2'
     }
   ];
