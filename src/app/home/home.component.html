@@ -6,7 +6,7 @@
     <div *ngIf="!this.loading">
 
    <div >
-      <h3> Pinned Collection</h3>
+      <h3> Pinned collection</h3>
       <p *ngIf="(dataSourcePin.data[0] === undefined)" class="alert alert-warning">You have not pinned any collections
         yet.To pin a collection, Click the button Pin.</p>
 
@@ -69,7 +69,7 @@
               <mat-cell *matCellDef="let element; let row" class="example-element-row"
                 [class.example-expanded-row]="expandedElement === element"
                 (click)="expandedElement = expandedElement === element ? null : element; dataPin = row.versions">
-                <button mat-stroked-button [ngClass]="'customOutline'">Show Versions
+                <button mat-stroked-button [ngClass]="'customOutline'">Show versions
                   <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                   <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
                 </button>
@@ -112,7 +112,7 @@
         <mat-toolbar>
           <mat-toolbar-row>
             <button mat-raised-button [disabled]="isPinselected()" id="buttonL" (click)="UnpinSelectedCollections()"
-              class="button_alignR">UnPin Selected Collections</button>
+              class="button_alignR">UnPin selected collections</button>
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons [length]="dataSourcePin.data.length">
             </mat-paginator>
           </mat-toolbar-row>
@@ -202,7 +202,7 @@
             <mat-cell *matCellDef="let element; let row" class="example-element-row"
               [class.example-expanded-row]="expandedElement === element"
               (click)="expandedElement = expandedElement === element ? null : element; dataPub = row.versions">
-              <button mat-stroked-button [ngClass]="'customOutline'">Show Versions
+              <button mat-stroked-button [ngClass]="'customOutline'">Show versions
                 <mat-icon *ngIf="expandedElement === element">arrow_drop_up</mat-icon>
                 <mat-icon *ngIf="expandedElement != element">arrow_drop_down</mat-icon>
               </button>
@@ -244,7 +244,7 @@
       <mat-toolbar>
         <mat-toolbar-row>
           <button mat-raised-button [disabled]="isselected()" id="buttonL" (click)="pinSelectedCollections()"
-            class="button_alignR">Pin Selected Collections</button>
+            class="button_alignR">Pin selected collections</button>
           <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="dataSourcePub.data.length" showFirstLastButtons>
           </mat-paginator>
         </mat-toolbar-row>

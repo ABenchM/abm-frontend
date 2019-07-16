@@ -8,6 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <img src="assets/abm_logo.jpg" class="img-click" routerLink="/" align="right" width="60px" height="60px" alt="ABM" >
     <ul class="navbar-nav mr-auto nav-pills">
+
       <li id="step0" *ngIf="loggedInStatus()" class="nav-item" routerLinkActive="active-link">
         <a class="nav-link" routerLink="/collection">My Collections</a>
       </li>

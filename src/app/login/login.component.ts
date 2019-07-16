@@ -8,6 +8,7 @@ import { Global } from '../services/global.service';
 import { GoogleLoginService } from '../services/google-login.service';
 import { ToastrService } from 'ngx-toastr';
 import { CurrentUserService } from '../services/current-user.service';
+import { Register } from '../services/register.service';
 @Component({
   selector: 'abm-login',
   templateUrl: './login.component.html',
@@ -17,9 +18,11 @@ export class LoginComponent implements OnInit {
   public ngForm: NgForm;
   public loginFailed = false;
   userrole: string;
+  public invalidUsername = true;
   model = new Credentials('', '');
   google_username = 'google-oauth';
   constructor(private login: Login, private router: Router, private toastr: ToastrService,
+    private register: Register,
     private googleLoginService: GoogleLoginService, private route: ActivatedRoute, private currentUserService: CurrentUserService) { }
   loginOnsuccess(response) {
     if (response.status === 200) {
@@ -44,6 +47,7 @@ export class LoginComponent implements OnInit {
     this.login.postLoginForm(cred)
       .subscribe(
         response => {
+          this.invalidUsername = this.register.checkUsername;
           if (response.status === 401) {
 
             this.toastr.error('Either Username or password is invalid');
@@ -62,8 +66,10 @@ export class LoginComponent implements OnInit {
           }
         },
         (error) => {
+          this.invalidUsername = this.register.checkUsername;
+
           this.toastr.error('You are unauthorized to login. Please try agin later or contact the administrator.');
-          console.log(error);
+          // console.log(error);
         }
       );
   }

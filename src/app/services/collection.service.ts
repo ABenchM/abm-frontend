@@ -68,6 +68,7 @@ export class CollectionService {
  }
 
   updateVersion(version) {
+    console.log('Version DOI '  + version.doi);
     return this.http.put('/rest/version/', version);
   }
 
