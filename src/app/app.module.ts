@@ -131,6 +131,7 @@ const routes: Routes = [
     CreateCollectionComponent,
     DialogComponentComponent,
     AddToCollectionComponent,
+    OtreeCompletionComponent,
     DeleteDialogboxComponent,
     ManageUsersComponent,
     ManagePublicCollectionsComponent,
