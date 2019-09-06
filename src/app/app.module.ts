@@ -81,6 +81,9 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password.co
 import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
 import { ParentviewComponent } from './parentview/parentview.component';
 import { MdComponentModule } from './md-component.module';
+import { OnBoardingComponent } from './on-boarding/on-boarding.component';
+import { CookieService } from 'ngx-cookie-service';
+import { OtreeCompletionComponent } from './otree-completion/otree-completion.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -106,7 +109,8 @@ const routes: Routes = [
   { path: 'manageusers', component: ManageUsersComponent },
   { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
   { path: 'pendingRequest', component: AdminPendingReqComponent },
-  { path: 'profile', component: UserProfileComponent }
+  { path: 'profile', component: UserProfileComponent },
+  {path: 'otree', component: OtreeCompletionComponent}
 
 ];
 
@@ -140,7 +144,8 @@ const routes: Routes = [
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent,
     DialogVersionDialogComponent,
-    ParentviewComponent
+    ParentviewComponent,
+    OnBoardingComponent
   ],
   imports: [
     BrowserModule,
@@ -186,7 +191,8 @@ const routes: Routes = [
     { provide: ErrorHandler, useClass: AppErrorHandler },
     ContextMenuService,
     ResetPasswordService,
-    RouterLinkActive
+    RouterLinkActive,
+    CookieService
   ],
   entryComponents: [
     DeleteDialogboxComponent,
