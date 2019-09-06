@@ -81,6 +81,7 @@ import { ConfirmPasswordComponent } from './confirm-password/confirm-password.co
 import { DialogVersionDialogComponent } from './edit-collection/dialog-version-dialog.component';
 import { ParentviewComponent } from './parentview/parentview.component';
 import { MdComponentModule } from './md-component.module';
+import { OtreeCompletionComponent } from './otree-completion/otree-completion.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -106,7 +107,8 @@ const routes: Routes = [
   { path: 'manageusers', component: ManageUsersComponent },
   { path: 'managePublicCollections', component: ManagePublicCollectionsComponent },
   { path: 'pendingRequest', component: AdminPendingReqComponent },
-  { path: 'profile', component: UserProfileComponent }
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'otree', component: OtreeCompletionComponent}
 
 ];
 
@@ -140,7 +142,8 @@ const routes: Routes = [
     ResetPasswordSuccessComponent,
     ConfirmPasswordComponent,
     DialogVersionDialogComponent,
-    ParentviewComponent
+    ParentviewComponent,
+    OtreeCompletionComponent
   ],
   imports: [
     BrowserModule,
