@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from '../services/login.service';
-
+import {NavbarService} from '../services/navbar.service';
 import { BehaviorSubject ,  Observable } from 'rxjs';
 import { CurrentUserService } from '../services/current-user.service';
 @Component({
@@ -10,7 +10,7 @@ import { CurrentUserService } from '../services/current-user.service';
 })
 export class BsNavbarComponent implements OnInit {
 
-  constructor(private login: Login, private currentUserService: CurrentUserService) { }
+  constructor(private login: Login, private currentUserService: CurrentUserService, private nav: NavbarService) { }
 
   username: string;
   userrole: string;
