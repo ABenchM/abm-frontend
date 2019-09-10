@@ -12,7 +12,7 @@ export class OtreeCompletionComponent implements OnInit {
 
   ngOnInit() {
     this.nav.hide();
-    window.location.href = 'https://app.prolific.co/submissions/complete?cc=7Y1LD2FE';
+    window.location.href = 'https://app.prolific.co/submissions/complete?cc=P1132SY9';
   }
 
 }
